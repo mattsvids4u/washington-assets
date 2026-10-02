@@ -6,3 +6,4 @@ __pycache__/
 jobs/*/out/
 .DS_Store
 Thumbs.db
+jobs/DC-F02/renders/
