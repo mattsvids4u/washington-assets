@@ -459,6 +459,10 @@ def annex_strip(m, fr, A, Z, ac, sw, b_face, b_spandrel, glass_b, lod, key, orna
     wins = []
     for k, zf in enumerate(fl):
         wins.append((zf + 0.55, zf + A["floor_h"] - 0.35))
+    if lod >= 2:
+        # one bronze card over the whole strip: the dark vertically linked bay is the Annex's
+        # identity at distance (glass cards sit proud of it, never coplanar)
+        m.lbox(fr, a0, a1, b_face, b_face + 0.01, Z["strip0"], Z["strip1"], "M_F01_Metal_Bronze")
     # spandrels (incl. below first and above last window)
     edges = [Z["strip0"]] + [z for w in wins for z in w] + [Z["strip1"]]
     for i in range(0, len(edges), 2):
@@ -474,7 +478,7 @@ def annex_strip(m, fr, A, Z, ac, sw, b_face, b_spandrel, glass_b, lod, key, orna
     for k, (c0, c1) in enumerate(wins):
         gs = glass_slot(f"{key}-{k}")
         if lod >= 2:
-            m.lbox(fr, a0 + 0.1, a1 - 0.1, b_face, b_face + 0.02, c0, c1, GLASS[gs])
+            m.lbox(fr, a0 + 0.1, a1 - 0.1, b_face + 0.01, b_face + 0.03, c0, c1, GLASS[gs])
             continue
         L.window_unit(m, fr, a0 + 0.06, a1 - 0.06, c0, c1, -core, lod,
                       {"frame": "M_F01_Metal_Bronze", "glass": GLASS}, cols=3, rows=3,
@@ -832,7 +836,15 @@ def build_cannon(lod):
         L.ring_prism(m, L.offset_polygon_per_edge(outer, [0.2] * n), court, C["z_arch0"], C["z_cor1"], MAT,
                      "M_F01_Limestone_Court", MAT)
     else:
-        L.ring_prism(m, outer, court, 0.0, C["z_cor1"], MAT, "M_F01_Limestone_Court", MAT)
+        # LOD2: one ring with the Independence Ave loggia notched out of the middle band
+        frN2 = frames[2]
+        s0n2, s1n2 = C["pav_ne"], lw[2] - C["pav_nw"]
+        notch = [frN2.p(s0n2, 0.0, 0)[:2], frN2.p(s0n2, -C["loggia"], 0)[:2],
+                 frN2.p(s1n2, -C["loggia"], 0)[:2], frN2.p(s1n2, 0.0, 0)[:2]]
+        notched = outer[:3] + notch + outer[3:]
+        L.ring_prism(m, outer, court, 0.0, zs, MAT, "M_F01_Limestone_Court", MAT)
+        L.ring_prism(m, notched, court, zs, C["z_arch0"], MAT, "M_F01_Limestone_Court", MAT)
+        L.ring_prism(m, outer, court, C["z_arch0"], C["z_cor1"], MAT, "M_F01_Limestone_Court", MAT)
     att = L.offset_polygon_per_edge(outer, [C["attic_set"]] * n)
     L.ring_prism(m, att, court, C["z_cor1"], C["z_roof"], MAT, "M_F01_Limestone_Court", "M_F01_Roof_Tar")
     # court deck (1955 garage roof, in place in Nov 1963)
@@ -974,15 +986,19 @@ def build_cannon(lod):
                 cannon_column(m, x, y, C, lod)
     else:
         frN = frames[2]
+        s0n, s1n = C["pav_ne"], lw[2] - C["pav_nw"]
         for pc in bays[2][0][3:]:
             for dx in (-C["pair_cc"] / 2, C["pair_cc"] / 2):
-                x, y, _ = frN.p(pc + dx, 0.6, 0)
+                x, y, _ = frN.p(pc + dx, -0.85, 0)        # same position as LOD0/LOD1
                 cannon_column(m, x, y, C, 2)
         for i in range(n):
             fr = frames[i]
             for k, ac in enumerate(bays[i][1]):
+                fw = fr
+                if i == 2 and s0n < ac < s1n:              # on the loggia wall
+                    fw = L.Frame((fr.o[0] - fr.n[0] * C["loggia"], fr.o[1] - fr.n[1] * C["loggia"]), fr.u)
                 for (c0, c1) in ((z2a, z2b), (z3a, z3b)):
-                    cannon_window(m, fr, ac - ww / 2, ac + ww / 2, c0, c1, 0.0, 2, f"cannon-{i}-u{k}")
+                    cannon_window(m, fw, ac - ww / 2, ac + ww / 2, c0, c1, 0.0, 2, f"cannon-{i}-u{k}")
     # ---------------- entablature: architrave fascia, frieze with triglyphs, cornice (sweeps)
     if lod < 2:
         # profiles end exactly at the entablature core face (out = -0.2): adjacent, never coplanar-overlapping
