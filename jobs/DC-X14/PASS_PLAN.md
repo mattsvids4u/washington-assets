@@ -58,7 +58,12 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
    SHA256SUMS), branches `claude/eager-cray-vpg2j3` (PR #1) and `asset/DC-X14-v001`, Drive
    Incoming Deliveries folder `DC-X14 — asset — v001` (12zNk-c-3YVCSfuQgys4T8SxVHwQvpU5L) with
    the text files, RENDER_INDEX and PAYLOAD_LINK (GLBs/PNGs exceed the connector's upload limit).
-   Next pass (v002) only on Matt's review.
+   Matt reviewed the same day (see HANDOFF review notes).
+5. v002 (same day, from Matt's review + new evidence E19–E22) — **DONE 2026-10-02.** Added dark-wood
+   panelled partitions (`X14_PART_Panel_Wood_090/_060`, `X14_PART_Door_Wood_090`), torchère floor
+   lamp, wall sconce, painted coffered beam ceiling, and a second demo room `X14_DEMO_LRS_Room_1953`
+   (wood partitions, torchères, sconces, pendants, coffered ceiling, linoleum; no drop ceiling). v001
+   modules are byte-identical in v002. Delivered as `deliveries/DC-X14/asset-v002/` (complete kit).
 
 ## Acceptance checks
 
@@ -80,6 +85,6 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
   APPROXIMATE until those are compared.
 - Exact 1963 room assignment of LRS divisions in the Main Building: PROBABLE (NW/SW curtains and
   pavilions, Great Hall upper level, first-floor east corridor) from a 1967 account; not a 1963 document.
-- Partition colour, height and glazing pattern: APPROXIMATE (gray, c. 2.1 m, obscure-glass uppers).
+- Partition colour, height and glazing pattern: gray steel kit APPROXIMATE (c. 2.13 m, clear uppers); wood kit from the 1953 photo (c. 1.9 m, solid, two flat panels per 0.9 m section) — proportions scaled by eye, APPROXIMATE ±10 %.
 - Ceiling heights, window sizes, cornice profiles: APPROXIMATE (no HABS data pages reachable).
 - Sign text uses the 1963 name "Legislative Reference Service" (historical signage rule); room numbers FICTIONALISED.

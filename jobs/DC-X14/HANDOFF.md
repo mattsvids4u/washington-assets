@@ -1,4 +1,4 @@
-# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v001)
+# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v002; v001 section below unchanged)
 
 Claimant claude-cloud-agent · DC-INT1 Interior Standard · P2 · AGENTS lane · stage A (asset)
 Request revision WASHINGTON-2026-09-22-v001 + Road Plan 04 addendum · built 2026-10-02 in the cloud sandbox (bpy 4.5.14, no GPU, no Unreal)
@@ -139,3 +139,30 @@ Known limitations left on purpose (say if you want them changed): no furniture (
 3. **Missing records:** Matt will fetch them from the links in the run summary (HABS DC-351 data pages + photos 22/23; 1953 LRS photo full size; Annual Report FY1963 Ch. V / App. XII). Dimensions stay APPROXIMATE until compared; v002 only if they disagree with the build.
 
 These are review notes, not an approval. asset_user_approval remains PENDING.
+
+## asset-v002 (2026-10-02, same run) — what changed and why
+
+Trigger: Matt's review ("most probable condition, most accurate finish") plus the full-size 1953
+LRS photograph and HABS DC-351-23 (EVIDENCE.md E19–E22). The photo shows the LRS dividers of
+record as **dark wood panelled partitions** with **torchère lamps and opal sconces**, no
+dropped ceiling and no fluorescents; the HABS office shows a **painted coffered beam ceiling**.
+Wooden partitions are documented in 1953 and again in Nov 1966, so for 1963 they are the
+evidence-led choice; the 1967 "gray partitions" overlay stays available.
+
+New modules (all with LOD0–2, UCX, sockets; QA PASS; v001 modules byte-identical):
+- `X14_PART_Panel_Wood_090`, `X14_PART_Panel_Wood_060` — 1.95 m dark-oak framed partitions, 60 mm posts, bottom/mid/top rails, two recessed flat panels with bolection beads (LOD0).
+- `X14_PART_Door_Wood_090` — same frame with a four-panel 1.84 m leaf on `PIVOT_X14_WoodDoorHinge`.
+- `X14_ARCH_Torchere_Lamp` — brass floor lamp, weighted base, knopped column, opal bowl (emissive 1.5).
+- `X14_ARCH_Wall_Sconce` — brass backplate (pivot at its bottom on the wall face), arm, upturned opal shade; place at z ≈ 2.32 m.
+- `X14_ARCH_Ceiling_Coffered_300` — 3 × 3 coffers per 3 m tile, 0.30 m beams, cove at the junction (LOD0–1), painted panels (`MI_X14_Paint_Coffer`), rosettes (LOD0); pivot on the beam underside → place at z = ROOM_H − 0.30.
+- `X14_DEMO_LRS_Room_1953` — the same 9 × 6 m shell with coffered ceilings, three wood cubicles (0.9 + door + 0.9 fronts; 4 × 0.9 + 0.6 dividers), six pendants, three torchères, three sconces, linoleum floor, I09 sockets plus `SOCKET_I09_PedestalFan_NN`.
+
+Decision record: default LRS room = **v002 wood condition**; alternate = v001 gray overlay. Both
+ship in asset-v002 (complete kit, 24 modules + 2 demo rooms). Register row unchanged except
+delivery_integrity → "v002 complete kit; v001 modules byte-identical; QA PASS; UE import NOT_RUN".
+
+Still wanted: HABS DC-351 data pages (dc0221data.pdf) for room heights and joinery; Annual
+Report FY1963 printed pp. 59–70 and 125–126 (the excerpt received was pp. 35–46 and 101–102).
+
+Render review v002: see `renders/` (`X14_DEMO_LRS_Room_1953_*`) and `renders/modules/` for the
+six new modules — notes appended after the images were checked (below).

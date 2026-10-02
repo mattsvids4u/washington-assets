@@ -247,6 +247,8 @@ def materials():
     M["fluor"] = material("MI_X14_FluorTube_Lit", color=(0.95, 0.97, 1.0, 1), roughness=0.3, emission=(0.9, 0.95, 1.0, 1), emission_strength=6.0)
     M["opal"] = material("MI_X14_Opal_Glass", color=(0.95, 0.93, 0.86, 1), roughness=0.35, alpha=0.9, emission=(1.0, 0.85, 0.6, 1), emission_strength=1.5)
     M["signtext"] = material("MI_X14_Sign_Text", color=(0.05, 0.05, 0.05, 1), roughness=0.4)
+    M["coffer"] = material("MI_X14_Paint_Coffer", color=(0.42, 0.47, 0.44, 1), roughness=0.7)   # painted coffer panel, olive-grey (APPROXIMATE, from DC-351-23 tonality)
+    M["woodpart"] = material("MI_X14_Oak_Partition_Dark", "T_X14_OakDoor_BC.png", "T_X14_Oak_R.png", "T_X14_Oak_N.png", uv_scale=1.0)
     return M
 
 
@@ -1036,6 +1038,233 @@ def build_sign(M):
     return name, objs
 
 
+
+# =============================================================================== v002 additions (1953 condition)
+WPART_H, WPART_W, WPART_T, WPOST_W = 1.95, 0.90, 0.045, 0.06   # dark wood panelled partitions (E19, 1953 photo)
+
+
+def wood_partition(bm, w, lod, mat, door=False):
+    """Dark-oak panelled partition: 60 mm posts, bottom/mid/top rails, two flat recessed panels."""
+    t = WPART_T
+    box(bm, 0, -WPOST_W / 2, 0, WPOST_W, WPOST_W / 2, WPART_H, mat)
+    box(bm, w - WPOST_W, -WPOST_W / 2, 0, w, WPOST_W / 2, WPART_H, mat)
+    if door:
+        return
+    x0, x1 = WPOST_W, w - WPOST_W
+    box(bm, x0, -t / 2, 0.004, x1, t / 2, 0.12, mat)                     # bottom rail
+    box(bm, x0, -t / 2, WPART_H - 0.08, x1, t / 2, WPART_H - 0.004, mat)  # top rail
+    box(bm, x0, -t / 2, 1.00, x1, t / 2, 1.06, mat)                       # mid rail
+    for (za, zb) in ((0.12, 1.00), (1.06, WPART_H - 0.08)):
+        box(bm, x0, -t / 2 + 0.012, za, x1, t / 2 - 0.012, zb, mat)       # recessed flat panel
+        if lod == 0:  # thin bolection bead around each panel on both faces
+            for yy in (-t / 2 - 0.002, t / 2 - 0.006):
+                box(bm, x0, yy, za, x0 + 0.02, yy + 0.008, zb, mat)
+                box(bm, x1 - 0.02, yy, za, x1, yy + 0.008, zb, mat)
+                box(bm, x0 + 0.02, yy, za, x1 - 0.02, yy + 0.008, za + 0.02, mat)
+                box(bm, x0 + 0.02, yy, zb - 0.02, x1 - 0.02, yy + 0.008, zb, mat)
+
+
+def build_wood_panel(M, width=WPART_W):
+    name = f"X14_PART_Panel_Wood_{int(round(width * 100)):03d}"
+    objs = []
+    for lod in range(3):
+        bm = new_bm()
+        wood_partition(bm, width, lod, 0)
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["woodpart"]]))
+    objs += ucx_boxes(name, [(0, -WPOST_W / 2, 0, width, WPOST_W / 2, WPART_H)], M)
+    objs.append(empty("SOCKET_X14_PartNext", (width, 0, 0)))
+    objs.append(empty("SOCKET_X14_PartPrev", (0, 0, 0)))
+    return name, objs
+
+
+def build_wood_door(M):
+    """0.9 m wood partition door unit: posts + head rail, panelled leaf (1.85 m) on a hinge pivot."""
+    name = "X14_PART_Door_Wood_090"
+    w = WPART_W
+    objs = []
+    for lod in range(3):
+        bm = new_bm()
+        wood_partition(bm, w, lod, 0, door=True)
+        box(bm, WPOST_W, -WPART_T / 2, 1.86, w - WPOST_W, WPART_T / 2, WPART_H - 0.004, 0)   # head rail
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["woodpart"], M["brass"]]))
+    pivot = empty("PIVOT_X14_WoodDoorHinge", (WPOST_W + 0.002, 0.0, 0.012))
+    objs.append(pivot)
+    for lod in range(3):
+        bm = new_bm()
+        door_leaf(bm, w - 2 * WPOST_W - 0.006, 1.84, 0.04, 0, 1, lod)
+        leaf = finish(bm, f"{name}_Leaf_LOD{lod}", [M["woodpart"], M["brass"]])
+        leaf.parent = pivot
+        objs.append(leaf)
+    objs += ucx_boxes(name, [(0, -WPOST_W / 2, 0, WPOST_W, WPOST_W / 2, WPART_H),
+                             (w - WPOST_W, -WPOST_W / 2, 0, w, WPOST_W / 2, WPART_H),
+                             (WPOST_W, -WPART_T / 2, 1.86, w - WPOST_W, WPART_T / 2, WPART_H)], M)
+    bm = new_bm()
+    box(bm, WPOST_W, -0.02, 0, w - WPOST_W, 0.02, 1.85)
+    objs.append(finish(bm, f"UCX_{name}_Leaf_01", [M["metal"]]))
+    objs.append(empty("SOCKET_X14_PartNext", (w, 0, 0)))
+    objs.append(empty("SOCKET_X14_PartPrev", (0, 0, 0)))
+    return name, objs
+
+
+def opal_bowl(bm, cx, cy, z0, r, h, segs, mat=0, up=True):
+    """Lathe an opal glass bowl (open at the top if up=True): closed solid with a thin rim."""
+    prof_out = [(0.0, 0.0), (r * 0.45, 0.0), (r * 0.85, h * 0.35), (r, h * 0.75), (r, h)]
+    prof_in = [(r - 0.006, h), (r - 0.006, h * 0.75), (r * 0.85 - 0.006, h * 0.35 + 0.004), (r * 0.45 - 0.01, 0.008), (0.0, 0.008)]
+    prof = prof_out + prof_in
+    rings = []
+    for (rr, zz) in prof:
+        zz = z0 + (zz if up else h - zz)
+        if rr <= 0:
+            rings.append([bm.verts.new((cx, cy, zz))] * segs)
+        else:
+            rings.append([bm.verts.new((cx + rr * math.cos(2 * math.pi * i / segs), cy + rr * math.sin(2 * math.pi * i / segs), zz)) for i in range(segs)])
+    for a, b in zip(rings[:-1], rings[1:]):
+        for i in range(segs):
+            j = (i + 1) % segs
+            quad = [a[i], a[j], b[j], b[i]]
+            uniq = []
+            for v in quad:
+                if v not in uniq:
+                    uniq.append(v)
+            if len(uniq) >= 3:
+                f = bm.faces.new(uniq)
+                f.material_index = mat
+
+
+def build_torchere(M):
+    """Brass torchère floor lamp with an opal bowl shade (E19). Pivot at the base centre."""
+    name = "X14_ARCH_Torchere_Lamp"
+    objs = []
+    for lod in range(3):
+        segs = 20 if lod == 0 else 10
+        bm = new_bm()
+        cylinder(bm, 0, 0, 0.0, 0.025, 0.16, segs, mat=0)             # weighted base
+        cylinder(bm, 0, 0, 0.025, 0.06, 0.05, segs, mat=0)            # base collar
+        cylinder(bm, 0, 0, 0.06, 1.55, 0.016, 12 if lod == 0 else 6, mat=0)   # column
+        if lod == 0:
+            cylinder(bm, 0, 0, 0.90, 0.95, 0.024, 12, mat=0)          # column knop
+        cylinder(bm, 0, 0, 1.55, 1.60, 0.05, segs, mat=0)             # fitter cup
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["brass"]]))
+        bm = new_bm()
+        opal_bowl(bm, 0, 0, 1.59, 0.15, 0.17, segs, mat=0, up=True)
+        objs.append(finish(bm, f"{name}_Glass_LOD{lod}", [M["opal"]]))
+    objs += ucx_boxes(name, [(-0.16, -0.16, 0, 0.16, 0.16, 0.06), (-0.03, -0.03, 0.06, 0.03, 0.03, 1.55), (-0.15, -0.15, 1.55, 0.15, 0.15, 1.76)], M)
+    return name, objs
+
+
+def build_sconce(M):
+    """Brass wall sconce with an upturned opal shade (E19). Pivot on the wall face (y=0), arm into +Y."""
+    name = "X14_ARCH_Wall_Sconce"
+    objs = []
+    for lod in range(3):
+        segs = 16 if lod == 0 else 8
+        bm = new_bm()
+        box(bm, -0.05, 0.0, 0.0, 0.05, 0.012, 0.16, 0)                         # backplate (pivot at its bottom, on the wall)
+        cylinder(bm, 0.0, 0.08, 0.012, 0.16, 0.010, 8, mat=0, axis="Y")         # arm at z 0.08
+        cylinder(bm, 0.0, 0.08, 0.16, 0.20, 0.035, segs, mat=0, axis="Y")       # fitter
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["brass"]]))
+        bm = new_bm()
+        opal_bowl(bm, 0.0, 0.18, 0.07, 0.10, 0.12, segs, mat=0, up=True)
+        objs.append(finish(bm, f"{name}_Glass_LOD{lod}", [M["opal"]]))
+    objs += ucx_boxes(name, [(-0.10, 0.0, 0.0, 0.10, 0.28, 0.20)], M)
+    return name, objs
+
+
+def build_ceiling_coffered(M):
+    """Painted coffered beam ceiling, 3 × 3 m: 3 × 3 coffers, 0.30 m beams 0.30 m deep with a cove
+    at the beam/soffit junction, painted panels, rosette (LOD0). Pivot on the beam underside:
+    place at z = ROOM_H − 0.30 so the coffer soffits sit at ROOM_H. Derived from HABS DC-351-23
+    (hero office) — APPROXIMATE for standard rooms."""
+    name = "X14_ARCH_Ceiling_Coffered_300"
+    bw, bd, L = 0.30, 0.30, MOD_W
+    pitch = L / 3
+    objs = []
+    for lod in range(3):
+        bm = new_bm()
+        # slab above everything
+        box(bm, 0, 0, bd, L, L, bd + 0.06, 0)
+        # beams: three along X (full length) and short ones along Y between them (no coplanar overlaps)
+        ys = [0, pitch, 2 * pitch]
+        for y in ys:
+            box(bm, 0, y, 0, L, y + bw, bd, 0)
+        box(bm, 0, L - bw, 0, L, L, bd, 0)
+        for x in (0, pitch, 2 * pitch, L - bw):
+            for y in ys:
+                box(bm, x, y + bw, 0, x + bw, y + pitch if y < 2 * pitch else L - bw, bd, 0)
+        # coffer panels (painted) recessed 20 mm into the slab
+        for i in range(3):
+            for j in range(3):
+                xa, ya = i * pitch + bw, j * pitch + bw
+                xb, yb = (i + 1) * pitch if i < 2 else L - bw, (j + 1) * pitch if j < 2 else L - bw
+                box(bm, xa, ya, bd - 0.02, xb, yb, bd + 0.0, 1)
+                if lod <= 1:  # cove moulding around each coffer at the beam/soffit junction
+                    prof = [(0, 0), (0, 0.03)] + [(0.03 * math.sin(a), 0.03 * (1 - math.cos(a))) for a in (math.pi / 6, math.pi / 3, math.pi / 2)] + [(0.03, 0)]
+                    path = [(xa, ya, bd), (xb, ya, bd), (xb, yb, bd), (xa, yb, bd), (xa, ya, bd)]
+                    sweep(bm, [(-w, -d) for (w, d) in prof], path, normal=(0, 0, 1), mat=0)
+                if lod == 0:  # rosette
+                    cylinder(bm, (xa + xb) / 2, (ya + yb) / 2, bd - 0.02 - 0.03, bd - 0.02, 0.07, 12, mat=0)
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["ceiling"], M["coffer"]]))
+    objs += ucx_boxes(name, [(0, 0, 0, L, L, bd + 0.06)], M)
+    objs.append(empty("SOCKET_X14_Pendant", (L / 2, L / 2, 0), rot=(math.pi, 0, 0)))
+    return name, objs
+
+
+def build_demo_1953(M, built):
+    """Second demo room, 1953 condition (E19): same shell with coffered ceilings, dark wood
+    partitions, torchères and sconces, pendants; no dropped ceiling, no fluorescents."""
+    B = {n: o for n, o in built}
+    objs = []
+    W, D = 9.0, 6.0
+    for i in range(3):
+        for j in range(2):
+            objs += place(B["X14_ARCH_Floor_300_Linoleum"], (i * 3, j * 3, 0), tag=f".f{i}{j}")
+            objs += place(B["X14_ARCH_Ceiling_Coffered_300"], (i * 3, j * 3, ROOM_H - 0.30), tag=f".c{i}{j}")
+    objs += place(B["X14_ARCH_Wall_Plain_300"], (0, 0, 0), 0, ".s0")
+    objs += place(B["X14_ARCH_Wall_Door_300"], (3, 0, 0), 0, ".s1")
+    objs += place(B["X14_ARCH_Wall_Plain_300"], (6, 0, 0), 0, ".s2")
+    for j in range(2):
+        objs += place(B["X14_ARCH_Wall_Window_300"], (W, j * 3, 0), math.pi / 2, f".e{j}")
+    for i in range(3):
+        objs += place(B["X14_ARCH_Wall_Plain_300"], (W - i * 3, D, 0), math.pi, f".n{i}")
+    for j in range(2):
+        objs += place(B["X14_ARCH_Wall_Window_300" if j == 1 else "X14_ARCH_Wall_Plain_300"], (0, D - j * 3, 0), -math.pi / 2, f".w{j}")
+    objs += place(B["X14_ARCH_Corner"], (0, 0, 0), 0, ".k0")
+    objs += place(B["X14_ARCH_Corner"], (W, 0, 0), math.pi / 2, ".k1")
+    objs += place(B["X14_ARCH_Corner"], (W, D, 0), math.pi, ".k2")
+    objs += place(B["X14_ARCH_Corner"], (0, D, 0), -math.pi / 2, ".k3")
+    objs += place(B["X14_PART_Sign_Door"], (3 + (MOD_W - DOOR_W) / 2 + DOOR_W + 0.25, 0.0, 1.55), 0, ".sign")
+    # wood partition run: 3 cubicles × (panel 0.9 + door 0.9 + panel 0.9) = 8.1 m from x = 0.45
+    y_run = 1.8
+    x = 0.45
+    for k in range(9):
+        mod = "X14_PART_Door_Wood_090" if k % 3 == 1 else "X14_PART_Panel_Wood_090"
+        objs += place(B[mod], (x, y_run, 0), 0, f".wp{k}")
+        x += WPART_W
+    for xd in (0.45 + 2.7, 0.45 + 5.4):
+        yy = y_run
+        for k, (mod, wid) in enumerate([("X14_PART_Panel_Wood_090", 0.9)] * 4 + [("X14_PART_Panel_Wood_060", 0.6)]):
+            objs += place(B[mod], (xd, yy, 0), math.pi / 2, f".wd{int(xd*100)}_{k}")
+            yy += wid
+    # lighting: pendants over the corridor, torchères in the cubicles, sconces on the north wall
+    for i in range(3):
+        objs += place(B["X14_ARCH_Pendant_Lamp"], (1.5 + i * 3, 0.9, ROOM_H - 1.10), 0, f".pl{i}")
+        objs += place(B["X14_ARCH_Pendant_Lamp"], (1.5 + i * 3, 4.5, ROOM_H - 1.10), 0, f".pl2{i}")
+        objs += place(B["X14_ARCH_Torchere_Lamp"], (0.9 + i * 3, 5.4, 0), 0, f".tl{i}")
+        objs += place(B["X14_ARCH_Wall_Sconce"], (1.5 + i * 3, D, 2.32), math.pi, f".sc{i}")
+    cub_x = [1.8, 4.5, 7.2]
+    for c, cx in enumerate(cub_x):
+        objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Chair_{c+1:02d}", (cx, 4.4, 0), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx - 1.0, 5.6, 0), (0, 0, 0)))
+        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.4, 3.5, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.5, 3.75, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.6, 3.75, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_PedestalFan_{c+1:02d}", (cx + 1.1, 5.4, 0), (0, 0, 0)))
+    objs.append(empty("SOCKET_I09_WallClock_01", (4.5, 0.03, 2.4), (0, 0, 0)))
+    objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
+    return "X14_DEMO_LRS_Room_1953", objs
+
+
 # =============================================================================== export
 def export_glb(name, objs, path):
     bpy.ops.object.select_all(action="DESELECT")
@@ -1068,6 +1297,12 @@ MODULES = [
     ("X14_PART_DropCeiling_120", build_drop_ceiling),
     ("X14_PART_Fluorescent_120", build_fluorescent),
     ("X14_PART_Sign_Door", build_sign),
+    ("X14_PART_Panel_Wood_090", lambda M: build_wood_panel(M, WPART_W)),
+    ("X14_PART_Panel_Wood_060", lambda M: build_wood_panel(M, 0.60)),
+    ("X14_PART_Door_Wood_090", build_wood_door),
+    ("X14_ARCH_Torchere_Lamp", build_torchere),
+    ("X14_ARCH_Wall_Sconce", build_sconce),
+    ("X14_ARCH_Ceiling_Coffered_300", build_ceiling_coffered),
 ]
 
 
@@ -1194,11 +1429,12 @@ def main():
             "materials": sorted({s.material.name for o in objs if o.type == "MESH" for s in o.material_slots if s.material}),
         }
         print("exported", path)
-    n, objs = build_demo(M, built)
-    path = os.path.join(OUT, f"{n}.glb")
-    export_glb(n, objs, path)
-    manifest["modules"][n] = {"file": os.path.basename(path), "objects": len(objs), "note": "assembly of kit instances + I09 sockets"}
-    print("exported", path)
+    for demo_fn in (build_demo, build_demo_1953):
+        n, objs = demo_fn(M, built)
+        path = os.path.join(OUT, f"{n}.glb")
+        export_glb(n, objs, path)
+        manifest["modules"][n] = {"file": os.path.basename(path), "objects": len(objs), "note": "assembly of kit instances + I09 sockets"}
+        print("exported", path)
     with open(os.path.join(OUT, "BUILD_MANIFEST.json"), "w") as f:
         json.dump(manifest, f, indent=2)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "DC-X14_kit.blend"))

@@ -3,32 +3,199 @@
   "units": "metres in Blender/glTF; UE 5.8 glTF import converts to centimetres (1 m = 100 UU)",
   "axes": "+X along the module run, interior/room side +Y, Z up; pivot at the module's own base (z = 0) on its left end",
   "import_path_suggestion": "/Game/LibraryOfCongress1963/Interiors/X14_StaffOffices/",
-  "seeds": {"generator_seed": 1963, "textures": "deterministic numpy RNG seeded 1963"},
+  "seeds": {
+    "generator_seed": 1963,
+    "textures": "deterministic numpy RNG seeded 1963"
+  },
   "typed_slots": {
     "ARCH (1897 shell, ITS ALIVE WD + plaster)": {
-      "X14_ARCH_Wall_Plain_300": {"run": 3.0, "thickness": 0.30, "height": 4.60, "sockets": ["SOCKET_X14_WallPrev (0,0,0)", "SOCKET_X14_WallNext (3,0,0)"]},
-      "X14_ARCH_Wall_Window_300": {"run": 3.0, "thickness": 0.60, "height": 4.60, "opening": "arched 1.50 w × (0.90 sill + 2.45 rect + 0.75 arch)", "sockets": ["SOCKET_X14_WallPrev", "SOCKET_X14_WallNext", "SOCKET_X14_WindowCentre (1.5,0,0.9)"], "placement": "outer walls only; interior face on y=0 like the plain wall, extra thickness goes outward"},
-      "X14_ARCH_Wall_Door_300": {"run": 3.0, "thickness": 0.30, "height": 4.60, "opening": "1.10 × 2.60 door + 0.40 transom", "pivots": ["PIVOT_X14_DoorHinge at (0.998, -0.16, 0.01); leaf children rotate about local Z, open into -Y (away from the room) up to 100°"], "sockets": ["SOCKET_X14_WallPrev", "SOCKET_X14_WallNext", "SOCKET_X14_DoorSign (2.3, 0, 1.55) — plate hangs on the room face, latch side"]},
-      "X14_ARCH_Corner": {"footprint": "[-0.3,0]×[-0.3,0]", "placement": "at each inside corner point, rotated to fill the outside notch; wall trims form the inside mitre automatically"},
-      "X14_ARCH_Floor_300": {"tile": "3 × 3 m", "variants": ["_Linoleum"], "placement": "grid at z = 0 (geometry is −0.05..0 in the mesh and offset +0.05 so the walking surface is z = 0)"},
-      "X14_ARCH_Ceiling_300": {"tile": "3 × 3 m", "placement": "z = 4.60", "sockets": ["SOCKET_X14_Pendant (1.5,1.5,0) rotated 180° about X — hang the pendant with its canopy here"]},
-      "X14_ARCH_Pendant_Lamp": {"drop": 1.10, "placement": "at SOCKET_X14_Pendant; module geometry has the bowl at z=0..0.2 and the canopy at z=1.1, so place at ceiling z − 1.10 unrotated"}
+      "X14_ARCH_Wall_Plain_300": {
+        "run": 3.0,
+        "thickness": 0.3,
+        "height": 4.6,
+        "sockets": [
+          "SOCKET_X14_WallPrev (0,0,0)",
+          "SOCKET_X14_WallNext (3,0,0)"
+        ]
+      },
+      "X14_ARCH_Wall_Window_300": {
+        "run": 3.0,
+        "thickness": 0.6,
+        "height": 4.6,
+        "opening": "arched 1.50 w × (0.90 sill + 2.45 rect + 0.75 arch)",
+        "sockets": [
+          "SOCKET_X14_WallPrev",
+          "SOCKET_X14_WallNext",
+          "SOCKET_X14_WindowCentre (1.5,0,0.9)"
+        ],
+        "placement": "outer walls only; interior face on y=0 like the plain wall, extra thickness goes outward"
+      },
+      "X14_ARCH_Wall_Door_300": {
+        "run": 3.0,
+        "thickness": 0.3,
+        "height": 4.6,
+        "opening": "1.10 × 2.60 door + 0.40 transom",
+        "pivots": [
+          "PIVOT_X14_DoorHinge at (0.998, -0.16, 0.01); leaf children rotate about local Z, open into -Y (away from the room) up to 100°"
+        ],
+        "sockets": [
+          "SOCKET_X14_WallPrev",
+          "SOCKET_X14_WallNext",
+          "SOCKET_X14_DoorSign (2.3, 0, 1.55) — plate hangs on the room face, latch side"
+        ]
+      },
+      "X14_ARCH_Corner": {
+        "footprint": "[-0.3,0]×[-0.3,0]",
+        "placement": "at each inside corner point, rotated to fill the outside notch; wall trims form the inside mitre automatically"
+      },
+      "X14_ARCH_Floor_300": {
+        "tile": "3 × 3 m",
+        "variants": [
+          "_Linoleum"
+        ],
+        "placement": "grid at z = 0 (geometry is −0.05..0 in the mesh and offset +0.05 so the walking surface is z = 0)"
+      },
+      "X14_ARCH_Ceiling_300": {
+        "tile": "3 × 3 m",
+        "placement": "z = 4.60",
+        "sockets": [
+          "SOCKET_X14_Pendant (1.5,1.5,0) rotated 180° about X — hang the pendant with its canopy here"
+        ]
+      },
+      "X14_ARCH_Pendant_Lamp": {
+        "drop": 1.1,
+        "placement": "at SOCKET_X14_Pendant; module geometry has the bowl at z=0..0.2 and the canopy at z=1.1, so place at ceiling z − 1.10 unrotated"
+      }
     },
     "PART (1950s–60s temporary overlay)": {
-      "X14_PART_Panel_Solid_120": {"run": 1.20, "height": 2.13, "sockets": ["SOCKET_X14_PartPrev", "SOCKET_X14_PartNext (1.2,0,0)"]},
-      "X14_PART_Panel_Solid_060": {"run": 0.60, "note": "filler so runs can hit 0.3 m increments"},
-      "X14_PART_Panel_Glazed_120": {"run": 1.20, "glazing": "clear, 1.26–2.03 m", "sockets": ["SOCKET_X14_PartPrev", "SOCKET_X14_PartNext"]},
-      "X14_PART_Door_090": {"run": 0.90, "pivots": ["PIVOT_X14_PartDoorHinge at (0.052, 0, 0.012); leaf opens ±100°"], "sockets": ["SOCKET_X14_PartPrev", "SOCKET_X14_PartNext (0.9,0,0)", "SOCKET_X14_DoorSign (0.45, 0.027, 1.75)"]},
-      "X14_PART_Post": {"placement": "centred on every panel joint, corner and run end; panels butt at the post centre line"},
-      "X14_PART_DropCeiling_120": {"tile": "1.2 × 1.2 m (4 × 0.6 m tiles)", "placement": "grid at z = 2.75 (DROP_Z); hanger wires reach 0.5 m above", "sockets": ["SOCKET_X14_Fixture (0.6,0.6,0) rotated 180° about X"]},
-      "X14_PART_Fluorescent_120": {"length": 1.22, "placement": "fixture base at DROP_Z − 0.62 (chains reach the grid underside)", "states": {"lit": "MI_X14_FluorTube_Lit emissive 6.0", "unlit": "swap the Tubes object material to MI_X14_Glass_Clear or set emissive 0 — no separate mesh needed"}},
-      "X14_PART_Sign_Door": {"size": "0.42 × 0.14 m", "placement": "at SOCKET_X14_DoorSign, plate on y=0 facing +Y"}
+      "X14_PART_Panel_Solid_120": {
+        "run": 1.2,
+        "height": 2.13,
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext (1.2,0,0)"
+        ]
+      },
+      "X14_PART_Panel_Solid_060": {
+        "run": 0.6,
+        "note": "filler so runs can hit 0.3 m increments"
+      },
+      "X14_PART_Panel_Glazed_120": {
+        "run": 1.2,
+        "glazing": "clear, 1.26–2.03 m",
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext"
+        ]
+      },
+      "X14_PART_Door_090": {
+        "run": 0.9,
+        "pivots": [
+          "PIVOT_X14_PartDoorHinge at (0.052, 0, 0.012); leaf opens ±100°"
+        ],
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext (0.9,0,0)",
+          "SOCKET_X14_DoorSign (0.45, 0.027, 1.75)"
+        ]
+      },
+      "X14_PART_Post": {
+        "placement": "centred on every panel joint, corner and run end; panels butt at the post centre line"
+      },
+      "X14_PART_DropCeiling_120": {
+        "tile": "1.2 × 1.2 m (4 × 0.6 m tiles)",
+        "placement": "grid at z = 2.75 (DROP_Z); hanger wires reach 0.5 m above",
+        "sockets": [
+          "SOCKET_X14_Fixture (0.6,0.6,0) rotated 180° about X"
+        ]
+      },
+      "X14_PART_Fluorescent_120": {
+        "length": 1.22,
+        "placement": "fixture base at DROP_Z − 0.62 (chains reach the grid underside)",
+        "states": {
+          "lit": "MI_X14_FluorTube_Lit emissive 6.0",
+          "unlit": "swap the Tubes object material to MI_X14_Glass_Clear or set emissive 0 — no separate mesh needed"
+        }
+      },
+      "X14_PART_Sign_Door": {
+        "size": "0.42 × 0.14 m",
+        "placement": "at SOCKET_X14_DoorSign, plate on y=0 facing +Y"
+      }
     },
-    "FURNITURE sockets (consumed by DC-I09)": ["SOCKET_I09_Desk_NN (desk centre, forward = local +Y)", "SOCKET_I09_Chair_NN", "SOCKET_I09_FileCabinet_NN", "SOCKET_I09_Typewriter_NN (z 0.75)", "SOCKET_I09_DeskLamp_NN (z 0.75)", "SOCKET_I09_Telephone_NN (z 0.75)", "SOCKET_I09_WallClock_01 (z 2.4 on the wall)"],
-    "INTEGRATION sockets": ["SOCKET_X15_StaffAccess_Door — the room's corridor door for X15 staff/back-of-house routing"]
+    "FURNITURE sockets (consumed by DC-I09)": [
+      "SOCKET_I09_Desk_NN (desk centre, forward = local +Y)",
+      "SOCKET_I09_Chair_NN",
+      "SOCKET_I09_FileCabinet_NN",
+      "SOCKET_I09_Typewriter_NN (z 0.75)",
+      "SOCKET_I09_DeskLamp_NN (z 0.75)",
+      "SOCKET_I09_Telephone_NN (z 0.75)",
+      "SOCKET_I09_WallClock_01 (z 2.4 on the wall)"
+    ],
+    "INTEGRATION sockets": [
+      "SOCKET_X15_StaffAccess_Door — the room's corridor door for X15 staff/back-of-house routing"
+    ],
+    "PART_WOOD (1953 condition, v002)": {
+      "X14_PART_Panel_Wood_090": {
+        "run": 0.9,
+        "height": 1.95,
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext (0.9,0,0)"
+        ],
+        "note": "60 mm end posts included; panels butt post-to-post, no separate joint post needed"
+      },
+      "X14_PART_Panel_Wood_060": {
+        "run": 0.6,
+        "note": "filler"
+      },
+      "X14_PART_Door_Wood_090": {
+        "run": 0.9,
+        "pivots": [
+          "PIVOT_X14_WoodDoorHinge at (0.062, 0, 0.012); leaf opens ±100°"
+        ],
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext"
+        ]
+      },
+      "X14_ARCH_Torchere_Lamp": {
+        "footprint": "0.32 m dia base",
+        "height": 1.76,
+        "placement": "free-standing on the floor; opal bowl emissive 1.5"
+      },
+      "X14_ARCH_Wall_Sconce": {
+        "placement": "pivot at the bottom of the backplate on the wall face (y=0), arm into the room (+Y); mount at z ≈ 2.32 m",
+        "size": "0.10 w × 0.20 h, projects 0.28 m"
+      },
+      "X14_ARCH_Ceiling_Coffered_300": {
+        "tile": "3 × 3 m",
+        "placement": "z = ROOM_H − 0.30 (pivot on the beam underside; coffer soffits at ROOM_H)",
+        "sockets": [
+          "SOCKET_X14_Pendant (1.5,1.5,0) rotated 180° about X"
+        ]
+      }
+    }
   },
-  "demo_assembly": {"file": "X14_DEMO_LRS_Room.glb", "room": "9 × 6 × 4.6 m, windows on +X (east), door on −Y (south), 3 cubicles behind a 1.8 m corridor", "layout_status": "FICTIONALISED (plausible per E4/E12/E18; not a documented 1963 plan)"},
+  "demo_assembly": {
+    "file": "X14_DEMO_LRS_Room.glb",
+    "room": "9 × 6 × 4.6 m, windows on +X (east), door on −Y (south), 3 cubicles behind a 1.8 m corridor",
+    "layout_status": "FICTIONALISED (plausible per E4/E12/E18; not a documented 1963 plan)"
+  },
   "collision": "UCX_<module>_NN convex boxes per module; door leaves have their own UCX in the closed pose",
-  "lods": {"LOD0": "full mouldings, muntins, hardware", "LOD1": "no picture rail / muntins / hardware", "LOD2": "slab + openings only"},
-  "pcg_rules": ["walls snap WallNext→WallPrev in 3.0 m steps", "partitions snap PartNext→PartPrev in 1.2/0.9/0.6 m steps with a Post at each joint", "drop-ceiling grid is independent of the 3 m architectural grid (1.2 m) and may stop short of walls by up to 0.6 m (1960s practice: perimeter soffit filler not modelled — see uncertainties)"]
+  "lods": {
+    "LOD0": "full mouldings, muntins, hardware",
+    "LOD1": "no picture rail / muntins / hardware",
+    "LOD2": "slab + openings only",
+    "note_v002": "wood partitions: LOD0 beads, LOD1 rails + panels, LOD2 same (already low); coffered ceiling: LOD0 rosettes + coves, LOD1 coves, LOD2 beams + panels only"
+  },
+  "pcg_rules": [
+    "walls snap WallNext→WallPrev in 3.0 m steps",
+    "partitions snap PartNext→PartPrev in 1.2/0.9/0.6 m steps with a Post at each joint",
+    "drop-ceiling grid is independent of the 3 m architectural grid (1.2 m) and may stop short of walls by up to 0.6 m (1960s practice: perimeter soffit filler not modelled — see uncertainties)"
+  ],
+  "demo_assembly_1953": {
+    "file": "X14_DEMO_LRS_Room_1953.glb",
+    "room": "same 9 × 6 × 4.6 m shell; wood partitions, coffered ceilings, 6 pendants, 3 torchères, 3 sconces, linoleum",
+    "layout_status": "FICTIONALISED layout; construction per E19/E20"
+  }
 }
