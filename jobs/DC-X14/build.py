@@ -539,7 +539,7 @@ def build_wall_window(M):
         bm.from_mesh(ob.data)
         wall_trims(bm, lod, rail_gaps=[(x0 - 0.001, x0 + WIN_W + 0.001)])
         # Marble sill: through the reveal, 50 mm proud into the room, 40 mm thick.
-        box(bm, x0 - 0.04, -thick, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL + 0.006, 2)
+        box(bm, x0 - 0.04, -thick + 0.01, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL + 0.006, 2)
         # Window frame set 0.42 m back from the room face in the reveal.
         fy = -0.42
         fd = 0.06  # frame depth (y)
