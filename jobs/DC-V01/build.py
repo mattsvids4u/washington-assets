@@ -1078,7 +1078,7 @@ def side_details(panels):
             n0 = len(tbm.verts)
             tbm.from_mesh(p_.data)
             tbm.verts.ensure_lookup_table()
-            bmesh.ops.transform(tbm, matrix=p_.matrix_world, verts=tbm.verts[n0:])
+            bmesh.ops.transform(tbm, matrix=Matrix.Translation(p_.location), verts=tbm.verts[n0:])   # matrix_world is stale before a depsgraph update
     body = new_obj("tmp_target", tbm, [M["MI_V01_Paint_Body"]])
     for side, tag in ((1, "L"), (-1, "R")):
         bm = bmesh.new()
