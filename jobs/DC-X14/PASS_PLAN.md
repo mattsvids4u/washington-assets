@@ -21,8 +21,8 @@ Plan 04 addendum). Furniture is DC-I09's (sockets only here). ITS ALIVE: WD + pl
   dropped ceilings, temporary light fixtures and gray partitions". GGR Division in the east
   corridor of the first floor. See EVIDENCE.md for every record and its date/rights.
 - Photo record: "Employees of the Legislative Reference Service at their desks", Sept 1953,
-  LoC Photoduplication Service, loc.gov/item/2009631159 (catalog located; image NOT inspected,
-  see Uncertainties).
+  LoC Photoduplication Service, loc.gov/item/2009631159 (150 px thumbnail inspected via Matt's
+  Drive upload; full resolution still wanted).
 - Moodbook pages 10–12 (text read via Drive connector; image pages not viewable in sandbox).
 
 ## Measurable deliverable
@@ -50,11 +50,15 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
    "History and Government Division"; (d) coplanar post/cap faces z-fought → posts inset;
    (e) sign letters faced into the wall → rotated; (f) 0.6 m filler panel added so the 9 m demo
    run closes exactly; (g) corner module reduced to a notch filler (wall trims mitre by union).
-3. Verify — **IN PROGRESS.** QA: 17/17 GLBs PASS after each iteration. Renders: full module
-   orbit set + 9 interior views being produced; self-review in HANDOFF.md. Clean rebuild:
-   isolated rebuild compared by SHA-256 (result recorded in HANDOFF.md).
-4. Deliver — NEXT: `deliveries/DC-X14/asset-v001/`, branch `asset/DC-X14-v001`, PR, Drive
-   Incoming Deliveries folder `DC-X14 — asset — v001`.
+3. Verify — **DONE 2026-10-02.** QA: 17/17 GLBs PASS. Renders: 128 module orbit images +
+   9 interior views, every one looked at; six defects found and fixed (list in HANDOFF.md render
+   review), then re-rendered. Clean rebuild: `out/` deleted and rebuilt, QA PASS, all 17 GLBs and
+   22 textures byte-identical to the packaged set.
+4. Deliver — **DONE 2026-10-02.** `deliveries/DC-X14/asset-v001/` (193 files, DELIVERY_MANIFEST +
+   SHA256SUMS), branches `claude/eager-cray-vpg2j3` (PR #1) and `asset/DC-X14-v001`, Drive
+   Incoming Deliveries folder `DC-X14 — asset — v001` (12zNk-c-3YVCSfuQgys4T8SxVHwQvpU5L) with
+   the text files, RENDER_INDEX and PAYLOAD_LINK (GLBs/PNGs exceed the connector's upload limit).
+   Next pass (v002) only on Matt's review.
 
 ## Acceptance checks
 
