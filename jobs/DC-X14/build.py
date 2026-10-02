@@ -539,7 +539,7 @@ def build_wall_window(M):
         bm.from_mesh(ob.data)
         wall_trims(bm, lod, rail_gaps=[(x0 - 0.001, x0 + WIN_W + 0.001)])
         # Marble sill: through the reveal, 50 mm proud into the room, 40 mm thick.
-        box(bm, x0 - 0.04, -thick, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL, 2)
+        box(bm, x0 - 0.04, -thick, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL + 0.006, 2)
         # Window frame set 0.42 m back from the room face in the reveal.
         fy = -0.42
         fd = 0.06  # frame depth (y)
@@ -790,7 +790,7 @@ def build_pendant(M):
         bm = new_bm()
         # canopy at top (z = drop), chain, bowl at bottom (z ~ 0..0.18)
         cylinder(bm, 0, 0, drop - 0.03, drop, 0.06, 16 if lod == 0 else 8, mat=0)
-        cylinder(bm, 0, 0, 0.20, drop - 0.03, 0.006, 6, mat=0)
+        cylinder(bm, 0, 0, 0.19, drop - 0.02, 0.006, 6, mat=0)
         if lod == 0:
             for i in range(10):
                 z = 0.25 + i * 0.08
@@ -830,8 +830,8 @@ def partition_frame(bm, w, lod, mat_paint, glazed=False, door=False):
     else:
         box(bm, 0, -t / 2 - 0.015, 0, w, t / 2 + 0.015, PART_BASE_H, mat_paint)     # base channel
     box(bm, 0, -t / 2 - 0.01, PART_H - 0.04, w, t / 2 + 0.01, PART_H, mat_paint)   # top cap
-    box(bm, 0, -t / 2, 0, POST_W, t / 2, PART_H, mat_paint)
-    box(bm, w - POST_W, -t / 2, 0, w, t / 2, PART_H, mat_paint)
+    box(bm, 0, -t / 2, 0.004, POST_W, t / 2, PART_H - 0.004, mat_paint)
+    box(bm, w - POST_W, -t / 2, 0.004, w, t / 2, PART_H - 0.004, mat_paint)
     if door:
         return
     if glazed:
@@ -913,10 +913,9 @@ def build_part_post(M):
     objs = []
     for lod in range(3):
         bm = new_bm()
-        box(bm, -POST_W / 2, -POST_W / 2, 0, POST_W / 2, POST_W / 2, PART_H, 0)
+        box(bm, -POST_W / 2, -POST_W / 2, 0.004, POST_W / 2, POST_W / 2, PART_H - 0.004, 0)
         box(bm, -0.09, -0.09, 0, 0.09, 0.09, 0.012, 0)
-        if lod == 0:
-            box(bm, -POST_W / 2 - 0.004, -POST_W / 2 - 0.004, PART_H - 0.04, POST_W / 2 + 0.004, POST_W / 2 + 0.004, PART_H, 0)
+        box(bm, -POST_W / 2 - 0.004, -POST_W / 2 - 0.004, PART_H - 0.04, POST_W / 2 + 0.004, POST_W / 2 + 0.004, PART_H, 0)
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["part"]]))
     objs += ucx_boxes(name, [(-0.09, -0.09, 0, 0.09, 0.09, PART_H)], M)
     return name, objs
@@ -1004,8 +1003,8 @@ def build_sign(M):
                 cu.extrude = 0.0015
                 to = bpy.data.objects.new("txt", cu)
                 bpy.context.scene.collection.objects.link(to)
-                to.location = (0, pt, z)
-                to.rotation_euler = (math.pi / 2, 0, 0)
+                to.location = (0, pt + 0.0015, z)
+                to.rotation_euler = (math.pi / 2, 0, math.pi)
                 bpy.ops.object.select_all(action="DESELECT")
                 to.select_set(True)
                 bpy.context.view_layer.objects.active = to
