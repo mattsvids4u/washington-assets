@@ -76,6 +76,17 @@ through the glass, MP/DC roof letters, single red beacon, POLICE trunk marking, 
   moved aft; door glass parenting, decal orientation, plate text, glyph rotation fixed).
 - 2026-10-02 11:10Z Pass 3 verify: QA 445/445 + 375/375, clean rebuild byte-identical, clay +
   textured + top + posed renders reviewed against E1 and moodbook p.10–12. Delivered as asset-v001.
+  v002 (Pass 4) delivered 2026-10-02 — see below.
+- 2026-10-02 14:15–15:40Z **Pass 4 (asset-v002) — realism, fine bevelling, grounding** (Matt:
+  "do another realism and geometry pass. fine beveling and grounding"):
+  rolled 3.5 mm bevels on every body panel edge and aperture flange, 4 mm bevels on hard-surface
+  props; tyres with three tread grooves, a 1 cm loaded deflection and a flat contact patch with
+  sidewall bulge; underbody (exhaust, muffler, driveshaft, axle + differential, leaf springs, fuel
+  tank, cross-member, control arms, front/rear valance pans) and a dark undercoat floor pan so the
+  car reads grounded from kerb height; door armrests; slightly more convex door skins. Defects found
+  by new close-up renders and fixed: radiator support poking through the hood lip (shipped unnoticed
+  in v001's final GLB), floating rocker strip (v001 too), mirrored door-seal text, chrome-plug
+  headlamps. Determinism regression (bevelled plate UVs) found and fixed; sliver-face cleanup added.
 - Next pass (after Matt's review): identity correction if the 1963 make is established; body
-  side sculpting (side spear / fender character line), engine-bay and trunk dressing, siren and
-  spotlight, DPD livery layer for V07, lit beacon state as a material switch in UE.
+  side sculpting (side spear / fender character line), trunk dressing, siren and spotlight, DPD
+  livery layer for V07, lit beacon state as a material switch in UE.

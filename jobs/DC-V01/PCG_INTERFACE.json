@@ -3,7 +3,7 @@
   "asset": "SM_V01_PatrolSedan_MPDC",
   "units": "centimetres in this file; GLB is authored in metres (Unreal import = cm)",
   "axes": {"forward": "-Y (nose)", "driver_side": "+X (left-hand drive)", "up": "+Z", "ground": "Z = 0 at tyre contact"},
-  "footprint_cm": {"length_over_bumpers": 546.0, "body_length": 533.0, "width_body": 207.0, "width_over_mirror": 217.5, "height_roof": 141.0, "height_antenna_tip": 189.0, "wheelbase": 302.0, "tread_front": 155.0, "tread_rear": 152.0, "tyre_od": 71.0, "ground_clearance_floor": 22.0},
+  "footprint_cm": {"length_over_bumpers": 546.0, "body_length": 533.0, "width_body": 207.0, "width_over_mirror": 217.5, "height_roof": 141.0, "height_antenna_tip": 189.0, "wheelbase": 302.0, "tread_front": 155.0, "tread_rear": 152.0, "tyre_od": 71.0, "ground_clearance_floor": 22.0, "ground_clearance_underbody_lowest": 12.0},
   "root_pivot": {"location": [0, 0, 0], "note": "origin on the ground plane at the wheelbase midpoint; axle centres at y = -151 / +151"},
   "hinges": {
     "DOOR_FL": {"origin": [97, -46, 62], "axis": "Z", "open_sign": -1, "max_deg": 65},
@@ -14,12 +14,14 @@
     "TRUNK": {"origin": [0, 162, 96], "axis": "X", "open_sign": 1, "max_deg": 70}
   },
   "wheels": {
-    "STEER_FL": {"location": [77.5, -151, 35.5], "child": "WHEEL_FL", "steer_axis": "Z", "max_steer_deg": 32},
-    "STEER_FR": {"location": [-77.5, -151, 35.5], "child": "WHEEL_FR", "steer_axis": "Z", "max_steer_deg": 32},
-    "WHEEL_RL": {"location": [76, 151, 35.5]},
-    "WHEEL_RR": {"location": [-76, 151, 35.5]},
+    "STEER_FL": {"location": [77.5, -151, 34.5], "child": "WHEEL_FL", "steer_axis": "Z", "max_steer_deg": 32},
+    "STEER_FR": {"location": [-77.5, -151, 34.5], "child": "WHEEL_FR", "steer_axis": "Z", "max_steer_deg": 32},
+    "WHEEL_RL": {"location": [76, 151, 34.5]},
+    "WHEEL_RR": {"location": [-76, 151, 34.5]},
     "spin_axis": "X (wheel local)",
     "radius_cm": 35.5,
+    "loaded_deflection_cm": 1.0,
+    "note": "hub height = 34.5 cm (loaded); tyre mesh has a flat contact patch at Z = 0 — a UE wheeled-vehicle setup should use radius 35.5 and let suspension settle, or 34.5 for a static placement",
     "suspension_travel_cm_suggested": {"front": 9, "rear": 8}
   },
   "sockets": {
@@ -41,6 +43,7 @@
     "beacon": {"unlit": "MI_V01_Beacon_Red_Unlit", "lit": "MI_V01_Beacon_Red_Lit (emissive, defined in build.py)"}
   },
   "lods": {"LOD0": "full", "LOD1": "decimate 0.45 on parts > 300 faces", "LOD2": "decimate 0.18 on parts > 1500 faces", "naming": "<NODE>_LOD1 / <NODE>_LOD2 siblings with identical transforms"},
+  "underbody_nodes": ["UNDER_EXHAUST_DRIVELINE", "UNDER_AXLES_TANK (axle, differential, leaf springs, tank, cross-member, control arms, valance pans)"],
   "collision": ["UCX_BODY_01 (lower body)", "UCX_BODY_02 (cabin prism)", "UCX_BODY_03 (front bumper)", "UCX_BODY_04 (rear bumper)"],
   "pcg": {
     "placement": "ambient / escort / parked vehicle on DC-R04 lanes; parking-legal kerbs only (R04 rules)",

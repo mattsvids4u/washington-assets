@@ -27,6 +27,7 @@ PREVIEW = "--preview" in sys.argv
 WHEELBASE = 302.0          # 119 in
 TREAD_F, TREAD_R = 155.0, 152.0
 TYRE_OD, TYRE_W = 71.0, 19.0
+TYRE_SAG = 1.0             # loaded-tyre deflection: hub height = OD/2 - SAG, flat contact patch
 RIM_D = 35.6               # 14 in
 AXLE_F, AXLE_R = -151.0, 151.0
 NOSE, TAIL = -240.0, 278.0  # sheet-metal ends (bumpers add ~6 cm each)
@@ -106,6 +107,10 @@ def cleanup(obj, merge=0.0005):
     ngons = [f for f in bm.faces if len(f.verts) > 4]
     if ngons:
         bmesh.ops.triangulate(bm, faces=ngons)
+    bmesh.ops.triangulate(bm, faces=bm.faces, quad_method="BEAUTY", ngon_method="BEAUTY")
+    slivers = [f for f in bm.faces if f.calc_area() < 2e-10]   # zero-area triangles (QA threshold 1e-10)
+    if slivers:
+        bmesh.ops.delete(bm, geom=slivers, context="FACES")
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     bm.to_mesh(obj.data)
     bm.free()
@@ -380,13 +385,13 @@ def make_materials(images):
     material("MI_V01_Glass", (0.80, 0.86, 0.86), roughness=0.03, alpha=0.22, transmission=0.9, ior=1.5)  # GL
     material("MI_V01_Lens_Red", (0.75, 0.04, 0.03), roughness=0.08, alpha=0.75, transmission=0.4, ior=1.5)
     material("MI_V01_Lens_Clear", (0.95, 0.95, 0.9), roughness=0.08, alpha=0.6, transmission=0.6, ior=1.5)
-    material("MI_V01_Headlamp", (0.85, 0.85, 0.82), roughness=0.15, metallic=0.8)
+    material("MI_V01_Headlamp", (0.92, 0.93, 0.90), roughness=0.22, metallic=0.3, specular=1.0, alpha=0.9, transmission=0.25, ior=1.5)
     material("MI_V01_Rubber_Tyre", (0.04, 0.04, 0.04), roughness=0.85)
     material("MI_V01_Whitewall", (0.86, 0.86, 0.82), roughness=0.75)
     material("MI_V01_Interior_Trim", (0.52, 0.47, 0.38), roughness=0.8)                   # headliner/door cards
     material("MI_V01_Interior_Vinyl", (0.36, 0.30, 0.22), roughness=0.6)                  # seats
     material("MI_V01_Interior_Dark", (0.08, 0.08, 0.08), roughness=0.7)                   # dash/column/floor
-    material("MI_V01_Undercoat", (0.05, 0.05, 0.05), roughness=0.95)                      # wells, gaps, underside
+    material("MI_V01_Undercoat", (0.11, 0.11, 0.105), roughness=0.95)                      # wells, gaps, underside
     material("MI_V01_Grille_Dark", (0.06, 0.06, 0.07), roughness=0.6, metallic=0.3)
     material("MI_V01_Beacon_Red_Unlit", (0.70, 0.05, 0.05), roughness=0.1, alpha=0.8, transmission=0.3, ior=1.5)
     material("MI_V01_Beacon_Red_Lit", (0.9, 0.05, 0.05), roughness=0.1, alpha=0.9,
@@ -434,6 +439,8 @@ def make_textures():
     fs = ImageFont.truetype(BOLD, 44)
     def arc_text(text, r, a0, a1, flip=False):
         n = len(text)
+        if flip:
+            a0, a1 = a1, a0          # lower arc: place glyphs right-to-left in angle so the text reads left-to-right
         for i, ch in enumerate(text):
             a = math.radians(a0 + (a1 - a0) * (i + 0.5) / n)
             cx, cy = S / 2 + r * math.cos(a), S / 2 + r * math.sin(a)
@@ -503,7 +510,7 @@ K = {
     "x5":   [(NOSE, 88), (-225, 95), (-150, 98.5), (-70, 100.5), (0, 101.5), (120, 101.5), (160, 100.5), (240, 97), (TAIL, 90)],
     "z5":   [(NOSE, 81.5), (-225, 83.5), (-150, 85.5), (-70, 88.0), (0, 90.5), (158, 91.0), (240, 89.5), (TAIL, 86.5)],
     # side mid (slightly convex door skin)
-    "x6":   [(NOSE, 87), (-225, 94.5), (-150, 98), (-70, 100), (0, 101), (120, 101), (160, 100), (240, 96.5), (TAIL, 89)],
+    "x6":   [(NOSE, 87), (-225, 94.5), (-150, 98.5), (-70, 100.8), (0, 102.0), (120, 102.0), (160, 100.8), (240, 96.5), (TAIL, 89)],
     "z6":   [(NOSE, 64), (-70, 64), (0, 64), (TAIL, 64)],
     # lower side
     "x7":   [(NOSE, 84), (-225, 92), (-150, 95.5), (-70, 97.5), (0, 98.5), (120, 98.5), (160, 97.5), (240, 94), (TAIL, 86)],
@@ -584,12 +591,13 @@ def build_loft():
     me = obj.data
     for v in me.vertices:
         x, y, z = v.co
+        zw = min(1.0, max(0.0, (z - 0.30) / 0.15)); zw = zw * zw * (3 - 2 * zw)   # upper fender only
         if y < -2.10:
-            w = min(1.0, (-2.10 - y) / 0.30)
-            v.co.y -= 0.07 * w * (abs(x) / 0.90) ** 2
+            w = min(1.0, (-2.10 - y) / 0.30); w = w * w * (3 - 2 * w)
+            v.co.y -= 0.07 * w * zw * (abs(x) / 0.90) ** 2
         if y > 2.45:
-            w = min(1.0, (y - 2.45) / 0.33)
-            v.co.y += 0.04 * w * (abs(x) / 0.88) ** 2
+            w = min(1.0, (y - 2.45) / 0.33); w = w * w * (3 - 2 * w)
+            v.co.y += 0.04 * w * zw * (abs(x) / 0.88) ** 2
     return obj
 
 
@@ -778,6 +786,18 @@ def solidify(obj, inner_mat=1, rim_mat=0):
     apply_mod(obj, sol)
 
 
+def bevel(obj, width=0.004, segs=2, angle=50):
+    """Fine edge bevel (angle-limited, overlap-clamped) so hard edges catch light."""
+    b = obj.modifiers.new("bev", "BEVEL")
+    b.width = width
+    b.segments = segs
+    b.limit_method = "ANGLE"
+    b.angle_limit = math.radians(angle)
+    b.use_clamp_overlap = True
+    b.miter_outer = "MITER_ARC"
+    apply_mod(obj, b)
+
+
 # ----------------------------------------------------------------------------- apertures
 WIN_FRONT = [(-43, 97.5), (-15, 131.0), (45, 131.0), (45, 97.5)]
 WIN_REAR = [(58, 97.5), (58, 131.0), (112, 131.0), (120, 97.5)]
@@ -872,6 +892,15 @@ def cut_and_split(body):
         shrink_boundary(p, 0.0035)
         solidify(p, inner_mat=1 if name.startswith("DOOR") else 2, rim_mat=0)
     solidify(body, inner_mat=1, rim_mat=0)
+    # v002: rolled panel edges / flanged aperture rims (3.5 mm, 2 segments)
+    for p in list(panels.values()) + [body]:
+        bevel(p, width=0.0035, segs=2, angle=55)
+    # v002: the floor pan / underside reads as dark undercoat, not body colour
+    me = body.data
+    for poly in me.polygons:
+        c = poly.center
+        if c.z < 0.40 and poly.normal.z < -0.55:
+            poly.material_index = 2
     pivots = {"DOOR_FL": (97, -46, 62), "DOOR_FR": (-97, -46, 62), "DOOR_RL": (99, 53, 62), "DOOR_RR": (-99, 53, 62),
               "HOOD": (0, HOOD_Y1, 91), "TRUNK": (0, TRUNK_Y0, 96)}
     for name, p in panels.items():
@@ -1041,15 +1070,28 @@ def side_details(panels):
             bm_cylinder(bm, (x, y + 9, 85.2), "x", 1.1, -1.2, 1.8, segs=12)
     out.append(new_obj("DOOR_HANDLES", bm, [M["MI_V01_Chrome"]]))
     # rocker / lower body strip, following the body with a shrinkwrap
+    body = bpy.data.objects["BODY"]
     for side, tag in ((1, "L"), (-1, "R")):
         bm = bmesh.new()
         n = 40
-        y0, y1 = -215, 262
-        vs = [[bm.verts.new(V(side * 103, y0 + (y1 - y0) * i / n, z)) for i in range(n + 1)] for z in (37.0, 40.0)]
+        y0, y1 = -104, 104                               # rocker moulding between the wheel arches
+        vs = [[bm.verts.new(V(side * 110, y0 + (y1 - y0) * i / n, z)) for i in range(n + 1)] for z in (35.5, 39.5)]
         for i in range(n):
             bm.faces.new([vs[0][i], vs[0][i + 1], vs[1][i + 1], vs[1][i]])
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
         strip = new_obj(f"TRIM_ROCKER_{tag}", bm, [M["MI_V01_Chrome"]])
+        sw = strip.modifiers.new("sw", "SHRINKWRAP")
+        sw.wrap_method = "PROJECT"; sw.use_project_x = True
+        sw.use_negative_direction = side > 0; sw.use_positive_direction = side < 0
+        sw.target = body; sw.offset = 0.004
+        apply_mod(strip, sw)
+        sol = strip.modifiers.new("sol", "SOLIDIFY"); sol.thickness = 0.006; sol.offset = 1.0
+        apply_mod(strip, sol)
+        # keep the strip's outward face pointing +/-X
+        bmq = bmesh.new(); bmq.from_mesh(strip.data); bmq.normal_update()
+        if sum(f.normal.x * side for f in bmq.faces) < 0:
+            for f in bmq.faces: f.normal_flip()
+        bmq.to_mesh(strip.data); bmq.free()
         out.append(strip)
     # driver-side round mirror
     bm = bmesh.new()
@@ -1071,9 +1113,13 @@ def wheel(name, side, pivot):
     R, w = TYRE_OD / 2, TYRE_W / 2
     rr = RIM_D / 2
     # tyre: tread -> shoulder -> sidewall -> bead, both sides, closed torus
-    prof = [(R, -w + 2), (R, w - 2), (R - 1.5, w), (rr + 6, w - 0.8), (rr + 1, w - 3), (rr, w - 3),
-            (rr, -w + 3), (rr + 1, -w + 3), (rr + 6, -w + 0.8), (R - 1.5, -w)]
-    bm_revolve(bm, prof, "x", (0, 0, 0), segs=48, mat=0)
+    tread = [(R, -w + 2)]
+    for o in (-5.2, 0.0, 5.2):                      # three circumferential tread grooves
+        tread += [(R, o - 0.55), (R - 0.7, o - 0.3), (R - 0.7, o + 0.3), (R, o + 0.55)]
+    tread.append((R, w - 2))
+    prof = tread + [(R - 1.5, w), (rr + 6, w - 0.8), (rr + 1, w - 3), (rr, w - 3),
+                    (rr, -w + 3), (rr + 1, -w + 3), (rr + 6, -w + 0.8), (R - 1.5, -w)]
+    bm_revolve(bm, prof, "x", (0, 0, 0), segs=64, mat=0)
     tyre_faces = list(bm.faces)
     # whitewall band on the outboard sidewall
     ww = bmesh.new()
@@ -1094,6 +1140,13 @@ def wheel(name, side, pivot):
     cb = bmesh.new(); bm_revolve(cb, cap, "x", (0, 0, 0), segs=36, mat=3, close=False)
     tmp = bpy.data.meshes.new("tmp4"); cb.to_mesh(tmp); cb.free(); bm.from_mesh(tmp); bpy.data.meshes.remove(tmp)
     # fix material indices by mesh order: faces appended keep their index from each sub-bmesh
+    # contact patch: the loaded tyre flattens against the ground (hub sits TYRE_SAG below R)
+    for v in bm.verts:
+        zl = v.co.z * 100.0
+        if zl < -(R - TYRE_SAG):
+            depth = (-(R - TYRE_SAG) - zl) / TYRE_SAG
+            v.co.z = -(R - TYRE_SAG) / 100.0
+            v.co.y *= 1.0 + 0.012 * depth           # sidewall bulge at the patch
     obj = new_obj(name, bm, [M["MI_V01_Rubber_Tyre"], M["MI_V01_Whitewall"], M["MI_V01_Steel_Painted"], M["MI_V01_Chrome"]])
     obj.location = V(*pivot)
     return obj
@@ -1104,7 +1157,7 @@ def wheels():
     for y, tread in ((AXLE_F, TREAD_F), (AXLE_R, TREAD_R)):
         for side, tag in ((1, "L"), (-1, "R")):
             name = f"WHEEL_{'F' if y < 0 else 'R'}{tag}"
-            out[name] = wheel(name, side, (side * tread / 2, y, TYRE_OD / 2))
+            out[name] = wheel(name, side, (side * tread / 2, y, TYRE_OD / 2 - TYRE_SAG))
     return out
 
 
@@ -1195,14 +1248,14 @@ def interior():
     bm_box(bm, -34, -200, 36, 34, -120, 72)             # block
     bm_box(bm, -40, -150, 72, 40, -118, 80)             # valve covers / intake
     bm_revolve(bm, [(0.0, 80.0), (17.0, 80.0), (17.0, 88.0), (0.0, 88.0)], "z", (0, -140, 0), segs=28, close=False)  # air cleaner
-    bm_box(bm, -44, -232, 40, 44, -226, 84)             # radiator core
+    bm_box(bm, -44, -232, 40, 44, -226, 78)             # radiator core
     bm_box(bm, -70, -225, 32, 70, -200, 36)             # front cross-member
     bm_box(bm, -78, -236, 26, 78, -60, 30)              # engine-bay floor / splash pan
     objs.append(new_obj("INT_ENGINE_BAY", bm, [M["MI_V01_Interior_Dark"]]))
     bm = bmesh.new()
-    bm_box(bm, -60, -236, 26, 60, -228, 92)             # radiator support / inner fender wall (front)
-    bm_box(bm, -76, -230, 26, -72, -64, 86)             # inner fender walls
-    bm_box(bm, 72, -230, 26, 76, -64, 86)
+    bm_box(bm, -60, -234, 26, 60, -228, 79)             # radiator support (stays below the hood lip, z 84)
+    bm_box(bm, -74, -228, 26, -70, -64, 80)             # inner fender walls
+    bm_box(bm, 70, -228, 26, 74, -64, 80)
     objs.append(new_obj("INT_ENGINE_BAY_WALLS", bm, [M["MI_V01_Undercoat"]]))
     # sun visors + mirror
     bm = bmesh.new()
@@ -1211,6 +1264,54 @@ def interior():
     bm_box(bm, -11, -30, 118, 11, -29, 124)
     objs.append(new_obj("INT_VISORS", bm, [M["MI_V01_Interior_Trim"]]))
     # driver placeholder socket marker is an empty (added in sockets())
+    return objs
+
+
+# ----------------------------------------------------------------------------- underbody (v002)
+
+def underbody():
+    """Exhaust, muffler, driveshaft, rear axle + differential, leaf springs, fuel tank — so the car
+    reads grounded from kerb level and under the open hood/trunk. APPROXIMATE layout."""
+    objs = []
+    bm = bmesh.new()
+    px = -30.0                                           # exhaust runs on the passenger side
+    bm_cylinder(bm, (px, 0, 17.5), "y", 2.2, -118, 58, segs=14)      # head pipe
+    bm_revolve(bm, [(0.0, 60.0), (5.0, 61.0), (8.5, 66.0), (8.5, 124.0), (5.0, 129.0), (0.0, 130.0)], "y", (px, 0, 17.0), segs=20, close=False)  # muffler
+    bm_cylinder(bm, (px, 0, 17.5), "y", 2.2, 130, 262, segs=14)      # tailpipe
+    bm_cylinder(bm, (px, 262, 17.5), "y", 2.4, 0, 14, segs=14)       # tailpipe tip
+    bm_cylinder(bm, (0, 0, 28.0), "y", 3.5, -62, 138, segs=14)       # driveshaft
+    objs.append(new_obj("UNDER_EXHAUST_DRIVELINE", bm, [M["MI_V01_Steel_Painted"]]))
+    bm = bmesh.new()
+    bm_cylinder(bm, (0, AXLE_R, TYRE_OD / 2 - TYRE_SAG), "x", 4.2, -70, 70, segs=16)   # axle tubes
+    bm_revolve(bm, [(0.0, -14.0), (13.0, -12.0), (14.5, 0.0), (13.0, 12.0), (0.0, 14.0)], "y", (0, AXLE_R, TYRE_OD / 2 - TYRE_SAG), segs=20, close=False)  # differential
+    for sx in (-56, 56):
+        bm_box(bm, sx - 3, AXLE_R - 58, 27, sx + 3, AXLE_R + 58, 30.5)   # leaf springs
+        bm_box(bm, sx - 3.5, AXLE_R - 6, 26, sx + 3.5, AXLE_R + 6, 40)   # spring seats / U-bolts
+    bm_box(bm, -44, 196, 12, 44, 252, 22)                                 # fuel tank (behind the axle)
+    bm_box(bm, -90, NOSE - 8, 21, 90, NOSE + 16, 38)                      # front valance / gravel pan
+    bm_box(bm, -86, TAIL - 16, 21, 86, TAIL + 8, 38)                      # rear valance
+    bm_box(bm, -66, AXLE_F - 8, 28, 66, AXLE_F + 8, 36)                   # front cross-member
+    for sx in (-60, 60):
+        bm_box(bm, sx - 10, AXLE_F - 20, 24, sx + 10, AXLE_F + 20, 32)    # lower control arms (block-in)
+    objs.append(new_obj("UNDER_AXLES_TANK", bm, [M["MI_V01_Undercoat"]]))
+    return objs
+
+
+def armrests(panels):
+    """Door armrests, parented to each door so they swing with it."""
+    objs = []
+    for name, p in panels.items():
+        if not name.startswith("DOOR"):
+            continue
+        side = 1 if name.endswith("L") else -1
+        y0, y1 = (-20, 24) if "_F" in name else (62, 104)
+        xin = side * (band_x(97.5) - SHELL_T - 1.5)
+        bm = bmesh.new()
+        bm_box(bm, min(xin, xin - side * 7), y0, 62, max(xin, xin - side * 7), y1, 68)
+        o = new_obj(f"INT_ARMREST_{name[-2:]}", bm, [M["MI_V01_Interior_Vinyl"]])
+        o.parent = p
+        o.matrix_parent_inverse = Matrix.Translation(-p.location)
+        objs.append(o)
     return objs
 
 
@@ -1258,8 +1359,8 @@ def side_decal(name, y0, z0, y1, z1, side, mat, target, subdiv=20, offset=0.004)
     for f in bm.faces:
         for l in f.loops:
             co = l.vert.co
-            u = (co.y * 100 - y0) / (y1 - y0)
-            if side > 0:
+            u = (co.y * 100 - y0) / (y1 - y0)   # driver side (+X): reader's right is +Y (rear)
+            if side < 0:
                 u = 1 - u
             v = (co.z * 100 - z0) / (z1 - z0)
             l[uv].uv = (u, v)
@@ -1435,15 +1536,25 @@ def main():
     rear_end()
     chrome = bumpers() + side_details(panels)
     ws = wheels()
-    inte = interior()
+    inte = interior() + underbody() + armrests(panels)
     pol = police_layer(body, panels)
+    # v002 fine bevels on hard-surface props (edges that catch light)
+    for nm in ("GRILLE_BARS", "BUMPER_FRONT_GUARDS", "BUMPER_REAR_GUARDS", "DOOR_HANDLES", "INT_DASH", "INT_FLOOR",
+               "TRIM_REAR_PANEL", "TRIM_HOOD_FRONT", "INT_ENGINE_BAY", "INT_ENGINE_BAY_WALLS",
+               "POLICE_RADIO", "INT_VISORS", "UNDER_AXLES_TANK", "WIPERS", "INT_SEAT_FRONT", "INT_SEAT_REAR"):
+        o = bpy.data.objects.get(nm)
+        if o is not None:
+            bevel(o, width=0.004, segs=2, angle=40)
+    for o in bpy.context.scene.objects:
+        if o.name.startswith("INT_ARMREST"):
+            bevel(o, width=0.008, segs=3, angle=40)
 
     root = empty("SM_V01_PatrolSedan_MPDC", (0, 0, 0))
     for o in list(bpy.context.scene.objects):
         if o.type == "MESH" and o.parent is None and not o.name.startswith("WHEEL_"):
             o.parent = root
     for tag, side in (("L", 1), ("R", -1)):
-        st = empty(f"STEER_F{tag}", (side * TREAD_F / 2, AXLE_F, TYRE_OD / 2), root)
+        st = empty(f"STEER_F{tag}", (side * TREAD_F / 2, AXLE_F, TYRE_OD / 2 - TYRE_SAG), root)
         w = ws[f"WHEEL_F{tag}"]
         w.parent = st
         w.location = (0, 0, 0)

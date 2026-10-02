@@ -1,6 +1,6 @@
 {
   "job_id": "DC-V01",
-  "version": "asset-v001",
+  "version": "asset-v002",
   "claimant": "claude-cloud-agent",
   "context": {
     "brief": {"id": "1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4", "revision": "WASHINGTON-2026-09-22-v001"},
@@ -26,7 +26,7 @@
     "font": "DejaVuSans-Bold.ttf (decal text)",
     "generator": "jobs/DC-V01/build.py",
     "qa": "tools/qa_check.py",
-    "renders": "tools/render_views.py, tools/render_top.py, tools/render_pose.py",
+    "renders": "tools/render_views.py, tools/render_top.py, tools/render_pose.py, tools/render_detail.py",
     "export": "glTF 2.0 binary, metres, +Y up; Unreal 5.8 import converts to centimetres (1 m = 100 cm)"
   },
   "unreal": {

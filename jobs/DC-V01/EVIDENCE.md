@@ -62,3 +62,10 @@ Moodbook p.10 "design the vehicle as a whole": wheelbase, roof arc, window line,
 were set before trim; glass, chrome, rubber, paint and upholstery use distinct roughness/metallic
 values; doors, wheels and lights are separate nodes for motion. p.12 deliverables: clay silhouette,
 base-colour/textured views, front/profile/¾ supplied; in-engine motion test NOT_RUN.
+
+## v002 note (Pass 4, 2026-10-02)
+No new historical evidence; v002 is a geometry/realism pass on the same locked features. Added
+construction detail (panel-edge bevels, tread grooves, loaded tyre, underbody, valances, armrests)
+is generic 1960s full-size-sedan construction and is labelled APPROXIMATE, not sourced to a specific
+MPD vehicle. The E1 photo shows a thin bright rocker-level strip between the wheel arches, which the
+v002 rocker moulding now follows (v001's floated off the body).

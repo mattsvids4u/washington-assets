@@ -22,10 +22,10 @@ sc = bpy.context.scene
 sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = 32
 sc.render.resolution_x = 1000; sc.render.resolution_y = 1000
 world = bpy.data.worlds.new("W"); world.use_nodes = True
-world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.8
+world.node_tree.nodes["Background"].inputs["Strength"].default_value = 1.6 if bottom else 0.8
 sc.world = world
 sun = bpy.data.objects.new("Sun", bpy.data.lights.new("Sun", "SUN")); sun.data.energy = 3
-sun.rotation_euler = (math.radians(30), 0, math.radians(20)); sc.collection.objects.link(sun)
+sun.rotation_euler = (math.radians(150 if bottom else 30), 0, math.radians(20)); sc.collection.objects.link(sun)
 cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam")); cam.data.type = "ORTHO"
 cam.data.ortho_scale = max(hi - lo) * 1.1
 sc.collection.objects.link(cam); sc.camera = cam

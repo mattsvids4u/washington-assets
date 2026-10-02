@@ -1,9 +1,32 @@
-# DC-V01 — MPD patrol car 1963 — HANDOFF (asset-v001)
+# DC-V01 — MPD patrol car 1963 — HANDOFF (asset-v002)
 
 Claimant: claude-cloud-agent (AGENTS lane) · delivered 2026-10-02 · stage A (asset) · set DC-EXT1
 Brief WASHINGTON-2026-09-22-v001 · stage standard v001 · road-plans canon v002 · request doc
 1CGp5evRrPST1P3r5soqPHBGuvm9VatvnqqleL0stpU8 (incl. vehicle benchmark addendum, Matt 2026-09-26).
 **Not approved. Matt's review decides.** Delivery integrity and visual quality are separate.
+
+## What changed in asset-v002 (Pass 4 — "realism and geometry pass: fine beveling and grounding")
+- **Fine bevelling.** Every body panel edge, door/hood/trunk edge and aperture flange now carries a
+  rolled 3.5 mm two-segment bevel; grille bars, bumper guards, handles, dash, floor, trims, engine
+  bay, radio, visors, seats and underbody parts carry 4 mm bevels; armrests 8 mm. Edges catch
+  light instead of reading as razor-sharp CAD (moodbook p.10 "edges that catch light").
+- **Grounding.** Tyres now have three circumferential tread grooves, a 1 cm loaded deflection
+  (hubs at 34.5 cm) and a flat contact patch with a slight sidewall bulge, so the car sits on the
+  road instead of touching it at a tangent. A full underbody was added — exhaust and muffler,
+  driveshaft, live rear axle with differential, leaf springs, fuel tank, front cross-member and
+  control-arm block-ins, front and rear valance pans — and the floor pan reads as dark undercoat.
+  `renders/..._underside.png` and `..._detail_rear_wheel_kerb.png` show it.
+- **Realism fixes found by the new close-up renders** (`tools/render_detail.py`): the engine-bay
+  radiator support poked through the hood lip as a dark bar above the grille (this was in v001's
+  final GLB but not in its renders, which predated the engine bay — my miss); the rocker strip
+  floated 8 cm off the body (v001 too) and is now shrink-wrapped between the arches; door-seal
+  text was mirrored on the driver side; headlamps read as chrome plugs and are now glassy lenses;
+  door skins slightly more convex; door armrests added; smoother fender-tip blend.
+- **Determinism regression caught and fixed**: bevelling the licence-plate boxes produced
+  run-to-run UV differences; plates are no longer bevelled. Both GLBs again rebuild byte-identical
+  from a clean `out/`. A zero-area sliver on the body is now removed by the cleanup step.
+- Unchanged: identity (APPROXIMATE 1963 Ford-pattern sedan), hierarchy and socket names, decals,
+  MPD layer, LOD/UCX scheme. v001 remains frozen in `deliveries/DC-V01/asset-v001/`.
 
 ## What was built
 A complete 1963-setting Metropolitan Police (MPD) patrol sedan as a **whole vehicle**, generated
@@ -47,8 +70,10 @@ SM_V01_PatrolSedan_MPDC
   DOOR_RL / DOOR_RR  origin = hinge (±99,  53, 62) cm
   HOOD   origin = rear hinge line (0, −62, 91) cm        (rotate about X, negative = open)
   TRUNK  origin = front hinge line (0, 162, 96) cm       (rotate about X, positive = open)
-  STEER_FL / STEER_FR (±77.5, −151, 35.5) → WHEEL_FL / WHEEL_FR (origin = hub)
-  WHEEL_RL / WHEEL_RR (±76, 151, 35.5)
+  STEER_FL / STEER_FR (±77.5, −151, 34.5) → WHEEL_FL / WHEEL_FR (origin = hub, loaded height)
+  WHEEL_RL / WHEEL_RR (±76, 151, 34.5)
+  UNDER_EXHAUST_DRIVELINE, UNDER_AXLES_TANK                (v002 underbody)
+  INT_ARMREST_FL/FR/RL/RR                                   (v002, children of their doors)
   GLASS_WINDSHIELD, GLASS_REAR, TRIM_WINDOW_*, GRILLE_*, HEADLAMP_*, TAILLAMP_*, BUMPER_*, TRIM_*,
   WHEELHOUSES, INT_* (interior), PLATE_FRONT/REAR, MIRROR_DRIVER, WIPERS, DOOR_HANDLES
   POLICE_DECAL_ROOF_ID, POLICE_DECAL_TRUNK, POLICE_DECAL_SEAL_FL/FR, POLICE_BEACON_BASE/DOME,
@@ -59,8 +84,8 @@ SM_V01_PatrolSedan_MPDC
 ```
 `renders/SM_V01_PatrolSedan_MPDC_posed_open.png` is the exported GLB re-imported and posed
 (doors, hood, trunk open, front wheels steered 22°) — the hinges and steering pivots work as nodes.
-Full lists: `HIERARCHY.txt`, `MESH_STATS.txt`. LOD0 ≈ 90 k triangles (body 47 k); LOD1 ≈ 45 %,
-LOD2 ≈ 18 % on every part above 300 / 1500 faces.
+Full lists: `HIERARCHY.txt`, `MESH_STATS.txt`. LOD0 is heavier in v002 because of the bevels
+(see MESH_STATS.txt); LOD1 ≈ 45 %, LOD2 ≈ 18 % on every part above 300 / 1500 faces.
 
 ## Material slots (stable names; ITS ALIVE families)
 MT: `MI_V01_Chrome`, `MI_V01_Steel_Painted`, `MI_V01_Headlamp` · GL: `MI_V01_Glass`,
@@ -90,8 +115,8 @@ is defined in build.py for the lit state; swap on the dome) · CT: `MI_V01_Paint
 |---|---|
 | Pass 1 evidence | done (EVIDENCE.md) |
 | Clean rebuild | PASS — `out/` deleted, `python jobs/DC-V01/build.py`, both GLBs byte-identical to the previous build (SHA256 compared) |
-| GLB reopen QA (`tools/qa_check.py`) | PASS 445/445 (MPDC), 375/375 (neutral base): bounds, ground contact, UVs, materials, degenerate faces, outward normals, applied transforms, LODs, UCX |
-| Actual-output renders | clay + textured front/profile/rear/¾, orthographic top, posed-open view (`renders/`) |
+| GLB reopen QA (`tools/qa_check.py`) | PASS 515/515 (MPDC), 455/455 (neutral base): bounds, ground contact, UVs, materials, degenerate faces, outward normals, applied transforms, LODs, UCX |
+| Actual-output renders | clay + textured front/profile/rear/¾, orthographic top and underside, posed-open view, four close-up detail views (front fender, door belt, rear wheel at kerb height, grille low) (`renders/`) |
 | Visual self-review vs E1 + moodbook p.10–12 | roof layout/orientation, beacon, trunk marking, seal, light body, chrome, whitewalls match E1; silhouette reads as a 1962–63 full-size sedan; see "What Matt should look at" |
 | Unreal 5.8 import / native readback | **NOT_RUN — needs local Unreal (UE 5.8)** |
 | Wheel rotation / steering / suspension / door motion in engine | **NOT_RUN — needs local Unreal (UE 5.8)**; pivots verified only by re-import + pose render |
@@ -100,7 +125,7 @@ is defined in build.py for the lit state; swap on the dome) · CT: `MI_V01_Paint
 ## Expected register status changes (head agent edits the sheet; not done by this agent)
 - DC-V01: asset_status CLAIMED → DELIVERED; claim_owner "claude-cloud-agent — DC-V01" (prior
   "V01 - MPD Patrol Car / Lu / ChatGPT" is RELEASED per Drive); delivery_integrity
-  "v001 SHA256 verified; clean rebuild byte-identical; QA 445/445; Unreal NOT_RUN";
+  "v002 SHA256 verified; clean rebuild byte-identical; QA 515/515; Unreal NOT_RUN" (v001 superseded);
   asset_user_approval PENDING; integration_status NOT_STARTED.
 - DC-V02 "Depends on": a candidate production sedan base now exists
   (`SM_V01_Sedan_Base_Neutral.glb`, asset/DC-V01-v001) — not approved until Matt says so.
@@ -118,6 +143,9 @@ is defined in build.py for the lit state; swap on the dome) · CT: `MI_V01_Paint
    proposed as the WASHINGTON/DALLAS vehicle contract for V03–V09.
 
 ## What Matt should look at
+0. v002 first: `renders/..._detail_*.png` (bevels, panel gaps, contact patch, rocker strip), and
+   `..._underside.png` / `..._detail_rear_wheel_kerb.png` for grounding. Say if the bevel radius
+   should be larger (3.5 mm is a stamped-steel roll; 6–8 mm would read softer at game distance).
 1. `renders/SM_V01_PatrolSedan_MPDC_textured_three_quarter.png` and `_profile.png` against the
    1962 fleet photo (E1) — does the body read as the right era/class? If a different make is
    known for 1963 MPD, say which and the cross-section table can be re-authored.
@@ -134,4 +162,4 @@ is defined in build.py for the lit state; swap on the dome) · CT: `MI_V01_Paint
 PASS_PLAN.md · CONTEXT_ACK.json · EVIDENCE.md · HANDOFF.md · DEPENDENCY_LOCK.json ·
 PCG_INTERFACE.json · REUSABLE_COMPONENTS.json · HIERARCHY.txt · MESH_STATS.txt ·
 source/build.py · meshes/*.glb · textures/*.png · renders/*.png · DELIVERY_MANIFEST.json ·
-SHA256SUMS.txt. Repo branch `asset/DC-V01-v001` (PR link in PAYLOAD_LINK.txt on Drive).
+SHA256SUMS.txt. Repo branch `asset/DC-V01-v002` (PR link in PAYLOAD_LINK.txt on Drive).

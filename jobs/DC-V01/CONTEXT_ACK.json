@@ -53,5 +53,6 @@
     "sandbox": "Linux cloud, bpy 4.5.14 LTS, no GPU, no Unreal",
     "network": "WebSearch only; egress proxy blocks direct fetch/download from loc.gov, commons.wikimedia.org, trumanlibrary.gov, mpdc.dc.gov, dcmetropolicecollector.com — photo evidence is link-cited, not downloaded (see EVIDENCE.md)"
   },
+  "pass4_instruction": "Matt (session chat, 2026-10-02): 'do another realism and geometry pass. fine beveling and grounding.' -> asset-v002",
   "drive_available": true
 }
