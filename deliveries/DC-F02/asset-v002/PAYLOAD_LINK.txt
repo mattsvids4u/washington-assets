@@ -4,7 +4,7 @@ The mesh, textures, full-resolution renders and the generator are too large to u
 Drive connector. They live in GitHub:
 
   Branch: https://github.com/mattsvids4u/washington-assets/tree/asset/DC-F02-v002
-  Pull request: https://github.com/mattsvids4u/washington-assets/pull/5 (v002; v001 is PR 4)
+  Pull request: https://github.com/mattsvids4u/washington-assets/pull/6 (v002; v001 is pull/4)
   Package path: deliveries/DC-F02/asset-v002/
     meshes/SM_F02_SenateOfficeBuilding.glb   (LOD0/1/2 + UCX + sockets + optional site helper; metres)
     textures/T_SOB_*.png                     (BC / ORM / N; also embedded in the GLB)

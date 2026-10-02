@@ -2,8 +2,8 @@
   "job_id": "DC-F02",
   "version": "asset-v002",
   "claimant": "claude-cloud-agent",
-  "created_utc": "2026-10-02T14:12:08+00:00",
-  "source_commit": "9824143621f83280e4c5a127e8d7f1c46790fe2b",
+  "created_utc": "2026-10-02T14:12:41+00:00",
+  "source_commit": "53427ea68dcc4819bed2104e45d11ed00b631872",
   "gates": {
     "clean_rebuild": "see HANDOFF.md",
     "glb_reopen_qa": "see HANDOFF.md",
@@ -44,8 +44,8 @@
     },
     {
       "path": "PAYLOAD_LINK.txt",
-      "bytes": 1274,
-      "sha256": "cb62e652464b6f28bce2c3564d919084b792e6c8b45ddb9f9ebabdb24d491b93"
+      "bytes": 1276,
+      "sha256": "70792d9693377941ad5fe913dcf110355d099fc4ab6d37deaf2d739b703a0b90"
     },
     {
       "path": "PCG_INTERFACE.json",
