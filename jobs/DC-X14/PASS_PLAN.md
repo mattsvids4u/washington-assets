@@ -43,7 +43,7 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
 
 1. Evidence — **DONE 2026-10-02.** Web-search leads first; Matt then supplied the FY1963 Annual
    Report, the LCIB 1997 memoir text and photos, HABS DC-351 frames, the first-floor plan and
-   the 1953 LRS photo thumbnail (EVIDENCE.md E12–E18). Naming gate cleared; dimensions gate open.
+   the 1953 LRS photo thumbnail (EVIDENCE.md E12–E18). Naming gate cleared; dimensions gate closed by Matt's direction (set dressing, see pass 6).
 2. Build — **DONE 2026-10-02.** `build.py` v1: 16 modules + demo. Iterations: (a) exact boolean
    failed on multi-shell walls → cut the bare slab, add trims after; (b) degenerate faces from a
    duplicated cornice profile point → cleaned; (c) sign text used the 1967 division name → 1963
@@ -88,3 +88,11 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
 - Partition colour, height and glazing pattern: gray steel kit APPROXIMATE (c. 2.13 m, clear uppers); wood kit from the 1953 photo (c. 1.9 m, solid, two flat panels per 0.9 m section) — proportions scaled by eye, APPROXIMATE ±10 %.
 - Ceiling heights, window sizes, cornice profiles: APPROXIMATE (no HABS data pages reachable).
 - Sign text uses the 1963 name "Legislative Reference Service" (historical signage rule); room numbers FICTIONALISED.
+
+## Pass 6 — evidence gates closed (Matt, 2026-10-02)
+
+Matt's direction in chat: "this is set dressing … just go for it". The outstanding archive
+requests (HABS DC-351 data pages, Annual Report FY1963 Ch. V / App. XII, the five unsaved HABS
+frames) are **waived**. The approximate dimensions in `build.py` stand as the delivered values;
+no v003 is planned for dimension checks. Everything labelled APPROXIMATE stays labelled that way.
+This is a scoping decision, not an approval: asset_user_approval remains PENDING.

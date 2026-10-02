@@ -9,7 +9,7 @@ offices and Legislative Reference Service (LRS) rooms, October–November 1963.
 closed most of the gap on 2026-10-02 by dropping files into `References/DC-X14` (Drive folder
 1xeNS9O1j-BKbPVC0Czt9PCnLQL9aoMc8) and sending images in chat; those are E12–E18 below and
 were inspected. Records marked NOT INSPECTED remain leads only. All dimensions in the kit are
-APPROXIMATE; the HABS data pages (room heights, joinery) are still the open gate.
+APPROXIMATE. The HABS data-page gate was waived by Matt on 2026-10-02 (set dressing).
 
 ## Records (date · source · rights · what it supports)
 
@@ -62,7 +62,7 @@ APPROXIMATE; the HABS data pages (room heights, joinery) are still the open gate
 - APPROXIMATE: all dimensions (room height 4.6 m; window opening 1.5 × 3.95 m arched; door 1.1 × 2.6 m + 0.4 m transom; partitions 2.13 m; drop ceiling at 2.75 m); oak strip floor in offices; two-light double-hung sash; cast-iron column radiators; cove cornice profile; partition colour (gray) and glazing (clear upper panels).
 - FICTIONALISED: room numbers on door signs; the specific room arrangement in the demo assembly; the eavesdrop gameplay use.
 
-## Still missing (for Matt or a non-sandboxed run)
+## Still missing — WAIVED by Matt 2026-10-02 ("set dressing … just go for it"); kept as leads only
 
 1. ~~E1/E15 at full resolution~~ — received (E19).
 2. ~~HABS DC-351 photos 22/23~~ — received (E20, E21). HABS DC-351 **data pages** (dc0221data.pdf: room heights, joinery sizes) still not received.

@@ -177,3 +177,15 @@ six new modules — notes appended after the images were checked (below).
 - No coincident-face artifacts found in the new modules (checked the panel ends, rails and beam crossings).
 
 Known limitations v002: the sconce and torchère shades are plain bowls (no etched pattern); coffer panel ornament is reduced to a rosette; partition and door grain is procedural; pedestal fans, desks, chairs and files remain DC-I09 (sockets provided, including `SOCKET_I09_PedestalFan_NN`).
+
+## Review notes — Matt, 2026-10-02 (chat, after v002)
+
+"this is set dressing chill chill just go for it" → the remaining record requests are dropped:
+HABS DC-351 data pages, Annual Report FY1963 printed pp. 59–70 / 125–126, and the five unsaved
+HABS frames. The dimensions gate is closed; all dimensions stay APPROXIMATE as built and labelled.
+No further passes are planned on this job unless Matt reviews and asks for changes.
+
+Register expectation (head agent applies): unchanged from the v002 note — DELIVERED,
+delivery_integrity "v002 complete kit; v001 modules byte-identical; QA PASS; UE import NOT_RUN";
+evidence note "dimensions APPROXIMATE, archive gate waived by Matt 2026-10-02".
+asset_user_approval remains PENDING — this note is scoping, not approval.
