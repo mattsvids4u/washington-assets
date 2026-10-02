@@ -9,9 +9,11 @@ Target state: **October–November 1963**. Compiled 2026-10-02 by claude-cloud-a
   SAH Archipedia, folger.edu, archive.org, HathiTrust, Flickr and OSM all returned HTTP 403
   from the policy proxy for both curl and WebFetch. **No reference image could be opened,
   inspected or saved in this run.**
-- The two starter photos in Drive `References/DC-F01` (below) could not be viewed either:
-  the Drive connector returns no image content, and the files cannot be moved into the
-  sandbox. They are cited from their provenance note only.
+- **Update, second run (2026-10-02, same claim):** the Drive connector now returns image
+  data, so the two starter photos in `References/DC-F01` were downloaded, inspected and
+  measured (see "Photo inspection" below). The outside photo archives are still blocked
+  (HTTP 000 from loc.gov, tile.loc.gov, Wikimedia and NARA), so no 1963-dated photo has been
+  inspected yet.
 - Facts come from **WebSearch result text** quoting the named pages. Three research agents
   ran ~170 searches before the session's 200-search cap ran out. Full fact sheets, with
   every quote and source key, are in `research/*_factsheet_agent_2026-10-02.md`.
@@ -19,8 +21,9 @@ Target state: **October–November 1963**. Compiled 2026-10-02 by claude-cloud-a
   package is on Matt's PC only (the Drive folder holds just the handoff), so v001 footprints
   come from published dimensions. They must be re-checked against the R02 evidence cards
   before placement.
-- Because images were not inspected, **facade rhythm details (bay counts not stated in text,
-  window sizes, heights, mouldings) are APPROXIMATE**. The renders show the actual exported
+- Only the Folger north facade has now been checked against a photo, and that photo is from
+  2025. **Annex and Cannon facade rhythm details (bay counts not stated in text, window sizes,
+  heights, mouldings) are still APPROXIMATE**. The renders show the actual exported
   output, ready for Matt to compare with the photo records listed per building.
 
 Labels: **VERIFIED** = stated by a named authoritative source (as quoted in search text) ·
@@ -28,12 +31,24 @@ Labels: **VERIFIED** = stated by a named authoritative source (as quoted in sear
 estimate, unverified · **FICTIONALISED** = invented (none of the building identities are
 fictional; only stand-in sculpture and placeholder landscape are invented forms, labelled below).
 
+## Photo inspection (second run, 2026-10-02)
+
+Ref 01 (Folger, Commons 2025, CC BY-SA 4.0, Ser Amantio di Nicolao) is taken from the **NE corner** (the Adams Building
+shows behind the east end). Review camera `photo01_ne` in render_review.py roughly matches this vantage. The
+side-by-side is `renders/review/CMP_ref01_vs_photo01_ne.png`. It supports the following (all north facade; carved
+stone is unchanged since 1932, so it is valid for 1963):
+nine bays ✓ · reliefs directly under the windows at terrace level ✓ · wide fluted pilasters with sunk window fields
+running up to the frieze (fixed) · rectilinear grilles (fixed) · window heads at ~9 m and the frieze on them (fixed) ·
+canopy entrances with masks (fixed) · inscriptions in the attic over the window row (fixed) · upper dentil band and
+slight recession at the top ✓. Excluded as post-2019: the "FOLGER THEATRE" letters on the terrace wall, the planters
+and the modern lamp.
+
 ## Drive starter photos (References/DC-F01, collected 2026-09-22)
 
 | File | Source / ID | Date | Creator | Rights | What it could support | Limitation |
 |---|---|---|---|---|---|---|
-| 01_Exterior_view_Folger_Shakespeare_Library_June_2025_166991267.jpg | commons.wikimedia.org/wiki/File:Exterior_view,_Folger_Shakespeare_Library,_June_2025.jpg | 2025-06-03 (EXIF) | Ser Amantio di Nicolao | CC BY-SA 4.0 | Folger north facade composition | Post-2024 renovation (new entrances/landscape must be excluded). **Not inspected (no image access).** |
-| 02_Adams_Building_Exterior_Stairs_32044495186_54993551.jpg | commons.wikimedia.org/wiki/File:Adams_Building_Exterior_Stairs_(32044495186).jpg | 2017-01-03 | USCapitol | Public domain | Annex entrance stair detail | Modern view. **Not inspected.** |
+| 01_Exterior_view_Folger_Shakespeare_Library_June_2025_166991267.jpg | commons.wikimedia.org/wiki/File:Exterior_view,_Folger_Shakespeare_Library,_June_2025.jpg | 2025-06-03 (EXIF) | Ser Amantio di Nicolao | CC BY-SA 4.0 | Folger north facade composition | Post-2024 renovation (new entrances/landscape must be excluded). **Inspected and measured 2026-10-02 (second run).** |
+| 02_Adams_Building_Exterior_Stairs_32044495186_54993551.jpg | commons.wikimedia.org/wiki/File:Adams_Building_Exterior_Stairs_(32044495186).jpg | 2017-01-03 | USCapitol | Public domain | Annex entrance stair detail | Modern view. **Inspected 2026-10-02:** close-up of the white marble treads with tan/grey veining and soiling; it supports the material and tone only, not geometry. |
 
 Moodbook: `SAVE_JFK_Visual_Benchmark_Moodbook.pdf` (Drive 11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr). Pages
 10–12 were read as **text only**; the page images could not be viewed here (see CONTEXT_ACK.json).
@@ -92,16 +107,18 @@ folger.edu building history, the Collation posts "Creating John Gregory's Bas Re
 | North facade | smooth white marble, divided into **nine bays** of long narrow windows with **Art Deco aluminium grilles**, separated by **fluted pilasters** | VERIFIED (excerpt) | HPRB / NRHP; HPO addition report |
 | Reliefs | **nine marble bas-reliefs by John Gregory**, carved 1932 by the Piccirilli Brothers, each **6 × 6 ft**, below the windows; left-to-right order MND, R&J, MoV, Macbeth, JC, Lear, R3, Hamlet, H4 | VERIFIED (order PROBABLE in the middle) | Folger Collation; Glenshaw |
 | Top of the facade | "broad attic story broken only by inscriptions, a slight recession at the top, and an entablature of shallowly incised abstract classical ornament" | VERIFIED (excerpt) | SAH |
-| Inscriptions | Ben Jonson "Thou art a monument, without a tombe …"; Samuel Johnson "This therefore is the praise of Shakespeare …"; First Folio spellings | VERIFIED text; **positions APPROXIMATE** (Jonson placed over the east end, Johnson over the west end) | folger.edu inscriptions page; Folger |
+| Inscriptions | Ben Jonson "Thou art a monument, without a tombe …"; Samuel Johnson "This therefore is the praise of Shakespeare …"; First Folio spellings | VERIFIED text. **Positions VERIFIED by photo (ref 01):** both quotes are in the attic above the window row, with Johnson legible over the east half, so Jonson goes over the west half (v001 run 1 had them over the end doors, swapped) | folger.edu inscriptions page; ref 01 |
 | West end | "treated more prominently, as the main approach is from the west"; "two similar façades" | VERIFIED / PROBABLE | SAH; Folger podcast |
 | Puck | Brenda Putnam, 1932, **marble**, on a fountain facing west; "Lord, what fooles these mortals be!" (marble original in place in 1963; aluminium copy only from 2001–02) | VERIFIED | Folger |
 | East end | "a blank wall broken only by masks of comedy and tragedy"; the theatre is in the east wing | VERIFIED (excerpt) | SAH; NRHP |
 | Front terrace | terrace with a shallow lawn about 25 × 135 ft along the north elevation; marble staircases, a wall along the front, marble and bluestone paving | VERIFIED (lawn per a 2017–22 document; 1932 match PROBABLE) | NRHP-form nomination; Folger 2021 |
 | Rear in 1963 | U-shaped plan; the courtyard was filled by the **1958–59 one-storey addition** (present in 1963) | VERIFIED | HPO addition report; Folgerpedia |
 | Materials | white **Georgia marble** ashlar in "alternating rows of larger and smaller panels"; marble plinth; **all exterior metal aluminium**; glazed brick on non-primary walls | VERIFIED (brick location PROBABLE) | NRHP; Folger Collation |
-| Bay spacing, window size, heights | 15 ft bays (9 × 15 ft = the 135 ft lawn); windows 1.83 × 6.43 m; plinth/terrace 0.76 m; entablature 10.88–11.72 m; attic to 14.0 m | APPROXIMATE | derived; not stated |
+| Bay spacing, window size, heights | 15 ft bays (9 × 15 ft = the 135 ft lawn) APPROXIMATE; **glass 1.83 × 5.26 m (3.99–9.25 m), sunk window field 2.4 m wide up to the frieze, fluted pilasters 1.4 m with 8 flutes, incised frieze 9.85–10.75 m**, attic to 14.0 m | **PROBABLE** (photo-measured on ref 01; run 1 had the windows 1.2 m too tall and the pilasters 0.86 m) | ref 01 measured along vertical lines on the facade plane, scaled from the attic line and the 1.83 m relief panels (±0.4 m) |
 | Rear wing widths, reading-room block, 1958 addition height | 15/17 m wings; 4.3 m addition | APPROXIMATE | not stated |
-| Doors | end entrances with aluminium grille doors and a comedy/tragedy mask above | PROBABLE (masks) / APPROXIMATE (design) | Folger page excerpt |
+| Doors | north-facade end entrances: grille door about 2.2 × 4.5 m in a tall sunk panel; mask cartouche just above the door inside the panel; fluted strips each side; **projecting flat canopy** whose top meets the frieze, with a pendant lantern | **PROBABLE** (ref 01; lantern form APPROXIMATE) | ref 01; Folger page excerpt |
+| Window grilles | cast aluminium, **rectilinear interlocking-rectangle fret** over the full height (run 1 used chevron heads, which was wrong) | VERIFIED type (ref 01) / APPROXIMATE exact pattern | ref 01 |
+| East end door (ref 01) | the 2025 photo shows a door with steps and a vertical break in the east wall | **NOT MODELLED. CONFLICT:** SAH describes "a blank wall broken only by masks"; the door may be a 2019–24 change. Needs a pre-2019 photo (Horydczak / CyArk 2020) | ref 01 vs SAH |
 
 Excluded as post-1963: the Hartman-Cox reading room (1983); the Elizabethan Garden (1989); the aluminium Puck (2001–02); the 2019–24 KieranTimberlake/OLIN works (Adams Pavilion under the lawn, sunken entry plazas and ramps, tapestry gardens, poem wall, new Puck fountain, aluminium quotation letters).
 

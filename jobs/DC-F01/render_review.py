@@ -25,6 +25,7 @@ VIEWS = {
         "street_nw": ((-52.0, 40.0, 1.6), (-12.0, 4.0, 6.0), 30),          # 2nd St / East Capitol corner
         "detail_bays": ((6.0, 30.0, 1.7), (0.0, 16.9, 5.5), 35),           # relief + window bays close-up
         "rear_se": ((55.0, -45.0, 1.6), (8.0, -6.0, 6.0), 30),             # alley / 3rd St
+        "photo01_ne": ((52.0, 40.0, 1.6), (14.0, 12.0, 6.5), 26),          # vantage of ref 01 (Commons 2025, NE corner)
     },
     "SM_F01_LOCAnnex": {
         "street_sw": ((-80.0, -78.0, 1.6), (-20.0, -10.0, 12.0), 30),      # Independence Ave / 2nd St

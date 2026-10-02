@@ -17,7 +17,7 @@ autumn 1963 state, under their 1963-facing names:
 | Asset | GLB | LOD0 / LOD1 / LOD2 tris | Size (m) | Identity features modelled |
 |---|---|---|---|---|
 | **Library of Congress Annex** | `SM_F01_LOCAnnex.glb` | 103,476 / 41,836 / 4,500 | 126.96 × 72.84 × 31.20 (12.5 MB) | 400 × 225 ft footprint; corner and central pavilions linked by recessed fenestrated curtains; vertically linked bays (bronze spandrels with honeysuckle ornament) between narrow marble piers; NC pink granite skirt; attic set back 35 ft; three-tier aged copper roof; 3 + 3 bronze door pairs (W/E) and the south pair on the owl-and-lamp stair; figure-per-leaf door stand-ins |
-| **Folger Shakespeare Library** | `SM_F01_Folger.glb` | 45,254 / 6,334 / 984 | 85.38 × 46.33 × 14.63 incl. terrace and fountain (4.7 MB) | 226 × 111 × 48 ft on a marble plinth; nine tall windows with cast-aluminium Art Deco grilles between fluted pilasters; nine 6 × 6 ft relief panels (stand-ins); incised frieze; broad attic carrying the verified Jonson and Johnson inscriptions; slight top recession; end entrances with mask medallions; three-bay west front; blank east wall with comedy/tragedy masks; U-plan rear with the 1958–59 one-storey infill; terrace with the 25 × 135 ft lawn bed, front wall and stairs; marble Puck fountain on the west lawn (stand-in figure) |
+| **Folger Shakespeare Library** | `SM_F01_Folger.glb` | 63,878 / 7,054 / 1,008 | 85.38 × 46.33 × 14.63 incl. terrace and fountain (6.1 MB) | 226 × 111 × 48 ft on a marble plinth; **checked against photo ref 01:** nine tall windows in sunk fields up to the frieze, rectilinear cast-aluminium fret grilles, wide 8-flute pilasters; nine 6 × 6 ft relief panels (stand-ins); incised frieze on the window heads; broad attic with the Johnson (east half) and Jonson (west half) inscriptions over the window row; slight top recession; end entrances in tall sunk panels under projecting canopies with lanterns and mask cartouches; three-bay west front; blank east wall with comedy/tragedy masks; U-plan rear with the 1958–59 one-storey infill; terrace with the 25 × 135 ft lawn bed, front wall and stairs; marble Puck fountain on the west lawn (stand-in figure) |
 | **Cannon House Office Building** | `SM_F01_Cannon.glb` | 225,852 / 65,540 / 6,356 | 132.77 × 117.06 × 28.40 incl. plinth and stairs (22.7 MB) | hollow trapezoid on Square 690, New Jersey Ave diagonal; rusticated arcaded base (keystoned arched windows, basement windows, granite plinth); **34 fluted Doric columns (17 coupled pairs)** in a deep loggia on Independence Ave; coupled-pilaster pilastrade on the other fronts; Doric entablature with triglyphs and mutules; balustrade; recessed attic (4th + 5th storeys); chamfered NW rotunda-corner main entrance; limestone court fronts; 1955 garage-deck court |
 
 Each GLB contains `<name>_LOD0/1/2`, convex `UCX_<name>_NN` collision hulls, and `SOCKET_*`
@@ -39,14 +39,15 @@ grade, +X east, +Y north.
 | Actual-output renders | clay + textured front/profile/rear/¾ (`renders/standard/`); street-level car-height views, night lit-window views, base-colour/roughness/normal passes, clay street views and LOD1/LOD2 views (`renders/review/`) |
 | Unreal import / readback | **NOT_RUN — needs local Unreal (UE 5.8)** |
 | Motion / drive-by tests | **NOT_RUN — needs local Unreal (UE 5.8)** |
-| Visual comparison against reference photos | **NOT_DONE.** No reference image could be opened in this cloud environment (see Evidence gaps) |
-| Visual comparison against the moodbook images | **NOT_DONE.** The moodbook was read as text only; pp. 10–12 directives were applied (see CONTEXT_ACK.json) |
+| Visual comparison against reference photos | **Folger: DONE** against Drive ref 01 (2025, NE corner). Matched camera `photo01_ne`; the side-by-side is `renders/review/CMP_ref01_vs_photo01_ne.png`; five corrections were made (see PASS_PLAN log 8). **Annex / Cannon: NOT_DONE**: there are no geometry photos on Drive, and the outside archives are still blocked |
+| Visual comparison against the moodbook images | **DONE (second run):** pp. 10–12 page images inspected. The target is warm tungsten (#C49D63) against charcoal and olive, with cold-paper neutrals; the night lit-window views are the check for that. Day views are neutral review lighting, not a grade |
 
 ## Evidence gaps (what Matt should know first)
 
-1. **No photos were inspected.** The environment's network allowlist blocks every image
-   host (loc.gov, Wikimedia, NARA, NPS, AOC, DC Planning, Flickr, archive.org). The Drive
-   connector returns no image data, so the two starter photos in `References/DC-F01` were not viewable either.
+1. **Only the two Drive starter photos were inspected**, in the second run: the Folger NE view
+   (2025) and an Adams stair close-up (2017, material only). The outside archives (loc.gov,
+   Wikimedia, NARA, NPS, AOC, Flickr, archive.org) are still blocked, so **no 1963-dated photo
+   has been inspected**, and the Annex and Cannon geometry is still unchecked against any photo.
    Facts come from search-result text quoting authoritative pages (AOC, LoC, SAH Archipedia,
    DC HPO/NRHP forms, Folger, House Historian); see `EVIDENCE.md` and `research/`.
 2. **DC-R02 footprints not consumed.** The approved R02 data package lives on Matt's PC only,
@@ -59,7 +60,8 @@ grade, +X east, +Y north.
 
 - **APPROXIMATE (examples, full list in EVIDENCE.md):**
   - Annex: heights, pavilion widths and bay counts; spandrel material (bronze is a PROBABLE inference from SAH wording).
-  - Folger: window size; terrace layout; rear wing widths; inscription positions.
+  - Folger: bay width, terrace layout, rear wing widths, entrance lantern. Window and frieze heights, pilaster width and entrance canopy are now PROBABLE (photo-measured). Inscription positions are VERIFIED by the photo.
+  - Folger east end: the 2025 photo shows a door with steps. It is **not modelled**, because SAH calls the east end a blank wall and the door may date from 2019–24. Needs a pre-2019 photo.
   - Cannon: overall dimensions and angle, heights, column size, the chamfered corner form, and the attic's look; coupled columns are PROBABLE.
 - **Labelled stand-ins (rights unconfirmed, never likenesses):**
   - Lawrie bronze door figures (Annex).
@@ -68,7 +70,7 @@ grade, +X east, +Y north.
   - Comedy/tragedy masks (Folger).
   - Owls and lamp standards (Annex).
 - **Inscriptions:**
-  - Carved: only the two Folger quotations, whose wording is VERIFIED; their placement over the end bays is APPROXIMATE, and Liberation Serif is a stand-in typeface.
+  - Carved: only the two Folger quotations, whose wording is VERIFIED; their placement in the attic over the window row is VERIFIED by photo ref 01, and Liberation Serif is a stand-in typeface.
   - Not carved: no other building names, because their positions are unverified. They are marked with `SOCKET_Signage_*_PENDING`.
 - **Placeholder:** `M_F01_Turf_Placeholder` on the Folger lawn bed, to be replaced by DC-N03 via `SOCKET_Lawn_N03_Turf`.
 - **Nothing FICTIONALISED:** all three identities, names and histories are real.
@@ -130,10 +132,10 @@ grade, +X east, +Y north.
 1. `renders/review/*_textured_street_*.png`: the three buildings at car height, compared with your own knowledge or photos of each.
 2. **Cannon colonnade pairing** (`SM_F01_Cannon_textured_detail_colonnade.png`): coupled (built) vs evenly spaced single columns. It is one parameter (`CANNON["n_pairs"]`, `pair_cc`). F02's twin SOB uses single columns; see UNIFICATION PROPOSAL 0.
 3. **Annex spandrels** (`SM_F01_LOCAnnex_textured_street_w.png`): bronze (built, PROBABLE) vs marble.
-4. **Folger front** (`SM_F01_Folger_textured_street_n.png`, `detail_bays`): grilles, relief stand-ins, attic inscriptions.
+4. **Folger front:** `CMP_ref01_vs_photo01_ne.png` (photo vs model at a matched vantage), `SM_F01_Folger_textured_street_n.png` and `detail_bays`. Check the grilles, entrance canopies, relief stand-ins and inscriptions. Also tell me whether the east-end door in the 2025 photo existed in 1963.
 5. Night views (`*_night_*.png`) for the moving-car-at-night read.
 6. **On UE import:** materials arrive one-sided. A missing face seen from outside would mean a winding bug; the audit reports none, so please flag any you find.
-7. Decisions: the SOB/NSOB owner; whether to keep the Folger inscriptions at APPROXIMATE positions; any of the dimensions above.
+7. Decisions: the SOB/NSOB owner; the Folger east-end door; any of the dimensions above.
 
 ## Files
 

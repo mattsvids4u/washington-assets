@@ -18,6 +18,7 @@ cp $J/out/textures/*.png "$D"/textures/
 cp -r $J/renders/standard $J/renders/review "$D"/renders/
 cp $J/research/*.md "$D"/research/
 cp $J/context/*.txt "$D"/context/
+mkdir -p "$D"/references && cp $J/refs/* "$D"/references/
 cp $J/renders/previews/*.png "$D"/drive_previews/ 2>/dev/null || true
 echo "assembled $D"
 du -sh "$D"

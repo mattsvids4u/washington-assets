@@ -6,11 +6,11 @@ Brief WASHINGTON-2026-09-22-v001 · Stage standard WASHINGTON-2026-09-22-v001 ·
 Claimed 2026-10-02T10:30Z — Drive folder `DC-F01 — claude-cloud-agent` (1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f), CLAIM.json 1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x
 Work branch `claude/adoring-pasteur-25ccu0`; delivery branch pattern `asset/DC-F01-v###`.
 
-Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (final render review after the winding fix) · v001 delivery in preparation.**
+Status (2026-10-02, second run): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE, including a Folger photo comparison in the second run · v001 DELIVERED for Matt's review (not approved).**
 
 | Pass | Result |
 |---|---|
-| 1 Evidence | EVIDENCE.md + research/ fact sheets (WebSearch text only; image hosts blocked by the environment allowlist, so no photo inspected) |
+| 1 Evidence | EVIDENCE.md + research/ fact sheets (WebSearch text). Second run: the Drive starter photos (Folger 2025, Adams stair 2017) and the moodbook pp. 10–12 images were inspected via the Drive connector. Outside archives are still blocked, so there is no 1963-dated photo |
 | 2 Build | build.py → 3 GLBs (LOD0-2, UCX, sockets, PBR textures); ~50 s full rebuild |
 | 3 Verify | qa_check 20/20 on all three; per-shell orientation audit 0 inward-wound shells on all 9 LOD meshes; exposed-coplanar gate PASS on all 9 (`out/coplanar_report.txt`); clean rebuild byte-identical (32 files: GLBs, textures, reports); clay/textured/street/night/pass/LOD renders inspected; fixes applied (see Pass log) |
 
@@ -95,9 +95,19 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
    - **Fixes it found:** Folger window sills (top coplanar with the opening floor), stoops (a zero-height third step), relief frames (buried in the reveal, now lining the sunk field), grille and door glazing-bar crossings, and moulding end caps. Annex LOD2 pavilion corners (corner rule was off at LOD2, so 11 m² faces z-fought at distance). Cannon LOD2 cornice top coplanar with the core ring top. Cannon entrance-stair top tread coplanar with the plinth. Mullion and transom crossings on all three buildings.
    - **Left as is:** two same-material slivers (15 cm² and 12 cm²) at the Cannon's obtuse SW corner, where full-length slabs meet. Both are below the gate threshold.
 
+8. **Folger photo comparison (second run, 2026-10-02).** The Drive connector now returns image data, so starter photo ref 01 (Commons 2025, NE corner) was inspected. Review camera `photo01_ne` was added to match it, and heights were measured along vertical lines on the facade plane. Five corrections followed:
+   - Windows were 1.2 m too tall: glass head 10.42 → 9.25 m, incised frieze 10.88–11.72 → 9.85–10.75 m.
+   - Each window now sits in a 2.4 m sunk field running up to the frieze, between 1.4 m eight-flute pilasters (were 0.86 m, with broad plain ashlar between them).
+   - Grilles are now a rectilinear interlocking-rectangle fret. The chevron heads were wrong.
+   - The end entrances are now a tall sunk panel with the mask just above a 4.5 m door, fluted strips each side, and a projecting canopy whose top meets the frieze, with a lantern.
+   - The inscriptions moved from over the end doors to the attic over the window row. Johnson is legible over the east half, so the run 1 positions had the two quotes swapped.
+
+   Gates were re-run: qa 20/20, 0 inward shells, coplanar PASS (two new recess-edge overlaps found and fixed), clean rebuild byte-identical.
+
 ## Uncertainties (running list)
 
-- Reference images not inspected (environment egress allowlist); every dimension from text sources is at best PROBABLE and facade rhythm details are APPROXIMATE until Matt (or a local run) compares renders with the photos.
+- Only the Folger north facade has been checked against a photo, and that photo is from 2025. Annex and Cannon facade rhythm details stay APPROXIMATE until someone compares the renders with dated photos (outside archives are blocked here).
+- Folger east-end door: shown in the 2025 photo but not modelled, because SAH says the east end is a blank wall. Needs a pre-2019 photo.
 - R02 footprints not available here → footprint outlines APPROXIMATE.
 - 1930s federal/institutional sculpture (Lee Lawrie doors on the Annex, John Gregory reliefs on the Folger): rights unconfirmed → accurate massing with labelled simplified stand-ins (stage standard §7).
 - SOB/NSOB F01-vs-F02 ownership (see version plan); F02 has now built the SOB.

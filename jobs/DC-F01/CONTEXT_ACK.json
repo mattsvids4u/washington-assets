@@ -2,7 +2,7 @@
   "context_revision": "WASHINGTON-2026-09-22-v001",
   "context_url": "https://docs.google.com/document/d/1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4/edit",
   "context_modified_utc": "2026-09-25T05:06:18Z",
-  "checked_utc": "2026-10-02T12:40:00Z",
+  "checked_utc": "2026-10-02T12:50:00Z",
   "worker_task": "DC-F01 - Federal background assemblies",
   "job_id": "DC-F01",
   "owner_set": "DC-EXT1 Exterior Standard (AGENTS lane)",
@@ -102,7 +102,7 @@
       11,
       12
     ],
-    "how_inspected": "TEXT ONLY via the Drive connector. Page images could not be viewed in this cloud sandbox (Drive returns no image content; the 6 MB PDF cannot be transferred into the sandbox; network egress allowlist blocks other routes). Visual comparison against the moodbook images is therefore NOT_DONE this run and is flagged for Matt.",
+    "how_inspected": "Run 1 (2026-10-02 ~10:30Z): text only. Run 2 (2026-10-02 ~12:45Z): the PDF was downloaded through the Drive connector, and the page images of pp. 10-12 were inspected ('Objects with presence', 'Build the room. Sculpt the light.', 'The image is the authority'). Applied: staged review (clay, material passes, lit view), the palette relationships (tungsten #C49D63 for illumination, charcoal #131D1B / olive #667363 for depth, cold paper #DFDFD4 neutrals), and legibility at street-camera distance.",
     "applied_directives": [
       "p10: model the object's logic - edges that catch light, recesses that cast shadow (deep window reveals, cornice undercuts, column flutes at LOD0)",
       "p11: palette system CHARCOAL #131D1B, OLIVE #667363, WALNUT #6B4734, TUNGSTEN #C49D63, COLD PAPER #DFDFD4 used as a lighting/material relationship, not a universal tint; historical marble/granite/bronze colours kept",
@@ -141,8 +141,21 @@
     "Register lags Drive: DC-C20 shows UNCLAIMED but Drive holds 'DC-C20 — asset — v005 APPROVED'; DC-V01 shows CLAIMED (Lu) but a claude-cloud-agent claim folder was created 2026-10-02T10:17Z by another session.",
     "SOB / NSOB ownership: the DC-F01 request mission lists 'the 1963 Senate Office Building / New Senate Office Building', but DC-F02 and Road Plans canon v002 assign SOB/NSOB to DC-F02. DC-F01 v001 does not build them; Matt/head agent to confirm.",
     "Network egress allowlist in this cloud environment blocks loc.gov, Wikimedia, NARA, NPS, AOC, DC Planning, archive.org, HathiTrust, Flickr (HTTP 403 from the policy proxy) for both curl and WebFetch. Reference images could not be opened; WebSearch text summaries only.",
-    "Moodbook and starter photos inspected as text/metadata only (see moodbook.how_inspected).",
+    "Run 1: moodbook and starter photos as text/metadata only. Run 2: moodbook pp. 10-12 images and both starter photos inspected (see moodbook.how_inspected, second_run).",
     "DC-F02 was claimed 2026-10-02T11:14Z by another claude-cloud-agent session and delivered asset-v001 (Senate Office Building) at 11:57Z. The SOB/NSOB overlap with the F01 request is therefore being exercised by F02; F01 recommends F02 keep both (Matt to confirm). The twin Cannon/SOB colonnades disagree (F01 coupled 17 pairs vs F02 34 single): see HANDOFF UNIFICATION PROPOSAL 0."
   ],
-  "job_selection": "DC-F01 chosen as the highest-priority (P1) UNCLAIMED request in the AGENTS lane (EXT1 Unclaimed held F01 P1, F02 P2, V02 P3, V03 P3; INT1 Unclaimed held only DC-WH05, which is Ronan-authorised, outside the WASHINGTON register and depends on undelivered WH03/WH04). The two existing claude-cloud-agent claims (X14, V01) belong to other live sessions and were left alone."
+  "job_selection": "DC-F01 chosen as the highest-priority (P1) UNCLAIMED request in the AGENTS lane (EXT1 Unclaimed held F01 P1, F02 P2, V02 P3, V03 P3; INT1 Unclaimed held only DC-WH05, which is Ronan-authorised, outside the WASHINGTON register and depends on undelivered WH03/WH04). The two existing claude-cloud-agent claims (X14, V01) belong to other live sessions and were left alone.",
+  "second_run": {
+    "utc": "2026-10-02T12:30Z-13:30Z",
+    "brief_modified_utc": "2026-09-25T05:06:18Z (unchanged)",
+    "register_modified_utc": "2026-10-01T12:31:29Z (unchanged)",
+    "stage_standard_modified_utc": "2026-09-23T01:42:32Z (unchanged)",
+    "road_plans_modified_utc": "2026-10-01T06:42:28Z (unchanged)",
+    "request_modified_utc": "2026-09-25T10:29:38Z (unchanged)",
+    "reviews_for_DC-F01": "none in EXT1 Reviews",
+    "starter_photos_inspected": [
+      "01_Exterior_view_Folger_Shakespeare_Library_June_2025 (Drive 1NIpxgAo9ffIXMKGKDsqG2KuFSco-2flq)",
+      "02_Adams_Building_Exterior_Stairs (Drive 1baRVdTLIXwH68c7Hpm-fhywKQLzkCdR1)"
+    ]
+  }
 }

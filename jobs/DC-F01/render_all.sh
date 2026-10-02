@@ -9,6 +9,7 @@ for g in jobs/DC-F01/out/SM_F01_*.glb; do
   python jobs/DC-F01/render_review.py "$g" "$OUT/review" --mode textured --samples 40 > /dev/null 2>&1 && echo "street $g"
 done
 python jobs/DC-F01/render_review.py jobs/DC-F01/out/SM_F01_Folger.glb "$OUT/review" --mode night --views street_ne,street_nw --samples 48 > /dev/null 2>&1 && echo night-folger
+python jobs/DC-F01/render_review.py jobs/DC-F01/out/SM_F01_Folger.glb "$OUT/review" --mode textured --views photo01_ne --samples 40 > /dev/null 2>&1 && echo photo01-folger
 python jobs/DC-F01/render_review.py jobs/DC-F01/out/SM_F01_LOCAnnex.glb "$OUT/review" --mode night --views street_sw,street_w --samples 48 > /dev/null 2>&1 && echo night-annex
 python jobs/DC-F01/render_review.py jobs/DC-F01/out/SM_F01_Cannon.glb "$OUT/review" --mode night --views street_ne,street_nw --samples 48 > /dev/null 2>&1 && echo night-cannon
 for m in basecolor roughness normal; do

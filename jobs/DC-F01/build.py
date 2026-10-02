@@ -96,7 +96,7 @@ FOLGER = dict(
     bay=15 * FT,       # 4.57 m  APPROXIMATE (nine bays = 135 ft lawn length, S4)
     win_w=6 * FT,      # 1.83 m  APPROXIMATE (= relief width; "long, narrow windows")
     relief=6 * FT,     # 1.83 m square  VERIFIED (Folger Collation S10)
-    pil_w=0.86,        # fluted pilaster width  APPROXIMATE
+    pil_w=1.4,         # fluted pilaster width  PROBABLE (ref 01: ~0.3 bay, 8 flutes)
     pil_proj=0.12,     # pilaster projection / central wall recess  APPROXIMATE
     reveal=0.45,       # window reveal depth  APPROXIMATE
     front_depth=13.0,  # front (gallery) range depth  APPROXIMATE
@@ -110,8 +110,10 @@ def folger_levels(F):
         zt=zt,
         base1=zt + 0.55,                  # marble base course top
         rel0=zt + 0.78, rel1=zt + 0.78 + F["relief"],
-        win0=zt + 0.78 + F["relief"] + 0.62, win1=10.42,
-        ent0=10.88, ent1=11.72,           # entablature with shallow incised ornament (S6)
+        # heads / frieze photo-measured on ref 01 (Commons 2025), scaled from the 14.0 m attic line
+        # and the 1.83 m relief panels: glass ~3.6-9.0 m, incised frieze ~9.9-10.8 m  PROBABLE
+        win0=zt + 0.78 + F["relief"] + 0.62, win1=9.25,
+        ent0=9.85, ent1=10.75,            # entablature with shallow incised ornament (S6)
         att1=14.0,                        # attic top below the "slight recession" (S6)
         top=F["H"],
         roof=F["H"] - 1.05,               # flat roof behind the parapet  APPROXIMATE
@@ -136,24 +138,25 @@ def folger_window_grille(m, fr, a0, a1, c0, c1, b_glass, lod):
     for k in (1, 2, 3):
         x = a0 + w * k / 4
         m.lbox(fr, x - bar / 2, x + bar / 2, bf0 - 0.006, bf1 + 0.006, c0 + fw, c1 - fw, mat)
-    # horizontal rails, denser in the lower (sill) zone
-    rails = [0.12, 0.24, 0.36, 0.5, 0.64, 0.78]
+    # horizontal rails, then a rectilinear fret of interlocking rectangles in every cell
+    # (ref 01, Commons 2025: stepped rectangles, no chevrons; exact pattern APPROXIMATE)
+    rails = [k / 8 for k in range(1, 8)]
     for t in rails:
         z = c0 + h * t
         m.lbox(fr, a0 + fw, a1 - fw, bf0, bf1, z - bar / 2, z + bar / 2, mat)
-    # chevron band near the head (stylised Art Deco motif)
-    zb0, zb1 = c0 + h * 0.84, c1 - fw - 0.08
-    nchev = 4
-    for i in range(nchev):
-        x0 = a0 + fw + (w - 2 * fw) * i / nchev
-        x1 = a0 + fw + (w - 2 * fw) * (i + 1) / nchev
-        xm = (x0 + x1) / 2
-        t = 0.03
-        m.lprism(fr, [(x0, zb1 - t), (x0 + t, zb1), (xm + t * 0.5, zb0 + t), (xm - t * 0.5, zb0 + t)], bf0 + 0.004,
-                 bf1 - 0.004, mat)
-        m.lprism(fr, [(x1 - t, zb1), (x1, zb1 - t), (xm + t * 0.5, zb0 + t), (xm - t * 0.5, zb0 + t)], bf0 + 0.007,
-                 bf1 - 0.007, mat)
-    m.lbox(fr, a0 + fw, a1 - fw, bf0, bf1, zb0 - bar / 2, zb0 + bar / 2, mat)
+    t = 0.025
+    for col in range(4):
+        x0 = a0 + (fw if col == 0 else 0.0) + w * col / 4 + bar / 2 + 0.05
+        x1 = a0 + w * (col + 1) / 4 - (fw if col == 3 else 0.0) - bar / 2 - 0.05
+        for row in range(8):
+            z0 = c0 + (fw if row == 0 else 0.0) + h * row / 8 + bar / 2 + 0.06
+            z1 = c0 + h * (row + 1) / 8 - (fw if row == 7 else 0.0) - bar / 2 - 0.06
+            # inner rectangle tied to the bar on alternating sides -> interlocking "key" read
+            xa, xb = (x0 - 0.055, x1 - 0.06) if (row + col) % 2 == 0 else (x0 + 0.06, x1 + 0.055)
+            m.lbox(fr, xa, xb, bf0 + 0.004, bf1 - 0.004, z0, z0 + t, mat)
+            m.lbox(fr, xa, xb, bf0 + 0.004, bf1 - 0.004, z1 - t, z1, mat)
+            m.lbox(fr, xa, xa + t, bf0 + 0.004, bf1 - 0.004, z0 + t, z1 - t, mat)
+            m.lbox(fr, xb - t, xb, bf0 + 0.004, bf1 - 0.004, z0 + t, z1 - t, mat)
 
 
 def folger_bay_facade(m, fr, F, Z, a_start, nbays, lod, key, reliefs, wall_depth):
@@ -164,10 +167,12 @@ def folger_bay_facade(m, fr, F, Z, a_start, nbays, lod, key, reliefs, wall_depth
     bay, ww, rel = F["bay"], F["win_w"], F["relief"]
     pp, pw = F["pil_proj"], F["pil_w"]
     a_lo, a_hi = a_start - pw / 2, a_start + nbays * bay + pw / 2
-    wins, rel_ops = [], []
+    wins, rel_ops, fields = [], [], []
+    fw2 = 1.2                            # half-width of the sunk window field (ref 01: ~2.4 m)  PROBABLE
     for i in range(nbays):
         ac = a_start + (i + 0.5) * bay
         wins.append((ac - ww / 2, ac + ww / 2, Z["win0"], Z["win1"]))
+        fields.append((ac - fw2, ac + fw2, Z["win0"] - 0.1, Z["ent0"]))
         rel_ops.append((ac - rel / 2, ac + rel / 2, Z["rel0"], Z["rel1"]))
     if lod >= 2:
         for i, (wa0, wa1, wc0, wc1) in enumerate(wins):
@@ -179,7 +184,12 @@ def folger_bay_facade(m, fr, F, Z, a_start, nbays, lod, key, reliefs, wall_depth
     # recessed wall slab b in [-wall_depth, -pp] with window + relief-field openings
     slab = L.Mesh_proxy(m, fr, -pp)
     L.wall_with_openings(slab, None, a_lo, a_hi, Z["base1"], Z["ent0"], wall_depth - pp,
-                         wins + rel_ops, "M_F01_Marble_Folger")
+                         fields + rel_ops, "M_F01_Marble_Folger")
+    # sunk window field: back wall 0.15 m behind the slab face, keyed 2 cm into the reveals
+    fld = L.Mesh_proxy(m, fr, -pp - 0.15)
+    for (fa0, fa1, fc0, fc1), win in zip(fields, wins):
+        L.wall_with_openings(fld, None, fa0 - 0.02, fa1 + 0.02, fc0, fc1 + 0.02, wall_depth - pp - 0.15, [win],
+                             "M_F01_Marble_Smooth")
     for k, (ra0, ra1, rc0, rc1) in enumerate(rel_ops):
         m.lbox(fr, ra0, ra1, -wall_depth, -pp - 0.10, rc0, rc1, "M_F01_Marble_Smooth")
         if reliefs:
@@ -193,7 +203,7 @@ def folger_bay_facade(m, fr, F, Z, a_start, nbays, lod, key, reliefs, wall_depth
         m.lbox(fr, wa0 - 0.06, wa1 + 0.06, -wall_depth + 0.02, -pp + 0.05, wc0 - 0.10, wc0 + 0.025,
                "M_F01_Marble_Smooth")
     for i in range(nbays + 1):
-        L.fluted_pilaster(m, fr, a_start + i * bay, pw, Z["base1"], Z["ent0"], -pp, pp, 6, lod,
+        L.fluted_pilaster(m, fr, a_start + i * bay, pw, Z["base1"], Z["ent0"], -pp, pp, 8, lod,
                           "M_F01_Marble_Smooth", cap_h=0.30, base_h=0.0)
 
 
@@ -218,16 +228,32 @@ def folger_upper_bands(m, fr, F, Z, a0, a1, lod, wall_depth, frieze_marks=()):
 def folger_end_section(m, fr, F, Z, a0, a1, lod, key, door=True, wall_depth=0.57, inscription=None):
     """Solid end section (faces at b = 0, ent0 and below) with an optional raised entrance and
     comedy / tragedy mask stand-in above it (P: masks "hover over the entrances")."""
-    dw, dh = 2.2, 4.0
+    dw, dh = 2.2, 4.5                   # door height photo-measured (ref 01)  PROBABLE
     ac = (a0 + a1) / 2
     zd = Z["base1"]                     # door threshold on the base course; stoop below
+    # Entrance bay as seen in ref 01 (Commons 2025, north facade from the NE): the door sits in a
+    # tall recessed panel that also holds the mask, under a projecting flat canopy at ~6.5 m.
+    pa0, pa1 = ac - dw / 2 - 0.35, ac + dw / 2 + 0.35
+    zcan, rd = Z["ent0"] - 0.9, 0.18    # canopy top meets the frieze band (ref 01); recess depth APPROXIMATE
     if lod >= 2:
         if door:
             m.lbox(fr, ac - dw / 2, ac + dw / 2, 0.0, 0.02, zd, zd + dh, "M_F01_Metal_Aluminium")
+            m.lbox(fr, pa0 - 0.35, pa1 + 0.35, 0.0, 1.0, zcan, zcan + 0.9, "M_F01_Marble_Smooth")
         return
-    ops = [(ac - dw / 2, ac + dw / 2, zd, zd + dh)] if door else []
+    ops = [(pa0, pa1, zd, zcan)] if door else []
     L.wall_with_openings(m, fr, a0, a1, Z["base1"], Z["ent0"], wall_depth, ops, "M_F01_Marble_Folger")
     if door:
+        back = L.Mesh_proxy(m, fr, -rd)
+        L.wall_with_openings(back, None, pa0 - 0.02, pa1 + 0.02, zd, zcan + 0.02, wall_depth - rd,   # keyed into the reveals
+                             [(ac - dw / 2, ac + dw / 2, zd, zd + dh)], "M_F01_Marble_Smooth")
+        # canopy slab with a stepped fascia, and a pendant lantern under it (fixture APPROXIMATE)
+        m.lbox(fr, pa0 - 0.35, pa1 + 0.35, 0.0, 1.0, zcan, zcan + 0.62, "M_F01_Marble_Smooth")
+        m.lbox(fr, pa0 - 0.25, pa1 + 0.25, 0.0, 0.9, zcan + 0.62, zcan + 0.88, "M_F01_Marble_Smooth")
+        m.lbox(fr, ac - 0.04, ac + 0.04, 0.56, 0.64, zcan - 0.35, zcan, "M_F01_Metal_Aluminium")
+        m.lbox(fr, ac - 0.16, ac + 0.16, 0.44, 0.76, zcan - 0.75, zcan - 0.35, "M_F01_Glass_NightLit")
+        for s in (-1, 1):
+            L.fluted_pilaster(m, fr, ac + s * (dw / 2 + 0.35 + 0.23), 0.4, zd, zcan, 0.0, 0.06, 3, lod,
+                              "M_F01_Marble_Smooth")
         bd = -wall_depth + 0.12
         m.lbox(fr, ac - dw / 2, ac + dw / 2, -wall_depth, bd - 0.06, zd - 0.02, zd, "M_F01_Marble_Smooth")
         m.lbox(fr, ac - dw / 2, ac + dw / 2, bd - 0.06, bd, zd, zd + dh, "M_F01_Metal_Aluminium")
@@ -241,19 +267,15 @@ def folger_end_section(m, fr, F, Z, a0, a1, lod, key, door=True, wall_depth=0.57
                 m.lbox(fr, ac - dw / 2 + 0.1, ac + dw / 2 - 0.1, bd + 0.01, bd + 0.045, z - 0.025, z + 0.025,
                        "M_F01_Metal_Aluminium")
             m.lbox(fr, ac - dw / 2, ac + dw / 2, bd, bd + 0.05, zd + dh - 0.9, zd + dh - 0.82, "M_F01_Metal_Aluminium")
-        sw = 0.28
-        m.lbox(fr, ac - dw / 2 - sw, ac - dw / 2, 0.0, 0.05, zd, zd + dh + sw, "M_F01_Marble_Smooth")
-        m.lbox(fr, ac + dw / 2, ac + dw / 2 + sw, 0.0, 0.05, zd, zd + dh + sw, "M_F01_Marble_Smooth")
-        m.lbox(fr, ac - dw / 2, ac + dw / 2, 0.0, 0.05, zd + dh, zd + dh + sw, "M_F01_Marble_Smooth")
         # stoop: three risers down to the terrace (two step blocks; the terrace is the last tread)
         L.stairs(m, fr, ac - dw / 2 - 0.2, ac + dw / 2 + 0.2, 0.04, 2, (zd - Z["zt"]) / 3, 0.34, zd - (zd - Z["zt"]) / 3,
                  "M_F01_Marble_Smooth")
-        zc = zd + dh + 1.55
+        zc = zd + dh + 0.95             # mask just above the door, inside the recess (ref 01)
         ring = [(ac + 0.62 * math.cos(2 * math.pi * k / 20), zc + 0.62 * math.sin(2 * math.pi * k / 20)) for k in range(20)]
-        m.lprism(fr, ring, 0.0, 0.06, "M_F01_Marble_Smooth")
+        m.lprism(fr, ring, -rd, -rd + 0.06, "M_F01_Marble_Smooth")
         if lod == 0:
             face = [(ac + 0.3 * math.cos(2 * math.pi * k / 16), zc + 0.4 * math.sin(2 * math.pi * k / 16)) for k in range(16)]
-            m.lprism(fr, face, 0.06, 0.11, "M_F01_Marble_Smooth")
+            m.lprism(fr, face, -rd + 0.06, -rd + 0.11, "M_F01_Marble_Smooth")
     if inscription and lod == 0:
         L.text_inscription(m, fr, inscription, ac, Z["att1"] - 0.38, 0.33, 0.2, 0.0, "M_F01_Marble_Incised",
                            FONT, max_width=(a1 - a0) - 1.2)
@@ -314,12 +336,17 @@ def build_folger(lod):
     LN = W - dS
     a_c0 = (W - nb * bay) / 2
     ca_lo, ca_hi = a_c0 - pw / 2, a_c0 + nb * bay + pw / 2
-    insc_E = ["THOU ART A MONUMENT WITHOUT A TOMBE", "AND ART ALIVE STILL WHILE THY BOOKE DOTH LIVE",
+    insc_jonson = ["THOU ART A MONUMENT WITHOUT A TOMBE", "AND ART ALIVE STILL WHILE THY BOOKE DOTH LIVE",
               "AND WE HAVE WITS TO READ AND PRAISE TO GIVE"]
-    insc_W = ["THIS THEREFORE IS THE PRAISE OF SHAKESPEARE", "THAT HIS DRAMA IS THE MIRROUR OF LIFE"]
-    folger_end_section(m, frN, F, Z, 0.0, ca_lo, lod, "fN-E", door=True, wall_depth=dN, inscription=insc_E)
+    insc_johnson = ["THIS THEREFORE IS THE PRAISE OF SHAKESPEARE", "THAT HIS DRAMA IS THE MIRROUR OF LIFE"]
+    folger_end_section(m, frN, F, Z, 0.0, ca_lo, lod, "fN-E", door=True, wall_depth=dN)
     folger_bay_facade(m, frN, F, Z, a_c0, nb, lod, "fN", True, dN)
-    folger_end_section(m, frN, F, Z, ca_hi, LN, lod, "fN-W", door=True, wall_depth=dN, inscription=insc_W)
+    folger_end_section(m, frN, F, Z, ca_hi, LN, lod, "fN-W", door=True, wall_depth=dN)
+    if lod == 0:
+        # inscriptions in the attic over the window row, Johnson over the east half (ref 01)
+        for t, lines in ((0.25, insc_johnson), (0.75, insc_jonson)):
+            L.text_inscription(m, frN, lines, a_c0 + nb * bay * t, Z["ent1"] + 1.6, 0.33, 0.2, 0.0,
+                               "M_F01_Marble_Incised", FONT, max_width=nb * bay / 2 - 1.0)
     folger_upper_bands(m, frN, F, Z, 0.0, LN, lod, dN, frieze_marks=[a_c0 + i * bay for i in range(nb + 1)])
     # ---- West facade (2nd St; "two similar facades", P): edge NW -> SW, u = -y, spans a in [0, D]
     frW = L.Frame((x0, y1), (0, -1))
