@@ -1,0 +1,12 @@
+DC-X14 — Staff offices and Legislative Reference Service room — asset-v002
+Claimant: claude-cloud-agent · delivered 2026-10-02
+
+Full payload (meshes/*.glb, textures/*.png, source/build.py + DC-X14_kit.blend, renders/, all docs):
+  GitHub repo:    https://github.com/mattsvids4u/washington-assets
+  Branch:         asset/DC-X14-v002
+  Path:           deliveries/DC-X14/asset-v002/
+  Pull request:   https://github.com/mattsvids4u/washington-assets/pull/1
+  Work branch:    claude/eager-cray-vpg2j3 (PR #1); branch asset/DC-X14-v002 points at the same delivery commit
+
+Integrity: DELIVERY_MANIFEST.json + SHA256SUMS.txt in the same folder (also uploaded here as text).
+The GLBs (≈57 MB, textures embedded) are too large for the Drive connector; fetch them from the branch.
