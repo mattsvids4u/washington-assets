@@ -69,7 +69,8 @@ on import that `X14_ARCH_Wall_Plain_300` reads 300 × 30 × 460 UU.
 
 ## Self-review of the actual renders (be harsh)
 
-Filled in from the renders in `renders/` — see the "Render review" section at the end.
+See "Render review" at the end: every module orbit (clay + textured) and all nine interior
+views were looked at; the defects found were fixed in the generator and re-rendered.
 
 ## Expected register status changes (head agent to apply — I did not edit the sheet)
 
@@ -108,6 +109,25 @@ Filled in from the renders in `renders/` — see the "Render review" section at 
 5. Open the cited HABS/LoC records locally (EVIDENCE.md) and tell me which dimensions to
    correct; `build.py` has every dimension as a named constant at the top.
 
-## Render review
+## Render review (every image in `renders/` was looked at; defects fixed before delivery)
 
-(see below)
+Defects found and fixed during Pass 3 (all in `build.py`, all re-rendered from the final build):
+1. Exact boolean on the multi-shell wall mesh returned the opening instead of the wall → cut the bare slab first, add mouldings after. Confirmed by signed volumes (window wall 5.75 m³, door wall 3.36 m³).
+2. Duplicated cornice profile point → 4 zero-area faces (QA FAIL) → removed; QA PASS.
+3. Coincident faces (post ends vs cap/channel ends, sash rails over stiles, door muntin over lock rail, grid bars at crossings) rendered as pure black squares because Cycles' shadow rays self-block on coplanar twins → all joinery now butts rather than overlaps; cover post is 60 mm so it shares no plane with the 50 mm panel posts.
+4. Sign letters faced into the wall (mirrored from the room) → rotated to face +Y; 1967 division name replaced by the 1963 "History and Government Division".
+5. Fluorescent reflector was a solid wedge with the tubes buried inside → thin open-bottom trough; tubes now visible and emissive (KHR_materials_emissive_strength 6 survives the GLB round trip).
+6. Marble sill end flush with the exterior face → inset 10 mm.
+
+What the final images show (module orbits, 960 px, 24 samples; interiors 1152 px, 32 samples):
+- `X14_ARCH_Wall_Window_300` — reads as a deep-reveal arched window: stained oak two-light double-hung sash, arched transom with radial muntins, marble sill proud of the reveal, column radiator under it; picture rail stops at the reveal, cove cornice above. Exterior face is plaster (never seen in-game; granite belongs to DC-H04). Still APPROXIMATE: proportions, sash lights, radiator pattern.
+- `X14_ARCH_Wall_Door_300` — four-panel oak door with raised fields, brass knob and hinges, glazed two-light transom, stepped architraves both faces, baseboard returning into the architrave. The leaf's wood grain (procedural stripes at 1 m tiling) reads a little like veneer plywood at close range — fine at gameplay distance; swap in a photographed oak albedo locally if it bothers.
+- `X14_ARCH_Wall_Plain_300`, `Corner`, `Floor_300` (+ linoleum), `Ceiling_300` — correct, plain; floor strip joints read; corner is a notch filler by design (the inside mitre is formed by the two walls' trims).
+- `X14_ARCH_Pendant_Lamp` — opal bowl on a chain with canopy; bowl is a 20-segment lathe and shows facets in close-up (standard tier; raise `segs` in `build_pendant` for hero use).
+- `X14_PART_Panel_*`, `Door_090`, `Post` — gray enamel steel partitions with base channel, top cap, horizontal sheet seam, glazed uppers with beads, flush door with knobs both sides, cover post with foot plate. No artifacts after fix 3.
+- `X14_PART_DropCeiling_120` — exposed T-grid, four fissured tiles recessed, hanger wires. From eye level only the underside is seen; the overview camera at 4.2 m looks over the top, which no player camera does.
+- `X14_PART_Fluorescent_120` — two glowing tubes in an open reflector on chains, end plates; lit state only (unlit = material swap, documented in PCG_INTERFACE.json).
+- `X14_PART_Sign_Door` — brass plate, four screws, raised black lettering legible at ~1 m: "LEGISLATIVE REFERENCE SERVICE / HISTORY AND GOVERNMENT DIVISION / ROOM 128".
+- Interiors (`X14_DEMO_LRS_Room_textured_int_*`): corridor east/west show the whole idea in one frame — 4.6 m plaster room with trim, arched windows and radiators, pendants above, and the gray glazed cubicle fronts under a floating acoustic grid with chain-hung strips. Cubicle view: window, radiator, drop ceiling and two fixtures from inside a cubicle. Door view: door, transom, sign. Ceiling view: grid, hangers, fixture undersides. Clay views confirm silhouettes without materials.
+
+Known limitations left on purpose (say if you want them changed): no furniture (I09 sockets only, so the room is empty); the drop ceiling is an island with no perimeter closure strip, matching the "temporary" reading of the memoir but not a documented detail; exterior faces are untextured plaster; no dirt/wear (that is the Age + Use stage).
