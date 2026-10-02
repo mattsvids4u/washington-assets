@@ -6,13 +6,13 @@ Brief WASHINGTON-2026-09-22-v001 · Stage standard WASHINGTON-2026-09-22-v001 ·
 Claimed 2026-10-02T10:30Z — Drive folder `DC-F01 — claude-cloud-agent` (1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f), CLAIM.json 1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x
 Work branch `claude/adoring-pasteur-25ccu0`; delivery branch pattern `asset/DC-F01-v###`.
 
-Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (pending final render review) · v001 delivery in preparation.**
+Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (final render review after the winding fix) · v001 delivery in preparation.**
 
 | Pass | Result |
 |---|---|
 | 1 Evidence | EVIDENCE.md + research/ fact sheets (WebSearch text only; image hosts blocked by the environment allowlist, so no photo inspected) |
 | 2 Build | build.py → 3 GLBs (LOD0-2, UCX, sockets, PBR textures); ~50 s full rebuild |
-| 3 Verify | qa_check 20/20 on all three; clean rebuild byte-identical (GLBs + textures); clay/textured/street/night/pass/LOD renders inspected; fixes applied (see Pass log) |
+| 3 Verify | qa_check 20/20 on all three; per-shell orientation audit 0 inward-wound shells on all 9 LOD meshes; exposed-coplanar gate PASS on all 9 (`out/coplanar_report.txt`); clean rebuild byte-identical (32 files: GLBs, textures, reports); clay/textured/street/night/pass/LOD renders inspected; fixes applied (see Pass log) |
 
 ## Problem
 
@@ -34,7 +34,7 @@ Shakespeare Library and Cannon House Office Building.
 |---|---|---|
 | **v001** | C10 hard-locks: **Library of Congress Annex**, **Folger Shakespeare Library**, **Cannon House Office Building** | Road Plan 05 addendum names F01 the C10 hard-lock owner; these frame the C9 arrival (both route options pass them); none needs C20, and C18 is not yet approved |
 | v002 | U.S. Courthouse (C4/C5) + Post Office Department + IRS (C2–C4) | needs C18 (federal limestone bay, not yet approved) and C20 (red tile roof, v005 APPROVED per Drive) for honest Federal Triangle vocabulary |
-| v003 | SOB / NSOB only if Matt confirms they stay with F01 | Road Plans canon v002 assigns SOB/NSOB to DC-F02; request text lists them under F01 — **ownership conflict raised, not built** |
+| v003 | SOB / NSOB only if Matt confirms they stay with F01 | Road Plans canon v002 assigns SOB/NSOB to DC-F02; request text lists them under F01 — **ownership conflict raised, not built**. Update 2026-10-02: DC-F02 (another claude-cloud-agent session) delivered the SOB as F02 asset-v001 and plans the NSOB as its v002 → recommend F01 drops v003 |
 
 ## Locked sources (filled in during Pass 1 — see EVIDENCE.md)
 
@@ -57,14 +57,17 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
 
 ## Passes
 
-1. **Evidence** — EVIDENCE.md per building: dated sources with URL/archive ID, rights, what each supports, 1963 vs later changes, APPROXIMATE/FICTIONALISED labels; evidence card per building (footprint, height, storeys, bays, materials). *(in progress)*
+1. **Evidence** — EVIDENCE.md per building: dated sources with URL/archive ID, rights, what each supports, 1963 vs later changes, APPROXIMATE/FICTIONALISED labels; evidence card per building (footprint, height, storeys, bays, materials). *(done; photo inspection blocked, see EVIDENCE.md)*
 2. **Build** — `python jobs/DC-F01/build.py` rebuilds everything from scratch (geometry, textures, GLBs, layout).
-3. **Verify** — `tools/qa_check.py` on every GLB (fix every FAIL); clay + textured renders; harsh comparison against evidence and moodbook; iterate; clean rebuild from empty `out/`.
+3. **Verify** — `tools/qa_check.py` on every GLB (fix every FAIL); per-shell orientation audit and `run_coplanar.sh` (visible z-fighting) on every LOD; clay + textured renders; harsh comparison against evidence and moodbook; iterate; clean rebuild from empty `out/`.
 4. **Deliver** — `deliveries/DC-F01/asset-v001/`, `package_delivery.py`, branch `asset/DC-F01-v001` + PR, Drive `Incoming Deliveries/DC-F01 — asset — v001`.
 
 ## Acceptance checks
 
 - qa_check.py: all PASS for all GLBs (bounds, ground contact, UVs, materials, no degenerate faces, outward normals, LOD1 present, UCX present, transforms applied).
+- Every closed shell wound outward (build.py `orientation_audit`, reported as `inward_wound_shells` in build_report.json): 0 on every LOD. qa_check's signed-volume test only checks the whole-LOD sum, which can hide inverted parts.
+- No coincident same-direction faces a viewer can see (`coplanar_check.py` via `run_coplanar.sh`; the gate fails above 0.05 m² visible per LOD) — these z-fight in Unreal and render as black bands in Cycles.
+- Materials single-sided (glTF `doubleSided: false`).
 - Dimensions within ±5 % of the evidence card values used (bbox printed by build.py and recorded in HANDOFF.md).
 - Each building's renders show its identifying features (listed per building in EVIDENCE.md) — not a box with a window texture: real openings, depth, cornice shadow lines.
 - No post-1963 elements (e.g. Folger 2020s entrance pavilions/ramps, Adams-era signage, Cannon Renewal changes).
@@ -85,10 +88,17 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
 3. Annex review: read as a generic office block → pavilions 0.9 m proud, deep sunk strips, darker statuary bronze, owl stand-ins moved onto the stair cheek walls (were buried), one figure panel per door leaf (six Lawrie figures per three-pair entrance), then **bronze spandrels** (SAH contrasts "window bays" with "marble-clad" piers) and taller windows → vertical bays now read.
 4. Cannon review: dense attic window grid looked modern → one attic window per bay below; geometry budget 417k → 226k LOD0 tris (two-segment flutes, turned balusters only on visible fronts, glass-only court windows, lighter LOD1).
 5. Pass-3 render review: a black vertical band at the Cannon's SE base corner. Cause: the right-angle corner flags were shifted by one edge. SE was treated as obtuse, adding an overlapping wedge; the N/chamfer corner was treated as a right angle, so its slab stopped short. Fixed (`right = [True, True, False, False, False]`); SE and NW corners re-rendered clean, and the Cannon standard and street views were re-rendered from the fixed GLB.
+6. Pass-3 render review, second round: black bands along the Annex parapets (coping and attic coping overlapping the slab tops), Cannon window openings sitting 0.15–0.3 m off their frames on the oblique fronts (inset slab polygons slide their vertices along the edges; openings now shifted into each slab's own frame), and a Cannon cornice strip overlapping the entablature ring (profiles now start at the core face). All fixed in the generator.
+7. Automated geometry gates, because eyeballing renders kept missing defects:
+   - **Inside-out boxes (serious).** `coplanar_check.py` showed glass panes coincident with walls. The cause: `lbox`, the facade-frame box used for most detail on all three buildings, wound every face inward, because the facade frame is left-handed and the face list was mirrored twice. Cycles shades back faces, so renders never showed it. The GLBs only looked right because every material was exported double-sided. Fixed `lbox`; added a per-shell orientation audit to build.py (0 inward shells on every LOD); materials now export single-sided.
+   - **The checker itself.** It ray-tests each coincident same-direction overlap from just off the face, with glass treated as transparent and a terrain plane, so it reports only what a viewer can see. Across the three buildings, visible overlaps fell from ~1,620 m² before the winding fix to 0.004 m².
+   - **Fixes it found:** Folger window sills (top coplanar with the opening floor), stoops (a zero-height third step), relief frames (buried in the reveal, now lining the sunk field), grille and door glazing-bar crossings, and moulding end caps. Annex LOD2 pavilion corners (corner rule was off at LOD2, so 11 m² faces z-fought at distance). Cannon LOD2 cornice top coplanar with the core ring top. Cannon entrance-stair top tread coplanar with the plinth. Mullion and transom crossings on all three buildings.
+   - **Left as is:** two same-material slivers (15 cm² and 12 cm²) at the Cannon's obtuse SW corner, where full-length slabs meet. Both are below the gate threshold.
 
 ## Uncertainties (running list)
 
 - Reference images not inspected (environment egress allowlist); every dimension from text sources is at best PROBABLE and facade rhythm details are APPROXIMATE until Matt (or a local run) compares renders with the photos.
 - R02 footprints not available here → footprint outlines APPROXIMATE.
 - 1930s federal/institutional sculpture (Lee Lawrie doors on the Annex, John Gregory reliefs on the Folger): rights unconfirmed → accurate massing with labelled simplified stand-ins (stage standard §7).
-- SOB/NSOB F01-vs-F02 ownership (see version plan).
+- SOB/NSOB F01-vs-F02 ownership (see version plan); F02 has now built the SOB.
+- Cannon colonnade coupled (F01) vs F02's single-column reading of the twin SOB — one of the two is wrong; photo check, then align (HANDOFF UNIFICATION PROPOSAL 0).

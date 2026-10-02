@@ -16,9 +16,9 @@ autumn 1963 state, under their 1963-facing names:
 
 | Asset | GLB | LOD0 / LOD1 / LOD2 tris | Size (m) | Identity features modelled |
 |---|---|---|---|---|
-| **Library of Congress Annex** | `SM_F01_LOCAnnex.glb` | __ANNEX_TRIS__ | __ANNEX_SIZE__ | 400 × 225 ft footprint; corner and central pavilions linked by recessed fenestrated curtains; vertically linked bays (bronze spandrels with honeysuckle ornament) between narrow marble piers; NC pink granite skirt; attic set back 35 ft; three-tier aged copper roof; 3 + 3 bronze door pairs (W/E) and the south pair on the owl-and-lamp stair; figure-per-leaf door stand-ins |
-| **Folger Shakespeare Library** | `SM_F01_Folger.glb` | __FOLGER_TRIS__ | __FOLGER_SIZE__ | 226 × 111 × 48 ft on a marble plinth; nine tall windows with cast-aluminium Art Deco grilles between fluted pilasters; nine 6 × 6 ft relief panels (stand-ins); incised frieze; broad attic carrying the verified Jonson and Johnson inscriptions; slight top recession; end entrances with mask medallions; three-bay west front; blank east wall with comedy/tragedy masks; U-plan rear with the 1958–59 one-storey infill; terrace with the 25 × 135 ft lawn bed, front wall and stairs; marble Puck fountain on the west lawn (stand-in figure) |
-| **Cannon House Office Building** | `SM_F01_Cannon.glb` | __CANNON_TRIS__ | __CANNON_SIZE__ | hollow trapezoid on Square 690, New Jersey Ave diagonal; rusticated arcaded base (keystoned arched windows, basement windows, granite plinth); **34 fluted Doric columns (17 coupled pairs)** in a deep loggia on Independence Ave; coupled-pilaster pilastrade on the other fronts; Doric entablature with triglyphs and mutules; balustrade; recessed attic (4th + 5th storeys); chamfered NW rotunda-corner main entrance; limestone court fronts; 1955 garage-deck court |
+| **Library of Congress Annex** | `SM_F01_LOCAnnex.glb` | 103,476 / 41,836 / 4,500 | 126.96 × 72.84 × 31.20 (12.5 MB) | 400 × 225 ft footprint; corner and central pavilions linked by recessed fenestrated curtains; vertically linked bays (bronze spandrels with honeysuckle ornament) between narrow marble piers; NC pink granite skirt; attic set back 35 ft; three-tier aged copper roof; 3 + 3 bronze door pairs (W/E) and the south pair on the owl-and-lamp stair; figure-per-leaf door stand-ins |
+| **Folger Shakespeare Library** | `SM_F01_Folger.glb` | 45,254 / 6,334 / 984 | 85.38 × 46.33 × 14.63 incl. terrace and fountain (4.7 MB) | 226 × 111 × 48 ft on a marble plinth; nine tall windows with cast-aluminium Art Deco grilles between fluted pilasters; nine 6 × 6 ft relief panels (stand-ins); incised frieze; broad attic carrying the verified Jonson and Johnson inscriptions; slight top recession; end entrances with mask medallions; three-bay west front; blank east wall with comedy/tragedy masks; U-plan rear with the 1958–59 one-storey infill; terrace with the 25 × 135 ft lawn bed, front wall and stairs; marble Puck fountain on the west lawn (stand-in figure) |
+| **Cannon House Office Building** | `SM_F01_Cannon.glb` | 225,852 / 65,540 / 6,356 | 132.77 × 117.06 × 28.40 incl. plinth and stairs (22.7 MB) | hollow trapezoid on Square 690, New Jersey Ave diagonal; rusticated arcaded base (keystoned arched windows, basement windows, granite plinth); **34 fluted Doric columns (17 coupled pairs)** in a deep loggia on Independence Ave; coupled-pilaster pilastrade on the other fronts; Doric entablature with triglyphs and mutules; balustrade; recessed attic (4th + 5th storeys); chamfered NW rotunda-corner main entrance; limestone court fronts; 1955 garage-deck court |
 
 Each GLB contains `<name>_LOD0/1/2`, convex `UCX_<name>_NN` collision hulls, and `SOCKET_*`
 empties (entrances, lamps, typed kit swap points, and pending signage). Material slots are stable
@@ -31,8 +31,11 @@ grade, +X east, +Y north.
 
 | Gate | Result |
 |---|---|
-| GLB reopen QA (`tools/qa_check.py`) | __QA__ |
-| Clean rebuild (delete `out/`, rerun) | __REBUILD__ |
+| GLB reopen QA (`tools/qa_check.py`) | **20/20 PASS** on all three GLBs |
+| Shell orientation (build.py `orientation_audit`) | **0 inward-wound shells** on all 9 LOD meshes (`build_report.json` → `inward_wound_shells`) |
+| Visible coincident faces (`source/coplanar_check.py`, `run_coplanar.sh`) | **PASS** on all 9 LOD meshes (`coplanar_report.txt`): 0.004 m² visible in total, two same-material slivers at the Cannon SW corner; gate fails above 0.05 m² per LOD |
+| Materials | single-sided (glTF `doubleSided: false`); every shell is closed and outward-wound |
+| Clean rebuild (delete `out/`, rerun) | **byte-identical**: all 32 output files (3 GLBs, 27 textures, build report, PCG interface) hash-match a rebuild into an empty directory |
 | Actual-output renders | clay + textured front/profile/rear/¾ (`renders/standard/`); street-level car-height views, night lit-window views, base-colour/roughness/normal passes, clay street views and LOD1/LOD2 views (`renders/review/`) |
 | Unreal import / readback | **NOT_RUN — needs local Unreal (UE 5.8)** |
 | Motion / drive-by tests | **NOT_RUN — needs local Unreal (UE 5.8)** |
@@ -89,9 +92,19 @@ grade, +X east, +Y north.
 - **SOB / NSOB ownership conflict:**
   - The DC-F01 request lists the Senate Office Building and New Senate Office Building.
   - DC-F02 and Road Plans canon v002 assign both to F02.
-  - **Matt: confirm the owner.** F01 has not built either.
+  - Another claude-cloud-agent session has since claimed DC-F02 (2026-10-02T11:14Z). It delivered the Senate Office Building as `DC-F02 — asset — v001` and proposes the New SOB as its v002.
+  - **Recommendation:** F02 keeps both, and F01 drops them from its scope. **Matt: confirm.** F01 has built neither.
 
 ## UNIFICATION PROPOSALS
+
+0. **Cannon (F01) and Senate Office Building (F02) are twins, so make them agree.**
+   - AOC calls the two Carrère & Hastings buildings "almost identical"; each has 34 fluted Doric columns facing the Capitol and a pilastrade on the diagonal avenue.
+   - The two agent deliveries currently disagree on the colonnade:
+     - F01 v001 builds the Cannon's 34 columns as 17 coupled pairs (PROBABLE, from SAH's "doubled fluted columns … doubled pilasters" and the Colonnade du Louvre analogy).
+     - F02 v001 builds the SOB's 34 as evenly spaced free-standing columns (3.30 m c/c).
+   - At most one reading is right for both. After a photo check, align both generators: F01 is one parameter (`CANNON["n_pairs"]`, `pair_cc`).
+   - The column, entablature, balustrade and rusticated-base vocabulary could then be shared between the two jobs.
+   - I have not touched F02's files.
 
 1. **DC-C19 runtime-light Doric.**
    - C19 v004 is sculpt-review density (Corinthian LOD0 740k tris) and lists a lighter runtime version as open.
@@ -106,20 +119,25 @@ grade, +X east, +Y north.
 4. **Night glazing slot convention.**
    - F01 uses a two-slot glazing convention: `M_F01_Glass` (day) and `M_F01_Glass_NightLit` (~35 %, stable hash).
    - Propose it as the corridor-wide convention so DC-L01 can drive night states without per-building logic.
-5. **No DALLAS parent** (NEW), so there is nothing to propose upstream to DALLAS.
+5. **Two geometry gates for every agent delivery.**
+   - `tools/qa_check.py` checks signed volume per LOD as a whole, so inverted parts can hide inside a positive total. That is how F01's inside-out facade boxes went unnoticed until Pass 3 (see PASS_PLAN log 7).
+   - Propose adding a per-shell orientation audit and the exposed-coplanar check (`source/coplanar_check.py`, generator-agnostic, works on any GLB) to `tools/`. Every agent delivery would then be gated on "no inside-out shells, no visible z-fighting".
+   - F01 has not edited the shared `tools/`.
+6. **No DALLAS parent** (NEW), so there is nothing to propose upstream to DALLAS.
 
 ## What Matt should look at
 
 1. `renders/review/*_textured_street_*.png`: the three buildings at car height, compared with your own knowledge or photos of each.
-2. **Cannon colonnade pairing** (`SM_F01_Cannon_textured_detail_colonnade.png`): coupled (built) vs evenly spaced single columns. It is one parameter (`CANNON["n_pairs"]`, `pair_cc`).
+2. **Cannon colonnade pairing** (`SM_F01_Cannon_textured_detail_colonnade.png`): coupled (built) vs evenly spaced single columns. It is one parameter (`CANNON["n_pairs"]`, `pair_cc`). F02's twin SOB uses single columns; see UNIFICATION PROPOSAL 0.
 3. **Annex spandrels** (`SM_F01_LOCAnnex_textured_street_w.png`): bronze (built, PROBABLE) vs marble.
 4. **Folger front** (`SM_F01_Folger_textured_street_n.png`, `detail_bays`): grilles, relief stand-ins, attic inscriptions.
 5. Night views (`*_night_*.png`) for the moving-car-at-night read.
-6. Decisions: the SOB/NSOB owner; whether to keep the Folger inscriptions at APPROXIMATE positions; any of the dimensions above.
+6. **On UE import:** materials arrive one-sided. A missing face seen from outside would mean a winding bug; the audit reports none, so please flag any you find.
+7. Decisions: the SOB/NSOB owner; whether to keep the Folger inscriptions at APPROXIMATE positions; any of the dimensions above.
 
 ## Files
 
 `PASS_PLAN.md` · `CONTEXT_ACK.json` · `EVIDENCE.md` · `HANDOFF.md` · `DEPENDENCY_LOCK.json` · `PCG_INTERFACE.json` ·
 `REUSABLE_COMPONENTS.json` · `NEXT_CHAT_PROMPT.txt` + `DISPATCH_LOG.json` (successor note; no claim queued) ·
-`source/` (build.py, f01lib.py, f01mat.py, render_review.py, render_all.sh, make_delivery.sh, make_previews.py) ·
+`source/` (build.py, f01lib.py, f01mat.py, render_review.py, render_all.sh, make_delivery.sh, make_previews.py, coplanar_check.py, run_coplanar.sh) · `coplanar_report.txt` ·
 `meshes/*.glb` · `textures/*.png` · `renders/` · `research/` · `build_report.json` · `DELIVERY_MANIFEST.json` · `SHA256SUMS.txt`

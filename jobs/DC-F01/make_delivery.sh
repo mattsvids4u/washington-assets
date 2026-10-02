@@ -11,7 +11,8 @@ cp $J/PASS_PLAN.md $J/CONTEXT_ACK.json $J/EVIDENCE.md $J/HANDOFF.md $J/DEPENDENC
    $J/REUSABLE_COMPONENTS.json $J/NEXT_CHAT_PROMPT.txt $J/DISPATCH_LOG.json "$D"/
 cp $J/out/PCG_INTERFACE.json $J/out/build_report.json "$D"/
 cp $J/build.py $J/f01lib.py $J/f01mat.py $J/render_review.py $J/render_all.sh $J/make_delivery.sh \
-   $J/make_previews.py "$D"/source/
+   $J/make_previews.py $J/coplanar_check.py $J/run_coplanar.sh "$D"/source/
+cp $J/out/coplanar_report.txt "$D"/
 cp $J/out/*.glb "$D"/meshes/
 cp $J/out/textures/*.png "$D"/textures/
 cp -r $J/renders/standard $J/renders/review "$D"/renders/

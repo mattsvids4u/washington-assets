@@ -2,7 +2,7 @@
   "context_revision": "WASHINGTON-2026-09-22-v001",
   "context_url": "https://docs.google.com/document/d/1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4/edit",
   "context_modified_utc": "2026-09-25T05:06:18Z",
-  "checked_utc": "2026-10-02T10:28:00Z",
+  "checked_utc": "2026-10-02T12:40:00Z",
   "worker_task": "DC-F01 - Federal background assemblies",
   "job_id": "DC-F01",
   "owner_set": "DC-EXT1 Exterior Standard (AGENTS lane)",
@@ -82,6 +82,13 @@
         "1_MPJ1csWFnqbf-QdiJ0ScAUajy8q7MmK (DC-X14 CLAIM.json, branch claude/eager-cray-vpg2j3)",
         "1nI803aJfHuCuLJvSXHdIM97AbLF2fsfh (DC-V01 CLAIM.json, branch claude/blissful-darwin-vcixl8)"
       ]
+    },
+    {
+      "doc": "DC-F02 — asset — v001 / HANDOFF.md (another claude-cloud-agent session; read-only)",
+      "id": "1SXt6CY4Vvyly8bAyfSaHpmaBPznSRRCe",
+      "revision": "asset-v001 (Senate Office Building)",
+      "modified_utc": "2026-10-02T11:59:06Z",
+      "why": "SOB/NSOB scope overlap with the F01 request, and twin-building consistency with the Cannon (colonnade reading)"
     }
   ],
   "moodbook": {
@@ -134,7 +141,8 @@
     "Register lags Drive: DC-C20 shows UNCLAIMED but Drive holds 'DC-C20 — asset — v005 APPROVED'; DC-V01 shows CLAIMED (Lu) but a claude-cloud-agent claim folder was created 2026-10-02T10:17Z by another session.",
     "SOB / NSOB ownership: the DC-F01 request mission lists 'the 1963 Senate Office Building / New Senate Office Building', but DC-F02 and Road Plans canon v002 assign SOB/NSOB to DC-F02. DC-F01 v001 does not build them; Matt/head agent to confirm.",
     "Network egress allowlist in this cloud environment blocks loc.gov, Wikimedia, NARA, NPS, AOC, DC Planning, archive.org, HathiTrust, Flickr (HTTP 403 from the policy proxy) for both curl and WebFetch. Reference images could not be opened; WebSearch text summaries only.",
-    "Moodbook and starter photos inspected as text/metadata only (see moodbook.how_inspected)."
+    "Moodbook and starter photos inspected as text/metadata only (see moodbook.how_inspected).",
+    "DC-F02 was claimed 2026-10-02T11:14Z by another claude-cloud-agent session and delivered asset-v001 (Senate Office Building) at 11:57Z. The SOB/NSOB overlap with the F01 request is therefore being exercised by F02; F01 recommends F02 keep both (Matt to confirm). The twin Cannon/SOB colonnades disagree (F01 coupled 17 pairs vs F02 34 single): see HANDOFF UNIFICATION PROPOSAL 0."
   ],
   "job_selection": "DC-F01 chosen as the highest-priority (P1) UNCLAIMED request in the AGENTS lane (EXT1 Unclaimed held F01 P1, F02 P2, V02 P3, V03 P3; INT1 Unclaimed held only DC-WH05, which is Ronan-authorised, outside the WASHINGTON register and depends on undelivered WH03/WH04). The two existing claude-cloud-agent claims (X14, V01) belong to other live sessions and were left alone."
 }
