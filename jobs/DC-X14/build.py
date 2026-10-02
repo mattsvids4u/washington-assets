@@ -959,8 +959,9 @@ def build_fluorescent(M):
         bm = new_bm()
         # channel body sits above z=0.06 (tubes hang below the reflector), reflector flares
         box(bm, 0, -0.07, 0.10, L, 0.07, 0.16, 0)
-        # reflector: swept trapezoid profile along X
-        prof = [(0.0, -0.07), (0.0, 0.07), (-0.06, 0.16), (-0.065, 0.16), (-0.065, -0.16), (-0.06, -0.16)]
+        # reflector: thin open-bottom trough (3 mm sheet) swept along X — tubes hang inside it, visible from below
+        prof = [(0.0, -0.07), (-0.065, -0.16), (-0.068, -0.157), (-0.003, -0.067),
+                (-0.003, 0.067), (-0.068, 0.157), (-0.065, 0.16), (0.0, 0.07)]   # (z offset, y)
         # sweep expects (lateral, depth) with lateral along cross(t, n); use n = +Z, t = +X -> lateral = -Y
         sweep(bm, [(d, z) for (z, d) in prof], [(0, 0, 0.10), (L, 0, 0.10)], normal=(0, 0, 1), mat=0)
         if lod == 0:

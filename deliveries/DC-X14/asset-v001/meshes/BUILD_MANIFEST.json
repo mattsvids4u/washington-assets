@@ -270,7 +270,7 @@
         "X14_PART_Fluorescent_120_Tubes_LOD2",
         "UCX_X14_PART_Fluorescent_120_01"
       ],
-      "lod0_faces": 69,
+      "lod0_faces": 71,
       "materials": [
         "MI_X14_FluorTube_Lit",
         "MI_X14_Metal_Painted"
