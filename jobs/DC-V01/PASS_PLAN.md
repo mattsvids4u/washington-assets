@@ -86,7 +86,8 @@ through the glass, MP/DC roof letters, single red beacon, POLICE trunk marking, 
   car reads grounded from kerb height; door armrests; slightly more convex door skins. Defects found
   by new close-up renders and fixed: radiator support poking through the hood lip (shipped unnoticed
   in v001's final GLB), floating rocker strip (v001 too), mirrored door-seal text, chrome-plug
-  headlamps. Determinism regression (bevelled plate UVs) found and fixed; sliver-face cleanup added.
+  headlamps. Determinism regression (bevelled plate UVs) found and fixed; sliver-face cleanup added (meshes now
+  exported pre-triangulated, QA 585/585 + 520/520); rocker strip wrap target extended to the door skins.
 - Next pass (after Matt's review): identity correction if the 1963 make is established; body
   side sculpting (side spear / fender character line), trunk dressing, siren and spotlight, DPD
   livery layer for V07, lit beacon state as a material switch in UE.

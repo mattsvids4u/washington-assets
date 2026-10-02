@@ -1070,7 +1070,19 @@ def side_details(panels):
             bm_cylinder(bm, (x, y + 9, 85.2), "x", 1.1, -1.2, 1.8, segs=12)
     out.append(new_obj("DOOR_HANDLES", bm, [M["MI_V01_Chrome"]]))
     # rocker / lower body strip, following the body with a shrinkwrap
-    body = bpy.data.objects["BODY"]
+    # shrink-wrap target = body skin + door skins (doors are separate objects)
+    tparts = [duplicate(bpy.data.objects["BODY"], "tmp_target")]
+    for n_, p_ in panels.items():
+        if n_.startswith("DOOR"):
+            d = duplicate(p_, "tmp_door")
+            d.parent = None
+            d.matrix_world = p_.matrix_world.copy()
+            tparts.append(d)
+    set_active(tparts[0])
+    for o in tparts:
+        o.select_set(True)
+    bpy.ops.object.join()
+    body = tparts[0]
     for side, tag in ((1, "L"), (-1, "R")):
         bm = bmesh.new()
         n = 40
@@ -1093,6 +1105,7 @@ def side_details(panels):
             for f in bmq.faces: f.normal_flip()
         bmq.to_mesh(strip.data); bmq.free()
         out.append(strip)
+    bpy.data.objects.remove(body, do_unlink=True)
     # driver-side round mirror
     bm = bmesh.new()
     bm_cylinder(bm, (band_x(100) + 4, -25, 100), "x", 0.8, 0, 9, segs=10)

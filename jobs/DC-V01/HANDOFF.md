@@ -115,7 +115,7 @@ is defined in build.py for the lit state; swap on the dome) · CT: `MI_V01_Paint
 |---|---|
 | Pass 1 evidence | done (EVIDENCE.md) |
 | Clean rebuild | PASS — `out/` deleted, `python jobs/DC-V01/build.py`, both GLBs byte-identical to the previous build (SHA256 compared) |
-| GLB reopen QA (`tools/qa_check.py`) | PASS 515/515 (MPDC), 455/455 (neutral base): bounds, ground contact, UVs, materials, degenerate faces, outward normals, applied transforms, LODs, UCX |
+| GLB reopen QA (`tools/qa_check.py`) | PASS 585/585 (MPDC), 520/520 (neutral base) — meshes are now exported pre-triangulated: bounds, ground contact, UVs, materials, degenerate faces, outward normals, applied transforms, LODs, UCX |
 | Actual-output renders | clay + textured front/profile/rear/¾, orthographic top and underside, posed-open view, four close-up detail views (front fender, door belt, rear wheel at kerb height, grille low) (`renders/`) |
 | Visual self-review vs E1 + moodbook p.10–12 | roof layout/orientation, beacon, trunk marking, seal, light body, chrome, whitewalls match E1; silhouette reads as a 1962–63 full-size sedan; see "What Matt should look at" |
 | Unreal 5.8 import / native readback | **NOT_RUN — needs local Unreal (UE 5.8)** |
@@ -125,7 +125,7 @@ is defined in build.py for the lit state; swap on the dome) · CT: `MI_V01_Paint
 ## Expected register status changes (head agent edits the sheet; not done by this agent)
 - DC-V01: asset_status CLAIMED → DELIVERED; claim_owner "claude-cloud-agent — DC-V01" (prior
   "V01 - MPD Patrol Car / Lu / ChatGPT" is RELEASED per Drive); delivery_integrity
-  "v002 SHA256 verified; clean rebuild byte-identical; QA 515/515; Unreal NOT_RUN" (v001 superseded);
+  "v002 SHA256 verified; clean rebuild byte-identical; QA 585/585; Unreal NOT_RUN" (v001 superseded);
   asset_user_approval PENDING; integration_status NOT_STARTED.
 - DC-V02 "Depends on": a candidate production sedan base now exists
   (`SM_V01_Sedan_Base_Neutral.glb`, asset/DC-V01-v001) — not approved until Matt says so.
