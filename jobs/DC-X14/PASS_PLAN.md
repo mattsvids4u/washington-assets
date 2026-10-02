@@ -41,10 +41,20 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
 
 ## Passes
 
-1. Evidence (this run) — EVIDENCE.md, gates, APPROXIMATE/FICTIONALISED labels. **DONE 2026-10-02** (image inspection blocked, see below).
-2. Build — `jobs/DC-X14/build.py` rebuilds everything from scratch (geometry, generated PBR textures, GLBs).
-3. Verify — `tools/qa_check.py` per GLB, `tools/render_views.py` clay + textured per module, custom interior renders of the demo room, harsh self-review, clean rebuild.
-4. Deliver — `deliveries/DC-X14/asset-v001/`, branch `asset/DC-X14-v001`, PR, Drive Incoming Deliveries folder.
+1. Evidence — **DONE 2026-10-02.** Web-search leads first; Matt then supplied the FY1963 Annual
+   Report, the LCIB 1997 memoir text and photos, HABS DC-351 frames, the first-floor plan and
+   the 1953 LRS photo thumbnail (EVIDENCE.md E12–E18). Naming gate cleared; dimensions gate open.
+2. Build — **DONE 2026-10-02.** `build.py` v1: 16 modules + demo. Iterations: (a) exact boolean
+   failed on multi-shell walls → cut the bare slab, add trims after; (b) degenerate faces from a
+   duplicated cornice profile point → cleaned; (c) sign text used the 1967 division name → 1963
+   "History and Government Division"; (d) coplanar post/cap faces z-fought → posts inset;
+   (e) sign letters faced into the wall → rotated; (f) 0.6 m filler panel added so the 9 m demo
+   run closes exactly; (g) corner module reduced to a notch filler (wall trims mitre by union).
+3. Verify — **IN PROGRESS.** QA: 17/17 GLBs PASS after each iteration. Renders: full module
+   orbit set + 9 interior views being produced; self-review in HANDOFF.md. Clean rebuild:
+   isolated rebuild compared by SHA-256 (result recorded in HANDOFF.md).
+4. Deliver — NEXT: `deliveries/DC-X14/asset-v001/`, branch `asset/DC-X14-v001`, PR, Drive
+   Incoming Deliveries folder `DC-X14 — asset — v001`.
 
 ## Acceptance checks
 
@@ -60,9 +70,10 @@ Assembly: `X14_DEMO_LRS_Room` — a 9 × 6 m division room assembled from the ki
 
 ## Uncertainties
 
-- Sandbox egress blocks loc.gov, tile.loc.gov, Wikipedia/Commons, archive.org, HathiTrust: catalog
-  records are cited but **no reference image could be opened or saved**. Everything dimensional is
-  APPROXIMATE. Matt (or a local run) should open the cited records and compare.
+- Sandbox egress blocks loc.gov, tile.loc.gov, Wikipedia/Commons, archive.org, HathiTrust. Matt
+  supplied the key files by hand (EVIDENCE.md E12–E18); still missing: HABS DC-351 data pages and
+  frames 22/23, the 1953 photo at full size, Annual Report Ch. V. Everything dimensional stays
+  APPROXIMATE until those are compared.
 - Exact 1963 room assignment of LRS divisions in the Main Building: PROBABLE (NW/SW curtains and
   pavilions, Great Hall upper level, first-floor east corridor) from a 1967 account; not a 1963 document.
 - Partition colour, height and glazing pattern: APPROXIMATE (gray, c. 2.1 m, obscure-glass uppers).

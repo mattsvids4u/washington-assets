@@ -549,7 +549,7 @@ def build_wall_window(M):
         box(bm, x0, fy, WIN_SILL, x0 + fw, fy + fd, WIN_SILL + jamb_h, 3)
         box(bm, x0 + WIN_W - fw, fy, WIN_SILL, x0 + WIN_W, fy + fd, WIN_SILL + jamb_h, 3)
         # transom bar between sash and arched light
-        box(bm, x0, fy, WIN_SILL + jamb_h - 0.05, x0 + WIN_W, fy + fd + 0.02, WIN_SILL + jamb_h + 0.03, 3)
+        box(bm, x0 + fw, fy, WIN_SILL + jamb_h - 0.05, x0 + WIN_W - fw, fy + fd + 0.02, WIN_SILL + jamb_h + 0.03, 3)
         if lod <= 1:
             # Double-hung: lower sash (inner plane) and upper sash (outer plane), each 2 lights.
             sash_h = (jamb_h - 0.05) / 2
@@ -558,11 +558,11 @@ def build_wall_window(M):
                 sw = 0.045
                 box(bm, x0 + fw, yy, zb, x0 + fw + sw, yy + 0.028, zb + sash_h, 3)
                 box(bm, x0 + WIN_W - fw - sw, yy, zb, x0 + WIN_W - fw, yy + 0.028, zb + sash_h, 3)
-                box(bm, x0 + fw, yy, zb, x0 + WIN_W - fw, yy + 0.028, zb + sw, 3)
-                box(bm, x0 + fw, yy, zb + sash_h - sw, x0 + WIN_W - fw, yy + 0.028, zb + sash_h, 3)
+                box(bm, x0 + fw + sw, yy, zb, x0 + WIN_W - fw - sw, yy + 0.028, zb + sw, 3)
+                box(bm, x0 + fw + sw, yy, zb + sash_h - sw, x0 + WIN_W - fw - sw, yy + 0.028, zb + sash_h, 3)
                 if lod == 0:  # single vertical muntin per sash (two lights)
                     cx = x0 + WIN_W / 2
-                    box(bm, cx - 0.012, yy, zb, cx + 0.012, yy + 0.028, zb + sash_h, 3)
+                    box(bm, cx - 0.012, yy, zb + sw, cx + 0.012, yy + 0.028, zb + sash_h - sw, 3)
             # Arched transom: fixed frame ring following the arch (polyline sweep) + radial muntins.
             r = WIN_W / 2
             cx = x0 + r
@@ -652,7 +652,8 @@ def door_leaf(bm, w, h, t, mat_door, mat_brass, lod, hinge_left=True):
     # centre muntin and recessed panels (panels 12 mm in from each face)
     mu = 0.09
     cx = w / 2
-    box(bm, cx - mu / 2, 0, rl, cx + mu / 2, t, h - rt, mat_door)
+    box(bm, cx - mu / 2, 0, rl, cx + mu / 2, t, zl, mat_door)
+    box(bm, cx - mu / 2, 0, zl + mid, cx + mu / 2, t, h - rt, mat_door)
     inset = 0.012
     for (xa, xb) in ((st, cx - mu / 2), (cx + mu / 2, w - st)):
         for (za, zb) in ((rl, zl), (zl + mid, h - rt)):
@@ -688,9 +689,9 @@ def build_wall_door(M):
         # Door frame (jamb lining) through the wall thickness.
         box(bm, x0, -WALL_T, 0, x0 + frame_t, 0, DOOR_H + TRANS_H, 1)
         box(bm, x0 + DOOR_W - frame_t, -WALL_T, 0, x0 + DOOR_W, 0, DOOR_H + TRANS_H, 1)
-        box(bm, x0, -WALL_T, DOOR_H + TRANS_H - frame_t, x0 + DOOR_W, 0, DOOR_H + TRANS_H, 1)
+        box(bm, x0 + frame_t, -WALL_T, DOOR_H + TRANS_H - frame_t, x0 + DOOR_W - frame_t, 0, DOOR_H + TRANS_H, 1)
         # Transom bar
-        box(bm, x0, -WALL_T, DOOR_H, x0 + DOOR_W, 0, DOOR_H + 0.05, 1)
+        box(bm, x0 + frame_t, -WALL_T, DOOR_H, x0 + DOOR_W - frame_t, 0, DOOR_H + 0.05, 1)
         if lod <= 1:
             # Architrave both faces (room side and back side), mitred around the opening.
             seg = [(x0 - 0.002, 0, 0), (x0 - 0.002, 0, DOOR_H + TRANS_H + 0.002),
@@ -701,10 +702,10 @@ def build_wall_door(M):
             # Transom sash (fixed) with 2 lights
             box(bm, x0 + frame_t, -0.16, DOOR_H + 0.05, x0 + frame_t + 0.04, -0.12, DOOR_H + TRANS_H - frame_t, 2)
             box(bm, x0 + DOOR_W - frame_t - 0.04, -0.16, DOOR_H + 0.05, x0 + DOOR_W - frame_t, -0.12, DOOR_H + TRANS_H - frame_t, 2)
-            box(bm, x0 + frame_t, -0.16, DOOR_H + 0.05, x0 + DOOR_W - frame_t, -0.12, DOOR_H + 0.09, 2)
-            box(bm, x0 + frame_t, -0.16, DOOR_H + TRANS_H - frame_t - 0.04, x0 + DOOR_W - frame_t, -0.12, DOOR_H + TRANS_H - frame_t, 2)
+            box(bm, x0 + frame_t + 0.04, -0.16, DOOR_H + 0.05, x0 + DOOR_W - frame_t - 0.04, -0.12, DOOR_H + 0.09, 2)
+            box(bm, x0 + frame_t + 0.04, -0.16, DOOR_H + TRANS_H - frame_t - 0.04, x0 + DOOR_W - frame_t - 0.04, -0.12, DOOR_H + TRANS_H - frame_t, 2)
             if lod == 0:
-                box(bm, MOD_W / 2 - 0.012, -0.16, DOOR_H + 0.05, MOD_W / 2 + 0.012, -0.12, DOOR_H + TRANS_H - frame_t, 2)
+                box(bm, MOD_W / 2 - 0.012, -0.16, DOOR_H + 0.09, MOD_W / 2 + 0.012, -0.12, DOOR_H + TRANS_H - frame_t - 0.04, 2)
         clean(bm)
         box_uv(bm)
         bm.to_mesh(ob.data)
@@ -934,7 +935,8 @@ def build_drop_ceiling(M):
         for x in (0, TILE, W):
             box(bm, x - gw / 2, -gw / 2, 0, x + gw / 2, W + gw / 2, gd, 1)
         for y in (0, TILE, W):
-            box(bm, -gw / 2, y - gw / 2, 0, W + gw / 2, y + gw / 2, gd, 1)
+            for xa, xb in ((gw / 2, TILE - gw / 2), (TILE + gw / 2, W - gw / 2)):
+                box(bm, xa, y - gw / 2, 0, xb, y + gw / 2, gd, 1)
         # tiles
         for i in range(2):
             for j in range(2):
