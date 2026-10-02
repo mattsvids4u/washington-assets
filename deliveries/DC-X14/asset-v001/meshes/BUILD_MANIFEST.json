@@ -223,7 +223,7 @@
         "SOCKET_X14_PartPrev.003",
         "SOCKET_X14_DoorSign.001"
       ],
-      "lod0_faces": 96,
+      "lod0_faces": 84,
       "materials": [
         "MI_X14_Brass",
         "MI_X14_Metal_Painted",

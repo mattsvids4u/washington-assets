@@ -539,7 +539,7 @@ def build_wall_window(M):
         bm.from_mesh(ob.data)
         wall_trims(bm, lod, rail_gaps=[(x0 - 0.001, x0 + WIN_W + 0.001)])
         # Marble sill: through the reveal, 50 mm proud into the room, 40 mm thick.
-        box(bm, x0 - 0.04, -thick, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL + 0.006, 2)
+        box(bm, x0 - 0.04, -thick + 0.01, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL + 0.006, 2)
         # Window frame set 0.42 m back from the room face in the reveal.
         fy = -0.42
         fd = 0.06  # frame depth (y)
@@ -823,18 +823,15 @@ def build_pendant(M):
 
 
 def partition_frame(bm, w, lod, mat_paint, glazed=False, door=False):
-    """Steel partition: base channel, posts both sides, top cap, infill panel (solid or solid+glazed)."""
+    """Steel partition: full-height end posts; base channel and top cap run BETWEEN the posts
+    (no coincident end faces); infill panel solid or solid + glazed."""
     t = PART_T
-    if door:   # base channel only under the posts; the opening gets a flat threshold strip
-        box(bm, 0, -t / 2 - 0.015, 0, POST_W, t / 2 + 0.015, PART_BASE_H, mat_paint)
-        box(bm, w - POST_W, -t / 2 - 0.015, 0, w, t / 2 + 0.015, PART_BASE_H, mat_paint)
-    else:
-        box(bm, 0, -t / 2 - 0.015, 0, w, t / 2 + 0.015, PART_BASE_H, mat_paint)     # base channel
-    box(bm, 0, -t / 2 - 0.01, PART_H - 0.04, w, t / 2 + 0.01, PART_H, mat_paint)   # top cap
-    box(bm, 0, -t / 2, 0.004, POST_W, t / 2, PART_H - 0.004, mat_paint)
-    box(bm, w - POST_W, -t / 2, 0.004, w, t / 2, PART_H - 0.004, mat_paint)
+    box(bm, 0, -t / 2, 0, POST_W, t / 2, PART_H, mat_paint)
+    box(bm, w - POST_W, -t / 2, 0, w, t / 2, PART_H, mat_paint)
     if door:
         return
+    box(bm, POST_W, -t / 2 - 0.015, 0, w - POST_W, t / 2 + 0.015, PART_BASE_H, mat_paint)       # base channel
+    box(bm, POST_W, -t / 2 - 0.01, PART_H - 0.04, w - POST_W, t / 2 + 0.01, PART_H, mat_paint)  # top cap
     if glazed:
         split = 1.20
         box(bm, POST_W, -t / 2 + 0.01, PART_BASE_H, w - POST_W, t / 2 - 0.01, split, mat_paint)
@@ -875,8 +872,9 @@ def build_part_door(M):
     for lod in range(3):
         bm = new_bm()
         partition_frame(bm, w, lod, 0, door=True)
-        # head panel above the door (door 2.0 m high)
+        # head panel above the door (door 2.0 m high) and a top cap between the posts
         box(bm, POST_W, -PART_T / 2 + 0.01, 2.0, w - POST_W, PART_T / 2 - 0.01, PART_H - 0.04, 0)
+        box(bm, POST_W, -PART_T / 2 - 0.01, PART_H - 0.04, w - POST_W, PART_T / 2 + 0.01, PART_H, 0)
         # threshold strip
         box(bm, POST_W, -PART_T / 2 - 0.015, 0, w - POST_W, PART_T / 2 + 0.015, 0.012, 0)
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["part"], M["brass"]]))
@@ -914,11 +912,12 @@ def build_part_post(M):
     objs = []
     for lod in range(3):
         bm = new_bm()
-        box(bm, -POST_W / 2, -POST_W / 2, 0.004, POST_W / 2, POST_W / 2, PART_H - 0.004, 0)
+        pw = POST_W + 0.01   # 60 mm cover post: wraps the 50 mm panel end posts, no shared planes
+        box(bm, -pw / 2, -pw / 2, 0.004, pw / 2, pw / 2, PART_H, 0)
         box(bm, -0.09, -0.09, 0, 0.09, 0.09, 0.012, 0)
-        box(bm, -POST_W / 2 - 0.004, -POST_W / 2 - 0.004, PART_H - 0.04, POST_W / 2 + 0.004, POST_W / 2 + 0.004, PART_H, 0)
+        box(bm, -pw / 2 - 0.004, -pw / 2 - 0.004, PART_H - 0.04, pw / 2 + 0.004, pw / 2 + 0.004, PART_H + 0.004, 0)
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["part"]]))
-    objs += ucx_boxes(name, [(-0.09, -0.09, 0, 0.09, 0.09, PART_H)], M)
+    objs += ucx_boxes(name, [(-0.09, -0.09, 0, 0.09, 0.09, PART_H + 0.004)], M)
     return name, objs
 
 
