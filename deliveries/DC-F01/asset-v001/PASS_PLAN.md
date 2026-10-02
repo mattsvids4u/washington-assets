@@ -38,10 +38,10 @@ Shakespeare Library and Cannon House Office Building.
 
 ## Locked sources (filled in during Pass 1 — see EVIDENCE.md)
 
-- Drive: References/DC-F01 starter photos `01_Exterior_view_Folger_Shakespeare_Library_June_2025` (Commons, CC BY-SA 4.0, 2025-06-03) and `02_Adams_Building_Exterior_Stairs` (US Capitol, public domain, 2017-01-03). **Images could not be opened in this sandbox** (connector returns no image data; egress blocks Wikimedia) — metadata only.
+- Drive: References/DC-F01 starter photos `01_Exterior_view_Folger_Shakespeare_Library_June_2025` (Commons, CC BY-SA 4.0, 2025-06-03) and `02_Adams_Building_Exterior_Stairs` (US Capitol, public domain, 2017-01-03). First run: the images could not be opened (the connector returned no image data, and egress blocks Wikimedia). Second run: both were inspected through the Drive connector and copied to `refs/` (`references/SOURCES.md`); ref 01 drove the Folger corrections in Pass log 8.
 - DC-R02 v001 (APPROVED) is the footprint/height authority, but its data package is on Matt's PC only; v001 uses published dimensions and must be re-snapped to the R02 evidence cards before placement.
 - DC-C19 v004 (APPROVED): order vocabulary and interface for the Cannon colonnade (meshes not reused — see DEPENDENCY_LOCK.json).
-- Moodbook pp. 10–12 (text): object logic, material separation, palette relationships, staged review evidence.
+- Moodbook pp. 10–12: object logic, material separation, palette relationships, staged review evidence (read as text in the first run; page images inspected in the second run).
 
 ## Measurable deliverable (v001)
 
@@ -52,7 +52,7 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
   - `UCX_<name>_NN` convex collision per mass; `SOCKET_*` empties (entrances, lamps, typed kit swap slots);
   - stable material slots `M_F01_*` with generated portable PBR textures (base colour, roughness, normal);
   - pivot at footprint centre, grade level; +X east, +Y north (map-aligned).
-- `SM_F01_C10_ReviewLayout.glb` — the three buildings in approximate relative position for review renders only (NOT a placement source).
+- (A planned `SM_F01_C10_ReviewLayout.glb` was dropped from v001. Relative placement belongs to DC-R02/DC-B01, so each building was reviewed on its own.)
 - Renders: clay + textured front/profile/rear/¾ per building (tools/render_views.py), plus street-level review views, a night lit-window view, and base-colour/roughness/normal passes (moodbook p12).
 
 ## Passes
