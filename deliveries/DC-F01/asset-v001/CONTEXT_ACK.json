@@ -1,0 +1,161 @@
+{
+  "context_revision": "WASHINGTON-2026-09-22-v001",
+  "context_url": "https://docs.google.com/document/d/1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4/edit",
+  "context_modified_utc": "2026-09-25T05:06:18Z",
+  "checked_utc": "2026-10-02T12:50:00Z",
+  "worker_task": "DC-F01 - Federal background assemblies",
+  "job_id": "DC-F01",
+  "owner_set": "DC-EXT1 Exterior Standard (AGENTS lane)",
+  "stage": "asset",
+  "library_release": null,
+  "request_revision": "WASHINGTON-2026-09-22-v001 + Road Plan 05 integration addendum (request doc 1BtetdbtoBecIebPuerHqogzcQdkfjWJRft385ZviZhY, modified 2026-09-25T10:29:38Z)",
+  "request_sha256": "3c7747bd19b7b2a0a5e64f401a9d5ed29b2b502b5c780fcf096ae31aaa5e1bcb (sha256 of the Drive text/plain export saved as context/REQUEST_DC-F01_export_2026-10-02.txt, 3070 bytes incl. BOM)",
+  "claim_record_url": "https://drive.google.com/file/d/1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x/view (CLAIM.json in Claimed folder 'DC-F01 — claude-cloud-agent', https://drive.google.com/drive/folders/1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f)",
+  "documents_read": [
+    {
+      "doc": "WASHINGTON — CURRENT PROJECT BRIEF (live entry point)",
+      "id": "1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4",
+      "revision": "WASHINGTON-2026-09-22-v001",
+      "modified_utc": "2026-09-25T05:06:18Z"
+    },
+    {
+      "doc": "WASHINGTON — ASSET SET REGISTER (live)",
+      "id": "1vdCK73ALs-X-7o0MBlJLz7VxJzeqAvZt_AFCDDeTX-g",
+      "modified_utc": "2026-10-01T12:31:29Z",
+      "row": "DC-F01 EXT1 Standard P1 PCG assembly; depends DC-C18 DC-C19 DC-C20; HEAD_AUTH_2026-09-22; UNCLAIMED at read time"
+    },
+    {
+      "doc": "WASHINGTON — ASSET STAGE STANDARD v001 (stage A)",
+      "id": "1czqr-kWYX_AFdcbH7T-I-NgoQJV4e0nuqFq9oEGUcLA",
+      "revision": "WASHINGTON-2026-09-22-v001"
+    },
+    {
+      "doc": "WASHINGTON — MOODBOOK + PHOTO REFERENCE GUIDE",
+      "id": "1Zvp-ypgEsHXXBSH9r8cO0U_M1jJx0YzB0Rv6f_9CPkQ"
+    },
+    {
+      "doc": "WASHINGTON — ROAD PLANS 01–05 — SERIES CANON v002",
+      "id": "1ia8TnxZefKOT4H6PdnNB9BIKIdf5E-Y-muyGJ_j4vQY",
+      "revision": "WASHINGTON-ROADPLANS-v002 (2026-09-30)",
+      "relevant": "DC-F01 single owner of federal background assemblies incl. Library of Congress Annex, Folger and Cannon (C2-C7, C10); DC-F02 owns SOB/NSOB uplifts; 1963 name locks"
+    },
+    {
+      "doc": "DC-F01 request",
+      "id": "1BtetdbtoBecIebPuerHqogzcQdkfjWJRft385ZviZhY",
+      "modified_utc": "2026-09-25T10:29:38Z"
+    },
+    {
+      "doc": "References/DC-F01/00_READ_FIRST_SOURCES.md",
+      "id": "1vEWPUDKspgLUBsb2CVT2eXuXrkbEFAYN",
+      "modified_utc": "2026-09-23T02:28:56Z"
+    },
+    {
+      "doc": "DC-R02 HANDOFF v001 (approved parent data; full package on Matt's PC, not on Drive)",
+      "id": "1IUp3LtiAPcyYNncGg4gCdR4sgd-r6r8WQXPPY6JedJE"
+    },
+    {
+      "doc": "DC-C19 v004 HANDOFF.md + PASS06_SUMMARY.md (APPROVED folder 'DC-C19 — asset — v004 APPROVED')",
+      "id": "1OSN7SkXQl83xg7GqkXrx1iQpLmOgIZzO"
+    },
+    {
+      "doc": "CONTEXT_ACK_TEMPLATE.json (DALLAS)",
+      "id": "1ZAeibiXjQGh2zaPhDVW2Lo8Q9XnV4unI"
+    },
+    {
+      "doc": "ITS ALIVE — PCG1 FAMILY REGISTRY + ROLLOUT",
+      "id": "16r5RoOuP6ifa619oJvyZ06ArDd52QhmHzcqI07jID04",
+      "relevant": "material families UM/MM/AP/MT/WD/GL/CT/LG and exposure topologies VE/RE/HW/RD/TP/FH/RI/GT used to type every M_F01_* slot (PCG_INTERFACE.json)"
+    },
+    {
+      "doc": "Other AGENTS-lane request docs compared during job selection",
+      "ids": [
+        "1dFqH_fLcmv75V2hshADC2uE7jipCw4XYsZxuuQUWRww (DC-F02)",
+        "1wQQ2Zs_oqs1tImDws7fPyKpQKg_xLTFNiLTsPZcp8fQ (DC-V02)",
+        "1Cw2A4n7fG4ObKWffjMJS9NGs4DpfftnD9eWqnUZ5wGA (DC-V03)",
+        "1tAl0oO6BEmi1i1cA7AeM1l5gngrRcaG8BW3D69GTCwA (DC-WH05)",
+        "1bnlzUeVOib_SbpbNtuyplI61DX1j7lc49Ze0ep9my90 (WH recurring list)"
+      ]
+    },
+    {
+      "doc": "Existing claude-cloud-agent claims (other live sessions, not resumed)",
+      "ids": [
+        "1_MPJ1csWFnqbf-QdiJ0ScAUajy8q7MmK (DC-X14 CLAIM.json, branch claude/eager-cray-vpg2j3)",
+        "1nI803aJfHuCuLJvSXHdIM97AbLF2fsfh (DC-V01 CLAIM.json, branch claude/blissful-darwin-vcixl8)"
+      ]
+    },
+    {
+      "doc": "DC-F02 — asset — v001 / HANDOFF.md (another claude-cloud-agent session; read-only)",
+      "id": "1SXt6CY4Vvyly8bAyfSaHpmaBPznSRRCe",
+      "revision": "asset-v001 (Senate Office Building)",
+      "modified_utc": "2026-10-02T11:59:06Z",
+      "why": "SOB/NSOB scope overlap with the F01 request, and twin-building consistency with the Cannon (colonnade reading)"
+    }
+  ],
+  "moodbook": {
+    "file": "SAVE_JFK_Visual_Benchmark_Moodbook.pdf",
+    "drive_ids": [
+      "11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr (EXT1 References copy linked from the request, 6,172,581 bytes, modified 2026-09-23T01:31:58Z)",
+      "1FWyRokn6RiJiTGo_T20OL7NoVhrk3vK1 (AGENTS EXT1 References copy, same size)"
+    ],
+    "pages_used": [
+      10,
+      11,
+      12
+    ],
+    "how_inspected": "Run 1 (2026-10-02 ~10:30Z): text only. Run 2 (2026-10-02 ~12:45Z): the PDF was downloaded through the Drive connector, and the page images of pp. 10-12 were inspected ('Objects with presence', 'Build the room. Sculpt the light.', 'The image is the authority'). Applied: staged review (clay, material passes, lit view), the palette relationships (tungsten #C49D63 for illumination, charcoal #131D1B / olive #667363 for depth, cold paper #DFDFD4 neutrals), and legibility at street-camera distance.",
+    "applied_directives": [
+      "p10: model the object's logic - edges that catch light, recesses that cast shadow (deep window reveals, cornice undercuts, column flutes at LOD0)",
+      "p11: palette system CHARCOAL #131D1B, OLIVE #667363, WALNUT #6B4734, TUNGSTEN #C49D63, COLD PAPER #DFDFD4 used as a lighting/material relationship, not a universal tint; historical marble/granite/bronze colours kept",
+      "p12: build in reviewable stages and deliver front, profile, three-quarter, clay silhouette, base-colour, roughness and normal views and a final lit comparison"
+    ]
+  },
+  "dependency_versions_and_hashes": [
+    {
+      "id": "DC-C19",
+      "version": "v004",
+      "status": "APPROVED (Drive folder 'DC-C19 — asset — v004 APPROVED', 1ZPzsGBzzehDsnuDenvwHU-3Equ28AJRR; register row APPROVED)",
+      "use": "order vocabulary/interface only; meshes not reused (sculpt-review density, ZIP not transferable into sandbox) - see DEPENDENCY_LOCK.json"
+    },
+    {
+      "id": "DC-C20",
+      "version": "v005",
+      "status": "APPROVED per Drive folder 'DC-C20 — asset — v005 APPROVED' (1BbeeW5-vTSU-0FrNWFOHUH7meozEsLMg, 2026-10-01); register row still UNCLAIMED (stale)",
+      "use": "not used in v001 - no red tile roofs on the C10 buildings"
+    },
+    {
+      "id": "DC-C18",
+      "version": null,
+      "status": "register UNCLAIMED; working-pass docs exist on Drive (PASS 4-6, 2026-09-25) but no approved delivery found",
+      "use": "not used in v001; typed swap slots left where a C18 bay could later apply"
+    },
+    {
+      "id": "DC-R02",
+      "version": "v001",
+      "status": "APPROVED (register); full data package on Matt's PC only",
+      "use": "authority for 1963 footprint/height/evidence cards - NOT readable from this sandbox; v001 footprints/heights are therefore from published dimensions (APPROXIMATE) and must be re-snapped to R02 evidence cards before placement"
+    }
+  ],
+  "approval_evidence": [],
+  "cached_or_live": "live (all Drive documents read via connector on 2026-10-02 between 10:15 and 10:45 UTC)",
+  "discrepancies": [
+    "Register lags Drive: DC-C20 shows UNCLAIMED but Drive holds 'DC-C20 — asset — v005 APPROVED'; DC-V01 shows CLAIMED (Lu) but a claude-cloud-agent claim folder was created 2026-10-02T10:17Z by another session.",
+    "SOB / NSOB ownership: the DC-F01 request mission lists 'the 1963 Senate Office Building / New Senate Office Building', but DC-F02 and Road Plans canon v002 assign SOB/NSOB to DC-F02. DC-F01 v001 does not build them; Matt/head agent to confirm.",
+    "Network egress allowlist in this cloud environment blocks loc.gov, Wikimedia, NARA, NPS, AOC, DC Planning, archive.org, HathiTrust, Flickr (HTTP 403 from the policy proxy) for both curl and WebFetch. Reference images could not be opened; WebSearch text summaries only.",
+    "Run 1: moodbook and starter photos as text/metadata only. Run 2: moodbook pp. 10-12 images and both starter photos inspected (see moodbook.how_inspected, second_run).",
+    "DC-F02 was claimed 2026-10-02T11:14Z by another claude-cloud-agent session and delivered asset-v001 (Senate Office Building) at 11:57Z. The SOB/NSOB overlap with the F01 request is therefore being exercised by F02; F01 recommends F02 keep both (Matt to confirm). The twin Cannon/SOB colonnades disagree (F01 coupled 17 pairs vs F02 34 single): see HANDOFF UNIFICATION PROPOSAL 0."
+  ],
+  "job_selection": "DC-F01 chosen as the highest-priority (P1) UNCLAIMED request in the AGENTS lane (EXT1 Unclaimed held F01 P1, F02 P2, V02 P3, V03 P3; INT1 Unclaimed held only DC-WH05, which is Ronan-authorised, outside the WASHINGTON register and depends on undelivered WH03/WH04). The two existing claude-cloud-agent claims (X14, V01) belong to other live sessions and were left alone.",
+  "second_run": {
+    "utc": "2026-10-02T12:30Z-13:30Z",
+    "brief_modified_utc": "2026-09-25T05:06:18Z (unchanged)",
+    "register_modified_utc": "2026-10-01T12:31:29Z (unchanged)",
+    "stage_standard_modified_utc": "2026-09-23T01:42:32Z (unchanged)",
+    "road_plans_modified_utc": "2026-10-01T06:42:28Z (unchanged)",
+    "request_modified_utc": "2026-09-25T10:29:38Z (unchanged)",
+    "reviews_for_DC-F01": "none in EXT1 Reviews",
+    "starter_photos_inspected": [
+      "01_Exterior_view_Folger_Shakespeare_Library_June_2025 (Drive 1NIpxgAo9ffIXMKGKDsqG2KuFSco-2flq)",
+      "02_Adams_Building_Exterior_Stairs (Drive 1baRVdTLIXwH68c7Hpm-fhywKQLzkCdR1)"
+    ]
+  }
+}

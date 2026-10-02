@@ -6,7 +6,7 @@ Brief WASHINGTON-2026-09-22-v001 · Stage standard WASHINGTON-2026-09-22-v001 ·
 Claimed 2026-10-02T10:30Z — Drive folder `DC-F01 — claude-cloud-agent` (1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f), CLAIM.json 1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x
 Work branch `claude/adoring-pasteur-25ccu0`; delivery branch pattern `asset/DC-F01-v###`.
 
-Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (incl. the Folger photo comparison by the second, scheduled run) · v001 delivery in preparation** (two sessions worked this claim on the same branch; the first session packages v001).
+Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (incl. the Folger photo comparison by the second, scheduled run) · v001 DELIVERED for Matt's review (not approved)**: `deliveries/DC-F01/asset-v001`, branch `asset/DC-F01-v001` + PR, Drive `EXT1 / Incoming Deliveries / DC-F01 — asset — v001`. Two sessions worked this claim on the same branch; the first session packaged v001.
 
 | Pass | Result |
 |---|---|
