@@ -1,0 +1,21 @@
+{
+  "job_id": "DC-V01",
+  "version": "asset-v001",
+  "components": [
+    {"id": "V01_SedanBase_1963FordPattern", "node": "BODY + DOOR_* + HOOD + TRUNK + GLASS_* + TRIM_WINDOW_*", "family": "CT/GL/MT", "reuse": "city-neutral full-size sedan base (SM_V01_Sedan_Base_Neutral.glb)", "proposed_for": ["DALLAS V07", "DC-V02", "DC-V05"], "status": "PENDING Matt approval"},
+    {"id": "V01_Wheel_14in_Whitewall_DogDish", "node": "WHEEL_FL/FR/RL/RR", "family": "rubber/MT", "reuse": "7.50-14 tyre + painted steel rim + chrome dog-dish cap; hub-origin; outboard whitewall", "proposed_for": ["DC-V02", "DC-V05", "DC-V04 (resize)"], "status": "PENDING"},
+    {"id": "V01_Bumper_Wrap_Chrome", "node": "BUMPER_FRONT / BUMPER_REAR (+ _GUARDS)", "family": "MT", "reuse": "swept rounded-section chrome bumper with wrap ends and guards", "status": "PENDING"},
+    {"id": "V01_Headlamp_SealedBeam_575", "node": "HEADLAMP_BEZELS / HEADLAMP_LENSES", "family": "MT/GL", "reuse": "5¾-in quad sealed beams in chrome bezels", "status": "PENDING"},
+    {"id": "V01_TailLamp_Round", "node": "TAILLAMP_BEZELS / TAILLAMP_LENSES / BACKUP_LENSES", "family": "MT/GL", "status": "PENDING"},
+    {"id": "V01_Beacon_Red_Single", "node": "POLICE_BEACON_BASE / POLICE_BEACON_DOME", "family": "MT/GL", "reuse": "single red rotating-beacon dome, unlit/lit material states", "proposed_for": ["DALLAS V07", "DC-V07 follow-up car", "DC-V08 motorcycle (resize)"], "status": "PENDING"},
+    {"id": "V01_Interior_Bench_Dash_Column", "node": "INT_*", "family": "vinyl/dark", "reuse": "front/rear bench seats, dash, tilted column + 17-in wheel; APPROXIMATE trim", "status": "PENDING"},
+    {"id": "V01_Decal_Shrinkwrap_Method", "node": "POLICE_DECAL_*", "family": "CT", "reuse": "build.py decal_plane()/side_decal(): PIL texture + shrink-wrapped sheet, no body UV painting needed", "status": "PENDING"},
+    {"id": "V01_Generator_CrossSectionTable", "node": "build.py K / STATIONS", "family": "n/a", "reuse": "parametric loft table for body silhouette variants", "status": "PENDING"}
+  ],
+  "textures": [
+    {"file": "T_V01_Decal_RoofID.png", "size": "1024x1024 RGBA", "content": "M/P + D/C turquoise roof identifier (APPROXIMATE typeface)"},
+    {"file": "T_V01_Decal_DoorSeal.png", "size": "512x512 RGBA", "content": "generic round seal, METROPOLITAN POLICE / WASHINGTON D.C. (APPROXIMATE, no copied artwork)"},
+    {"file": "T_V01_Decal_Trunk.png", "size": "1024x256 RGBA", "content": "POLICE (readable from behind)"},
+    {"file": "T_V01_Plate.png", "size": "512x256 RGBA", "content": "FICTIONALISED DC plate MP 1963"}
+  ]
+}
