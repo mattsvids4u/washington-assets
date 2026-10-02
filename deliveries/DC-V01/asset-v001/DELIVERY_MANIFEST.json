@@ -1,0 +1,146 @@
+{
+  "job_id": "DC-V01",
+  "version": "asset-v001",
+  "claimant": "claude-cloud-agent",
+  "created_utc": "2026-10-02T11:08:53+00:00",
+  "source_commit": "8b841bf380c392ebe32736e60fe53361463ae65e",
+  "gates": {
+    "clean_rebuild": "see HANDOFF.md",
+    "glb_reopen_qa": "see HANDOFF.md",
+    "unreal_import_readback": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "matt_approval": "PENDING"
+  },
+  "files": [
+    {
+      "path": "CONTEXT_ACK.json",
+      "bytes": 3451,
+      "sha256": "b66a67754e70254d223dd943184d66d1ab01e01295f99337dd1a74c2c968bb11"
+    },
+    {
+      "path": "DEPENDENCY_LOCK.json",
+      "bytes": 2172,
+      "sha256": "0efa7ce199cb56fd9310dada1400b7c8dddafee55a62f810725436cc9b5e75af"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 8044,
+      "sha256": "9739e9d873d90eaba5b965f9db9891eb652fc1330e324e69e7e6485cdf6172b9"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 10144,
+      "sha256": "05a5ff93b1da4f138f114144614ec1909a971f65f2a5a90d991b6c08abd40381"
+    },
+    {
+      "path": "HIERARCHY.txt",
+      "bytes": 6041,
+      "sha256": "e1c32ed85e976ea370b47807e49743b86dc5933446c4e63e72f53db5d1bade37"
+    },
+    {
+      "path": "MESH_STATS.txt",
+      "bytes": 9384,
+      "sha256": "5e701ab7a215b9656332e1f04ffb060e355641e1b47cf1f64b4883cb68bd76b3"
+    },
+    {
+      "path": "PASS_PLAN.md",
+      "bytes": 6425,
+      "sha256": "f76e69b4b22da2dc4e9b415c701bf9e446c355cb089ddc831e7373d6d0bdcc37"
+    },
+    {
+      "path": "PCG_INTERFACE.json",
+      "bytes": 3742,
+      "sha256": "5b2fc6c08b3f22ae8ec687814deb04142a587ab4cfa70765ff9f826bcc5f19e4"
+    },
+    {
+      "path": "REUSABLE_COMPONENTS.json",
+      "bytes": 2585,
+      "sha256": "bd3d615f647755ba4449a43a5cf945f815274db9385c15d18ba0fe91e529a7e4"
+    },
+    {
+      "path": "meshes/SM_V01_PatrolSedan_MPDC.glb",
+      "bytes": 4292996,
+      "sha256": "c854d3028f28914f1d700ab0fc2e1ff3d6e441e9fd51eb373c363a395536f4d2"
+    },
+    {
+      "path": "meshes/SM_V01_Sedan_Base_Neutral.glb",
+      "bytes": 4025564,
+      "sha256": "9ddbd8e9401118bc764c7bef4a5165283044aceb25f85f9e90cab57267a5be51"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_front.png",
+      "bytes": 1011716,
+      "sha256": "9344919011483f8898f3c6e7811f6e0818010ded579aee75d94e9ad997434ed9"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_profile.png",
+      "bytes": 1015542,
+      "sha256": "dfdc7ab4c56ead415c0a404b89e4cd02206664328986b673be269317d6215d38"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_rear.png",
+      "bytes": 993536,
+      "sha256": "e4060a8a727a30ee93618a9662d195f4caab8fb871cf28cadbb2501d29b8d048"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_three_quarter.png",
+      "bytes": 1063539,
+      "sha256": "f4445bdcb7ea1fc7073fd2eca5f9e557c51bbc38f9e0dd7b302d7bd026ca7e08"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_posed_open.png",
+      "bytes": 1130279,
+      "sha256": "0e376e1c6e9fe8d718c09f721c6d592e4d1947ea5f7bd6ada51890aa69cad407"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_front.png",
+      "bytes": 1029053,
+      "sha256": "d936da5d539e25c37cf2d8ee6da37dca5c0d03e617ef539f323d2f703262fe22"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_profile.png",
+      "bytes": 1036412,
+      "sha256": "6d2cd3c426746e7e03302a832f98a84927c348689b054e3fb0e15a20e332539d"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_rear.png",
+      "bytes": 1018607,
+      "sha256": "3d10a138b1d63146966e55dc8ada735c51448209e5f0ce6feb98e171f43e7777"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_three_quarter.png",
+      "bytes": 1091874,
+      "sha256": "93908a2d1408fe3bfb87a4978f8687bfc246c90d655a253bbe86bb1cd45ad20e"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_top.png",
+      "bytes": 859756,
+      "sha256": "96f1cced4894d115c8c5df420c6e270071fa47272aeef7c38ae4b1ee02ce5899"
+    },
+    {
+      "path": "source/build.py",
+      "bytes": 64064,
+      "sha256": "4eca1990569580fc5f58d1b74cf64828e908201e6e15d858cf0f4bed22bc3bf5"
+    },
+    {
+      "path": "textures/T_V01_Decal_DoorSeal.png",
+      "bytes": 52466,
+      "sha256": "2c5afb613426011216fa135045cca82d4f78ca1bf7899f084c709475f63bb469"
+    },
+    {
+      "path": "textures/T_V01_Decal_RoofID.png",
+      "bytes": 29589,
+      "sha256": "0b8ed51b9de53f0f1e619cdbb94dff5b2509b07ac775e8b002965ad6f43817a8"
+    },
+    {
+      "path": "textures/T_V01_Decal_Trunk.png",
+      "bytes": 7652,
+      "sha256": "1dd3059e586c0c7f6a3cb9d9f3d4ebe6aacb302c14a1b04737759d0687b57eca"
+    },
+    {
+      "path": "textures/T_V01_Plate.png",
+      "bytes": 16801,
+      "sha256": "87a35a678e5650bb167466042ff6bdd35795119c1c43ac4e23da43aef9a06d68"
+    }
+  ]
+}
