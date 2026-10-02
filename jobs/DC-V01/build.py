@@ -1094,6 +1094,24 @@ def side_details(panels):
         sw.use_negative_direction = side > 0; sw.use_positive_direction = side < 0
         sw.target = body; sw.offset = 0.004
         apply_mod(strip, sw)
+        # vertices whose ray fell through a panel gap stay unprojected: interpolate them from neighbours
+        me = strip.data
+        rows = {}
+        for v in me.vertices:
+            rows.setdefault(round(v.co.z, 3), []).append(v)
+        for row in rows.values():
+            row.sort(key=lambda v: v.co.y)
+            good = [v for v in row if abs(v.co.x) < 1.08]
+            for v in row:
+                if abs(v.co.x) >= 1.08 and good:
+                    before = [g for g in good if g.co.y < v.co.y]
+                    after = [g for g in good if g.co.y > v.co.y]
+                    if before and after:
+                        a, b = before[-1], after[0]
+                        t = (v.co.y - a.co.y) / (b.co.y - a.co.y)
+                        v.co.x = a.co.x + (b.co.x - a.co.x) * t
+                    else:
+                        v.co.x = (before or after)[-1 if before else 0].co.x
         sol = strip.modifiers.new("sol", "SOLIDIFY"); sol.thickness = 0.006; sol.offset = 1.0
         apply_mod(strip, sol)
         # keep the strip's outward face pointing +/-X
