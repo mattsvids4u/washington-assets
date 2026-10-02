@@ -1,0 +1,15 @@
+{
+  "job_id": "DC-F02",
+  "version": "asset-v001",
+  "scope": "Senate Office Building (C7)",
+  "locked_utc": "2026-10-02",
+  "dependencies": [
+    {"id": "DC-R02", "role": "parcel / footprint / height / year authority", "state": "APPROVED (register 2026-10-01; road-plans canon v002)", "version": "v001", "evidence": "Drive HANDOFF 1IUp3LtiAPcyYNncGg4gCdR4sgd-r6r8WQXPPY6JedJE; SHA256SUMS 1NuRxi-IYKRWAcUqPS8U343CwYLavSJzq", "consumed": false, "note": "Full package (evidence cards, DT_DC_ParcelFootprints.csv) is on Matt's PC only; SOB PARAMS are APPROXIMATE and must be reconciled to the R02 SOB card locally. Nothing derived from R02 geometry in v001."},
+    {"id": "DC-R01", "role": "identity / naming (Senate Office Building, 1963 name lock)", "state": "DELIVERED, awaiting Matt", "consumed": "name lock only (via road-plans canon v002)"},
+    {"id": "DC-C19", "role": "classical orders kit (candidate swap for Doric order)", "state": "APPROVED", "consumed": false, "note": "Mesh files not reachable from the cloud sandbox; v001 authors its own Doric order. See HANDOFF UNIFICATION PROPOSALS."},
+    {"id": "DC-C18", "role": "federal limestone bay module", "state": "UNCLAIMED", "consumed": false},
+    {"id": "DC-B01", "role": "placement / common map frame", "state": "CLAIMED (Codex / Ronan)", "consumed": false, "note": "Nothing placed. Asset pivot = SW footprint corner at site datum."}
+  ],
+  "dallas": {"relation": "NEW", "library_ids": []},
+  "tools": {"blender_bpy": "4.5.14 LTS", "python": "3.11.15", "numpy": "see setup.sh", "generator": "jobs/DC-F02/build.py (seed 1963)"}
+}

@@ -1,0 +1,112 @@
+{
+  "job_id": "DC-F02",
+  "asset": "SM_F02_SenateOfficeBuilding",
+  "kind": "named hard-lock building assembly (not PCG-repeated; placed once)",
+  "units": "glTF metres; UE import -> cm",
+  "frame": {
+    "x": "+X east (along Constitution Ave)",
+    "y": "+Y north (toward C St NE)",
+    "z": "up",
+    "gltf_up": "+Y in file (exporter converts)"
+  },
+  "pivot": {
+    "description": "SW footprint corner (building corner at Delaware Ave x Constitution Ave) at the site datum",
+    "site_datum": "0.30 m below C St NE grade (lowest grade)",
+    "constitution_grade_z_m": 7.3
+  },
+  "footprint_m": {
+    "W_x": 143.0,
+    "D_y": 110.0,
+    "chamfer_SW": 14.0,
+    "wing_depth": 20.0,
+    "label": "APPROXIMATE - reconcile with DC-R02 SOB card"
+  },
+  "height_m": {
+    "above_constitution_grade_to_balustrade_top": 23.4,
+    "above_constitution_grade_to_corner_attic_top": 23.9,
+    "above_cst_grade_to_corner_attic_top": 30.9
+  },
+  "meshes": {
+    "SM_F02_SenateOfficeBuilding_LOD0": "full detail (~174k faces)",
+    "SM_F02_SenateOfficeBuilding_LOD1": "no rustication channels / sash bars / triglyphs; 12-sided unfluted columns; box balusters; 4-segment arches (~67k faces)",
+    "SM_F02_SenateOfficeBuilding_LOD2": "solid walls with glazing cards, 6-sided columns, solid parapet (~9k faces)",
+    "SM_F02_SOB_SiteGrade_LOD0": "OPTIONAL placement helper: sloped apron, Constitution granite terrace, court floor. DC-B01 may drop it in favour of terrain.",
+    "UCX_SM_F02_SenateOfficeBuilding_00..04": "5 convex boxes (4 wings + SW corner)"
+  },
+  "sockets": {
+    "SOCKET_Grade_Constitution_SW": [
+      0.0,
+      0.0,
+      7.3
+    ],
+    "SOCKET_Grade_Constitution_SE": [
+      143.0,
+      0.0,
+      7.3
+    ],
+    "SOCKET_Grade_CSt_NW": [
+      0.0,
+      110.0,
+      0.3
+    ],
+    "SOCKET_Grade_CSt_NE": [
+      143.0,
+      110.0,
+      0.3
+    ],
+    "SOCKET_Entrance_Rotunda": [
+      6.7,
+      6.7,
+      8.5
+    ],
+    "SOCKET_Flag_Corner_Attic": [
+      7.6,
+      7.6,
+      31.2
+    ]
+  },
+  "material_slots": [
+    "M_F02_SOB_MarbleVermont",
+    "M_F02_SOB_MarbleGeorgia",
+    "M_F02_SOB_GraniteNH",
+    "M_F02_SOB_LimestoneIndiana",
+    "M_F02_SOB_WindowFramePaint",
+    "M_F02_SOB_GlassInterior",
+    "M_F02_SOB_BronzeDoor",
+    "M_F02_SOB_RoofMembrane",
+    "M_F02_SOB_SitePaving"
+  ],
+  "its_alive_families": {
+    "UM(stone)": [
+      "MarbleVermont",
+      "MarbleGeorgia",
+      "GraniteNH",
+      "LimestoneIndiana"
+    ],
+    "MT": [
+      "BronzeDoor"
+    ],
+    "WD/paint": [
+      "WindowFramePaint"
+    ],
+    "GL": [
+      "GlassInterior"
+    ],
+    "RE": [
+      "RoofMembrane"
+    ],
+    "MM/HW": [
+      "SitePaving"
+    ]
+  },
+  "night_state": {
+    "slot": "M_F02_SOB_GlassInterior",
+    "method": "4x4 interior atlas (dark / blinds / lit / lit-behind-blinds) chosen per window with seed 1963; emissive texture T_SOB_GlassInterior_E drives lit cells. UE: multiply emissive by a scalar param for day/night.",
+    "label": "FICTIONALISED dressing"
+  },
+  "seed": 1963,
+  "weathering_hooks": "World-scale UVs (metres / tile) on all stone so DC-F02-W01 can layer grime masks; water table at Constitution grade +1.2 m; rustication channels are real geometry.",
+  "version": "asset-v003",
+  "changes_from_v001": "SOCKET_Flag_Roof_Center replaced by SOCKET_Flag_Corner_Attic (flagpole on the corner attic per E11/E15/E16); SOCKET_Entrance_Rotunda moved to the single arched doorway; corner attic raised 1.1 m",
+  "changes_from_v002": "Corner attic raise reduced from 1.1 m to 0.5 m (E16), so the flag socket moved down to z 31.2; corner returns and the Delaware centre pavilion added; no socket names changed"
+}
