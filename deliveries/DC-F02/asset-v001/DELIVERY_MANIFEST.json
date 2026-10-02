@@ -2,8 +2,8 @@
   "job_id": "DC-F02",
   "version": "asset-v001",
   "claimant": "claude-cloud-agent",
-  "created_utc": "2026-10-02T11:56:20+00:00",
-  "source_commit": "819de917d787b6617d592b1f4fcff8dc988eb6d9",
+  "created_utc": "2026-10-02T11:57:35+00:00",
+  "source_commit": "ef6630db55a98bdfd8fd2901470ae7111d487e1b",
   "gates": {
     "clean_rebuild": "see HANDOFF.md",
     "glb_reopen_qa": "see HANDOFF.md",
@@ -43,6 +43,11 @@
       "sha256": "080dddcaf0ce3c7fb297d8e9b3e035a9d941c20d6d54e0f821cfc1b6fa8a4208"
     },
     {
+      "path": "PAYLOAD_LINK.txt",
+      "bytes": 1237,
+      "sha256": "fac8b6d550fa678a73efb4e1413603ffc5d131add531c44a2d965ce2bd674b90"
+    },
+    {
       "path": "PCG_INTERFACE.json",
       "bytes": 2731,
       "sha256": "146397ac1bc4febef42babab0a622efcf06a66e4ee139302085589785756adff"
@@ -61,6 +66,11 @@
       "path": "meshes/SM_F02_SenateOfficeBuilding.glb",
       "bytes": 48912824,
       "sha256": "480c38971decc86cddf7ff1a6c8d8552b0035c18561852e9fdcc594e088f5cf3"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_CONTACT_SHEET_preview.png",
+      "bytes": 17505,
+      "sha256": "321438098ed50b0f38d546a7acfb7e1eea5306798fa183844702c547aa97b837"
     },
     {
       "path": "renders/SM_F02_SenateOfficeBuilding_aerial_sw_corner.png",
