@@ -78,3 +78,12 @@ That is too much for one honest delivery. The job is split into bounded versions
 
 - 2026-10-02 11:15Z: claimed. Pass 1 evidence written (link-cited).
 - 2026-10-02: Pass 2 build started.
+- 2026-10-02: Pass 2 build done. `build.py` builds LOD0/1/2, the site helper, UCX and sockets.
+- 2026-10-02: Pass 3 verify. Two defects found in self-review: coplanar roof slabs and coplanar
+  corner end caps rendered black. Fixed with non-overlapping slabs and mm offsets on the W/E/chamfer
+  frames. Stone albedo lowered; rustication channels deepened. QA 26/26. Clean rebuild twice:
+  byte-identical. Clay, textured and street renders reviewed.
+- 2026-10-02: asset-v001 packaged (deliveries/DC-F02/asset-v001).
+- **Next pass (v001 review loop):** photo match once Matt adds SOB photos and/or the R02 card to
+  References/DC-F02. Then the rotunda corner form, column spacing and footprint reconciliation.
+  After that, asset-v002, the New Senate Office Building.

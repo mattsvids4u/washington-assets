@@ -1,0 +1,27 @@
+[PASS] has meshes - 9 mesh objects
+[PASS] simple collision present (UCX_/UBX_/USP_) - 5 collision meshes
+[PASS] LODs present - SM_F02_SOB_SiteGrade_LOD0, SM_F02_SenateOfficeBuilding_LOD0, SM_F02_SenateOfficeBuilding_LOD1, SM_F02_SenateOfficeBuilding_LOD2
+[PASS] bounds sane (1 cm - 200 m) - 16100.0 x 12800.0 x 3071.7 cm
+[PASS] sits on ground (min Z ~ 0) - min Z 0.00 cm
+[PASS] matches expected size - got (16100.0, 12800.0, 3071.7) want (16100.0, 12800.0, 3070.0)
+[PASS] SM_F02_SenateOfficeBuilding_LOD0: has UVs
+[PASS] SM_F02_SenateOfficeBuilding_LOD0: has material - M_F02_SOB_MarbleVermont, M_F02_SOB_MarbleGeorgia, M_F02_SOB_GraniteNH, M_F02_SOB_LimestoneIndiana, M_F02_SOB_WindowFramePaint, M_F02_SOB_GlassInterior, M_F02_SOB_BronzeDoor, M_F02_SOB_RoofMembrane
+[PASS] SM_F02_SenateOfficeBuilding_LOD0: no degenerate faces - 0 zero-area faces
+[PASS] SM_F02_SenateOfficeBuilding_LOD0: normals face outward - signed volume 24014.3664
+[PASS] SM_F02_SenateOfficeBuilding_LOD0: transforms applied - scale (1.0, 1.0, 1.0)
+[PASS] SM_F02_SenateOfficeBuilding_LOD1: has UVs
+[PASS] SM_F02_SenateOfficeBuilding_LOD1: has material - M_F02_SOB_MarbleVermont, M_F02_SOB_MarbleGeorgia, M_F02_SOB_GraniteNH, M_F02_SOB_LimestoneIndiana, M_F02_SOB_WindowFramePaint, M_F02_SOB_GlassInterior, M_F02_SOB_BronzeDoor, M_F02_SOB_RoofMembrane
+[PASS] SM_F02_SenateOfficeBuilding_LOD1: no degenerate faces - 0 zero-area faces
+[PASS] SM_F02_SenateOfficeBuilding_LOD1: normals face outward - signed volume 23506.6120
+[PASS] SM_F02_SenateOfficeBuilding_LOD1: transforms applied - scale (1.0, 1.0, 1.0)
+[PASS] SM_F02_SenateOfficeBuilding_LOD2: has UVs
+[PASS] SM_F02_SenateOfficeBuilding_LOD2: has material - M_F02_SOB_MarbleVermont, M_F02_SOB_MarbleGeorgia, M_F02_SOB_GraniteNH, M_F02_SOB_LimestoneIndiana, M_F02_SOB_GlassInterior, M_F02_SOB_BronzeDoor, M_F02_SOB_RoofMembrane
+[PASS] SM_F02_SenateOfficeBuilding_LOD2: no degenerate faces - 0 zero-area faces
+[PASS] SM_F02_SenateOfficeBuilding_LOD2: normals face outward - signed volume 26553.5302
+[PASS] SM_F02_SenateOfficeBuilding_LOD2: transforms applied - scale (1.0, 1.0, 1.0)
+[PASS] SM_F02_SOB_SiteGrade_LOD0: has UVs
+[PASS] SM_F02_SOB_SiteGrade_LOD0: has material - M_F02_SOB_GraniteNH, M_F02_SOB_SitePaving
+[PASS] SM_F02_SOB_SiteGrade_LOD0: no degenerate faces - 0 zero-area faces
+[PASS] SM_F02_SOB_SiteGrade_LOD0: normals face outward - signed volume 46516.9749
+[PASS] SM_F02_SOB_SiteGrade_LOD0: transforms applied - scale (1.0, 1.0, 1.0)
+26/26 checks passed
