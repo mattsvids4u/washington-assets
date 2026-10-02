@@ -1070,19 +1070,16 @@ def side_details(panels):
             bm_cylinder(bm, (x, y + 9, 85.2), "x", 1.1, -1.2, 1.8, segs=12)
     out.append(new_obj("DOOR_HANDLES", bm, [M["MI_V01_Chrome"]]))
     # rocker / lower body strip, following the body with a shrinkwrap
-    # shrink-wrap target = body skin + door skins (doors are separate objects)
-    tparts = [duplicate(bpy.data.objects["BODY"], "tmp_target")]
+    # shrink-wrap target = body skin + door skins (doors are separate objects), merged with bmesh
+    tbm = bmesh.new()
+    tbm.from_mesh(bpy.data.objects["BODY"].data)
     for n_, p_ in panels.items():
         if n_.startswith("DOOR"):
-            d = duplicate(p_, "tmp_door")
-            d.parent = None
-            d.matrix_world = p_.matrix_world.copy()
-            tparts.append(d)
-    set_active(tparts[0])
-    for o in tparts:
-        o.select_set(True)
-    bpy.ops.object.join()
-    body = tparts[0]
+            n0 = len(tbm.verts)
+            tbm.from_mesh(p_.data)
+            tbm.verts.ensure_lookup_table()
+            bmesh.ops.transform(tbm, matrix=p_.matrix_world, verts=tbm.verts[n0:])
+    body = new_obj("tmp_target", tbm, [M["MI_V01_Paint_Body"]])
     for side, tag in ((1, "L"), (-1, "R")):
         bm = bmesh.new()
         n = 40
