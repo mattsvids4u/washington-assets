@@ -2,8 +2,8 @@
   "job_id": "DC-F02",
   "version": "asset-v002",
   "claimant": "claude-cloud-agent",
-  "created_utc": "2026-10-02T14:12:41+00:00",
-  "source_commit": "53427ea68dcc4819bed2104e45d11ed00b631872",
+  "created_utc": "2026-10-02T14:13:09+00:00",
+  "source_commit": "821c69a9112e6615924b80cd0f43763660e30179",
   "gates": {
     "clean_rebuild": "see HANDOFF.md",
     "glb_reopen_qa": "see HANDOFF.md",
@@ -24,8 +24,8 @@
     },
     {
       "path": "EVIDENCE.md",
-      "bytes": 13168,
-      "sha256": "43f939a183326cec35a1df259ac7876cc727f595e62a646f7e96db8622a966d0"
+      "bytes": 13167,
+      "sha256": "1119d5f754b3519c69e2f47a66d21f363860cf8db84f34c5b7fd0aeea50207e6"
     },
     {
       "path": "HANDOFF.md",
