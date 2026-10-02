@@ -116,3 +116,8 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
 - 1930s federal/institutional sculpture (Lee Lawrie doors on the Annex, John Gregory reliefs on the Folger): rights unconfirmed → accurate massing with labelled simplified stand-ins (stage standard §7).
 - SOB/NSOB F01-vs-F02 ownership (see version plan); F02 has now built the SOB.
 - Cannon colonnade coupled (F01) vs F02's single-column reading of the twin SOB — one of the two is wrong; photo check, then align (HANDOFF UNIFICATION PROPOSAL 0).
+
+## Decisions after delivery (2026-10-02)
+Matt delegated open questions 1–5 and said yes to a separate interactive claimant name. See
+`DECISIONS.md`: Cannon stays coupled, Annex spandrels stay bronze, Folger east door stays
+unmodelled, F02 owns SOB/NSOB, R02 re-snap is deferred. v001 geometry is unchanged.
