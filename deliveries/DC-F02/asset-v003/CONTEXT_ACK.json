@@ -1,0 +1,40 @@
+{
+  "job_id": "DC-F02",
+  "job_title": "DC-F02 - Existing corridor building uplifts",
+  "claimant": "claude-cloud-agent",
+  "claimed_utc": "2026-10-02T11:14:40Z",
+  "claim_folder_id": "10XO2Q6ojh0ux0fU8WTWsSwp9klgD47tV",
+  "set": "DC-EXT1 Exterior Standard",
+  "lane": "AGENTS",
+  "context_read_utc": "2026-10-02T11:10:00Z",
+  "brief": {"file_id": "1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4", "revision": "WASHINGTON-2026-09-22-v001", "modified": "2026-09-25T05:06:18Z", "read": true},
+  "register": {"file_id": "1vdCK73ALs-X-7o0MBlJLz7VxJzeqAvZt_AFCDDeTX-g", "modified": "2026-10-01T12:31:29Z", "read_utc": "2026-10-02T11:14:00Z",
+    "row_as_read": "DC-F02 | EXT1 | Standard | Existing corridor building uplifts | PCG assembly | P2 | C1, C2, C3, C4, C7 | inherits | NEW | depends DC-R02 | HEAD_AUTH_2026-09-22 | UNCLAIMED | weathering DC-F02-W01 BLOCKED_PENDING_ASSET",
+    "dependency_state": "DC-R02 = DELIVERED / APPROVED (register + road-plans canon status snapshot)",
+    "edited": false},
+  "stage_standard": {"file_id": "1czqr-kWYX_AFdcbH7T-I-NgoQJV4e0nuqFq9oEGUcLA", "revision": "WASHINGTON-2026-09-22-v001", "read": true},
+  "moodbook_guide": {"file_id": "1Zvp-ypgEsHXXBSH9r8cO0U_M1jJx0YzB0Rv6f_9CPkQ", "read": true},
+  "road_plans_canon": {"file_id": "1ia8TnxZefKOT4H6PdnNB9BIKIdf5E-Y-muyGJ_j4vQY", "revision": "WASHINGTON-ROADPLANS-v002 (2026-09-30)", "read": true,
+    "relevant_lines": ["DC-F02 owns bounded named uplifts C1-C4 and C7: Willard, Hotel Washington, District Building, Riggs, American Security, National Press Building, National Theatre, Senate Office Building, New Senate Office Building", "1963-facing names: Senate Office Building / New Senate Office Building; Russell/Dirksen are production labels only", "North-loop escort route runs Constitution Ave C7 past the Senate office buildings"]},
+  "request_doc": {"file_id": "1dFqH_fLcmv75V2hshADC2uE7jipCw4XYsZxuuQUWRww", "modified": "2026-09-25T05:07:08Z", "read": true, "read_first_links": "none beyond brief / stage standard / moodbook guide"},
+  "dependency_handoffs_read": [
+    {"id": "DC-R02 HANDOFF v001", "file_id": "1IUp3LtiAPcyYNncGg4gCdR4sgd-r6r8WQXPPY6JedJE", "note": "Full R02 package (evidence cards, DT_DC_ParcelFootprints.csv) is on Matt's PC only (file 17AVMHedTTjfkPRhg8Yc-jiS-b-XP0Zr7); not reachable from the cloud sandbox. SOB footprint/height therefore APPROXIMATE in v001 and parameterised for R02 reconciliation."}
+  ],
+  "moodbook": {
+    "file": "SAVE_JFK_Visual_Benchmark_Moodbook.pdf",
+    "file_id": "11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr (DC-EXT1 References copy, 6,172,581 bytes, modified 2026-09-23T01:31:58Z)",
+    "pages_total": 12,
+    "pages_relied_on": {
+      "10": "Props, materials & vehicles: model the object's logic (edges that catch light, recesses that cast shadow), material character separated by base colour / roughness / highlight, object approval = clay + material pass + final lit view.",
+      "11": "Environments, palette & light: compose before dressing, keep architecture coherent with period, palette charcoal #131D1B, olive #667363, walnut #6B4734, tungsten #C49D63, cold paper #DFDFD4; material differences visible within the grade.",
+      "12": "AI build brief: reviewable stages (camera/silhouette -> major forms -> materials -> light), deliver front/profile/three-quarter + clay + base colour + final lit; in-engine motion test (NOT_RUN here)."
+    },
+    "inspection": "All 12 pages' text read through the Drive connector. The page IMAGES were not rendered here: the 6 MB PDF is too large for the connector's base64 path and the sandbox has no other route to Drive. Recorded honestly; Matt should confirm the visual match locally."
+  },
+  "references_folder": {"set": "DC-EXT1", "folder_id": "1RnlH8TS-XBLAwqvijFmhf8Y99E5fP2EZ", "asset_subfolder_id": "1LqcpXf0zrs2-G6nv5Is3SCjLt99i-Unf", "starter_pack": "00_READ_FIRST_SOURCES.md read: two Willard Hotel images only (not in v001 scope). No Senate Office Building images exist anywhere in Drive (search 2026-10-02)."},
+  "dallas_unification": {"relation": "NEW (no DALLAS equivalent)", "reuse_register_checked": "register column 'DALLAS relation' = NEW; no DALLAS LibraryID applies. Kit relation: DC-C19 classical orders (APPROVED) and DC-C18 federal limestone bay (UNCLAIMED) are the WASHINGTON kits; their mesh files are not reachable from the sandbox, so v001 authors its own Doric order and proposes a C19 swap in HANDOFF (UNIFICATION PROPOSALS)."},
+  "parallel_agent_claims_seen": ["DC-X14 (claude-cloud-agent, 09:38Z)", "DC-V01 (claude-cloud-agent, 10:18Z)", "DC-F01 (claude-cloud-agent, 10:30Z; scope C10 Annex/Folger/Cannon - no overlap with F02)"],
+  "drive_available": true,
+  "cached_context_used": false,
+  "environment": {"sandbox": "Linux cloud, bpy 4.5.14 LTS, Python 3.11, no GPU, no Unreal", "network": "WebSearch works; direct fetch from loc.gov, wikimedia, wikipedia, archives.gov, aoc.gov is blocked by the egress proxy (curl 000 / WebFetch EGRESS_BLOCKED)"}
+}

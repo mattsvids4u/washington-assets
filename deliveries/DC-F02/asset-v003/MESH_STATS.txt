@@ -1,0 +1,4 @@
+SM_F02_SenateOfficeBuilding_LOD0: 227026 verts, 178793 faces
+SM_F02_SenateOfficeBuilding_LOD1: 88862 verts, 66719 faces
+SM_F02_SenateOfficeBuilding_LOD2: 12074 verts, 9077 faces
+SM_F02_SOB_SiteGrade_LOD0: 54 verts, 41 faces

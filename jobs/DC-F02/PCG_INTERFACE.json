@@ -23,8 +23,8 @@
   },
   "height_m": {
     "above_constitution_grade_to_balustrade_top": 23.4,
-    "above_constitution_grade_to_corner_attic_top": 24.5,
-    "above_cst_grade_to_corner_attic_top": 31.5
+    "above_constitution_grade_to_corner_attic_top": 23.9,
+    "above_cst_grade_to_corner_attic_top": 30.9
   },
   "meshes": {
     "SM_F02_SenateOfficeBuilding_LOD0": "full detail (~174k faces)",
@@ -62,7 +62,7 @@
     "SOCKET_Flag_Corner_Attic": [
       7.6,
       7.6,
-      31.8
+      31.2
     ]
   },
   "material_slots": [
@@ -106,6 +106,7 @@
   },
   "seed": 1963,
   "weathering_hooks": "World-scale UVs (metres / tile) on all stone so DC-F02-W01 can layer grime masks; water table at Constitution grade +1.2 m; rustication channels are real geometry.",
-  "version": "asset-v002",
-  "changes_from_v001": "SOCKET_Flag_Roof_Center replaced by SOCKET_Flag_Corner_Attic (flagpole on the corner attic per E11/E15/E16); SOCKET_Entrance_Rotunda moved to the single arched doorway; corner attic raised 1.1 m"
+  "version": "asset-v003",
+  "changes_from_v001": "SOCKET_Flag_Roof_Center replaced by SOCKET_Flag_Corner_Attic (flagpole on the corner attic per E11/E15/E16); SOCKET_Entrance_Rotunda moved to the single arched doorway; corner attic raised 1.1 m",
+  "changes_from_v002": "Corner attic raise reduced from 1.1 m to 0.5 m (E16), so the flag socket moved down to z 31.2; corner returns and the Delaware centre pavilion added; no socket names changed"
 }

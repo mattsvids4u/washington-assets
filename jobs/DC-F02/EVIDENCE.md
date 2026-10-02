@@ -1,4 +1,4 @@
-# DC-F02 — EVIDENCE (Senate Office Building, C7) — updated for asset-v002
+# DC-F02 — EVIDENCE (Senate Office Building, C7) — updated for asset-v003
 
 Pass 1, 2026-10-02, claude-cloud-agent. **Pass 4 (photo match), 2026-10-02:** Matt supplied five
 photographs in chat. These were the first images actually inspected; see "Inspected photographs"
@@ -12,7 +12,32 @@ below. They supersede the "link-cited only" limit for E10 and E11.
 | E10 | `references/REF_E10_Senate_side_aerial_1967-03-27_Leffler_LoC.jpg` (**stored**) | LoC 2024639984, Warren K. Leffler (U.S. News & World Report), 27 Mar 1967 | USN&WR collection: no known restrictions per LoC | Aerial from above Union Station, looking S | 1967 state (nearest to 1963). **Closed quadrangle** with slim wings and a large open court. Flat roof behind the parapet. Square NW/NE corners and the chamfered SW corner. Proportions consistent with PARAMS (wing ≈ 1/7 of width) | Oblique and distant, so it can't give exact metres. DC-R02 card still needed |
 | E15 | not stored (rights unconfirmed) | User-supplied modern colour photo of the SW corner from Constitution Ave (appears to be an AOC/Senate photograph; source not confirmed) | unconfirmed, so link/description only | Constitution Ave, looking N/NE | Confirms E11 survives unchanged: tall arched window between two columns, arched doorway with stair and cheek walls, framed pier windows, raised attic with flagpole, arched base windows. Windows original (E05) | Modern lamps, signals, cars and trees are not 1963 evidence |
 | E16 | not stored (rights unconfirmed) | User-supplied modern photo, dusk, SW corner from the Delaware/Constitution intersection | unconfirmed | as E11 | Same as E15. Also shows the solid raised attic block and the central tablet | Modern bollards and lamps are not 1963 evidence |
-| E17 | not stored (**Alamy watermark**, stock licence) | User-supplied 1960s B&W of the **New Senate Office Building** (1958), with 1960s cars | stock / watermarked, so not redistributable | Corner of the New SOB | For the **New SOB, planned as asset-v003**: stripped-classical facade, tall recessed window bays, a central pedimented portico with columns, square attic windows, a corner entrance | Not the v001/v002 building |
+| E17 | not stored (**Alamy watermark**, stock licence) | User-supplied 1960s B&W of the **New Senate Office Building** (1958), with 1960s cars | stock / watermarked, so not redistributable | Corner of the New SOB | For the **New SOB, planned as asset-v004**: stripped-classical facade, tall recessed window bays, a central pedimented portico with columns, square attic windows, a corner entrance | Not the v001/v002 building |
+
+### Pass 5 close reading (asset-v003)
+
+Enlarged crops of E11 (corner, colonnade, Delaware front) were re-read against E15 and E16:
+
+- **The chamfer piers are plain** in E11, E15 and E16. The framed windows with carved ornament
+  above are on the **return bays**, not the chamfer. v002 put them on the chamfer, which was wrong.
+- **Corner returns:** each street front next to the chamfer repeats the motif:
+  framed-window pier | recessed bay with 2 columns before a tall arched window | framed-window pier.
+  The colonnade (Constitution) and the pilastrade (Delaware) start only after it. Seen in E11 (both
+  returns), E15 (Delaware return) and E16 (both).
+- **Framed return windows** carry low pediments (E15, E16). The ornament above them is a carved
+  cartouche (E11).
+- **Tall arched windows** in the recesses are small-paned grids, about 4 lights wide (E11), with a
+  radiating fanlight.
+- **Arched ground-storey windows are tall and narrow:** about 0.36 of a bay wide and about 3× as tall
+  as wide (E11 colonnade crop). v002 had widened them, which was wrong.
+- **Chamfer base:** plain rustication either side of the door (E11). Console brackets flank the door
+  head under the window balconette (E11, E15). The stair sits between wide granite podium blocks
+  running across the chamfer (E11, E16).
+- **Raised corner attic** is only slightly higher than the parapet (E16).
+- **"Double colonnade" (E02)** = free-standing columns with matching pilasters (responds) on the
+  loggia wall behind. Visible in the E11 colonnade crop; already modelled.
+- **Delaware centre pavilion:** E11 (low resolution, far left) suggests the same pier / columns in
+  antis / pier motif rather than plain pilasters. Modelled that way, **APPROXIMATE**.
 
 Changes driven by these photos (asset-v002): the SW corner pavilion was rebuilt; the base windows
 became round-arched; a raised corner attic and a flag socket were added. See HANDOFF.md.
@@ -74,8 +99,10 @@ B. Russell only in 1972 (E06). "Russell" is a production label only. Nothing in 
 | Constitution Ave: rusticated base + colonnade of 34 Doric columns in a loggia + entablature + balustrade | Modelled: 34 fluted Doric columns, recessed loggia wall, two window tiers per bay, triglyph frieze, cornice, balustrade with pedestals over columns | Count + parti VERIFIED (E01, E02). Column height, spacing and loggia depth **APPROXIMATE** |
 | End pavilions on Constitution Ave | Slightly projecting pavilions with paired pilasters | **APPROXIMATE** (typical of the parti, E04 "pavilions") |
 | Delaware Ave, C St, First St fronts: pilastrades with central pavilions | Engaged Doric pilasters, flush wall, central pavilion | VERIFIED as parti (E01, E04). Bay counts **APPROXIMATE** |
-| Corner rotunda entrance at Delaware & Constitution (SW corner) | **v002:** chamfer with two solid piers (framed windows, oval cartouches, arris pilasters). Recessed central bay with 2 free-standing Doric columns before a tall round-arched window with a balconette. One round-arched bronze doorway with a fanlight, over a projecting 6-riser granite stair with cheek blocks. Arched base windows in the piers. Raised attic block with a blank tablet. Flag socket. (v001's 4 columns and 3 doors were wrong.) | **VERIFIED by photo (E11, E15, E16).** Exact widths, column order detail and cartouche carving **APPROXIMATE** |
-| Ground-storey windows | **v002:** round-arched (semicircular head, stone spandrels, fanlight, keystone) on all street fronts | **VERIFIED by photo (E11, E15, E16)** for the Constitution and Delaware fronts. C St / First St fronts assumed the same (**APPROXIMATE**) |
+| Corner rotunda entrance at Delaware & Constitution (SW corner) | **v003:** plain chamfer piers; recessed central bay with 2 Doric columns in antis (in the pier plane, architrave flush) before a tall small-paned arched window with a balconette on console brackets; one arched bronze doorway between granite podium blocks with a 6-riser stair; low raised attic block with a blank tablet. **v002 (superseded):** chamfer with two solid piers (framed windows, oval cartouches, arris pilasters). Recessed central bay with 2 free-standing Doric columns before a tall round-arched window with a balconette. One round-arched bronze doorway with a fanlight, over a projecting 6-riser granite stair with cheek blocks. Arched base windows in the piers. Raised attic block with a blank tablet. Flag socket. (v001's 4 columns and 3 doors were wrong.) | **VERIFIED by photo (E11, E15, E16).** Exact widths, column order detail and cartouche carving **APPROXIMATE** |
+| Corner-pavilion returns (Constitution and Delaware) | **v003:** 12 m return on each front: framed-window pier (pediment, cartouche) / recessed bay with 2 columns and a tall arched window / framed-window pier, over 3 arched base windows | **VERIFIED by photo (E11, E15, E16).** Widths **APPROXIMATE** |
+| Delaware centre pavilion | **v003:** same pier / columns in antis / pier motif | **APPROXIMATE** (E11, low resolution) |
+| Ground-storey windows | **v003:** round-arched, tall and narrow (1.2 m wide × 4.1 m), stone spandrels, fanlight, keystone, on all street fronts | **VERIFIED by photo (E11, E15, E16)** for the Constitution and Delaware fronts. C St / First St fronts assumed the same (**APPROXIMATE**) |
 | Materials: Vermont marble (S, W), Georgia marble (N, E), NH granite base/terrace, Indiana limestone courts | Separate material slots | VERIFIED (E02) |
 | Windows: original wood sash, 6-over-6 (piano nobile), 6-over-6 (upper), 2-over-2 (base) | Real openings, frames, sash bars, glazing | Openings VERIFIED (E05). Sash pattern **APPROXIMATE** |
 | Roof: flat, behind the balustrade, with low skylight ridges over corridors | Flat roof plus parapet | Flat roof behind the parapet **VERIFIED (E10, 1967)**. Skylight ridges **APPROXIMATE** |

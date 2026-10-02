@@ -24,6 +24,7 @@ VIEWS = {
     # intersection, looking NE at the rotunda corner
     "photo_match_E11_corner": ((-52.0, -50.0, ZC + 1.6), (14.0, 12.0, ZC + 10.0), 32, False),
     "detail_corner_pavilion": ((-20.0, -20.0, ZC + 1.6), (7.0, 7.0, ZC + 12.0), 28, False),
+    "street_delaware_centre_pavilion": ((-38.0, 52.0, 4.6), (0.0, 52.0, 14.0), 30, False),
 }
 
 

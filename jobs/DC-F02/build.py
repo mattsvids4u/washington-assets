@@ -38,7 +38,11 @@ PARAMS = {
     # Colonnade (34 columns VERIFIED E01; spacing APPROXIMATE)
     "n_columns": 34, "col_d": 1.40, "loggia_depth": 2.8,
     "corner_bay": 7.0,   # recessed central bay of the SW chamfer (photo-estimated, E11/E15)
-    "pav_w_east": 10.0, "pav_w_west": 8.0, "pav_proj": 0.8,
+    "return_w": 12.0,    # corner-pavilion return on each street front (E11/E15/E16: pier|recess|pier)
+    "return_recess": 5.6,
+    "attic_raise": 0.5,  # corner attic block above the parapet line (subtle in E16)
+    "base_win_w": 1.2,   # arched ground-storey windows: tall and narrow in E11 (about 1.2 x 4.1 m)
+    "pav_w_east": 10.0, "pav_proj": 0.8,
     "bay": 3.30, "wall_t": 0.9,
     "seed": 1963,
 }
@@ -191,6 +195,7 @@ class Frame:
 # ---------------------------------------------------------------------------
 RNG = random.Random(P["seed"])
 CUR_LOD = [0]
+ATLAS_DARK = []  # glazing-atlas cells holding the plain dark state (filled by glass_atlas)
 
 
 def atlas_uv(state):
@@ -236,12 +241,15 @@ def rusticated(mb, F, u0, u1, z0, z1, d0, d1, openings, mat, course, lod):
 
 
 def window(mb, F, u0, u1, z0, z1, d_face, depth, lod, kind="sash", hood=False, surround=False,
-           sill_mat="M_F02_SOB_MarbleVermont", tag=0):
-    """Opening already cut by caller. Adds frame, glazing, sash bars, sill, trim."""
+           sill_mat="M_F02_SOB_MarbleVermont", tag=0, state=None, pediment=False):
+    """Opening already cut by caller. Adds frame, glazing, sash bars, sill, trim.
+    kind: sash (6/6), two (2/2), tall (small-pane grid, E11 corner windows), door (glazing only).
+    state forces a glazing-atlas cell (tall corner windows use a dark cell, not blinds)."""
     fm = "M_F02_SOB_WindowFramePaint"
     gd = d_face + depth  # glass plane
     if lod >= 2:  # solid wall at LOD2: glazing card just proud of the face
-        state = RNG.randrange(16)
+        rs = RNG.randrange(16)
+        state = rs if state is None else state
         F.box(mb, u0, u1, d_face - 0.03, d_face - 0.01, z0, z1, "M_F02_SOB_GlassInterior", atlas_uv(state))
         return
     fw = 0.09 if lod == 0 else 0.12
@@ -250,7 +258,8 @@ def window(mb, F, u0, u1, z0, z1, d_face, depth, lod, kind="sash", hood=False, s
     F.box(mb, u0, u1, gd - 0.06, gd + 0.06, z1 - fw, z1, fm)
     F.box(mb, u0, u0 + fw, gd - 0.06, gd + 0.06, z0 + fw, z1 - fw, fm)
     F.box(mb, u1 - fw, u1, gd - 0.06, gd + 0.06, z0 + fw, z1 - fw, fm)
-    state = RNG.randrange(16)
+    rs = RNG.randrange(16)
+    state = rs if state is None else state
     F.box(mb, u0 + fw, u1 - fw, gd, gd + 0.015, z0 + fw, z1 - fw, "M_F02_SOB_GlassInterior", atlas_uv(state))
     if kind == "door":
         return
@@ -264,6 +273,15 @@ def window(mb, F, u0, u1, z0, z1, d_face, depth, lod, kind="sash", hood=False, s
                 F.box(mb, uc - bw, uc + bw, gd - 0.03, gd, z0 + fw, z1 - fw, fm)
             for zz in ((z0 + zm) / 2, (zm + z1) / 2):
                 F.box(mb, u0 + fw, u1 - fw, gd - 0.03, gd, zz - bw, zz + bw, fm)
+        elif kind == "tall":  # small-pane grid: 4 lights wide, ~0.75 m rows (E11 corner window)
+            for t in (0.25, 0.5, 0.75):
+                uc = u0 + (u1 - u0) * t
+                F.box(mb, uc - bw, uc + bw, gd - 0.03, gd, z0 + fw, z1 - fw, fm)
+            nr = max(2, round((z1 - z0) / 0.75))
+            for k in range(1, nr):
+                zz = z0 + (z1 - z0) * k / nr
+                if abs(zz - zm) > 0.1:
+                    F.box(mb, u0 + fw, u1 - fw, gd - 0.03, gd, zz - bw, zz + bw, fm)
         elif kind == "two":  # 2-over-2
             uc = (u0 + u1) / 2
             F.box(mb, uc - bw, uc + bw, gd - 0.03, gd, z0 + fw, z1 - fw, fm)
@@ -279,6 +297,10 @@ def window(mb, F, u0, u1, z0, z1, d_face, depth, lod, kind="sash", hood=False, s
             F.box(mb, u0 - 0.42, u1 + 0.42, d_face - 0.30, d_face, z1 + 0.62, z1 + 0.84, sill_mat)  # cornice
             for uu in (u0 - 0.36, u1 + 0.18):  # consoles
                 F.box(mb, uu, uu + 0.18, d_face - 0.26, d_face, z1 + 0.05, z1 + 0.62, sill_mat)
+            if pediment:  # low triangular pediment over the hood (framed corner windows, E15/E16)
+                uc = (u0 + u1) / 2
+                F.prism(mb, [(u0 - 0.42, z1 + 0.84), (u1 + 0.42, z1 + 0.84), (uc, z1 + 1.40)],
+                        d_face - 0.26, d_face, sill_mat)
 
 
 def arch_spandrels(mb, F, u0, u1, zs, d0, d1, mat, lod):
@@ -296,15 +318,16 @@ def arch_spandrels(mb, F, u0, u1, zs, d0, d1, mat, lod):
 
 
 def arched_window(mb, F, u0, u1, z0, ztop, d_face, depth, lod, kind="two", mat="M_F02_SOB_MarbleVermont",
-                  keystone=True):
+                  keystone=True, state=None):
     """Round-arched window in an opening already cut (rect u0..u1, z0..ztop): sash below the springing,
     glazed fanlight above, stone spandrels, keystone (E11 / E15 photos: arched base windows)."""
     r = (u1 - u0) / 2
     zs = ztop - r
     fm = "M_F02_SOB_WindowFramePaint"
     gd = d_face + depth
-    window(mb, F, u0, u1, z0, zs, d_face, depth, lod, kind=kind, sill_mat=mat)
-    state = RNG.randrange(16)
+    window(mb, F, u0, u1, z0, zs, d_face, depth, lod, kind=kind, sill_mat=mat, state=state)
+    rs = RNG.randrange(16)
+    state = rs if state is None else state
     if lod >= 2:
         return
     arch_spandrels(mb, F, u0, u1, zs, d_face, gd - 0.07, mat, lod)
@@ -312,6 +335,11 @@ def arched_window(mb, F, u0, u1, z0, ztop, d_face, depth, lod, kind="two", mat="
     if lod == 0:
         uc = (u0 + u1) / 2
         F.box(mb, uc - 0.025, uc + 0.025, gd - 0.03, gd, zs, ztop - 0.05, fm)  # fanlight bar
+        if kind == "tall":  # radiating fanlight bars
+            r = (u1 - u0) / 2
+            for ang in (math.radians(45), math.radians(135)):
+                cu, cz = uc + 0.5 * r * math.cos(ang), zs + 0.5 * r * math.sin(ang)
+                F.box(mb, cu - 0.025, cu + 0.025, gd - 0.03, gd, cz - 0.3, cz + 0.3, fm)
         if keystone:
             F.box(mb, uc - 0.24, uc + 0.24, d_face - 0.09, d_face, ztop - 0.12, ztop + 0.52, mat)
 
@@ -446,7 +474,8 @@ def base_and_basement(mb, F, u0, u1, dv, centers, ww, lod, mat_base, mat_up, bac
     rusticated(mb, F, u0, u1, 0.0, zp, dv, dv + back, open_low, mat_base, 0.9, lod)
     for (a0, a1, b0, b1) in open_low:
         window(mb, F, a0, a1, b0, b1, dv, 0.30, lod, kind="two", sill_mat=mat_base)
-    open_b = [(c - ww * 0.45, c + ww * 0.45, zc(2.4), zc(5.6)) for c in centers]
+    bw = P["base_win_w"] / 2
+    open_b = [(c - bw, c + bw, zc(1.9), zc(6.0)) for c in centers]
     open_b += list(doors)
     rusticated(mb, F, u0, u1, zp, zb, dv, dv + back, open_b, mat_up, 0.58, lod)
     for o in open_b[:len(centers)]:  # round-arched base windows (E11 / E15)
@@ -481,12 +510,11 @@ def pilaster(mb, F, u, d, lod, mat, w=1.1):
     F.box(mb, u - w / 2 - 0.15, u + w / 2 + 0.15, d - 0.47, d, z1 - 0.3, z1, mat)
 
 
-def pilastrade_facade(mb, F, lod, mat_up, mat_base, pav_bays=5):
-    """Secondary fronts: flush wall, pilasters per bay, central projecting pavilion."""
+def pilastrade_facade(mb, F, lod, mat_up, mat_base, pav_bays=5, u_end=None, recess_pavilion=False):
+    """Secondary fronts: flush wall, pilasters per bay, central projecting pavilion.
+    u_end stops the pilastrade short of a corner-pavilion return (Delaware Ave)."""
     T = P["wall_t"]
-    n, s = bays(0, F.L, P["bay"])
-    if F.name == "W":
-        n, s = bays(0, F.L - 0.0, P["bay"])
+    n, s = bays(0, F.L if u_end is None else u_end, P["bay"])
     mid = n // 2
     pav = set(range(mid - pav_bays // 2, mid + pav_bays // 2 + 1)) if n > pav_bays + 4 else set()
     pv = -P["pav_proj"]
@@ -501,6 +529,9 @@ def pilastrade_facade(mb, F, lod, mat_up, mat_base, pav_bays=5):
     zb, zt = zc(P["band_top"]), zc(P["order_top"])
     for (i0, i1, dv) in runs:
         u0, u1 = i0 * s, i1 * s
+        if dv and recess_pavilion:  # Delaware centre pavilion: pier | columns in antis | pier (E11, low-res)
+            corner_return(mb, F, u0, u1, lod)
+            continue
         centers = [(i + 0.5) * s for i in range(i0, i1)]
         base_and_basement(mb, F, u0, u1, dv, centers, 1.65, lod, mat_base, mat_up, T)
         ops = [(c - 0.725, c + 0.725, z0, z1) for c in centers
@@ -520,12 +551,13 @@ def constitution_facade(mb, F, lod):
     mat, matb = "M_F02_SOB_MarbleVermont", "M_F02_SOB_GraniteNH"
     T = P["wall_t"]
     u_start = P["chamfer"]
-    uwp = u_start + P["pav_w_west"]
+    uwp = u_start + P["return_w"]
     uep = F.L - P["pav_w_east"]
     pv = -P["pav_proj"]
     zb, zt = zc(P["band_top"]), zc(P["order_top"])
-    # --- pavilions
-    for (a, b) in ((u_start, uwp), (uep, F.L)):
+    corner_return(mb, F, u_start, uwp, lod)
+    # --- east end pavilion
+    for (a, b) in ((uep, F.L),):
         c = (a + b) / 2
         base_and_basement(mb, F, a, b, pv, [c], 1.6, lod, matb, mat, T + 0.8)
         ops = [(c - 0.9, c + 0.9, zc(8.6), zc(12.9)), (c - 0.9, c + 0.9, zc(14.6), zc(17.6))]
@@ -566,27 +598,104 @@ def constitution_facade(mb, F, lod):
     return cols
 
 
+def recessed_bay(mb, F, p0, p1, pv, lod, mat, win_w, dr=2.0):
+    """Recessed bay between two solid piers: two free-standing Doric columns in antis standing in the
+    pier plane, a tall round-arched window in the back wall with a balustraded balconette (E11/E15/E16).
+    Returns the column positions (u)."""
+    T = P["wall_t"]
+    zb, zt, zbt = zc(P["base_top"]), zc(P["order_top"]), zc(P["band_top"])
+    c = (p0 + p1) / 2
+    r = P["col_d"] / 2
+    F.box(mb, p0 - 0.6, p0, pv + T, pv + dr + T, zbt, zt, mat)    # recess returns
+    F.box(mb, p1, p1 + 0.6, pv + T, pv + dr + T, zbt, zt, mat)
+    F.box(mb, p0, p1, pv, pv + dr + T, zb, zbt, mat)               # recess floor
+    tw = (c - win_w / 2, c + win_w / 2, zc(8.6), zc(17.9))
+    wall_with_openings(mb, F, p0, p1, zbt, zt, pv + dr, pv + dr + T, [tw], mat)
+    arched_window(mb, F, tw[0], tw[1], tw[2], tw[3], pv + dr, 0.36, lod, kind="tall", mat=mat,
+                  state=ATLAS_DARK[0])
+    if lod <= 1:  # balconette at the window sill
+        hw = win_w / 2 + 0.2
+        F.box(mb, c - hw, c + hw, pv + dr - 0.45, pv + dr, zbt, zbt + 0.18, mat)
+        F.box(mb, c - hw, c + hw, pv + dr - 0.45, pv + dr, zbt + 0.85, zbt + 1.0, mat)
+        nb = max(3, int(win_w / 0.33)) if lod == 0 else 4
+        for k in range(nb + 1):
+            uu = c - hw + 0.2 + (2 * hw - 0.4) * k / nb
+            baluster(mb, F, uu, pv + dr - 0.22, zbt + 0.18, zbt + 0.85, lod, mat)
+        F.box(mb, c - 0.3, c + 0.3, pv + dr - 0.12, pv + dr, tw[3] - 0.15, tw[3] + 0.55, mat)  # keystone
+    cols = [p0 + r + 0.25, p1 - r - 0.25]
+    for p in cols:
+        x, y, _ = F.w(p, pv + r + 0.05, 0)  # front of shaft in the pier plane
+        column(mb, x, y, zbt, zt, lod, mat)
+    return cols
+
+
+def framed_pier(mb, F, a, b, pv, lod, mat):
+    """Solid pier with a framed piano-nobile window (hood, consoles, surround) and a carved cartouche
+    above it: the return bays of the corner pavilion (E11 ornament; E15/E16 framed windows)."""
+    T = P["wall_t"]
+    zt, zbt = zc(P["order_top"]), zc(P["band_top"])
+    cc = (a + b) / 2
+    ops = [(cc - 0.7, cc + 0.7, zc(8.6), zc(12.6))]
+    wall_with_openings(mb, F, a, b, zbt, zt, pv, pv + T, ops, mat)
+    window(mb, F, cc - 0.7, cc + 0.7, zc(8.6), zc(12.6), pv, 0.36, lod, hood=True, surround=True, sill_mat=mat,
+           pediment=True)
+    cartouche(mb, F, cc, pv, zc(14.6), mat, lod)
+
+
+def pavilion_base(mb, F, u0, u1, pv, arches, lod, extra_openings=()):
+    """Granite plinth, rusticated marble storey with tall round-arched windows, band course."""
+    mat, matb = "M_F02_SOB_MarbleVermont", "M_F02_SOB_GraniteNH"
+    T = P["wall_t"]
+    zp, zb, zbt = zc(P["plinth"]), zc(P["base_top"]), zc(P["band_top"])
+    bw = P["base_win_w"] / 2
+    ops = [(cc - bw, cc + bw, zc(1.9), zc(6.0)) for cc in arches]
+    low = []  # basement windows where the north slope exposes them (as base_and_basement)
+    for cc in arches:
+        for (za, zz) in ((zc(-6.3), zc(-4.3)), (zc(-2.9), zc(-0.9))):
+            if za > F.grade(cc) + 0.35:
+                low.append((cc - 0.74, cc + 0.74, za, zz))
+    rusticated(mb, F, u0, u1, 0.0, zp, pv, pv + T, low, matb, 0.9, lod)
+    for (a0, a1, b0, b1) in low:
+        window(mb, F, a0, a1, b0, b1, pv, 0.30, lod, kind="two", sill_mat=matb)
+    rusticated(mb, F, u0, u1, zp, zb, pv, pv + T, ops + list(extra_openings), mat, 0.58, lod)
+    for o in ops:
+        arched_window(mb, F, o[0], o[1], o[2], o[3], pv, 0.34, lod, kind="two", mat=mat)
+    F.box(mb, u0, u1, pv - 0.15, pv + T, zb, zbt, mat)
+
+
+def corner_return(mb, F, u0, u1, lod):
+    """Return of the SW corner pavilion onto a street front, repeating the chamfer motif at smaller
+    scale (E11, E15, E16): framed-window pier | recessed bay with 2 columns and a tall arched window |
+    framed-window pier, over three arched base windows; entablature and solid attic."""
+    mat = "M_F02_SOB_MarbleVermont"
+    T = P["wall_t"]
+    pv = -0.4
+    rw = (u1 - u0 - P["return_recess"]) / 2
+    p0, p1 = u0 + rw, u1 - rw
+    pavilion_base(mb, F, u0, u1, pv, [u0 + rw / 2, (p0 + p1) / 2, u1 - rw / 2], lod)
+    framed_pier(mb, F, u0, p0, pv, lod, mat)
+    framed_pier(mb, F, p1, u1, pv, lod, mat)
+    cols = recessed_bay(mb, F, p0, p1, pv, lod, mat, win_w=2.2)
+    zco = entablature(mb, F, u0, u1, pv, pv + 2.0 + T, [u0 + 0.5] + cols + [u1 - 0.5], lod, mat, zoff=0.008)
+    balustrade(mb, F, u0, u1, pv, zco, [], lod, mat, solid=True)
+
+
 def corner_rotunda(mb, F, lod):
     """SW chamfered rotunda pavilion, matched to E11 (c.1909) and E15/E16 (modern) photographs:
-    two solid piers with framed piano-nobile windows and carved cartouches; a recessed central bay
-    with two free-standing Doric columns in antis before one tall round-arched window; one
-    round-arched bronze doorway over a projecting granite stair with cheek blocks; arched base
-    windows in the piers; entablature and solid attic with a blank tablet (flag socket above)."""
+    two PLAIN solid piers; a recessed central bay with two free-standing Doric columns in antis before
+    one tall round-arched window with a balconette carried on console brackets over the doorway; one
+    round-arched bronze doorway between wide granite podium blocks with a projecting stair; plain
+    rusticated base; entablature and solid attic with a low raised tablet block (flag socket above)."""
     mat, matb, bd = "M_F02_SOB_MarbleVermont", "M_F02_SOB_GraniteNH", "M_F02_SOB_BronzeDoor"
     T = P["wall_t"]
     L = F.L
     c = L / 2
-    zp, zb, zt, zbt = zc(P["plinth"]), zc(P["base_top"]), zc(P["order_top"]), zc(P["band_top"])
+    zp, zbt = zc(P["plinth"]), zc(P["band_top"])
     pv = -0.4
     p0, p1 = c - P["corner_bay"] / 2, c + P["corner_bay"] / 2
-    dr = 2.0  # recess of the central bay
-    # --- base: granite plinth, rusticated marble with the doorway and two arched windows
+    # --- base: plain rusticated chamfer with the single doorway
     door = (c - 1.3, c + 1.3, zp, zc(6.0))
-    side = [(cc - 0.74, cc + 0.74, zc(2.4), zc(5.6)) for cc in (p0 / 2, (p1 + L) / 2)]
-    rusticated(mb, F, 0, L, 0.0, zp, pv, pv + T, [], matb, 0.9, lod)
-    rusticated(mb, F, 0, L, zp, zb, pv, pv + T, [door] + side, mat, 0.58, lod)
-    for o in side:
-        arched_window(mb, F, o[0], o[1], o[2], o[3], pv, 0.34, lod, kind="two", mat=mat)
+    pavilion_base(mb, F, 0, L, pv, [], lod, extra_openings=[door])
     a, b, z0, z1 = door
     zs = z1 - (b - a) / 2
     F.box(mb, a, b, pv + 0.45, pv + 0.55, z0, zs - 0.08, bd)                   # bronze leaves
@@ -602,51 +711,32 @@ def corner_rotunda(mb, F, lod):
                 F.box(mb, pa, pb, pv + 0.41, pv + 0.45, zz, zz + 1.1, bd)      # raised panels
         F.box(mb, c - 0.28, c + 0.28, pv - 0.10, pv, z1 - 0.12, z1 + 0.60, mat)  # keystone
         F.box(mb, a - 0.35, b + 0.35, pv - 0.10, pv, zs - 0.30, zs - 0.10, mat)  # impost band
-    F.box(mb, 0, L, pv - 0.15, pv + T, zb, zbt, mat)                           # band course
-    # --- projecting granite stair with cheek blocks, from the corner terrace to the door sill
+    if lod <= 1:  # console brackets flanking the door head, carrying the band / balconette (E11, E15)
+        for u in (a - 0.55, b + 0.15):
+            F.box(mb, u, u + 0.40, pv - 0.55, pv, z1 + 0.25, zbt - 0.6, mat)
+            F.box(mb, u - 0.05, u + 0.45, pv - 0.65, pv, zbt - 0.6, zbt - 0.15, mat)
+    # --- stair between wide granite podium blocks spanning the chamfer (E11, E16)
     g = P["z_const"]
-    nst, run, hw = 6, 0.42, 2.6
+    nst, run, hw = 6, 0.42, 2.4
     rise = (zp - g) / nst
     for k in range(nst):
         F.box(mb, c - hw, c + hw, pv - run * (nst - k), pv + 0.2, g + k * rise - 0.3, g + (k + 1) * rise, matb)
-    for (ca, cb) in ((c - hw - 1.1, c - hw), (c + hw, c + hw + 1.1)):
-        F.box(mb, ca, cb, pv - run * nst - 0.15, pv + 0.2, g - 0.3, zp + 0.30, matb)
-        F.box(mb, ca - 0.08, cb + 0.08, pv - run * nst - 0.25, pv + 0.2, zp + 0.30, zp + 0.48, matb)
-    # --- order zone: solid piers with framed windows and cartouches
+    depth = run * nst + 0.3
+    for (ca, cb) in ((0.6, c - hw), (c + hw, L - 0.6)):
+        F.box(mb, ca, cb, pv - depth, pv + 0.2, g - 0.3, zp + 0.45, matb)
+        F.box(mb, ca - 0.08, cb + 0.08, pv - depth - 0.10, pv + 0.2, zp + 0.45, zp + 0.62, matb)  # coping
+    # --- order zone: plain piers and the recessed central bay
     for (a, b) in ((0.0, p0), (p1, L)):
-        cc = (a + b) / 2
-        ops = [(cc - 0.7, cc + 0.7, zc(8.6), zc(12.6))]
-        wall_with_openings(mb, F, a, b, zbt, zt, pv, pv + T, ops, mat)
-        window(mb, F, cc - 0.7, cc + 0.7, zc(8.6), zc(12.6), pv, 0.36, lod, hood=True, surround=True, sill_mat=mat)
-        cartouche(mb, F, cc, pv, zc(14.3), mat, lod)
-    for u in (0.55, L - 0.55):  # pilaster strips at the chamfer arrises
-        pilaster(mb, F, u, pv, lod, mat, w=1.0)
-    # recess returns, floor and back wall with the tall arched window
-    F.box(mb, p0 - 1.0, p0, pv + T, pv + dr + T, zbt, zt, mat)
-    F.box(mb, p1, p1 + 1.0, pv + T, pv + dr + T, zbt, zt, mat)
-    F.box(mb, p0, p1, pv, pv + dr + T, zb, zbt, mat)
-    tw = (c - 1.5, c + 1.5, zc(8.6), zc(17.9))
-    wall_with_openings(mb, F, p0, p1, zbt, zt, pv + dr, pv + dr + T, [tw], mat)
-    arched_window(mb, F, tw[0], tw[1], tw[2], tw[3], pv + dr, 0.36, lod, kind="sash", mat=mat)
-    if lod <= 1:  # low balustraded balcony at the window sill
-        F.box(mb, c - 1.7, c + 1.7, pv + dr - 0.45, pv + dr, zbt, zbt + 0.18, mat)
-        F.box(mb, c - 1.7, c + 1.7, pv + dr - 0.45, pv + dr, zbt + 0.85, zbt + 1.0, mat)
-        for k in range(9 if lod == 0 else 5):
-            uu = c - 1.5 + 3.0 * k / (8 if lod == 0 else 4)
-            baluster(mb, F, uu, pv + dr - 0.22, zbt + 0.18, zbt + 0.85, lod, mat)
-    cols = [p0 + 1.15, p1 - 1.15]
-    for p in cols:
-        x, y, _ = F.w(p, pv + 1.0, 0)
-        column(mb, x, y, zbt, zt, lod, mat)
-    dface = pv + 1.0 - P["col_d"] / 2 * 0.86 - 0.05
-    zco = entablature(mb, F, 0, L, dface, pv + dr + T, [0.55] + cols + [L - 0.55], lod, mat)
-    balustrade(mb, F, 0, L, dface, zco, [], lod, mat, solid=True)
-    # raised central attic block carrying the tablet and the flagpole (E11, E15, E16)
-    ha = P["balustrade"] + 1.1
-    F.box(mb, c - 4.2, c + 4.2, dface - 0.05, dface + 1.6, zco, zco + ha, mat)
+        F.box(mb, a, b, pv, pv + T, zbt, zc(P["order_top"]), mat)
+    cols = recessed_bay(mb, F, p0, p1, pv, lod, mat, win_w=3.0)
+    zco = entablature(mb, F, 0, L, pv, pv + 2.0 + T, [0.55] + cols + [L - 0.55], lod, mat)
+    balustrade(mb, F, 0, L, pv, zco, [], lod, mat, solid=True)
+    # low raised central attic block carrying the tablet and the flagpole (E11, E15, E16)
+    ha = P["balustrade"] + P["attic_raise"]
+    F.box(mb, c - 4.2, c + 4.2, pv - 0.05, pv + 1.6, zco, zco + ha, mat)
     if lod <= 1:
-        F.box(mb, c - 4.4, c + 4.4, dface - 0.20, dface + 1.6, zco + ha - 0.25, zco + ha, mat)  # coping
-        F.box(mb, c - 3.0, c + 3.0, dface - 0.13, dface - 0.05, zco + 0.45, zco + ha - 0.55, mat)  # blank tablet
+        F.box(mb, c - 4.4, c + 4.4, pv - 0.20, pv + 1.6, zco + ha - 0.25, zco + ha, mat)  # coping
+        F.box(mb, c - 3.0, c + 3.0, pv - 0.13, pv - 0.05, zco + 0.40, zco + ha - 0.45, mat)  # blank tablet
 
 
 def court_facade(mb, F, lod):
@@ -733,7 +823,9 @@ def build_lod(lod):
     s2 = math.sqrt(0.5)
     FC = Frame(0, C, s2, -s2, C * math.sqrt(2), "C", dz=e)   # SW rotunda chamfer
     constitution_facade(mb, FS, lod)
-    pilastrade_facade(mb, FW, lod, "M_F02_SOB_MarbleVermont", "M_F02_SOB_GraniteNH")
+    pilastrade_facade(mb, FW, lod, "M_F02_SOB_MarbleVermont", "M_F02_SOB_GraniteNH",
+                      u_end=FW.L - P["return_w"], recess_pavilion=True)
+    corner_return(mb, FW, FW.L - P["return_w"], FW.L, lod)
     pilastrade_facade(mb, FN, lod, "M_F02_SOB_MarbleGeorgia", "M_F02_SOB_GraniteNH")
     pilastrade_facade(mb, FE, lod, "M_F02_SOB_MarbleGeorgia", "M_F02_SOB_GraniteNH")
     corner_rotunda(mb, FC, lod)
@@ -815,6 +907,7 @@ def glass_atlas(rng, n=1024):
     tung = np.array([0xC4, 0x9D, 0x63]) / 255
     dark = np.array([0.035, 0.045, 0.05])
     states = []
+    ATLAS_DARK.clear()
     for i in range(16):
         k = rng.random()
         states.append("lit" if k < 0.22 else "blind" if k < 0.55 else "litblind" if k < 0.65 else "dark")
@@ -839,6 +932,7 @@ def glass_atlas(rng, n=1024):
             ecell += tung * 0.85 * np.ones((c, c, 1))
         bc[y0:y0 + c, cx * c:(cx + 1) * c] = cell
         em[y0:y0 + c, cx * c:(cx + 1) * c] = ecell
+    ATLAS_DARK.extend(i for i, st in enumerate(states) if st == "dark")
     return save_png("T_SOB_GlassInterior_BC", np.clip(bc, 0, 1)), save_png("T_SOB_GlassInterior_E", np.clip(em, 0, 1))
 
 
@@ -976,7 +1070,7 @@ def sockets():
         # flagpole stands on the corner attic in E11 (c.1909) and E15/E16 (modern)
         "SOCKET_Flag_Corner_Attic": (P["chamfer"] / 2 + 0.6, P["chamfer"] / 2 + 0.6,
                                      zc(P["order_top"] + P["architrave"] + P["frieze"] + P["cornice"]
-                                        + P["balustrade"] + 1.1)),
+                                        + P["balustrade"] + P["attic_raise"])),
     }
     obs = []
     for n, loc in s.items():
