@@ -131,3 +131,11 @@ What the final images show (module orbits, 960 px, 24 samples; interiors 1152 px
 - Interiors (`X14_DEMO_LRS_Room_textured_int_*`): corridor east/west show the whole idea in one frame — 4.6 m plaster room with trim, arched windows and radiators, pendants above, and the gray glazed cubicle fronts under a floating acoustic grid with chain-hung strips. Cubicle view: window, radiator, drop ceiling and two fixtures from inside a cubicle. Door view: door, transom, sign. Ceiling view: grid, hangers, fixture undersides. Clay views confirm silhouettes without materials.
 
 Known limitations left on purpose (say if you want them changed): no furniture (I09 sockets only, so the room is empty); the drop ceiling is an island with no perimeter closure strip, matching the "temporary" reading of the memoir but not a documented detail; exterior faces are untextured plaster; no dirt/wear (that is the Age + Use stage).
+
+## Review notes — Matt, 2026-10-02 (chat)
+
+1. **1963 condition:** "whichever is most probable" → keep the gray-partition / drop-ceiling overlay as delivered (PROBABLE per E4/E6/E12). The 1953 cabinet-divider condition stays available as ARCH layer + I09 only.
+2. **Partition finish:** "whatever is most accurate" → gray stays the default. The memoir ties *gray* partitions to the LRS areas (curtains, pavilions, Great Hall upper level, MRR galleries); *faux mahogany* is documented only for the old House Reading Room cubicles (E5), so the mahogany albedo is reserved for a DC-X10 director's-office variant.
+3. **Missing records:** Matt will fetch them from the links in the run summary (HABS DC-351 data pages + photos 22/23; 1953 LRS photo full size; Annual Report FY1963 Ch. V / App. XII). Dimensions stay APPROXIMATE until compared; v002 only if they disagree with the build.
+
+These are review notes, not an approval. asset_user_approval remains PENDING.
