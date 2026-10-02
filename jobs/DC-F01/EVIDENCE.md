@@ -51,7 +51,7 @@ and the modern lamp.
 | 02_Adams_Building_Exterior_Stairs_32044495186_54993551.jpg | commons.wikimedia.org/wiki/File:Adams_Building_Exterior_Stairs_(32044495186).jpg | 2017-01-03 | USCapitol | Public domain | Annex entrance stair detail | Modern view. **Inspected 2026-10-02:** close-up of the white marble treads with tan/grey veining and soiling; it supports the material and tone only, not geometry. |
 
 Moodbook: `SAVE_JFK_Visual_Benchmark_Moodbook.pdf` (Drive 11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr). Pages
-10–12 were read as **text only**; the page images could not be viewed here (see CONTEXT_ACK.json).
+10–12 were read as text in the first run; in the second run their page images were inspected (see CONTEXT_ACK.json).
 
 ---
 
@@ -170,5 +170,5 @@ Excluded as post-1963: the 2015–c. 2025 Cannon Renewal (court lawn and new fou
 2. Re-snap all three footprints to the DC-R02 v001 evidence cards (R02 data not reachable here).
 3. Cannon: coupled vs single columns; the NW corner exterior; how the 5th storey reads from the street; court archway location.
 4. Annex: spandrel material (bronze PROBABLE); bay counts; attic cladding; entrance stair rises.
-5. Folger: inscription positions; west facade composition; terrace layout in 1932–63; 1958–59 addition appearance.
+5. Folger: west facade composition; terrace layout in 1932–63; 1958–59 addition appearance; whether the east-end door in the 2025 photo existed in 1963. (Inscription positions were resolved by photo ref 01.)
 6. Sculpture rights (Lawrie doors, Gregory reliefs, Putnam's Puck): until confirmed, stand-ins stay.
