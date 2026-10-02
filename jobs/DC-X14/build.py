@@ -338,13 +338,21 @@ def box_uv(bm, scale=1.0):
                 l[uv].uv = (c.x * scale, c.y * scale)
 
 
+def clean(bm):
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
+    bmesh.ops.dissolve_degenerate(bm, dist=1e-6, edges=bm.edges)
+    bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.calc_area() < 1e-10], context="FACES_ONLY")
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.normal_update()
+
+
 def finish(bm, name, mats, cleanup=True):
     """bmesh → object with materials, cleaned, UV'd, normals recalculated, linked to scene."""
     if cleanup:
-        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
-        bmesh.ops.dissolve_degenerate(bm, dist=1e-6, edges=bm.edges)
-    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-    bm.normal_update()
+        clean(bm)
+    else:
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        bm.normal_update()
     box_uv(bm)
     me = bpy.data.meshes.new(name)
     bm.to_mesh(me)
@@ -445,7 +453,6 @@ def cornice_profile(h=ROOM_H):
     for i in range(0, 9):
         a = math.pi / 2 * i / 8
         pts.append((z0 + 0.03 + (CORN_H - 0.03) * math.sin(a), 0.02 + (CORN_D - 0.02) * (1 - math.cos(a))))
-    pts.append((h, CORN_D))
     pts.append((h, 0))
     return pts
 
@@ -456,14 +463,40 @@ def architrave_profile():
 
 
 # =============================================================================== module builders
-def wall_core(bm, lod, thick=WALL_T, length=MOD_W, h=ROOM_H, mat_plaster=0, mat_oak=1):
-    """Plaster wall slab + oak baseboard, picture rail and cove cornice along +X."""
-    box(bm, 0, -thick, 0, length, 0, h, mat_plaster)
+def runs(length, gaps):
+    """Split 0..length into runs that avoid the (x0, x1) gaps."""
+    out, x = [], 0.0
+    for g0, g1 in sorted(gaps):
+        if g0 > x + 1e-6:
+            out.append((x, g0))
+        x = max(x, g1)
+    if x < length - 1e-6:
+        out.append((x, length))
+    return out
+
+
+def wall_trims(bm, lod, length=MOD_W, h=ROOM_H, base_gaps=(), rail_gaps=(), mat_plaster=0, mat_oak=1):
+    """Oak baseboard, picture rail and plaster cove cornice along +X, interrupted at openings."""
     if lod <= 1:
-        sweep(bm, baseboard_profile(), [(0, 0, 0), (length, 0, 0)], mat=mat_oak)
+        for a, b in runs(length, base_gaps):
+            sweep(bm, baseboard_profile(), [(a, 0, 0), (b, 0, 0)], mat=mat_oak)
         sweep(bm, cornice_profile(h), [(0, 0, 0), (length, 0, 0)], mat=mat_plaster)
     if lod == 0:
-        sweep(bm, rail_profile(), [(0, 0, 0), (length, 0, 0)], mat=mat_oak)
+        for a, b in runs(length, rail_gaps):
+            sweep(bm, rail_profile(), [(a, 0, 0), (b, 0, 0)], mat=mat_oak)
+
+
+def wall_slab(name, mats, thick=WALL_T, length=MOD_W, h=ROOM_H):
+    """Bare plaster wall box as an object (booleans are applied to this single closed shell)."""
+    bm = new_bm()
+    box(bm, 0, -thick, 0, length, 0, h, 0)
+    return finish(bm, name, mats)
+
+
+def wall_core(bm, lod, thick=WALL_T, length=MOD_W, h=ROOM_H, mat_plaster=0, mat_oak=1):
+    """Plaster wall slab + trims (no openings)."""
+    box(bm, 0, -thick, 0, length, 0, h, mat_plaster)
+    wall_trims(bm, lod, length, h, mat_plaster=mat_plaster, mat_oak=mat_oak)
 
 
 def ucx_boxes(name, boxes, M):
@@ -498,14 +531,13 @@ def build_wall_window(M):
     objs = []
     thick = EXT_WALL_T
     for lod in range(3):
-        bm = new_bm()
-        wall_core(bm, lod, thick=thick)
-        ob = finish(bm, f"{name}_LOD{lod}", [M["plaster"], M["oak"], M["marble"], M["door"], M["metal"]])
+        ob = wall_slab(f"{name}_LOD{lod}", [M["plaster"], M["oak"], M["marble"], M["door"], M["metal"]], thick=thick)
         cut = arch_cutter("cut", x0, -thick - 0.1, 0.3, WIN_SILL, WIN_W, WIN_RECT_H, segs=24 if lod == 0 else 10)
         boolean_cut(ob, cut)
-        # Add sill, sash and radiator as more shells into the same mesh.
+        # Trims (rail stops at the reveal), then sill, sash and radiator as more shells in the same mesh.
         bm = new_bm()
         bm.from_mesh(ob.data)
+        wall_trims(bm, lod, rail_gaps=[(x0 - 0.001, x0 + WIN_W + 0.001)])
         # Marble sill: through the reveal, 50 mm proud into the room, 40 mm thick.
         box(bm, x0 - 0.04, -thick, WIN_SILL - 0.04, x0 + WIN_W + 0.04, 0.05, WIN_SILL, 2)
         # Window frame set 0.42 m back from the room face in the reveal.
@@ -561,7 +593,7 @@ def build_wall_window(M):
                 cylinder(bm, lx, 0.145, 0.0, 0.12, 0.018, 8, mat=4)
         else:
             box(bm, x0 + 0.1, 0.05, 0.0, x0 + WIN_W - 0.1, 0.24, 0.76, 4)
-        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        clean(bm)
         box_uv(bm)
         bm.to_mesh(ob.data)
         bm.free()
@@ -647,13 +679,12 @@ def build_wall_door(M):
     objs = []
     frame_t = 0.045
     for lod in range(3):
-        bm = new_bm()
-        wall_core(bm, lod)
-        ob = finish(bm, f"{name}_LOD{lod}", [M["plaster"], M["oak"], M["door"], M["brass"]])
+        ob = wall_slab(f"{name}_LOD{lod}", [M["plaster"], M["oak"], M["door"], M["brass"]])
         cut = rect_cutter("cut", x0, x0 + DOOR_W, -WALL_T - 0.1, 0.1, -0.1, DOOR_H + TRANS_H)
         boolean_cut(ob, cut)
         bm = new_bm()
         bm.from_mesh(ob.data)
+        wall_trims(bm, lod, base_gaps=[(x0 - 0.12, x0 + DOOR_W + 0.12)])
         # Door frame (jamb lining) through the wall thickness.
         box(bm, x0, -WALL_T, 0, x0 + frame_t, 0, DOOR_H + TRANS_H, 1)
         box(bm, x0 + DOOR_W - frame_t, -WALL_T, 0, x0 + DOOR_W, 0, DOOR_H + TRANS_H, 1)
@@ -674,7 +705,7 @@ def build_wall_door(M):
             box(bm, x0 + frame_t, -0.16, DOOR_H + TRANS_H - frame_t - 0.04, x0 + DOOR_W - frame_t, -0.12, DOOR_H + TRANS_H - frame_t, 2)
             if lod == 0:
                 box(bm, MOD_W / 2 - 0.012, -0.16, DOOR_H + 0.05, MOD_W / 2 + 0.012, -0.12, DOOR_H + TRANS_H - frame_t, 2)
-        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        clean(bm)
         box_uv(bm)
         bm.to_mesh(ob.data)
         bm.free()
@@ -793,7 +824,11 @@ def build_pendant(M):
 def partition_frame(bm, w, lod, mat_paint, glazed=False, door=False):
     """Steel partition: base channel, posts both sides, top cap, infill panel (solid or solid+glazed)."""
     t = PART_T
-    box(bm, 0, -t / 2 - 0.015, 0, w, t / 2 + 0.015, PART_BASE_H, mat_paint)         # base channel
+    if door:   # base channel only under the posts; the opening gets a flat threshold strip
+        box(bm, 0, -t / 2 - 0.015, 0, POST_W, t / 2 + 0.015, PART_BASE_H, mat_paint)
+        box(bm, w - POST_W, -t / 2 - 0.015, 0, w, t / 2 + 0.015, PART_BASE_H, mat_paint)
+    else:
+        box(bm, 0, -t / 2 - 0.015, 0, w, t / 2 + 0.015, PART_BASE_H, mat_paint)     # base channel
     box(bm, 0, -t / 2 - 0.01, PART_H - 0.04, w, t / 2 + 0.01, PART_H, mat_paint)   # top cap
     box(bm, 0, -t / 2, 0, POST_W, t / 2, PART_H, mat_paint)
     box(bm, w - POST_W, -t / 2, 0, w, t / 2, PART_H, mat_paint)
@@ -843,12 +878,7 @@ def build_part_door(M):
         box(bm, POST_W, -PART_T / 2 + 0.01, 2.0, w - POST_W, PART_T / 2 - 0.01, PART_H - 0.04, 0)
         # threshold strip
         box(bm, POST_W, -PART_T / 2 - 0.015, 0, w - POST_W, PART_T / 2 + 0.015, 0.012, 0)
-        # remove the base channel inside the door opening by rebuilding it only outside: done by
-        # cutting the channel segment away with a boolean after finish (keeps everything closed).
-        ob = finish(bm, f"{name}_LOD{lod}", [M["part"], M["brass"]])
-        cut = rect_cutter("cut", POST_W, w - POST_W, -0.1, 0.1, 0.012, 2.0)
-        boolean_cut(ob, cut)
-        objs.append(ob)
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["part"], M["brass"]]))
     pivot = empty("PIVOT_X14_PartDoorHinge", (POST_W + 0.002, 0.0, 0.012))
     objs.append(pivot)
     for lod in range(3):
@@ -964,11 +994,12 @@ def build_sign(M):
         objs.append(plate)
         if lod == 0:
             for text, z, size in (("LEGISLATIVE REFERENCE SERVICE", 0.085, 0.022),
-                                  ("GOVERNMENT AND GENERAL RESEARCH DIVISION", 0.052, 0.016),
+                                  ("HISTORY AND GOVERNMENT DIVISION", 0.052, 0.016),
                                   ("ROOM 128", 0.020, 0.018)):
                 cu = bpy.data.curves.new("txt", "FONT")
                 cu.body = text
                 cu.size = size
+                cu.resolution_u = 3
                 cu.align_x = "CENTER"
                 cu.extrude = 0.0015
                 to = bpy.data.objects.new("txt", cu)

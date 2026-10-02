@@ -5,11 +5,11 @@ offices and Legislative Reference Service (LRS) rooms, October–November 1963.
 
 **Sandbox limitation (read first).** The cloud sandbox's egress policy blocks `loc.gov`,
 `tile.loc.gov`, `lcweb2.loc.gov`, `commons.wikimedia.org`, `en.wikipedia.org`, `archive.org`,
-`hathitrust.org` and `picryl.com`. Catalog records below were located and their catalog
-summaries read through web search, but **no image was opened, inspected or saved**, and no
-file could be placed in `References/DC-X14`. Every record is therefore a *lead with a stable
-archive ID*, not an inspected photo. All dimensions in the kit are APPROXIMATE. This gap is
-flagged in HANDOFF.md as the first thing Matt should check locally.
+`hathitrust.org` and `picryl.com`, so the agent could not open archive pages itself. Matt
+closed most of the gap on 2026-10-02 by dropping files into `References/DC-X14` (Drive folder
+1xeNS9O1j-BKbPVC0Czt9PCnLQL9aoMc8) and sending images in chat; those are E12–E18 below and
+were inspected. Records marked NOT INSPECTED remain leads only. All dimensions in the kit are
+APPROXIMATE; the HABS data pages (room heights, joinery) are still the open gate.
 
 ## Records (date · source · rights · what it supports)
 
@@ -25,12 +25,22 @@ flagged in HANDOFF.md as the first thing Matt should check locally.
 | E8 | LoC online tour, "Exterior" (33 ethnological heads as keystones of first-story pavilion windows) | building 1897 | https://www.loc.gov/about/online-tours/thomas-jefferson-building/exterior ; items 2007687132/2007687133 | PD text / LoC photos | First-story windows are round-arched with keystones → the kit's exterior-wall module uses a round-arched deep reveal | TEXT READ VIA SEARCH SNIPPETS |
 | E9 | HABS DC-351, Library of Congress (Jefferson Building): 25 photos, 4 data pages, 3 caption pages | survey c.1970s–90s | https://www.loc.gov/item/dc0221 ; caption PDF tile.loc.gov/.../dc0221cap.pdf | PD | Measured descriptions for room heights, window and door joinery | NOT REACHABLE from sandbox — gate for exact dimensions remains open |
 | E10 | Alterations to the Library of Congress Thomas Jefferson Building, first floor plan (drawing) | 20th c. | https://www.loc.gov/item/2002719567 | PD | Room layout of first-floor curtains/corridors | NOT REACHABLE |
+| E12 | **Annual Report of the Librarian of Congress, FY ending 30 June 1963** (PDF, 13.7 MB, Drive 1PK4LScmqGzukIKr_KT0oaGMxhITcAv6I, added by Matt) | 1963 | LoC, H.Doc.; text extracted via Drive connector (pp. front matter–~56 of ~141; Ch. II LRS pp. 20–25 complete; Ch. V Administrative Dept and App. XII employment statistics NOT returned) | PD (US Govt) | **1963 LRS officers and divisions:** Hugh L. Elsbree, Director; Lester S. Jayson, Deputy; Burnis Walker, Executive Officer; Charles A. Goodrum, Coordinator of Research. Divisions: American Law (Harry N. Stein); Economics (Julius W. Allen); Education and Public Welfare (Frederick B. Arner); Foreign Affairs (William C. Olson); **History and Government (Merlin H. Nipe)**; Library Services (Norman A. Pierce). 105,152 Congressional inquiries in FY1963. Space: "thrusts outward at the solid walls of the old Main Building and its supplemental Annex to find shelf space for books, desk space for staff"; "Crowding, which was already severe in 1960, is becoming steadily worse"; FY1963 saw the "installation of the new heating and ventilating system" in the Main Building with "major dislocation" in the last 3 months (Apr–Jun 1963); 460 staff moved to the Navy Yard Annex from ~April 1964. No LRS room location is stated. | TEXT INSPECTED (partial) — **sets the 1963 division names used on signage** |
+| E13 | LCIB May 1997 "The 'Main Building'" — full text (Matt pasted it; filed as `REF_LCIB_1997-05_Main_Building_memoirs.md` in this job and in References/DC-X14) | memoirs 1949–1988 | https://loc.gov/loc/lcib/970505/mainbldg.html | PD text | Adds to E4: **no air conditioning until the mid-1960s** — pavilion windows opened in summer (Helen Miller, 1949–79); Southwest Pavilion held a division with a "big round oak table" and salvaged Windsor chairs; LRS director's partitioned offices in the old House Reading Room (Members' Room); Nov 1966 **temporary wooden partitions** boxed in the Main Reading Room gallery bays; "nonstandardized office furniture made of wood"; Great Hall windows had no screens; A/C and "major refurbishing" late 1960s–early 1970s. | TEXT INSPECTED |
+| E14 | LCIB article photos (web thumbnails, 150–200 px): CRS director's office at the north end of the old House Reading Room (LC File Photo); CRS staff near the "Shrine", Great Hall second floor (LC File Photo); CRS on the Great Hall second floor, 1970s (Jim Higgins) | 1960s–1970s | same article; thumbnails supplied by Matt in chat, filed in References/DC-X14, DC-X03, DC-X10 | LoC in-house; verify before publication | Director's office: oak-panelled wall, brass sconce, plain wooden conference table with leather-seated armchairs, cardboard document boxes. Shrine photo: two wooden pedestal desks face to face, swivel chairs, papers, marble columns behind, no partitions in frame. Dropped ceilings/gray partitions not visible at thumbnail size. | IMAGES INSPECTED (low resolution) |
+| E15 | "Employees of the Legislative Reference Service at their desks", Sept 1953 — 150 px service thumbnail (ppmsca 19570) | Sept 1953 | LoC Photo Archive https://www.loc.gov/item/2009631159 ; thumbnail `service-pnp-ppmsca-19500-19570_150px.jpg` in References/DC-X14 (Matt) | LoC in-house photo | Tall panelled room (reads as the old House Reading Room), wooden flat-top desks with side drawers, wooden swivel armchairs, freestanding steel/wood filing cabinets and bookcases used as dividers between desk groups, a wall sconce, daylight from the left, dark floor (carpet or linoleum). No fluorescent fixtures or dropped ceiling visible. | IMAGE INSPECTED at 150 px only — full-resolution still needed |
+| E16 | HABS DC-351 index to photographs (caption PDF) | 1974–75 | `master-pnp-habshaer-dc-dc0200-dc0221-data-dc0221cap.pdf` in References/DC-X14 (Matt) | PD | Confirms photo list; DC-351-22 "Interior, corridor" and DC-351-23 "Interior, office and conference room" are the two frames most relevant to this kit — **not yet obtained**. | TEXT INSPECTED |
+| E17 | HABS DC-351 photographs sent by Matt: DC-351-3 south side; DC-351-8 west front doorway; DC-351-12 Main Reading Room looking NE; DC-351-16 MRR pier capital/entablature; also (not saved — arrived during an interrupted turn) DC-351-26 CT west front, DC-351-24 circular window in arcaded recess, DC-351-25 eagle capital | 1974–75 | HABS DC-351, Jack E. Boucher; filed to References/DC-H01 and DC-X06 | PD | DC-351-3 confirms the first-story windows along the south curtain are **round-arched with keystones** in a rusticated-granite base storey, with tall rectangular second-story windows between pilasters above; supports the arched deep-reveal window module. The rest are hero-set material (H01, X06). | IMAGES INSPECTED |
+| E18 | "The Library of Congress — First Floor Plan" (published plan, undated, source page not recorded) | 1897–1930s? | from Matt in chat; filed in References/DC-X14, DC-X11, DC-X01 | PD (LoC/HABS drawing, APPROXIMATE) | Shows the NW/SW curtains as rows of rooms along the outer walls flanking the N.W./S.W. courts, the corner pavilions as larger single rooms with a central feature, the Main Entrance Hall and the east stacks; room depths along the curtains read as roughly one window bay deep (c. 6–7 m) with a corridor on the court side — basis for the demo room's 9 × 6 m proportion. | IMAGE INSPECTED |
 | E11 | LoC online tours: Members' Room (11-ft oak panelling, beamed ceiling), Librarian's Room | 1897 fabric | https://www.loc.gov/about/online-tours/thomas-jefferson-building/members-room | PD text | Hero rooms are oak-panelled; **ordinary staff offices were not** — the kit uses painted plaster with oak trim, not panelling (APPROXIMATE) | TEXT READ |
 
 ## Research gates from the request
 
 - **"Legislative Reference Service naming/use evidence gate for the 1963 state"** — CLEARED on
-  naming (E7: 1963 Annual Report uses "Legislative Reference Service"; CRS name only from 1970).
+  naming (E7/E12: the FY1963 Annual Report names the "Legislative Reference Service" and its six
+  1963 divisions; CRS name only from 1970). The kit's door sign uses the 1963 wording
+  "LEGISLATIVE REFERENCE SERVICE / HISTORY AND GOVERNMENT DIVISION" (the division that became
+  "Government and General Research" by 1967).
   Use/location: PROBABLE (E4/E6: LRS in Main Building curtains/pavilions and Annex; the
   Government & General Research Division in the first-floor east corridor by 1967). No 1963
   room-number list was reachable → room numbers in the kit are FICTIONALISED.
@@ -42,13 +52,14 @@ flagged in HANDOFF.md as the first thing Matt should check locally.
 
 ## What is VERIFIED / PROBABLE / APPROXIMATE / FICTIONALISED in the kit
 
-- VERIFIED (documentary): the organisation name "Legislative Reference Service" in 1963; LRS housed in the Main Building and Annex; steel partitions with glass windows and painted finishes existed in Main Building rooms (E5); gray temporary partitions, dropped ceilings and temporary light fixtures in LRS office areas (E4, 1967).
-- PROBABLE: the same partition/drop-ceiling condition in 1963 (overcrowding documented 1957–59, E6).
+- VERIFIED (documentary): the organisation name "Legislative Reference Service" and its 1963 division names (E12); LRS housed in the Main Building and Annex; severe crowding and "desk space for staff" shortage in 1963 (E12); no air conditioning in 1963, new heating/ventilating system installed in the Main Building during Apr–Jun 1963 (E12, E13); steel partitions with glass windows and painted finishes existed in Main Building rooms (E5); gray temporary partitions, dropped ceilings and temporary light fixtures in LRS office areas (E4, 1967); wooden desks, swivel chairs and freestanding cabinets as dividers (E15, 1953); first-story windows round-arched (E8, E17).
+- PROBABLE: the gray partition / drop-ceiling condition already present in 1963 (crowding documented 1957–63, E6/E12; the memoir dates it to 1967).
 - APPROXIMATE: all dimensions (room height 4.6 m; window opening 1.5 × 3.95 m arched; door 1.1 × 2.6 m + 0.4 m transom; partitions 2.13 m; drop ceiling at 2.75 m); oak strip floor in offices; two-light double-hung sash; cast-iron column radiators; cove cornice profile; partition colour (gray) and glazing (clear upper panels).
 - FICTIONALISED: room numbers on door signs; the specific room arrangement in the demo assembly; the eavesdrop gameplay use.
 
-## Missing views to collect locally (for Matt or a non-sandboxed run)
+## Still missing (for Matt or a non-sandboxed run)
 
-1. E1 image (1953 LRS desks) — compare partition height, glazing, lighting, floor.
-2. HABS DC-351 data pages — room heights, window/door joinery sizes.
-3. Any 1960s Photoduplication Service interior of the NW/SW curtains or Great Hall upper level offices.
+1. E1/E15 at full resolution (1953 LRS desks) — partition height, glazing, lighting, floor finish.
+2. HABS DC-351 data pages and photos DC-351-22 (corridor) and DC-351-23 (office and conference room) — room heights, window/door joinery sizes.
+3. Annual Report FY1963 Ch. V (Administrative Department, pp. 59–70) and App. XII (employment) — the connector truncated the PDF at ~p. 56; the local PDF has them.
+4. Any 1960s Photoduplication Service interior of the NW/SW curtains or Great Hall upper level offices.
