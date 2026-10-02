@@ -1,0 +1,22 @@
+﻿DC-F01 — Federal background building assemblies
+Required: moodbook and reference photos
+Before building, inspect the general SAVE JFK moodbook images (especially pages 10–12) and follow the photo reference guide. Record the moodbook file/pages in CONTEXT_ACK.json. Find and inspect photos of this exact asset, save permitted images plus source/date/rights notes in this set's References/[asset ID], and record evidence and gaps in EVIDENCE.md. Compare output against both the moodbook and those photos. Starter photos do not clear this job's research gates; flag missing evidence before relying on it.
+SAVE JFK moodbook: SAVE_JFK_Visual_Benchmark_Moodbook.pdf
+Photo reference guide: WASHINGTON — MOODBOOK + PHOTO REFERENCE GUIDE (read before building)
+Set References folder: References
+ASSET REQUEST (stage A) · DC-EXT1 — Exterior Standard · P1 · PCG assembly Status: HEAD-AUTHORIZED (Matt, 2026-09-22) · UNCLAIMED · asset approval pending Matt · weathering: DC-F01-W01 waits in B_WEATHERING_STAGE/Pending Asset Approval · WASHINGTON-2026-09-22-v001
+Mission
+Assemble reference-led background federal and institutional buildings—including IRS, Post Office Department, the 1963 Senate Office Building / New Senate Office Building, U.S. Courthouse, and the C10 Library of Congress Annex, Folger Shakespeare Library and Cannon House Office Building—using DC-C18/C19/C20 only where evidence matches. Named overrides preserve each building identity; these are not generic or automatically bespoke hero builds.
+Context
+* Location (corridor segment codes, see brief): C2-C7, C10
+* In map now: District/Commerce/etc. partially exist
+* DALLAS: NEW (no DALLAS equivalent)
+* Direction: Each named building gets an evidence card and reference-led footprint/silhouette. For C10 preserve 1963-facing names—Library of Congress Annex, Folger Shakespeare Library and Cannon House Office Building—and never substitute modern Adams/Madison geometry. Promote to EXT2 only if Matt asks or verified close coverage exceeds F01.
+* Depends on: DC-C18, DC-C19, DC-C20
+* ITS ALIVE registration: inherits kits
+Road Plan 05 integration addendum
+* C10 named hard-lock ownership is F01: Library of Congress Annex (modern John Adams Building), Folger Shakespeare Library and Cannon House Office Building. Preserve their reference-led 1963 identities; generic PCG may not replace them.
+* Use C18/C19/C20 only where the individual building evidence supports that construction language. These kits are reusable vocabulary, not silhouette substitutes.
+* Build C10 detail by legal visibility/LOD need. Promote a specific facade to F02/EXT2 only if gameplay or cinematic proximity proves F01 structurally insufficient; do not pre-emptively mint separate hero IDs.
+Rules
+Asset stage standard: https://docs.google.com/document/d/1czqr-kWYX_AFdcbH7T-I-NgoQJV4e0nuqFq9oEGUcLA/edit Live brief (read first, record in CONTEXT_ACK): https://docs.google.com/document/d/1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4/edit Task title: "DC-F01 - Federal background assemblies"
