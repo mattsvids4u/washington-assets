@@ -5,7 +5,8 @@ Full payload (meshes/*.glb, textures/*.png, source/build.py + DC-X14_kit.blend, 
   GitHub repo:    https://github.com/mattsvids4u/washington-assets
   Branch:         asset/DC-X14-v001
   Path:           deliveries/DC-X14/asset-v001/
-  Pull request:   (see HANDOFF.md / run summary — filled in after the PR is opened)
+  Pull request:   https://github.com/mattsvids4u/washington-assets/pull/1
+  Work branch:    claude/eager-cray-vpg2j3 (PR #1); branch asset/DC-X14-v001 points at the same delivery commit
 
 Integrity: DELIVERY_MANIFEST.json + SHA256SUMS.txt in the same folder (also uploaded here as text).
 The GLBs (≈57 MB, textures embedded) are too large for the Drive connector; fetch them from the branch.
