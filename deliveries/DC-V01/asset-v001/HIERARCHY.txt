@@ -1,0 +1,110 @@
+  BACKUP_LENSES [MESH] @(0.0,0.0,0.0) cm faces=152
+  BODY [MESH] @(0.0,0.0,0.0) cm faces=47488
+  BODY_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=21368
+  BODY_LOD2 [MESH] @(0.0,0.0,0.0) cm faces=8546
+  BUMPER_FRONT [MESH] @(0.0,0.0,0.0) cm faces=348
+  BUMPER_FRONT_GUARDS [MESH] @(0.0,0.0,0.0) cm faces=24
+  BUMPER_REAR [MESH] @(0.0,0.0,0.0) cm faces=348
+  BUMPER_REAR_GUARDS [MESH] @(0.0,0.0,0.0) cm faces=24
+  DOOR_FL [MESH] @(97.0,-46.0,62.0) cm faces=3394
+    GLASS_DOOR_FL [MESH] @(0.0,0.0,0.0) cm faces=12
+    HINGE_DOOR_FL [NODE] @(97.0,-46.0,62.0) cm
+    TRIM_WINDOW_DOOR_FL [MESH] @(0.0,0.0,0.0) cm faces=32
+  DOOR_FL_LOD1 [MESH] @(97.0,-46.0,62.0) cm faces=1526
+  DOOR_FL_LOD2 [MESH] @(97.0,-46.0,62.0) cm faces=610
+  DOOR_FR [MESH] @(-97.0,-46.0,62.0) cm faces=3394
+    GLASS_DOOR_FR [MESH] @(0.0,0.0,0.0) cm faces=12
+    HINGE_DOOR_FR [NODE] @(-97.0,-46.0,62.0) cm
+    TRIM_WINDOW_DOOR_FR [MESH] @(0.0,0.0,0.0) cm faces=32
+  DOOR_FR_LOD1 [MESH] @(-97.0,-46.0,62.0) cm faces=1526
+  DOOR_FR_LOD2 [MESH] @(-97.0,-46.0,62.0) cm faces=610
+  DOOR_HANDLES [MESH] @(0.0,0.0,0.0) cm faces=224
+  DOOR_RL [MESH] @(99.0,53.0,62.0) cm faces=2654
+    GLASS_DOOR_RL [MESH] @(0.0,0.0,0.0) cm faces=12
+    HINGE_DOOR_RL [NODE] @(99.0,53.0,62.0) cm
+    TRIM_WINDOW_DOOR_RL [MESH] @(0.0,0.0,0.0) cm faces=32
+  DOOR_RL_LOD1 [MESH] @(99.0,53.0,62.0) cm faces=1194
+  DOOR_RL_LOD2 [MESH] @(99.0,53.0,62.0) cm faces=476
+  DOOR_RR [MESH] @(-99.0,53.0,62.0) cm faces=2650
+    GLASS_DOOR_RR [MESH] @(0.0,0.0,0.0) cm faces=12
+    HINGE_DOOR_RR [NODE] @(-99.0,53.0,62.0) cm
+    TRIM_WINDOW_DOOR_RR [MESH] @(0.0,0.0,0.0) cm faces=32
+  DOOR_RR_LOD1 [MESH] @(-99.0,53.0,62.0) cm faces=1192
+  DOOR_RR_LOD2 [MESH] @(-99.0,53.0,62.0) cm faces=476
+  GLASS_REAR [MESH] @(0.0,0.0,0.0) cm faces=12
+  GLASS_WINDSHIELD [MESH] @(0.0,0.0,0.0) cm faces=12
+  GRILLE_BACK [MESH] @(0.0,0.0,0.0) cm faces=12
+  GRILLE_BARS [MESH] @(0.0,0.0,0.0) cm faces=132
+  HEADLAMP_BEZELS [MESH] @(0.0,0.0,0.0) cm faces=896
+  HEADLAMP_BEZELS_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=402
+  HEADLAMP_LENSES [MESH] @(0.0,0.0,0.0) cm faces=672
+  HEADLAMP_LENSES_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=302
+  HOOD [MESH] @(0.0,-62.0,91.0) cm faces=5532
+    HINGE_HOOD [NODE] @(0.0,-62.0,91.0) cm
+  HOOD_LOD1 [MESH] @(0.0,-62.0,91.0) cm faces=2488
+  HOOD_LOD2 [MESH] @(0.0,-62.0,91.0) cm faces=994
+  INT_COLUMN [MESH] @(0.0,0.0,0.0) cm faces=52
+  INT_DASH [MESH] @(0.0,0.0,0.0) cm faces=48
+  INT_ENGINE_BAY [MESH] @(0.0,0.0,0.0) cm faces=172
+  INT_ENGINE_BAY_WALLS [MESH] @(0.0,0.0,0.0) cm faces=36
+  INT_FLOOR [MESH] @(0.0,0.0,0.0) cm faces=60
+  INT_SEAT_FRONT [MESH] @(0.0,0.0,0.0) cm faces=900
+  INT_SEAT_FRONT_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=404
+  INT_SEAT_REAR [MESH] @(0.0,0.0,0.0) cm faces=900
+  INT_SEAT_REAR_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=404
+  INT_STEERING_WHEEL [MESH] @(0.0,0.0,0.0) cm faces=384
+  INT_VISORS [MESH] @(0.0,0.0,0.0) cm faces=36
+  MIRROR_DRIVER [MESH] @(0.0,0.0,0.0) cm faces=228
+  PLATE_FRONT [MESH] @(0.0,0.0,0.0) cm faces=12
+  PLATE_REAR [MESH] @(0.0,0.0,0.0) cm faces=12
+  POLICE_ANTENNA [MESH] @(0.0,0.0,0.0) cm faces=88
+  POLICE_BEACON_BASE [MESH] @(0.0,0.0,0.0) cm faces=216
+  POLICE_BEACON_DOME [MESH] @(0.0,0.0,0.0) cm faces=360
+  POLICE_DECAL_ROOF_ID [MESH] @(0.0,0.0,0.0) cm faces=1152
+  POLICE_DECAL_ROOF_ID_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=518
+  POLICE_DECAL_SEAL_FL [MESH] @(0.0,0.0,0.0) cm faces=800
+  POLICE_DECAL_SEAL_FL_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=360
+  POLICE_DECAL_SEAL_FR [MESH] @(0.0,0.0,0.0) cm faces=800
+  POLICE_DECAL_SEAL_FR_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=360
+  POLICE_DECAL_TRUNK [MESH] @(0.0,0.0,0.0) cm faces=1152
+  POLICE_DECAL_TRUNK_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=518
+  POLICE_RADIO [MESH] @(0.0,0.0,0.0) cm faces=24
+  SOCKET_ANTENNA [NODE] @(0.0,68.0,139.8) cm
+  SOCKET_BEACON [NODE] @(0.0,32.0,140.5) cm
+  SOCKET_DRIVER [NODE] @(41.0,20.0,60.0) cm
+  SOCKET_PLATE_F [NODE] @(0.0,-252.5,43.6) cm
+  SOCKET_PLATE_R [NODE] @(0.0,290.5,43.6) cm
+  SOCKET_ROOF_SIGN [NODE] @(0.0,48.0,140.4) cm
+  SOCKET_SIREN [NODE] @(90.7,-200.0,88.0) cm
+  SOCKET_SPOTLIGHT_L [NODE] @(88.3,-40.0,104.0) cm
+  SOCKET_STEERING [NODE] @(41.0,-12.0,92.0) cm
+  STEER_FL [NODE] @(77.5,-151.0,35.5) cm
+    WHEEL_FL [MESH] @(77.5,-151.0,35.5) cm faces=2208
+    WHEEL_FL_LOD1 [MESH] @(77.5,-151.0,35.5) cm faces=992
+  STEER_FR [NODE] @(-77.5,-151.0,35.5) cm
+    WHEEL_FR [MESH] @(-77.5,-151.0,35.5) cm faces=2208
+    WHEEL_FR_LOD1 [MESH] @(-77.5,-151.0,35.5) cm faces=992
+  TAILLAMP_BEZELS [MESH] @(0.0,0.0,0.0) cm faces=448
+  TAILLAMP_LENSES [MESH] @(0.0,0.0,0.0) cm faces=336
+  TRIM_HOOD_FRONT [MESH] @(0.0,0.0,0.0) cm faces=12
+  TRIM_REAR_PANEL [MESH] @(0.0,0.0,0.0) cm faces=12
+  TRIM_ROCKER_L [MESH] @(0.0,0.0,0.0) cm faces=80
+  TRIM_ROCKER_R [MESH] @(0.0,0.0,0.0) cm faces=80
+  TRIM_WINDOW_REAR [MESH] @(0.0,0.0,0.0) cm faces=32
+  TRIM_WINDOW_WINDSHIELD [MESH] @(0.0,0.0,0.0) cm faces=32
+  TRUNK [MESH] @(0.0,162.0,96.0) cm faces=4180
+    HINGE_TRUNK [NODE] @(0.0,162.0,96.0) cm
+  TRUNK_LOD1 [MESH] @(0.0,162.0,96.0) cm faces=1880
+  TRUNK_LOD2 [MESH] @(0.0,162.0,96.0) cm faces=752
+  UCX_BODY_01 [MESH] @(0.0,0.0,0.0) cm faces=12
+  UCX_BODY_02 [MESH] @(0.0,0.0,0.0) cm faces=12
+  UCX_BODY_03 [MESH] @(0.0,0.0,0.0) cm faces=12
+  UCX_BODY_04 [MESH] @(0.0,0.0,0.0) cm faces=12
+  WHEELHOUSES [MESH] @(0.0,0.0,0.0) cm faces=784
+  WHEELHOUSES_LOD1 [MESH] @(0.0,0.0,0.0) cm faces=352
+  WHEEL_RL [MESH] @(76.0,151.0,35.5) cm faces=2208
+  WHEEL_RL_LOD1 [MESH] @(76.0,151.0,35.5) cm faces=992
+  WHEEL_RR [MESH] @(-76.0,151.0,35.5) cm faces=2208
+  WHEEL_RR_LOD1 [MESH] @(-76.0,151.0,35.5) cm faces=992
+  WIPERS [MESH] @(0.0,0.0,0.0) cm faces=24
+materials: ['MI_V01_Beacon_Red_Unlit', 'MI_V01_Chrome', 'MI_V01_Decal_DoorSeal', 'MI_V01_Decal_RoofID', 'MI_V01_Decal_Trunk', 'MI_V01_Glass', 'MI_V01_Grille_Dark', 'MI_V01_Headlamp', 'MI_V01_Interior_Dark', 'MI_V01_Interior_Trim', 'MI_V01_Interior_Vinyl', 'MI_V01_Lens_Clear', 'MI_V01_Lens_Red', 'MI_V01_Paint_Body', 'MI_V01_Plate', 'MI_V01_Rubber_Tyre', 'MI_V01_Steel_Painted', 'MI_V01_Undercoat', 'MI_V01_Whitewall']

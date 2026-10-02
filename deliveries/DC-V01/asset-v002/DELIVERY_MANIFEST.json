@@ -1,0 +1,171 @@
+{
+  "job_id": "DC-V01",
+  "version": "asset-v002",
+  "claimant": "claude-cloud-agent",
+  "created_utc": "2026-10-02T23:50:22+00:00",
+  "source_commit": "a9ff5a041e2ae3e94e94bdc7e48395507258cfa8",
+  "gates": {
+    "clean_rebuild": "see HANDOFF.md",
+    "glb_reopen_qa": "see HANDOFF.md",
+    "unreal_import_readback": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "matt_approval": "PENDING"
+  },
+  "files": [
+    {
+      "path": "CONTEXT_ACK.json",
+      "bytes": 3593,
+      "sha256": "df09618b774994396c4a9f31ea663fcb5f593040d559bbbdc31e87ee085d1c6f"
+    },
+    {
+      "path": "DEPENDENCY_LOCK.json",
+      "bytes": 2196,
+      "sha256": "137b70c2a173a58de4224764a5dcc3cff34e1137bd387f3008869b1e4cd1cbae"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 8539,
+      "sha256": "dbeddb19a558b5ac6d47d4606a89388f5ccafe23f29220eba1a6f52ce6440f16"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 12891,
+      "sha256": "283a906b8593ed852fc22d8320c05cec7d0b340de2e2b8b34b0b46ae1f042cd7"
+    },
+    {
+      "path": "HIERARCHY.txt",
+      "bytes": 7646,
+      "sha256": "1445d4c8e6e1dde91031cb9e439aa44bda3e67eb152cb6a3ae9102d5248ff7aa"
+    },
+    {
+      "path": "MESH_STATS.txt",
+      "bytes": 12240,
+      "sha256": "2f9beb12d19f11e70674f216970e14877e7872071a9975dce2882523d7ba8ed0"
+    },
+    {
+      "path": "PASS_PLAN.md",
+      "bytes": 7537,
+      "sha256": "91788f25f68310a56219b1397a63f0d5f06624983dae89eb6108b2cbdb0680c3"
+    },
+    {
+      "path": "PCG_INTERFACE.json",
+      "bytes": 4173,
+      "sha256": "47e83ce5c681e2a8369c711a11cca98a5110cfe9c118d87b22fd5242f1e03edf"
+    },
+    {
+      "path": "REUSABLE_COMPONENTS.json",
+      "bytes": 3120,
+      "sha256": "87999b1703704e94054357debc150339b083767f16d26bc7933436951b4c2db3"
+    },
+    {
+      "path": "meshes/SM_V01_PatrolSedan_MPDC.glb",
+      "bytes": 5291872,
+      "sha256": "b0c3acaea167bd24dfedca291f803b92c5890a9588edb7d4c20f620b013802c1"
+    },
+    {
+      "path": "meshes/SM_V01_Sedan_Base_Neutral.glb",
+      "bytes": 5012716,
+      "sha256": "c46122c2cd42eada5365b1b2a985c8fc536bb098bb48f56870ee33b8db2fe0ae"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_front.png",
+      "bytes": 1009751,
+      "sha256": "bc16ee45cfea510fdbd7c115f052937655d014ddf868b94f0aa6e0104b35a866"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_profile.png",
+      "bytes": 1015430,
+      "sha256": "51011470120fb67a2656595f776ab8e687f2e39c5bb1cc10850565062d300488"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_rear.png",
+      "bytes": 991318,
+      "sha256": "e938da73e1705740430618ff500bf8d91ed37dc92428f9a033bb02b19422b3ca"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_three_quarter.png",
+      "bytes": 1059581,
+      "sha256": "cbc5c4b40f3e6af888dd81b06d88110e6dbdc35feea73b79628633f340d35105"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_door_belt.png",
+      "bytes": 941423,
+      "sha256": "6218d05b21b1e052817f858574f6976cc33d2de9e093dd15d1c7957d9868545d"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_front_fender.png",
+      "bytes": 913907,
+      "sha256": "f7e69632471116b6d25c64a3713f7539018ad2d9ae38a9fff3f578cb9df4ce4e"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_grille_low.png",
+      "bytes": 840424,
+      "sha256": "5020ab1fe30aa455318ae4524bd913420c5624f38520ffb7d4fa75ee162effd6"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_rear_wheel_kerb.png",
+      "bytes": 864631,
+      "sha256": "e5cd0d628571379d75da4e9309db89c97660ae649b55af684e81363037af6d4c"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_posed_open.png",
+      "bytes": 1128849,
+      "sha256": "5b33769ede9b2f7ef318f73914efa44cd33ab72a9f1068d9de4d0ae5e68ffde9"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_front.png",
+      "bytes": 1025110,
+      "sha256": "3cd72dd312705ae877fab8e325599b52372826f63dced80ded81855ef63fa2fd"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_profile.png",
+      "bytes": 1037138,
+      "sha256": "a2af71ebe5a3165fb3325475298de5441b172e3dd2a66da99b495f6c403def81"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_rear.png",
+      "bytes": 1015728,
+      "sha256": "ea510ff89f23645336b3ce769c07d88ef8786ae2895fa235bfcf01395f36239f"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_three_quarter.png",
+      "bytes": 1089158,
+      "sha256": "4870aeec1c5c716a303e8422c4f0b03c6b6e940bc13e9494215fdb6b23d784f3"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_top.png",
+      "bytes": 864478,
+      "sha256": "e08137e04c43064ce291fff3f5f47c95b25542506cfee3edad41a90df32c2ec6"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_underside.png",
+      "bytes": 865983,
+      "sha256": "337f49102527d300b998d0b9add540085d3b8324e07b40646d543c7ba43de196"
+    },
+    {
+      "path": "source/build.py",
+      "bytes": 71969,
+      "sha256": "1f5a7357c5eb06e83bb6f5f1365c8ec44bd30a2649e9054b568d1a04da6ac21f"
+    },
+    {
+      "path": "textures/T_V01_Decal_DoorSeal.png",
+      "bytes": 52338,
+      "sha256": "97f94277b9a18f4f32afb9a27618f898217e5f04311439829efd941ad7be48f1"
+    },
+    {
+      "path": "textures/T_V01_Decal_RoofID.png",
+      "bytes": 29589,
+      "sha256": "0b8ed51b9de53f0f1e619cdbb94dff5b2509b07ac775e8b002965ad6f43817a8"
+    },
+    {
+      "path": "textures/T_V01_Decal_Trunk.png",
+      "bytes": 7652,
+      "sha256": "1dd3059e586c0c7f6a3cb9d9f3d4ebe6aacb302c14a1b04737759d0687b57eca"
+    },
+    {
+      "path": "textures/T_V01_Plate.png",
+      "bytes": 16801,
+      "sha256": "87a35a678e5650bb167466042ff6bdd35795119c1c43ac4e23da43aef9a06d68"
+    }
+  ]
+}
