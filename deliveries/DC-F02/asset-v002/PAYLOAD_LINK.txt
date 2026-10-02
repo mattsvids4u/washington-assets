@@ -1,0 +1,19 @@
+DC-F02 — asset — v002 (Senate Office Building, C7) — payload location
+
+The mesh, textures, full-resolution renders and the generator are too large to upload through the
+Drive connector. They live in GitHub:
+
+  Branch: https://github.com/mattsvids4u/washington-assets/tree/asset/DC-F02-v002
+  Pull request: https://github.com/mattsvids4u/washington-assets/pull/5 (v002; v001 is PR 4)
+  Package path: deliveries/DC-F02/asset-v002/
+    meshes/SM_F02_SenateOfficeBuilding.glb   (LOD0/1/2 + UCX + sockets + optional site helper; metres)
+    textures/T_SOB_*.png                     (BC / ORM / N; also embedded in the GLB)
+    renders/*.png                            (full-res clay/textured/street/night views + photo comparison)
+    source/build.py                          (reproducible generator: python jobs/DC-F02/build.py)
+    source/render_street.py                  (street-level render script)
+
+Verify after download: from inside deliveries/DC-F02/asset-v002 run  sha256sum -c SHA256SUMS.txt
+Rebuild: bash tools/setup.sh && python jobs/DC-F02/build.py   (byte-identical output, seed 1963)
+
+This Drive folder holds every text file of the package plus a small preview contact sheet.
+Unreal import/readback and motion tests: NOT_RUN — needs local Unreal (UE 5.8).

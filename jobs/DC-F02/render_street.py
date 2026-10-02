@@ -20,6 +20,10 @@ VIEWS = {
     "street_cst_slope_nw": ((-28.0, 135.0, 1.7), (20.0, 95.0, 9.0), 24, False),
     "street_constitution_night": ((-10.0, -26.0, ZC + 1.4), (90.0, 2.0, ZC + 10.0), 28, True),
     "aerial_sw_corner": ((-25.0, -25.0, 55.0), (20.0, 20.0, 25.0), 35, False),
+    # matched to the E11 (c.1909) / E15 (modern) photographs: across the Delaware x Constitution
+    # intersection, looking NE at the rotunda corner
+    "photo_match_E11_corner": ((-52.0, -50.0, ZC + 1.6), (14.0, 12.0, ZC + 10.0), 32, False),
+    "detail_corner_pavilion": ((-20.0, -20.0, ZC + 1.6), (7.0, 7.0, ZC + 12.0), 28, False),
 }
 
 

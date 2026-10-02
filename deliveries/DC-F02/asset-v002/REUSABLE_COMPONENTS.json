@@ -1,0 +1,15 @@
+{
+  "job_id": "DC-F02",
+  "version": "asset-v001",
+  "components": [
+    {"name": "column() - Beaux-Arts Roman Doric column", "source": "build.py", "params": "diameter (PARAMS.col_d), height, lod", "detail": "square plinth, torus base, 20 concave flutes, entasis, necking, echinus, abacus", "reuse": "Candidate shared order with DC-C19 / DC-H08 / DC-H10 if their order matches; C19 stays the approved authority"},
+    {"name": "pilaster() - Doric pilaster with fillet flutes", "source": "build.py"},
+    {"name": "window() - opening fill: frame, glazing, 6/6 or 2/2 sash bars, sill, surround, hood with consoles", "source": "build.py", "reuse": "Any masonry federal window bay (DC-C07 / DC-C18 style); atlas-driven night state"},
+    {"name": "rusticated() - banded rustication with real channel joints around openings", "source": "build.py"},
+    {"name": "entablature() - Doric architrave/frieze/triglyphs/mutules/corona", "source": "build.py"},
+    {"name": "balustrade() - lathed balusters, pedestals, solid attic variant", "source": "build.py", "reuse": "Compare with DC-G10 Capitol grounds balustrade for shared profile"},
+    {"name": "wall_with_openings() - merged-box wall fill", "source": "build.py"},
+    {"name": "T_SOB_GlassInterior atlas (16 interior states)", "source": "build.py glass_atlas()", "label": "FICTIONALISED"}
+  ],
+  "not_reused_from": {"DC-C19": "mesh not reachable from sandbox (proposal in HANDOFF)", "DALLAS": "NEW - none"}
+}

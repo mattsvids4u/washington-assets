@@ -15,10 +15,11 @@ That is too much for one honest delivery. The job is split into bounded versions
 
 | Version | Scope | Why this order |
 |---|---|---|
-| **asset-v001** | **Senate Office Building (C7)** | On the north-loop escort route (Constitution Ave), not in the map, best-documented parti, and no F01/H overlap |
-| asset-v002 | New Senate Office Building (C7, 1958) | Same street face; pairs with v001 |
-| asset-v003 | National Theatre + National Press Building (C3/C4) | Needs R02 C3/C4 frontage fields (R02 v002 owed) |
-| asset-v004+ | C1/C2 uplift revisions (Willard, Hotel Washington, District Bldg, Riggs, American Security) | Need the existing in-map meshes, which can't be reached from the cloud. Local / Unreal side first |
+| asset-v001 | Senate Office Building (C7), text-evidence build | On the north-loop escort route (Constitution Ave), not in the map, best-documented parti, and no F01/H overlap |
+| **asset-v002** | **Senate Office Building, photo-matched revision** | Matt supplied photos (E10, E11, E15–E17). Corner pavilion and base windows corrected |
+| asset-v003 | New Senate Office Building (C7, 1958) | Same street face; pairs with the SOB. E17 is a lead (Alamy, so a permitted photo is needed) |
+| asset-v004 | National Theatre + National Press Building (C3/C4) | Needs R02 C3/C4 frontage fields (R02 v002 owed) |
+| asset-v005+ | C1/C2 uplift revisions (Willard, Hotel Washington, District Bldg, Riggs, American Security) | Need the existing in-map meshes, which can't be reached from the cloud. Local / Unreal side first |
 
 ## Locked sources
 
@@ -87,3 +88,11 @@ That is too much for one honest delivery. The job is split into bounded versions
 - **Next pass (v001 review loop):** photo match once Matt adds SOB photos and/or the R02 card to
   References/DC-F02. Then the rotunda corner form, column spacing and footprint reconciliation.
   After that, asset-v002, the New Senate Office Building.
+- 2026-10-02: **Pass 4 (photo match).** Matt supplied 5 photos (EVIDENCE.md "Inspected photographs").
+  The v001 corner was wrong (4 columns / 3 doors). It was rebuilt per E11/E15/E16: 2 columns before a
+  tall arched window, solid piers with framed windows and cartouches, one arched doorway over a
+  projecting stair, raised attic, flag socket. Base windows are now round-arched with stone
+  spandrels. QA 26/26; clean rebuild byte-identical; photo-matched camera added.
+  Packaged as asset-v002 (v001 untouched).
+- **Next:** Matt reviews v002 against E11. Then reconcile PARAMS with the R02 card when available,
+  and check the C St front against E12. Then asset-v003, the New SOB.

@@ -1,6 +1,21 @@
-# DC-F02 — EVIDENCE (v001 scope: Senate Office Building, C7)
+# DC-F02 — EVIDENCE (Senate Office Building, C7) — updated for asset-v002
 
-Pass 1, 2026-10-02, claude-cloud-agent.
+Pass 1, 2026-10-02, claude-cloud-agent. **Pass 4 (photo match), 2026-10-02:** Matt supplied five
+photographs in chat. These were the first images actually inspected; see "Inspected photographs"
+below. They supersede the "link-cited only" limit for E10 and E11.
+
+## Inspected photographs (asset-v002)
+
+| ID | File (stored?) | Source / date / creator | Rights | Viewpoint | Establishes | Known mismatch / limits |
+|---|---|---|---|---|---|---|
+| E11 | `references/REF_E11_SOB_SW_corner_c1909_AmericanPressAssn_LoC.jpg` (**stored**) | LoC 2003655456, "D.C. Washington - Old Senate Office Building", c.1909–10, © American Press Ass'n (watermark in image) | Published before 1929, so US public domain. LoC catalog lists no known restrictions | Across the Delaware × Constitution intersection, looking NE at the SW corner | **Corner pavilion:** a flat chamfer with two solid piers and a recessed central bay. **Two free-standing columns** stand before **one tall round-arched window**. One **round-arched doorway** sits over a **projecting stair with cheek blocks**. The piers have framed piano-nobile windows with carved ornaments above. The corner attic is **raised**, with a tablet and the **flagpole**. **Round-arched ground-storey windows** run along both fronts. The rusticated base, the Constitution colonnade and the Delaware pilastrade are all visible | Pre-1933 (the First St wing is not visible; irrelevant from this view). Awnings are seasonal dressing, not modelled. Tablet inscription not legible |
+| E10 | `references/REF_E10_Senate_side_aerial_1967-03-27_Leffler_LoC.jpg` (**stored**) | LoC 2024639984, Warren K. Leffler (U.S. News & World Report), 27 Mar 1967 | USN&WR collection: no known restrictions per LoC | Aerial from above Union Station, looking S | 1967 state (nearest to 1963). **Closed quadrangle** with slim wings and a large open court. Flat roof behind the parapet. Square NW/NE corners and the chamfered SW corner. Proportions consistent with PARAMS (wing ≈ 1/7 of width) | Oblique and distant, so it can't give exact metres. DC-R02 card still needed |
+| E15 | not stored (rights unconfirmed) | User-supplied modern colour photo of the SW corner from Constitution Ave (appears to be an AOC/Senate photograph; source not confirmed) | unconfirmed, so link/description only | Constitution Ave, looking N/NE | Confirms E11 survives unchanged: tall arched window between two columns, arched doorway with stair and cheek walls, framed pier windows, raised attic with flagpole, arched base windows. Windows original (E05) | Modern lamps, signals, cars and trees are not 1963 evidence |
+| E16 | not stored (rights unconfirmed) | User-supplied modern photo, dusk, SW corner from the Delaware/Constitution intersection | unconfirmed | as E11 | Same as E15. Also shows the solid raised attic block and the central tablet | Modern bollards and lamps are not 1963 evidence |
+| E17 | not stored (**Alamy watermark**, stock licence) | User-supplied 1960s B&W of the **New Senate Office Building** (1958), with 1960s cars | stock / watermarked, so not redistributable | Corner of the New SOB | For **asset-v002 of the New SOB (planned)**: stripped-classical facade, tall recessed window bays, a central pedimented portico with columns, square attic windows, a corner entrance | Not the v001/v002 building |
+
+Changes driven by these photos (asset-v002): the SW corner pavilion was rebuilt; the base windows
+became round-arched; a raised corner attic and a flag socket were added. See HANDOFF.md.
 
 **Target state:** autumn 1963, as seen from Constitution Ave NE on the north-loop escort route
 (road-plans canon v002).
@@ -59,9 +74,10 @@ B. Russell only in 1972 (E06). "Russell" is a production label only. Nothing in 
 | Constitution Ave: rusticated base + colonnade of 34 Doric columns in a loggia + entablature + balustrade | Modelled: 34 fluted Doric columns, recessed loggia wall, two window tiers per bay, triglyph frieze, cornice, balustrade with pedestals over columns | Count + parti VERIFIED (E01, E02). Column height, spacing and loggia depth **APPROXIMATE** |
 | End pavilions on Constitution Ave | Slightly projecting pavilions with paired pilasters | **APPROXIMATE** (typical of the parti, E04 "pavilions") |
 | Delaware Ave, C St, First St fronts: pilastrades with central pavilions | Engaged Doric pilasters, flush wall, central pavilion | VERIFIED as parti (E01, E04). Bay counts **APPROXIMATE** |
-| Corner rotunda entrance at Delaware & Constitution (SW corner) | Chamfered corner pavilion, 4-column in-antis entrance, steps, bronze doors | Location VERIFIED (E01, E04). External corner form **APPROXIMATE — must be checked against E11** |
+| Corner rotunda entrance at Delaware & Constitution (SW corner) | **v002:** chamfer with two solid piers (framed windows, oval cartouches, arris pilasters). Recessed central bay with 2 free-standing Doric columns before a tall round-arched window with a balconette. One round-arched bronze doorway with a fanlight, over a projecting 6-riser granite stair with cheek blocks. Arched base windows in the piers. Raised attic block with a blank tablet. Flag socket. (v001's 4 columns and 3 doors were wrong.) | **VERIFIED by photo (E11, E15, E16).** Exact widths, column order detail and cartouche carving **APPROXIMATE** |
+| Ground-storey windows | **v002:** round-arched (semicircular head, stone spandrels, fanlight, keystone) on all street fronts | **VERIFIED by photo (E11, E15, E16)** for the Constitution and Delaware fronts. C St / First St fronts assumed the same (**APPROXIMATE**) |
 | Materials: Vermont marble (S, W), Georgia marble (N, E), NH granite base/terrace, Indiana limestone courts | Separate material slots | VERIFIED (E02) |
 | Windows: original wood sash, 6-over-6 (piano nobile), 6-over-6 (upper), 2-over-2 (base) | Real openings, frames, sash bars, glazing | Openings VERIFIED (E05). Sash pattern **APPROXIMATE** |
-| Roof: flat, behind the balustrade, with low skylight ridges over corridors | Flat roof plus parapet | **APPROXIMATE** (E10 would confirm) |
+| Roof: flat, behind the balustrade, with low skylight ridges over corridors | Flat roof plus parapet | Flat roof behind the parapet **VERIFIED (E10, 1967)**. Skylight ridges **APPROXIMATE** |
 | Window AC units, flags, lamps, signage | Not modelled (no signage on the building in 1963 that is known) | — |
 | Window interior states (lit / dark / blinds) for the night read | Atlas on the glazing, seeded per window | **FICTIONALISED** (gameplay dressing) |

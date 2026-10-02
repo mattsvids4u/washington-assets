@@ -1,0 +1,291 @@
+{
+  "job_id": "DC-F02",
+  "version": "asset-v002",
+  "claimant": "claude-cloud-agent",
+  "created_utc": "2026-10-02T14:12:08+00:00",
+  "source_commit": "9824143621f83280e4c5a127e8d7f1c46790fe2b",
+  "gates": {
+    "clean_rebuild": "see HANDOFF.md",
+    "glb_reopen_qa": "see HANDOFF.md",
+    "unreal_import_readback": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "matt_approval": "PENDING"
+  },
+  "files": [
+    {
+      "path": "CONTEXT_ACK.json",
+      "bytes": 4972,
+      "sha256": "cec2104a6b7cb0d71c74be15172fc413eefb9dd4bdeda7ff094e961901cda4df"
+    },
+    {
+      "path": "DEPENDENCY_LOCK.json",
+      "bytes": 1591,
+      "sha256": "5364b010e94720bfae7053bd378156a6f19e1270944485cdf2e29662c0b730b2"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 13168,
+      "sha256": "43f939a183326cec35a1df259ac7876cc727f595e62a646f7e96db8622a966d0"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 7240,
+      "sha256": "5845357f84ad93d2a41f9ac3b5e907791b3298a7a0db84e8f02e2d6262e4066a"
+    },
+    {
+      "path": "MESH_STATS.txt",
+      "bytes": 224,
+      "sha256": "1b7a0f6cfcc614b855cecc556cbe4cba3dc90c63444a663b9ed16b6d157db823"
+    },
+    {
+      "path": "PASS_PLAN.md",
+      "bytes": 5990,
+      "sha256": "8effc1fabad697e8b2295bf4cd463e2906a91bfa466535094f826a153313247f"
+    },
+    {
+      "path": "PAYLOAD_LINK.txt",
+      "bytes": 1274,
+      "sha256": "cb62e652464b6f28bce2c3564d919084b792e6c8b45ddb9f9ebabdb24d491b93"
+    },
+    {
+      "path": "PCG_INTERFACE.json",
+      "bytes": 3444,
+      "sha256": "9b0ff35e3c29fd771dec442ef0407c16e898964cda0774bf7936cb5dadc2aedc"
+    },
+    {
+      "path": "QA_REPORT.txt",
+      "bytes": 2491,
+      "sha256": "2f25ae538ceb6b8857dab953b7d27c13a8fd9a062121408e8088bf19df64abdb"
+    },
+    {
+      "path": "REUSABLE_COMPONENTS.json",
+      "bytes": 1457,
+      "sha256": "96c1b98d2f2605cb9272d31bd9c4da8c349785c5a7c45c78b4276f39e9a20079"
+    },
+    {
+      "path": "meshes/SM_F02_SenateOfficeBuilding.glb",
+      "bytes": 50337924,
+      "sha256": "9b7fa9a9832cc975715173534996afb196a8e255ac23a2a07a1dbea86f5b8e4b"
+    },
+    {
+      "path": "references/REF_E10_Senate_side_aerial_1967-03-27_Leffler_LoC.jpg",
+      "bytes": 216323,
+      "sha256": "c27f4dbe5edc68f50ebf2d794ea03e474e3b9feec5e744f25eb43ba22f1a5a88"
+    },
+    {
+      "path": "references/REF_E11_SOB_SW_corner_c1909_AmericanPressAssn_LoC.jpg",
+      "bytes": 138736,
+      "sha256": "f570d8c5036b9254d57870b29d4eccf8dccbfa67b2798064bf27100daf321fdc"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_COMPARE_E11_vs_v002.png",
+      "bytes": 990974,
+      "sha256": "1dc211cc6c73e4a289baee05e959b799fb7dd880d816963f7098a54fc5ff0af8"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_CONTACT_SHEET_preview.png",
+      "bytes": 14050,
+      "sha256": "c3296de132de3fa099a7ffd8748e4877f3a9f7bb33475cd966e363466e81d7b0"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_aerial_sw_corner.png",
+      "bytes": 1966497,
+      "sha256": "10b7a95d51f71266d62a2c7c65f7f6576680d41eb944104d1bd679d2ebc6ee5b"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_clay_front.png",
+      "bytes": 1033180,
+      "sha256": "47e58d870654b3ee8b0619885015f4558ef8d792256b4c7a521a53219f91fab7"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_clay_profile.png",
+      "bytes": 1028479,
+      "sha256": "ad37c53661ae35668c7073b10edbcc2e23314dea3c1fbb9ec24fb3a9c113343e"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_clay_rear.png",
+      "bytes": 1024974,
+      "sha256": "2b776f40a518804260eeeed62d4a1d9a29bf039743fa23c635d5418cc788b425"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_clay_three_quarter.png",
+      "bytes": 1090059,
+      "sha256": "bc0efd8d7592b8786454dbd23b6c47a2ccb3a833224c2521a75f0a87dff0726f"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_detail_colonnade_bay.png",
+      "bytes": 1884463,
+      "sha256": "27fa5a6bd0dc84e2165a56ac924d55915160cc60a4a2c9d7699f33d69c1a19bf"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_detail_corner_pavilion.png",
+      "bytes": 1806013,
+      "sha256": "24096777dcaa129da572cb3930dfb59c473a85e4122d0328ae8995c3bfd45ea7"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_photo_match_E11_corner.png",
+      "bytes": 1626445,
+      "sha256": "7795966ab216f03fb348d8190855621ffa47ed9430168d46e3dea6a4a564ac70"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_street_constitution_east.png",
+      "bytes": 1623910,
+      "sha256": "7766eb5a6c24ccaf48f428cee21e10656f2fc1149acd7c0dbc5acac341b11c39"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_street_constitution_night.png",
+      "bytes": 1415040,
+      "sha256": "3b512cfbb5b42429b8d79e182bb3904885cf9eb0759d827f8577da739cdb22d1"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_street_cst_slope_nw.png",
+      "bytes": 2001787,
+      "sha256": "d917a9f0493cac2ca81b9b4f298701b1a2a9a4841da61c673388f1bc350ff708"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_street_rotunda_corner.png",
+      "bytes": 1648384,
+      "sha256": "b3f989563dd73f43eaa4b1437a85003f3a43d7a073eada064abc1810d7fd18d7"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_textured_front.png",
+      "bytes": 1072072,
+      "sha256": "00ae18c496879e56ca86155e4ec62b70cb4a69986a1de76aece0682d8642d793"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_textured_profile.png",
+      "bytes": 1070383,
+      "sha256": "9a88224cbb7409eedc0cbf5e611b8a6415ffca04ae932008c1dc24c82f23746f"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_textured_rear.png",
+      "bytes": 1066506,
+      "sha256": "9a3c76766753a55024e5b8b85462b8a44a69a8590d93782a72609e2e5a818c40"
+    },
+    {
+      "path": "renders/SM_F02_SenateOfficeBuilding_textured_three_quarter.png",
+      "bytes": 1166091,
+      "sha256": "8b7b3fbb09718b67951c8916df7e54e5e24d3044a2bd03d4def0c047d7e90191"
+    },
+    {
+      "path": "source/build.py",
+      "bytes": 47182,
+      "sha256": "336ede5864f3d8b5b4703d192caa6d9453c86f6032268e20ec39450fe92347e4"
+    },
+    {
+      "path": "source/render_street.py",
+      "bytes": 5705,
+      "sha256": "678a894a66af715baa2ed43f5c3acd4f9c6a82d4679b2aef3bd15eb5b728bf7b"
+    },
+    {
+      "path": "textures/T_SOB_BronzeDoor_BC.png",
+      "bytes": 43004,
+      "sha256": "36d7bc325ad6f452649b53545782177e985cc939fdabef9b4ccbbc92069abed2"
+    },
+    {
+      "path": "textures/T_SOB_BronzeDoor_ORM.png",
+      "bytes": 79872,
+      "sha256": "79ce67eaddee51c7070681a1dbbcabccf7ded0997daeb5fcd84e3311cdbd6eab"
+    },
+    {
+      "path": "textures/T_SOB_GlassInterior_BC.png",
+      "bytes": 19727,
+      "sha256": "144a1380fc5b5f1a5f8c02c81a15f14a629977780b400c2cacc57c7c9c0199d1"
+    },
+    {
+      "path": "textures/T_SOB_GlassInterior_E.png",
+      "bytes": 15288,
+      "sha256": "75425287a02998610c8cbffe9971228737a3674b95478983e7f7e7f5abdd5278"
+    },
+    {
+      "path": "textures/T_SOB_GraniteNH_BC.png",
+      "bytes": 802614,
+      "sha256": "2a28db0ec50fda5030ef58d85911e7b630f9c7476e7a820720563fcfcc594e47"
+    },
+    {
+      "path": "textures/T_SOB_GraniteNH_N.png",
+      "bytes": 1521047,
+      "sha256": "1b27874cafcc5c72528c7aa7f71c7b4bd2d946abbc3ecb0bcb6a89e641c157e0"
+    },
+    {
+      "path": "textures/T_SOB_GraniteNH_ORM.png",
+      "bytes": 568498,
+      "sha256": "dab566a128fba883199524bc0a46de0c2229540ae3847e599ee8156e63582d8e"
+    },
+    {
+      "path": "textures/T_SOB_LimestoneIndiana_BC.png",
+      "bytes": 758361,
+      "sha256": "cda30699a63f3d0976b9a8b6dec608cb09418c1f67862512ec22611c16078f66"
+    },
+    {
+      "path": "textures/T_SOB_LimestoneIndiana_N.png",
+      "bytes": 1545302,
+      "sha256": "e125f90f547277e37ac670043a22e268d5be030b587073eedbdd0f4ff6216624"
+    },
+    {
+      "path": "textures/T_SOB_LimestoneIndiana_ORM.png",
+      "bytes": 578069,
+      "sha256": "d64dea9a976e0059ab85d5988cb10529381a0ff269af40971c128760854e8a52"
+    },
+    {
+      "path": "textures/T_SOB_MarbleGeorgia_BC.png",
+      "bytes": 735942,
+      "sha256": "26e604fc94268755fd4dde565d14d46425371b69b89a53f9bc75f9dc6e2ad8da"
+    },
+    {
+      "path": "textures/T_SOB_MarbleGeorgia_N.png",
+      "bytes": 1520897,
+      "sha256": "084ff07445b98e1e50273c159c1b6eb68c6b71e427c41c3377c0a09517704089"
+    },
+    {
+      "path": "textures/T_SOB_MarbleGeorgia_ORM.png",
+      "bytes": 568746,
+      "sha256": "63bbbc13fe8b6821b9996f117757f190ebde00b097f1a910a4830a42dba360a4"
+    },
+    {
+      "path": "textures/T_SOB_MarbleVermont_BC.png",
+      "bytes": 808046,
+      "sha256": "f04646ea927abc7e0f5badb6a2227959f0b882341893d17fb045c0f58ca42966"
+    },
+    {
+      "path": "textures/T_SOB_MarbleVermont_N.png",
+      "bytes": 1505087,
+      "sha256": "6bbf9525f9a82b2ddb5b4aaaf101e93d666992c49217703489ceb5d81c54955f"
+    },
+    {
+      "path": "textures/T_SOB_MarbleVermont_ORM.png",
+      "bytes": 565464,
+      "sha256": "6914cc43691ca5299f3f817072ecb5964c1708457f39016aa5a61d569740d1f3"
+    },
+    {
+      "path": "textures/T_SOB_RoofMembrane_BC.png",
+      "bytes": 50620,
+      "sha256": "b5c237d669b712b07968fda85d9eba04c290d15343d02f222709e67e07e75d9c"
+    },
+    {
+      "path": "textures/T_SOB_RoofMembrane_ORM.png",
+      "bytes": 80102,
+      "sha256": "f5858562ff7aed988a3f1e797abd83dd919743a40e86eea0c6556f20596a4c65"
+    },
+    {
+      "path": "textures/T_SOB_SitePaving_BC.png",
+      "bytes": 142921,
+      "sha256": "c947f6d3595c8234ca5484b2e40a645fb7e0dc2a7b574f4e2cf9a476092ac963"
+    },
+    {
+      "path": "textures/T_SOB_SitePaving_ORM.png",
+      "bytes": 76060,
+      "sha256": "852ce9e1cfa82ae43e518a593ae0338aa661c266c446398da9523f64f80383c3"
+    },
+    {
+      "path": "textures/T_SOB_WindowFramePaint_BC.png",
+      "bytes": 38698,
+      "sha256": "bcfa2993e9585cdbd7c613d969dc3928b6f1d68e73870ef1be271db5fee65b1b"
+    },
+    {
+      "path": "textures/T_SOB_WindowFramePaint_ORM.png",
+      "bytes": 77282,
+      "sha256": "44d2cf64537332430942b128baaba3043127ce454e49778b042e3c0b82b8b000"
+    }
+  ]
+}
