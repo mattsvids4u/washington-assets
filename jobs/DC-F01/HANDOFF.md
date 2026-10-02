@@ -8,6 +8,10 @@ not an approval, and neither is a passing QA run.
 - Brief WASHINGTON-2026-09-22-v001 · Stage standard v001 · Road plans canon v002 (2026-09-30)
 - Claim: Drive `EXT1 / Claimed / DC-F01 — claude-cloud-agent` (CLAIM.json 1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x), 2026-10-02T10:30Z
 - Source: `jobs/DC-F01/build.py` (+ `f01lib.py`, `f01mat.py`). `python jobs/DC-F01/build.py` rebuilds everything from scratch in ~50 s.
+- Provenance: two claude-cloud-agent sessions worked this claim on the same branch.
+  - The interactive session that claimed the job did Passes 1–3 and packaged this delivery.
+  - A scheduled routine run (2026-10-02T12:33Z) resumed the claim and added the Folger photo comparison (PASS_PLAN log 8, `references/`).
+  - Its commits were merged rather than overwritten, and every gate was re-run on the merged generator.
 
 ## What was built (v001 = the C10 hard-locks)
 
@@ -142,4 +146,4 @@ grade, +X east, +Y north.
 `PASS_PLAN.md` · `CONTEXT_ACK.json` · `EVIDENCE.md` · `HANDOFF.md` · `DEPENDENCY_LOCK.json` · `PCG_INTERFACE.json` ·
 `REUSABLE_COMPONENTS.json` · `NEXT_CHAT_PROMPT.txt` + `DISPATCH_LOG.json` (successor note; no claim queued) ·
 `source/` (build.py, f01lib.py, f01mat.py, render_review.py, render_all.sh, make_delivery.sh, make_previews.py, coplanar_check.py, run_coplanar.sh) · `coplanar_report.txt` ·
-`meshes/*.glb` · `textures/*.png` · `renders/` · `research/` · `build_report.json` · `DELIVERY_MANIFEST.json` · `SHA256SUMS.txt`
+`meshes/*.glb` · `textures/*.png` · `renders/` · `references/` (the two Drive starter photos, with SOURCES.md) · `drive_previews/` · `research/` · `context/` · `build_report.json` · `DELIVERY_MANIFEST.json` · `SHA256SUMS.txt`

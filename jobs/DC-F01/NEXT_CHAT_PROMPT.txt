@@ -5,9 +5,11 @@ CLAUDE.md limits each run to one job. Paste the text below into the next cloud-a
 ---
 Resume DC-F01 (Federal background building assemblies, EXT1 AGENTS lane). It is claimed by
 claude-cloud-agent: Drive EXT1/Claimed/"DC-F01 — claude-cloud-agent" (folder
-1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f). v001 (C10: Library of Congress Annex, Folger, Cannon) was
-delivered on 2026-10-02 (repo deliveries/DC-F01/asset-v001, branch asset/DC-F01-v001, Drive
-EXT1/Incoming Deliveries/"DC-F01 — asset — v001").
+1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f). v001 (C10: Library of Congress Annex, Folger, Cannon) is
+delivered as Drive EXT1/Incoming Deliveries/"DC-F01 — asset — v001" (its PAYLOAD_LINK.txt names
+the PR and branch asset/DC-F01-v001; repo deliveries/DC-F01/asset-v001). FIRST verify that the
+folder exists: if it does not, v001 was never delivered and you must finish it before anything
+else. Do not assume a delivery happened because a document says so.
 
 1. Check Reviews (EXT1 Reviews 1j2rzRx4nRzjt7_ixS66e6n2erScT6wj3) for "DC-F01 — REVIEW — v001"
    and act on Matt's notes first. Likely asks: coupled vs single Cannon columns

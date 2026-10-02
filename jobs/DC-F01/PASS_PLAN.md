@@ -6,7 +6,7 @@ Brief WASHINGTON-2026-09-22-v001 · Stage standard WASHINGTON-2026-09-22-v001 ·
 Claimed 2026-10-02T10:30Z — Drive folder `DC-F01 — claude-cloud-agent` (1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f), CLAIM.json 1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x
 Work branch `claude/adoring-pasteur-25ccu0`; delivery branch pattern `asset/DC-F01-v###`.
 
-Status (2026-10-02, second run): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE, including a Folger photo comparison in the second run · v001 DELIVERED for Matt's review (not approved).**
+Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (incl. the Folger photo comparison by the second, scheduled run) · v001 delivery in preparation** (two sessions worked this claim on the same branch; the first session packages v001).
 
 | Pass | Result |
 |---|---|
@@ -94,12 +94,7 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
    - **The checker itself.** It ray-tests each coincident same-direction overlap from just off the face, with glass treated as transparent and a terrain plane, so it reports only what a viewer can see. Across the three buildings, visible overlaps fell from ~1,620 m² before the winding fix to 0.004 m².
    - **Fixes it found:** Folger window sills (top coplanar with the opening floor), stoops (a zero-height third step), relief frames (buried in the reveal, now lining the sunk field), grille and door glazing-bar crossings, and moulding end caps. Annex LOD2 pavilion corners (corner rule was off at LOD2, so 11 m² faces z-fought at distance). Cannon LOD2 cornice top coplanar with the core ring top. Cannon entrance-stair top tread coplanar with the plinth. Mullion and transom crossings on all three buildings.
    - **Left as is:** two same-material slivers (15 cm² and 12 cm²) at the Cannon's obtuse SW corner, where full-length slabs meet. Both are below the gate threshold.
-8. Final render review of the LOD2 meshes. Two identity cues were missing at distance:
-   - **Annex.** The LOD2 mesh showed punched windows on white marble, the "generic office block" read rejected in log 3. It now carries one bronze card per vertically linked bay, with the glass proud of it.
-   - **Cannon.** LOD2 had no loggia, and its columns stood 0.6 m in front of the facade instead of 0.85 m inside it, so they would jump 1.45 m at the LOD switch. The LOD2 mass now has the loggia notched out between the pavilions, with the columns and loggia windows at their LOD0 positions.
-   - LOD0, LOD1 and collision are byte-for-byte unchanged (per-mesh buffer hashes). The full rebuild is still byte-identical, and all gates still pass.
-
-8. **Folger photo comparison (second run, 2026-10-02).** The Drive connector now returns image data, so starter photo ref 01 (Commons 2025, NE corner) was inspected. Review camera `photo01_ne` was added to match it, and heights were measured along vertical lines on the facade plane. Five corrections followed:
+8. **Folger photo comparison (second run, 2026-10-02; scheduled routine session, merged into this branch).** The Drive connector now returns image data, so starter photo ref 01 (Commons 2025, NE corner) was inspected. Review camera `photo01_ne` was added to match it, and heights were measured along vertical lines on the facade plane. Five corrections followed:
    - Windows were 1.2 m too tall: glass head 10.42 → 9.25 m, incised frieze 10.88–11.72 → 9.85–10.75 m.
    - Each window now sits in a 2.4 m sunk field running up to the frieze, between 1.4 m eight-flute pilasters (were 0.86 m, with broad plain ashlar between them).
    - Grilles are now a rectilinear interlocking-rectangle fret. The chevron heads were wrong.
@@ -107,6 +102,11 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
    - The inscriptions moved from over the end doors to the attic over the window row. Johnson is legible over the east half, so the run 1 positions had the two quotes swapped.
 
    Gates were re-run: qa 20/20, 0 inward shells, coplanar PASS (two new recess-edge overlaps found and fixed), clean rebuild byte-identical.
+
+9. Final render review of the LOD2 meshes (first session, after integrating 8). Two identity cues were missing at distance:
+   - **Annex.** The LOD2 mesh showed punched windows on white marble, the "generic office block" read rejected in log 3. It now carries one bronze card per vertically linked bay, with the glass proud of it.
+   - **Cannon.** LOD2 had no loggia, and its columns stood 0.6 m in front of the facade instead of 0.85 m inside it, so they would jump 1.45 m at the LOD switch. The LOD2 mass now has the loggia notched out between the pavilions, with the columns and loggia windows at their LOD0 positions.
+   - LOD0, LOD1 and collision are byte-for-byte unchanged (per-mesh buffer hashes). The full rebuild is still byte-identical, and all gates still pass.
 
 ## Uncertainties (running list)
 
