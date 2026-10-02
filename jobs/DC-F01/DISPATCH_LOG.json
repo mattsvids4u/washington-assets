@@ -1,0 +1,13 @@
+{
+  "job_id": "DC-F01",
+  "policy": "stage standard section 9: at the third asset pass, queue at most one successor claim within the same set; if scheduling is unavailable write NEXT_CHAT_PROMPT.txt",
+  "entries": [
+    {
+      "utc": "2026-10-02T12:10:00Z",
+      "pass": 3,
+      "successor_claim_queued": false,
+      "reason": "No successor claim or routine was queued. The user asked this run to claim and start one job, and CLAUDE.md limits each run to one job. Remaining DC-F01 scope (v002) stays under the existing claim.",
+      "next_chat_prompt": "jobs/DC-F01/NEXT_CHAT_PROMPT.txt"
+    }
+  ]
+}

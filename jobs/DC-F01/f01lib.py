@@ -62,19 +62,24 @@ class Mesh:
         self.name = name
         self.verts = []
         self.faces = []      # (vertex index tuple, material name, uv spec)
+        self.shells = []     # (first face, end face) per closed shell, for orientation_audit
 
     # -- raw shell
     def shell(self, verts, faces, mat, uv=None):
         base = len(self.verts)
+        f0 = len(self.faces)
         self.verts.extend(tuple(float(c) for c in v) for v in verts)
         for f in faces:
             self.faces.append((tuple(base + i for i in f), mat, uv))
+        self.shells.append((f0, len(self.faces)))
 
     def extend(self, other):
         base = len(self.verts)
+        f0 = len(self.faces)
         self.verts.extend(other.verts)
         for f, m, uv in other.faces:
             self.faces.append((tuple(base + i for i in f), m, uv))
+        self.shells.extend((f0 + a, f0 + b) for a, b in other.shells)
 
     @property
     def tri_count(self):
@@ -88,11 +93,10 @@ class Mesh:
         P = fr.p
         v = [P(a0, b0, c0), P(a1, b0, c0), P(a1, b1, c0), P(a0, b1, c0),
              P(a0, b0, c1), P(a1, b0, c1), P(a1, b1, c1), P(a0, b1, c1)]
-        # Frame (u, n, z) is left-handed when n = (u.y, -u.x) ... check orientation:
-        # u x n = (ux, uy, 0) x (uy, -ux, 0) = (0, 0, -ux^2 - uy^2) = -z, so (u, n, z) is
-        # left-handed and face winding must be mirrored relative to an (x, y, z) box.
+        # u x n = (ux, uy, 0) x (uy, -ux, 0) = -z, so (a, b, c) is a left-handed system: the
+        # face list is the mirror image of box()'s, which keeps every face wound outward in
+        # world space (orientation_audit checks this for every shell).
         faces = [(0, 1, 2, 3), (4, 7, 6, 5), (0, 4, 5, 1), (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)]
-        faces = [tuple(reversed(f)) for f in faces]
         self.shell(v, faces, mat, uv)
 
     def box(self, x0, x1, y0, y1, z0, z1, mat, uv=None):
@@ -111,12 +115,14 @@ class Mesh:
         n = len(poly)
         v = [(x, y, z0) for x, y in poly] + [(x, y, z1) for x, y in poly]
         base = len(self.verts)
+        f0 = len(self.faces)
         self.verts.extend(v)
         self.faces.append((tuple(base + i for i in reversed(range(n))), mat_bottom or mat, uv))
         self.faces.append((tuple(base + n + i for i in range(n)), mat_top or mat, uv))
         for i in range(n):
             j = (i + 1) % n
             self.faces.append(((base + i, base + j, base + n + j, base + n + i), mat, uv))
+        self.shells.append((f0, len(self.faces)))
 
     def lprism(self, fr, poly_ac, b0, b1, mat, uv=None):
         """Extrude a polygon drawn in the facade (a, c) plane from b0 to b1 along n."""
@@ -127,6 +133,7 @@ class Mesh:
         front = [fr.p(a, b1, c) for a, c in poly]
         back = [fr.p(a, b0, c) for a, c in poly]
         base = len(self.verts)
+        f0 = len(self.faces)
         self.verts.extend(front + back)
         # (a, c) CCW seen from +n (outside) -> front cap winding as listed faces +n.
         # Frame handedness: looking from +n, +a is to the right and +c up, so CCW in (a, c)
@@ -136,6 +143,7 @@ class Mesh:
         for i in range(n):
             j = (i + 1) % n
             self.faces.append(((base + j, base + i, base + n + i, base + n + j), mat, uv))
+        self.shells.append((f0, len(self.faces)))
 
     def sweep(self, path, profile, mat, closed=True, z=0.0, uv=None):
         """Sweep a closed cross-section along a horizontal path.
@@ -172,6 +180,7 @@ class Mesh:
             ring = [(p[0] + nx * o * scale, p[1] + ny * o * scale, z + up) for o, up in prof]
             rings.append(ring)
         base = len(self.verts)
+        f0 = len(self.faces)
         for r in rings:
             self.verts.extend(r)
         nseg = npth if closed else npth - 1
@@ -188,6 +197,7 @@ class Mesh:
             self.faces.append((tuple(base + k for k in range(npr)), mat, uv))
             last = base + (npth - 1) * npr
             self.faces.append((tuple(last + k for k in reversed(range(npr))), mat, uv))
+        self.shells.append((f0, len(self.faces)))
 
     def lathe(self, cx, cy, profile, segments, mat, flutes=0, flute_depth=0.0,
               flute_zone=None, uv='cyl', z_off=0.0, angle0=0.0):
@@ -197,6 +207,7 @@ class Mesh:
         flutes: number of concave flutes applied to rings whose z lies in flute_zone."""
         segs = segments
         base = len(self.verts)
+        f0 = len(self.faces)
         uvs = ('cyl', cx, cy)
         for r, zz in profile:
             fluted = flutes and flute_zone and flute_zone[0] - EPS <= zz <= flute_zone[1] + EPS
@@ -227,6 +238,32 @@ class Mesh:
         if profile[-1][0] > EPS:
             top = base + (npf - 1) * segs
             self.faces.append((tuple(top + s for s in range(segs)), mat, uvs))
+        self.shells.append((f0, len(self.faces)))
+
+
+def shell_volume(mesh, f0, f1):
+    """Signed volume of faces f0..f1 (divergence theorem); > 0 when wound outward."""
+    vs = mesh.verts
+    vol = 0.0
+    for idx, _, _ in mesh.faces[f0:f1]:
+        x0, y0, z0 = vs[idx[0]]
+        for k in range(1, len(idx) - 1):
+            x1, y1, z1 = vs[idx[k]]
+            x2, y2, z2 = vs[idx[k + 1]]
+            vol += (x0 * (y1 * z2 - z1 * y2) - y0 * (x1 * z2 - z1 * x2) + z0 * (x1 * y2 - y1 * x2)) / 6.0
+    return vol
+
+
+def orientation_audit(mesh, tol=1e-9):
+    """List the shells whose faces are wound inward: (volume, material, centre)."""
+    bad = []
+    for f0, f1 in mesh.shells:
+        v = shell_volume(mesh, f0, f1)
+        if v < -tol:
+            idx = mesh.faces[f0][0]
+            c = tuple(round(sum(mesh.verts[i][k] for i in idx) / len(idx), 2) for k in range(3))
+            bad.append((v, mesh.faces[f0][1], c))
+    return bad
 
 
 def _seg_normal(p0, p1):
@@ -773,16 +810,18 @@ def relief_standin_smooth(m, fr, a0, a1, c0, c1, b_back, seed, mat, lod=0):
     rnd = random.Random(seed)
     w, h = a1 - a0, c1 - c0
     fw = 0.08
-    m.lbox(fr, a0 - fw, a1 + fw, b_back, b_back + 0.06, c0 - fw, c0, mat)
-    m.lbox(fr, a0 - fw, a1 + fw, b_back, b_back + 0.06, c1, c1 + fw, mat)
-    m.lbox(fr, a0 - fw, a0, b_back, b_back + 0.06, c0, c1, mat)
-    m.lbox(fr, a1, a1 + fw, b_back, b_back + 0.06, c0, c1, mat)
+    # frame moulding lining the sunk field (inside the opening, so it is seen and none of its
+    # faces coincide with the reveal faces)
+    m.lbox(fr, a0, a1, b_back, b_back + 0.06, c0, c0 + fw, mat)
+    m.lbox(fr, a0, a1, b_back, b_back + 0.06, c1 - fw, c1, mat)
+    m.lbox(fr, a0, a0 + fw, b_back, b_back + 0.06, c0 + fw, c1 - fw, mat)
+    m.lbox(fr, a1 - fw, a1, b_back, b_back + 0.06, c0 + fw, c1 - fw, mat)
     if lod >= 1:
         return
     segs = 14
     nfig = rnd.choice((2, 3, 3))
-    gz = c0 + 0.08                                  # ground line of the scene
-    m.lbox(fr, a0, a1, b_back, b_back + 0.02, c0, gz, mat)
+    gz = c0 + fw + 0.06                             # ground line of the scene, on the moulding
+    m.lbox(fr, a0 + fw, a1 - fw, b_back, b_back + 0.02, c0 + fw, gz, mat)
     for i in range(nfig):
         cx = a0 + w * (i + 0.5) / nfig + rnd.uniform(-0.06, 0.06) * w
         fh = h * rnd.uniform(0.66, 0.84)
@@ -846,6 +885,7 @@ def ring_prism(m, outer, inner, z0, z1, mat_out, mat_in, mat_top, mat_bottom=Non
     pts = outer + inner
     tris = tessellate_polygon([[(x, y, 0.0) for x, y in outer], [(x, y, 0.0) for x, y in inner]])
     base = len(m.verts)
+    f0 = len(m.faces)
     m.verts.extend([(x, y, z0) for x, y in pts])
     m.verts.extend([(x, y, z1) for x, y in pts])
     npt = len(pts)
@@ -869,3 +909,4 @@ def ring_prism(m, outer, inner, z0, z1, mat_out, mat_in, mat_top, mat_bottom=Non
         a, b = no + i, no + j
         # inner loop is CCW too; walls must face into the hole -> reversed winding
         m.faces.append(((base + b, base + a, base + npt + a, base + npt + b), mat_in, None))
+    m.shells.append((f0, len(m.faces)))

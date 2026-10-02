@@ -33,7 +33,7 @@ import f01lib as L  # noqa: E402
 import f01mat as M  # noqa: E402
 
 FT = 0.3048
-OUT = os.path.join(HERE, "out")
+OUT = os.environ.get("F01_OUT", os.path.join(HERE, "out"))   # override only for rebuild-determinism checks
 TEXDIR = os.path.join(OUT, "textures")
 FONT = "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf"
 
@@ -53,11 +53,13 @@ def box_mats(m, x0, x1, y0, y1, z0, z1, side, top=None, bottom=None, n=None, s=N
     v = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0),
          (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
     base = len(m.verts)
+    f0 = len(m.faces)
     m.verts.extend(v)
     faces = [((0, 3, 2, 1), bottom or side), ((4, 5, 6, 7), top or side), ((0, 1, 5, 4), s or side),
              ((1, 2, 6, 5), e or side), ((2, 3, 7, 6), n or side), ((3, 0, 4, 7), w or side)]
     for f, mat in faces:
         m.faces.append((tuple(base + i for i in f), mat, None))
+    m.shells.append((f0, len(m.faces)))
 
 
 def flush_windows(m, fr, a0, a1, c_rows, w, h, spacing, b_face, lod, key, frame_mat="M_F01_Window_Frame_Dark"):
@@ -78,8 +80,8 @@ def flush_windows(m, fr, a0, a1, c_rows, w, h, spacing, b_face, lod, key, frame_
             m.lbox(fr, ac - w / 2, ac + w / 2, b_face, b_face + 0.025, c0, c0 + h, GLASS[gs])
             if lod == 0:
                 m.lbox(fr, ac - 0.025, ac + 0.025, b_face + 0.025, b_face + 0.045, c0, c0 + h, frame_mat)
-                m.lbox(fr, ac - w / 2, ac + w / 2, b_face + 0.025, b_face + 0.045, c0 + h * 0.5 - 0.025,
-                       c0 + h * 0.5 + 0.025, frame_mat)
+                m.lbox(fr, ac - w / 2, ac + w / 2, b_face + 0.025, b_face + 0.04, c0 + h * 0.5 - 0.025,
+                       c0 + h * 0.5 + 0.025, frame_mat)      # transom 5 mm behind the mullion face
 
 
 # =============================================================================
@@ -133,7 +135,7 @@ def folger_window_grille(m, fr, a0, a1, c0, c1, b_glass, lod):
     bar = 0.035
     for k in (1, 2, 3):
         x = a0 + w * k / 4
-        m.lbox(fr, x - bar / 2, x + bar / 2, bf0, bf1, c0 + fw, c1 - fw, mat)
+        m.lbox(fr, x - bar / 2, x + bar / 2, bf0 - 0.006, bf1 + 0.006, c0 + fw, c1 - fw, mat)
     # horizontal rails, denser in the lower (sill) zone
     rails = [0.12, 0.24, 0.36, 0.5, 0.64, 0.78]
     for t in rails:
@@ -147,8 +149,10 @@ def folger_window_grille(m, fr, a0, a1, c0, c1, b_glass, lod):
         x1 = a0 + fw + (w - 2 * fw) * (i + 1) / nchev
         xm = (x0 + x1) / 2
         t = 0.03
-        m.lprism(fr, [(x0, zb1 - t), (x0 + t, zb1), (xm + t * 0.5, zb0 + t), (xm - t * 0.5, zb0 + t)], bf0, bf1, mat)
-        m.lprism(fr, [(x1 - t, zb1), (x1, zb1 - t), (xm + t * 0.5, zb0 + t), (xm - t * 0.5, zb0 + t)], bf0, bf1, mat)
+        m.lprism(fr, [(x0, zb1 - t), (x0 + t, zb1), (xm + t * 0.5, zb0 + t), (xm - t * 0.5, zb0 + t)], bf0 + 0.004,
+                 bf1 - 0.004, mat)
+        m.lprism(fr, [(x1 - t, zb1), (x1, zb1 - t), (xm + t * 0.5, zb0 + t), (xm - t * 0.5, zb0 + t)], bf0 + 0.007,
+                 bf1 - 0.007, mat)
     m.lbox(fr, a0 + fw, a1 - fw, bf0, bf1, zb0 - bar / 2, zb0 + bar / 2, mat)
 
 
@@ -186,7 +190,8 @@ def folger_bay_facade(m, fr, F, Z, a_start, nbays, lod, key, reliefs, wall_depth
         b_glass = -wall_depth + 0.08
         m.lbox(fr, wa0, wa1, b_glass - 0.015, b_glass, wc0, wc1, GLASS[gs])
         folger_window_grille(m, fr, wa0, wa1, wc0, wc1, b_glass, lod)
-        m.lbox(fr, wa0 - 0.06, wa1 + 0.06, -wall_depth + 0.02, -pp + 0.05, wc0 - 0.10, wc0, "M_F01_Marble_Smooth")
+        m.lbox(fr, wa0 - 0.06, wa1 + 0.06, -wall_depth + 0.02, -pp + 0.05, wc0 - 0.10, wc0 + 0.025,
+               "M_F01_Marble_Smooth")
     for i in range(nbays + 1):
         L.fluted_pilaster(m, fr, a_start + i * bay, pw, Z["base1"], Z["ent0"], -pp, pp, 6, lod,
                           "M_F01_Marble_Smooth", cap_h=0.30, base_h=0.0)
@@ -233,15 +238,15 @@ def folger_end_section(m, fr, F, Z, a0, a1, lod, key, door=True, wall_depth=0.57
                 m.lbox(fr, x - 0.025, x + 0.025, bd + 0.01, bd + 0.05, zd + 0.2, zd + dh - 0.9, "M_F01_Metal_Aluminium")
             for t in (0.35, 0.7):
                 z = zd + 0.2 + (dh - 1.1) * t
-                m.lbox(fr, ac - dw / 2 + 0.1, ac + dw / 2 - 0.1, bd + 0.01, bd + 0.05, z - 0.025, z + 0.025,
+                m.lbox(fr, ac - dw / 2 + 0.1, ac + dw / 2 - 0.1, bd + 0.01, bd + 0.045, z - 0.025, z + 0.025,
                        "M_F01_Metal_Aluminium")
             m.lbox(fr, ac - dw / 2, ac + dw / 2, bd, bd + 0.05, zd + dh - 0.9, zd + dh - 0.82, "M_F01_Metal_Aluminium")
         sw = 0.28
         m.lbox(fr, ac - dw / 2 - sw, ac - dw / 2, 0.0, 0.05, zd, zd + dh + sw, "M_F01_Marble_Smooth")
         m.lbox(fr, ac + dw / 2, ac + dw / 2 + sw, 0.0, 0.05, zd, zd + dh + sw, "M_F01_Marble_Smooth")
         m.lbox(fr, ac - dw / 2, ac + dw / 2, 0.0, 0.05, zd + dh, zd + dh + sw, "M_F01_Marble_Smooth")
-        # stoop: three steps down to the terrace
-        L.stairs(m, fr, ac - dw / 2 - 0.2, ac + dw / 2 + 0.2, 0.04, 3, (zd - Z["zt"]) / 3, 0.34, zd - (zd - Z["zt"]) / 3,
+        # stoop: three risers down to the terrace (two step blocks; the terrace is the last tread)
+        L.stairs(m, fr, ac - dw / 2 - 0.2, ac + dw / 2 + 0.2, 0.04, 2, (zd - Z["zt"]) / 3, 0.34, zd - (zd - Z["zt"]) / 3,
                  "M_F01_Marble_Smooth")
         zc = zd + dh + 1.55
         ring = [(ac + 0.62 * math.cos(2 * math.pi * k / 20), zc + 0.62 * math.sin(2 * math.pi * k / 20)) for k in range(20)]
@@ -347,7 +352,7 @@ def build_folger(lod):
         loop = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
         m.sweep(loop, [(-0.3, 0.0), (0.04, 0.0), (0.04, Z["base1"] - Z["zt"]), (-0.3, Z["base1"] - Z["zt"])],
                 "M_F01_Marble_Smooth", closed=True, z=Z["zt"])
-        prim = [(x1, y0), (x1, y1), (x0, y1), (x0, y0)]
+        prim = [(x1, y0 + 0.01), (x1, y1), (x0, y1), (x0, y0 + 0.01)]    # caps 1 cm short of the band ends
         m.sweep(prim, [(-0.25, 0.0), (0.05, 0.0), (0.05, 0.08), (-0.25, 0.08)], "M_F01_Marble_Smooth",
                 closed=False, z=Z["ent1"] - 0.05)
         m.sweep(prim, [(-0.5, 0.0), (-0.12, 0.0), (-0.12, 0.08), (-0.5, 0.08)], "M_F01_Marble_Smooth",
@@ -449,7 +454,7 @@ def annex_strip(m, fr, A, Z, ac, sw, b_face, b_spandrel, glass_b, lod, key, orna
                       glass_set_back=glass_b - core, glass_slot=gs, frame_w=0.08, mullion_w=0.045)
 
 
-def annex_segment(m, fr, A, Z, kind, a0, a1, nstrips, lod, key, entrance=None):
+def annex_segment(m, fr, A, Z, kind, a0, a1, nstrips, lod, key, entrance=None, proud_a1=None):
     """kind: 'pav' (face b = 0, parapet z_pav) or 'cur' (face b = -pav_proj, parapet z_parapet)."""
     core = -A["slab"]
     face = 0.0 if kind == "pav" else -A["pav_proj"]
@@ -490,8 +495,14 @@ def annex_segment(m, fr, A, Z, kind, a0, a1, nstrips, lod, key, entrance=None):
         annex_strip(m, fr, A, Z, ac, sw, face, face - A["strip_recess"],
                     (face - 0.5) if kind == "pav" else (core + 0.12), lod, f"{key}-s{i}")
     # band course and coping
-    m.lbox(fr, a0, a1, core, face + 0.05, Z["band0"], Z["band1"], "M_F01_Marble_Smooth")
-    m.lbox(fr, a0, a1, core, face + 0.04, top - 0.22, top, "M_F01_Marble_Smooth")
+    # band course: only the projecting part (avoids coincident same-direction faces with the
+    # slab cells, which self-shadow black in a path tracer); runs to the true end at corners
+    a1p = proud_a1 if proud_a1 is not None else a1
+    m.lbox(fr, a0, a1p, face, face + 0.05, Z["band0"], Z["band1"], "M_F01_Marble_Smooth")
+    # coping: a cap ON the wall top with a 4 cm overhang, flush with the slab's inner face
+    m.lbox(fr, a0, a1, core, face + 0.04, top, top + 0.06, "M_F01_Marble_Smooth")
+    if a1p > a1 + 1e-6:
+        m.lbox(fr, a1, a1p, face, face + 0.04, top, top + 0.06, "M_F01_Marble_Smooth")
     # honeysuckle ornament over the piers in the parapet frieze
     if lod == 0 and kind == "pav":
         piers = [a0 + i * pitch for i in range(nstrips + 1)]
@@ -574,21 +585,24 @@ def build_annex(lod):
             fr = L.Frame(o, u)
             flush_windows(m, fr, 1.2, ln - 1.2, [zr + 1.3], 1.5, 2.6, pitch, 0.0, lod, f"annex-att-{u}",
                           frame_mat="M_F01_Metal_Bronze")
-            m.lbox(fr, 0.0, ln, -0.3, 0.06, A["z_attic"] - 0.25, A["z_attic"], "M_F01_Marble_Smooth")
+        m.sweep([(ax0, ay0), (ax1, ay0), (ax1, ay1), (ax0, ay1)], [(-0.3, 0.0), (0.06, 0.0), (0.06, 0.1), (-0.3, 0.1)],
+                "M_F01_Marble_Smooth", closed=True, z=A["z_attic"])
     # ---- facades (CCW: S, E, N, W) with the corner rule (each spans a in [0, L - slab])
     facs = [("S", L.Frame((x0, y0), (1, 0)), W, False), ("E", L.Frame((x1, y0), (0, 1)), D, True),
             ("N", L.Frame((x1, y1), (-1, 0)), W, False), ("W", L.Frame((x0, y1), (0, -1)), D, True)]
     for name, fr, ln, short in facs:
         segs = annex_layout(A, ln, short)
         for si, (kind, a0, a1, n) in enumerate(segs):
-            a1c = min(a1, ln - (sl if lod < 2 else 0.0))
+            a1c = min(a1, ln - (sl if lod < 2 else A["pav_proj"] + 0.01))     # corner rule (LOD2: pavilion slab)
             ent = None
             if si == 2:
                 if name in ("W", "E"):
                     ent = (3, 2.3, 4.1, 3.9)       # three pairs of bronze doors (COLE/WP)
                 elif name == "S":
                     ent = (1, 2.8, 4.1, 0.0)       # former Copyright Office doors (LAB23)
-            annex_segment(m, fr, A, Z, kind, a0, a1c, n, lod, f"annex-{name}{si}", entrance=ent)
+            proud_a1 = (a1 + 0.05) if si == len(segs) - 1 else a1
+            annex_segment(m, fr, A, Z, kind, a0, a1c, n, lod, f"annex-{name}{si}", entrance=ent,
+                          proud_a1=proud_a1 if lod < 2 else None)
     # ---- pink granite skirt along the stepped outline (MARB VERIFIED)
     if lod < 2:
         outline = annex_outline(A)
@@ -684,7 +698,9 @@ def cannon_geometry(C):
     Pw = (NW[0] + t * e2[0], NW[1] + t * e2[1])
     outer = [SW, SE, NE, Pn, Pw]                     # CCW: S, E, N, chamfer, W
     court = L.offset_polygon_per_edge([SW, SE, NE, NW], [C["wing"]] * 4)
-    right = [False, True, True, False, False]        # is the corner at the END of edge i a right angle
+    # corner at the END of edge i: S->SE and E->NE are right angles; N->chamfer, chamfer->W and W->SW
+    # (103.5 deg) are obtuse
+    right = [True, True, False, False, False]
     return outer, court, right
 
 
@@ -795,14 +811,20 @@ def build_cannon(lod):
     # court deck (1955 garage roof, in place in Nov 1963)
     m.prism(court, 0.0, 0.18, "M_F01_Concrete")
     # ---------------- rusticated arcaded base (0 -> 9.0) with basement + arched first-floor windows
+    def frame_shift(i, fr):
+        """a-offset of a slab-polygon edge frame relative to the outer edge frame (inset polygons
+        slide their vertices along the edges); openings are authored in outer coordinates."""
+        return (fr.o[0] - frames[i].o[0]) * frames[i].u[0] + (fr.o[1] - frames[i].o[1]) * frames[i].u[1]
+
     def base_openings(i, fr):
         pairs, wins, ent = bays[i]
+        sh = frame_shift(i, fr)
         ops = []
         for k, ac in enumerate(wins):
-            ops.append((ac - w_arch / 2, ac + w_arch / 2, 3.3, 6.9 + w_arch / 2))
-            ops.append((ac - 0.75, ac + 0.75, 0.85, 1.95))
+            ops.append((ac - w_arch / 2 - sh, ac + w_arch / 2 - sh, 3.3, 6.9 + w_arch / 2))
+            ops.append((ac - 0.75 - sh, ac + 0.75 - sh, 0.85, 1.95))
         if ent is not None:
-            ops.append((ent - 2.1, ent + 2.1, C["z_plinth"], 5.6 + 2.1))
+            ops.append((ent - 2.1 - sh, ent + 2.1 - sh, C["z_plinth"], 5.6 + 2.1))
         return ops
     if lod < 2:
         bd = [C["base_d"]] * n
@@ -845,7 +867,7 @@ def build_cannon(lod):
                     m.lbox(fr, ent + 1.45, ent + 2.1, bdoor, bdoor + 0.04, C["z_plinth"], 4.45, "M_F01_Marble_Cannon")
                 fan = [(ent + 2.1 * math.cos(math.pi * k / 16), 5.6 + 2.1 * math.sin(math.pi * k / 16)) for k in range(17)]
                 m.lprism(fr, fan, bdoor - 0.02, bdoor, GLASS[1])
-                L.stairs(m, fr, ent - 3.4, ent + 3.4, 0.0, 3, C["z_plinth"] / 3, 0.4, C["z_plinth"], "M_F01_Granite_Grey")
+                L.stairs(m, fr, ent - 3.4, ent + 3.4, 0.05, 3, C["z_plinth"] / 3, 0.4, C["z_plinth"], "M_F01_Granite_Grey")
         # granite plinth + stylobate band (continuous sweeps)
         m.sweep(outer, [(-0.4, 0.0), (0.05, 0.0), (0.05, C["z_plinth"]), (-0.4, C["z_plinth"])], "M_F01_Granite_Grey",
                 closed=True, z=0.0)
@@ -865,16 +887,17 @@ def build_cannon(lod):
 
         def up_openings(i, fr):
             pairs, wins, ent = bays[i]
+            sh = frame_shift(i, fr)
             ops = []
             if i == 3:
-                ops.append((ent - 1.6, ent + 1.6, 10.6, 15.8))
+                ops.append((ent - 1.6 - sh, ent + 1.6 - sh, 10.6, 15.8))
                 return ops
             for ac in wins:
                 if i == 2 and s0n < ac < s1n:
                     continue          # colonnade bays are built on the loggia wall below
-                ops += [(ac - ww / 2, ac + ww / 2, z2a, z2b), (ac - ww / 2, ac + ww / 2, z3a, z3b)]
+                ops += [(ac - ww / 2 - sh, ac + ww / 2 - sh, z2a, z2b), (ac - ww / 2 - sh, ac + ww / 2 - sh, z3a, z3b)]
             if i == 2:
-                ops.append((s0n - C["pil"] * 0, s1n, zs, C["z_arch0"]))   # open loggia (cut whole span)
+                ops.append((s0n - sh, s1n - sh, zs, C["z_arch0"]))   # open loggia (whole span)
             return ops
         cannon_slab_edges(m, face_up, depths, zs, C["z_arch0"], right, up_openings, MAT, lod)
         # loggia wall with windows behind the colonnade
@@ -889,7 +912,6 @@ def build_cannon(lod):
             pairs, wins, ent = bays[i]
             if i == 3:
                 frc = L.Frame((fr.o[0] - fr.n[0] * C["pil"], fr.o[1] - fr.n[1] * C["pil"]), fr.u)
-                L.arch_fillers(m, frc, ent - 1.6, ent + 1.6, 15.8 - 1.6, C["upper_d"], MAT, segs=12) if False else None
                 cannon_window(m, frc, ent - 1.6, ent + 1.6, 10.6, 14.2, C["upper_d"], lod, "cannon-ch-big", arch=True)
                 continue
             for k, ac in enumerate(wins):
@@ -936,10 +958,11 @@ def build_cannon(lod):
                     cannon_window(m, fr, ac - ww / 2, ac + ww / 2, c0, c1, 0.0, 2, f"cannon-{i}-u{k}")
     # ---------------- entablature: architrave fascia, frieze with triglyphs, cornice (sweeps)
     if lod < 2:
-        m.sweep(outer, [(-0.4, 0.0), (-0.12, 0.0), (-0.12, 0.33), (-0.08, 0.37), (-0.08, 0.75), (-0.4, 0.75)], MAT,
+        # profiles end exactly at the entablature core face (out = -0.2): adjacent, never coplanar-overlapping
+        m.sweep(outer, [(-0.2, 0.0), (-0.12, 0.0), (-0.12, 0.33), (-0.08, 0.37), (-0.08, 0.75), (-0.2, 0.75)], MAT,
                 closed=True, z=C["z_arch0"])
-        m.sweep(outer, [(-0.4, 0.0), (0.0, 0.0), (0.08, 0.1), (0.48, 0.22), (0.62, 0.32), (0.62, 0.62), (0.56, 0.75),
-                        (-0.4, 0.75)], MAT, closed=True, z=C["z_cor0"])
+        m.sweep(outer, [(-0.2, 0.0), (0.0, 0.0), (0.08, 0.1), (0.48, 0.22), (0.62, 0.32), (0.62, 0.62), (0.56, 0.75),
+                        (-0.2, 0.75)], MAT, closed=True, z=C["z_cor0"])
         if lod == 0:
             frz0, frz1 = C["z_frieze"] + 0.04, C["z_cor0"] - 0.04
             for i in range(n):
@@ -953,7 +976,8 @@ def build_cannon(lod):
                         m.lbox(fr, a + dx - 0.07, a + dx + 0.07, -0.2, -0.12, frz0, frz1, MAT)
                     m.lbox(fr, a - 0.32, a + 0.32, -0.1, 0.42, C["z_cor0"] + 0.12, C["z_cor0"] + 0.2, MAT)
     else:
-        m.sweep(outer, [(-0.3, 0.0), (0.5, 0.0), (0.5, 0.75), (-0.3, 0.75)], MAT, closed=True, z=C["z_cor0"])
+        # LOD2 cornice: starts at the wall face (out = 0) so its top never shares the core ring's top plane
+        m.sweep(outer, [(0.0, 0.0), (0.5, 0.0), (0.5, 0.75), (0.0, 0.75)], MAT, closed=True, z=C["z_cor0"])
     # ---------------- balustrade (plinth + rail sweeps, balusters per edge) and recessed attic
     bal_poly = L.offset_polygon_per_edge(outer, [0.3] * n)
     hb = C["z_bal"] - C["z_cor1"]
@@ -962,8 +986,6 @@ def build_cannon(lod):
     for i in range(n):
         frb = L.Frame.from_edge(bal_poly[i], bal_poly[(i + 1) % n])
         peds = [p for p in bays[i][0]] if i != 3 else []
-        L.balustrade(m, frb, 0.6, frb.length - 0.6, -0.5, -0.05, C["z_cor1"] + 0.2, hb - 0.37, 0.36, lod, MAT,
-                     pedestal_at=peds, ped_w=0.75) if False else None
         # balusters only (plinth/rail are the sweeps above)
         nbal = int((frb.length - 1.2) / 0.36)
         for k in range(nbal):
@@ -1052,11 +1074,16 @@ def export_building(key, tex_dir, out_dir):
     bpy.context.scene.collection.children.link(col)
     meshes = {}
     sockets = hulls = None
+    inverted = {}
     for lod in (0, 1, 2):
         mesh, s, h = builder(lod)
         if lod == 0:
             sockets, hulls = s, h
         meshes[lod] = mesh
+        bad = L.orientation_audit(mesh)
+        inverted[f"LOD{lod}"] = len(bad)
+        for vol, mname, c in bad[:10]:
+            print(f"[audit] {mesh.name}: inward-wound shell {mname} at {c} (volume {vol:.4f} m^3)")
     used = sorted({mname for mesh in meshes.values() for _, mname, _ in mesh.faces})
     mats = M.make_materials(tex_dir, used)
     tiles = {n: M.tile_of(n) for n in used}
@@ -1073,8 +1100,10 @@ def export_building(key, tex_dir, out_dir):
                               export_cameras=False)
     stats = {f"LOD{lod}": L.mesh_stats(o) for lod, o in objs.items()}
     stats["materials"] = used
-    stats["sockets"] = [s[0] for s in sockets]
+    stats["sockets"] = [{"name": sn, "location_m": [round(v, 4) for v in loc], "rotation_z_rad": round(rz, 5)}
+                        for sn, loc, rz in sockets]
     stats["collision_hulls"] = len(hulls)
+    stats["inward_wound_shells"] = inverted
     stats["glb_bytes"] = os.path.getsize(path)
     return path, stats
 
@@ -1104,6 +1133,79 @@ def main(argv):
               f"LOD1 {stats['LOD1']['tris']}, LOD2 {stats['LOD2']['tris']}, {stats['glb_bytes'] / 1e6:.1f} MB")
     with open(report_path, "w") as f:
         json.dump(report, f, indent=2, sort_keys=True)
+    write_pcg_interface(report, os.path.join(OUT, "PCG_INTERFACE.json"))
+
+
+# ITS ALIVE typing of every material slot: (material family, exposure topologies, role)
+SLOT_TYPES = {
+    "M_F01_Marble_Ashlar": ("UM", ["VE", "RE"], "Annex Georgia white marble ashlar walls"),
+    "M_F01_Marble_Folger": ("UM", ["VE", "RE", "HW"], "Folger Georgia marble ashlar, alternating course heights"),
+    "M_F01_Marble_Cannon": ("UM", ["VE", "RE", "HW"], "Cannon marble (South Dover NY / Georgia) walls, order, entablature"),
+    "M_F01_Marble_Smooth": ("UM", ["VE", "RE", "HW"], "monolithic marble trim, pilasters, plinths, relief stand-ins"),
+    "M_F01_Marble_Incised": ("UM", ["VE"], "carved inscription strokes (reads as incised shadow)"),
+    "M_F01_Granite_Pink": ("UM", ["VE", "HW", "GT"], "Annex North Carolina pink granite skirt and stairs"),
+    "M_F01_Granite_Grey": ("UM", ["VE", "HW", "GT"], "Cannon granite plinth course and steps (APPROXIMATE)"),
+    "M_F01_Brick_Glazed": ("UM", ["VE"], "Folger rear / courtyard glazed brick (location PROBABLE)"),
+    "M_F01_Limestone_Court": ("UM", ["VE"], "Cannon court fronts, Bedford Indiana limestone"),
+    "M_F01_Paving_Bluestone": ("UM", ["HW"], "Folger forecourt bluestone accents"),
+    "M_F01_Concrete": ("MM", ["HW"], "Cannon court garage deck (1955)"),
+    "M_F01_Glass": ("GL", ["VE"], "glazing, day slot A"),
+    "M_F01_Glass_NightLit": ("GL", ["VE"], "glazing slot B (~35 % of windows): identical by day; drive emissive for night"),
+    "M_F01_Lamp_Glass": ("GL", ["FH"], "opal lamp globes: night emissive slot"),
+    "M_F01_Metal_Bronze": ("MT", ["FH", "VE"], "statuary bronze doors, window metal, Annex spandrels (PROBABLE)"),
+    "M_F01_Metal_Aluminium": ("MT", ["FH", "VE"], "Folger cast-aluminium grilles and doors"),
+    "M_F01_Window_Frame_Dark": ("CT", ["VE"], "painted sash over WD/MT substrate (APPROXIMATE)"),
+    "M_F01_Roof_Copper": ("MT", ["RE"], "Annex copper roof tiers (~25-year patina)"),
+    "M_F01_Roof_Tar": ("AP", ["RE"], "flat bituminous roofs behind parapets"),
+    "M_F01_Turf_Placeholder": ("LG", ["GT"], "PLACEHOLDER lawn bed: replace with DC-N03 turf via SOCKET_Lawn_N03_Turf"),
+}
+
+
+def write_pcg_interface(report, path):
+    assets = {}
+    for name, st in sorted(report.items()):
+        assets[name] = {
+            "file": f"{name}.glb",
+            "units": "glTF metres (UE 5.8 import -> cm); Blender source Z-up, glTF Y-up",
+            "pivot": "footprint bounding-box centre at grade (z = 0); Cannon: centre of the un-chamfered trapezoid bbox",
+            "axes": "+X east, +Y north (map-aligned named building; R02 UE frame is +X east, +Y south, cm)",
+            "lods": {k: {"object": f"{name}_{k}", "tris": st[k]["tris"], "size_m": [round(v, 3) for v in st[k]["size_m"]]}
+                     for k in ("LOD0", "LOD1", "LOD2")},
+            "suggested_lod_screen_size": {"LOD0": 1.0, "LOD1": 0.35, "LOD2": 0.12},
+            "collision": f"{st['collision_hulls']} convex hulls named UCX_{name}_NN",
+            "sockets": st["sockets"],
+            "material_slots": [{"slot": mname, "its_alive_family": SLOT_TYPES.get(mname, ("?", [], ""))[0],
+                                "exposure": SLOT_TYPES.get(mname, ("?", [], ""))[1],
+                                "role": SLOT_TYPES.get(mname, ("?", [], ""))[2]} for mname in st["materials"]],
+        }
+    data = {
+        "job_id": "DC-F01", "version": "v001", "kind": "PCG assembly - named overrides (not generic repetition)",
+        "assets": assets,
+        "typed_slots": {
+            "night_glazing": "M_F01_Glass_NightLit carries ~35 % of windows, chosen by md5(window key) % 100 < 35 "
+                             "(stable across rebuilds). Drive emissive (moodbook TUNGSTEN #C49D63) for night states (DC-L01).",
+            "kit_swaps": {
+                "DC-C19": "SOCKET_C19_Order_Swap_Colonnade on the Cannon: the coupled Doric columns are a lightweight "
+                          "background-LOD derivation of C19 vocabulary; swap to a C19 runtime variant when one exists.",
+                "DC-C18": "no approved C18 delivery; Annex curtain bays / Cannon pilastrade bays are named-building bays, "
+                          "not C18 substitutes (request: kits are vocabulary, not silhouette substitutes).",
+                "DC-C20": "not applicable to C10 (no red tile roofs).",
+                "DC-N03": "SOCKET_Lawn_N03_Turf (Folger terrace lawn bed placeholder).",
+            },
+            "signage_pending": "SOCKET_Signage_* mark positions where 1963 building names may be carved; "
+                               "positions NOT verified, nothing carved except the two verified Folger quotations.",
+        },
+        "seeds": {
+            "glass_slot": "md5 hash of '<building>-<facade>-<window index>' keys",
+            "textures": {k: v.get("seed") for k, v in M.TEXTURED.items()},
+            "relief_standins": "Python random.Random(seed) per panel (Folger 1000+k); deterministic",
+        },
+        "placement": "NOT placed. Re-snap footprints to DC-R02 v001 evidence cards; DC-B01 owns the level. Base is flat "
+                     "at z = 0 (real sites slope: Folger/Annex block falls toward Independence Ave) - B01 to sink / "
+                     "extend plinths into terrain.",
+    }
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
 
 
 if __name__ == "__main__":

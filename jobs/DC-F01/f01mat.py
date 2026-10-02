@@ -300,6 +300,9 @@ def make_textures(tex_dir, names):
 def make_material(name, tex_dir):
     mat = bpy.data.materials.new(name)
     mat.use_nodes = True
+    # Every shell is closed and wound outward (build.py audits this), so materials are
+    # single-sided: glTF doubleSided = false -> UE imports one-sided materials.
+    mat.use_backface_culling = True
     nt = mat.node_tree
     bsdf = nt.nodes["Principled BSDF"]
     if name in TEXTURED:

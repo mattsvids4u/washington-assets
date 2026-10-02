@@ -6,7 +6,13 @@ Brief WASHINGTON-2026-09-22-v001 · Stage standard WASHINGTON-2026-09-22-v001 ·
 Claimed 2026-10-02T10:30Z — Drive folder `DC-F01 — claude-cloud-agent` (1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f), CLAIM.json 1WLLiZbaP2XxED8WP4e-rD1_0xMeuX42x
 Work branch `claude/adoring-pasteur-25ccu0`; delivery branch pattern `asset/DC-F01-v###`.
 
-Status: **PASS 1 (evidence) IN PROGRESS** — updated 2026-10-02.
+Status (2026-10-02): **Pass 1 DONE · Pass 2 DONE · Pass 3 DONE (pending final render review) · v001 delivery in preparation.**
+
+| Pass | Result |
+|---|---|
+| 1 Evidence | EVIDENCE.md + research/ fact sheets (WebSearch text only; image hosts blocked by the environment allowlist, so no photo inspected) |
+| 2 Build | build.py → 3 GLBs (LOD0-2, UCX, sockets, PBR textures); ~50 s full rebuild |
+| 3 Verify | qa_check 20/20 on all three; clean rebuild byte-identical (GLBs + textures); clay/textured/street/night/pass/LOD renders inspected; fixes applied (see Pass log) |
 
 ## Problem
 
@@ -71,6 +77,14 @@ Three GLBs in `out/`, Blender metres (UE glTF import → cm), Z-up source / glTF
 - DC-C18 — not approved; typed swap slots left where it could apply. DC-C20 v005 — APPROVED on Drive (register stale); not used by v001 (no tile roofs on C10 buildings).
 - DC-R02 v001 APPROVED — placement/footprint authority (data not reachable from this sandbox).
 - DC-B01 — target level/placement; nothing is placed by this job.
+
+## Pass log (what changed after each review)
+
+1. Folger first build: z-fighting risks at end-section/pilaster junctions and corners found by code review → corner rule + mitred sweeps; LOD2 details moved proud of the core (were hidden).
+2. Folger review: blocky "robot" relief stand-ins rejected → smooth domed low-relief figure forms; alternating tall/short ashlar courses (S4 wording); larger inscriptions; per-view raking review light (north facades get no sun in November).
+3. Annex review: read as a generic office block → pavilions 0.9 m proud, deep sunk strips, darker statuary bronze, owl stand-ins moved onto the stair cheek walls (were buried), one figure panel per door leaf (six Lawrie figures per three-pair entrance), then **bronze spandrels** (SAH contrasts "window bays" with "marble-clad" piers) and taller windows → vertical bays now read.
+4. Cannon review: dense attic window grid looked modern → one attic window per bay below; geometry budget 417k → 226k LOD0 tris (two-segment flutes, turned balusters only on visible fronts, glass-only court windows, lighter LOD1).
+5. Pass-3 render review: a black vertical band at the Cannon's SE base corner. Cause: the right-angle corner flags were shifted by one edge. SE was treated as obtuse, adding an overlapping wedge; the N/chamfer corner was treated as a right angle, so its slab stopped short. Fixed (`right = [True, True, False, False, False]`); SE and NW corners re-rendered clean, and the Cannon standard and street views were re-rendered from the fixed GLB.
 
 ## Uncertainties (running list)
 

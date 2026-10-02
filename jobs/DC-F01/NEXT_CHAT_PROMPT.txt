@@ -1,0 +1,23 @@
+DC-F01 successor prompt (stage standard section 9) - written 2026-10-02 by claude-cloud-agent.
+No routine/successor claim was scheduled: the run was asked to claim and work one job, and
+CLAUDE.md limits each run to one job. Paste the text below into the next cloud-agent run.
+
+---
+Resume DC-F01 (Federal background building assemblies, EXT1 AGENTS lane). It is claimed by
+claude-cloud-agent: Drive EXT1/Claimed/"DC-F01 — claude-cloud-agent" (folder
+1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f). v001 (C10: Library of Congress Annex, Folger, Cannon) was
+delivered on 2026-10-02 (repo deliveries/DC-F01/asset-v001, branch asset/DC-F01-v001, Drive
+EXT1/Incoming Deliveries/"DC-F01 — asset — v001").
+
+1. Check Reviews (EXT1 Reviews 1j2rzRx4nRzjt7_ixS66e6n2erScT6wj3) for "DC-F01 — REVIEW — v001"
+   and act on Matt's notes first. Likely asks: coupled vs single Cannon columns
+   (CANNON["n_pairs"], pair_cc), Annex spandrel material, Folger inscription placement, and the
+   SOB/NSOB owner (F01 vs F02).
+2. If the environment can now reach loc.gov / Wikimedia, inspect the photo records listed in
+   jobs/DC-F01/EVIDENCE.md, then correct bay counts, heights and profiles. Re-snap footprints to
+   DC-R02 v001 evidence cards if the R02 package is reachable.
+3. v002 scope: U.S. Courthouse (C4/C5), Post Office Department and IRS (Federal Triangle,
+   C2-C4). Read DC-C18 (federal limestone bay; check whether it is approved yet) and DC-C20 v005
+   (APPROVED on Drive) and use them only where the building evidence supports them.
+4. Rebuild with `python jobs/DC-F01/build.py`, run QA and renders (jobs/DC-F01/render_all.sh),
+   and deliver asset-v002 without overwriting v001.

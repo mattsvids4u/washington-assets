@@ -66,6 +66,7 @@ def parse_args():
                    choices=["textured", "clay", "night", "basecolor", "roughness", "normal"])
     p.add_argument("--res", type=int, default=1280)
     p.add_argument("--samples", type=int, default=48)
+    p.add_argument("--lod", type=int, default=0, help="which LOD to show (0, 1, 2)")
     return p.parse_args(argv)
 
 
@@ -179,7 +180,7 @@ def main():
     meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
     for o in meshes:
         n = o.name.upper()
-        if n.startswith(("UCX_", "UBX_", "USP_")) or "_LOD1" in n or "_LOD2" in n:
+        if n.startswith(("UCX_", "UBX_", "USP_")) or not n.endswith(f"_LOD{args.lod}"):
             o.hide_render = True
     vis = [o for o in meshes if not o.hide_render]
     scene = bpy.context.scene
@@ -244,7 +245,8 @@ def main():
                 lt.data.shadow_soft_size = 0.4
                 lt.location = p
                 scene.collection.objects.link(lt)
-        scene.render.filepath = os.path.join(args.out_dir, f"{base}_{args.mode}_{vname}.png")
+        tag = "" if args.lod == 0 else f"_LOD{args.lod}"
+        scene.render.filepath = os.path.join(args.out_dir, f"{base}_{args.mode}{tag}_{vname}.png")
         bpy.ops.render.render(write_still=True)
         print("wrote", scene.render.filepath)
 
