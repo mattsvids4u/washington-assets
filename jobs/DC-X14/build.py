@@ -1965,18 +1965,18 @@ def place_dressing(B, objs, room_tag, room_1953=True):
     """Set dressing shared by both demo rooms (layout FICTIONALISED, objects period-typical)."""
     D = 6.0
     o = []
-    o += place(B["X14_DRESS_Plant_Rubber"], (0.42, 0.42, 0), 0.0, ".pl_w")
-    o += place(B["X14_DRESS_Plant_Rubber"], (8.58, 0.42, 0), 1.3, ".pl_e")
+    o += place(B["X14_DRESS_Plant_Rubber"], (0.44, 0.36, 0), 0.0, ".pl_w")
+    o += place(B["X14_DRESS_Plant_Rubber"], (8.54, 0.36, 0), 1.3, ".pl_e")   # clear of the window radiators (y >= 0.71)
     o += place(B["X14_DRESS_Flag_Stand_US"], (3.45, 0.30, 0), math.pi, ".flag")
-    o += place(B["X14_DRESS_Coat_Tree"], (5.80, 0.34, 0), 0.4, ".coat")
+    o += place(B["X14_DRESS_Coat_Tree"], (6.02, 0.34, 0), 0.4, ".coat")   # clear of the door sign (x 5.3)
     o += place(B["X14_DRESS_Bulletin_Board_090"], (1.60, 0.0, 1.22), 0.0, ".bb")
     o += place(B["X14_DRESS_Frame_Print_Large"], (2.55, 0.0, 1.45), 0.0, ".pr_s")
     o += place(B["X14_DRESS_Wall_Calendar_1963_11"], (6.55, 0.0, 1.30), 0.0, ".cal")
     divider_x = [0.0, 3.15, 5.85]
     for c, cx in enumerate([1.8, 4.5, 7.2]):
         key = "X14_DRESS_Frame_Print_Large" if c == 1 else "X14_DRESS_Frame_Photo_Small"
-        o += place(B[key], (cx - 0.60, D, 1.45), math.pi, f".pr_n{c}")
-        bx = divider_x[c] + 0.03
+        o += place(B[key], (cx - 0.30, D, 1.45), math.pi, f".pr_n{c}")   # centred under the north-wall sconce
+        bx = divider_x[c] + 0.045      # clears the partition skin (±0.04) and the wall baseboard (0.028)
         o += place(B["X14_DRESS_Bookcase_Oak_090"], (bx, 4.85, 0), -math.pi / 2, f".bk{c}")
         o += place(B["X14_DRESS_Plant_Pothos_Small"], (bx + 0.16, 4.62, 1.80), 0.5 * c, f".po{c}")
         o += place(B["X14_DRESS_Wastebasket"], (cx + 0.95, 3.75, 0), 0.0, f".wb{c}")

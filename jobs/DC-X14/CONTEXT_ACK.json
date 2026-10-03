@@ -69,5 +69,14 @@
     "stage_standard_modified": "2026-09-23T01:42:32Z",
     "request_doc_modified": "2026-09-25T10:31:15Z",
     "result": "no changes since the claim; claim folder intact (request doc, CLAIM.json, archive-gate note)"
+  },
+  "v005_recheck": {
+    "checked_utc": "2026-10-03",
+    "method": "Drive metadata modifiedTime + listing of the claim folder and DC-INT1 Reviews",
+    "brief_modified": "2026-09-25T05:06:18Z",
+    "register_modified": "2026-10-01T12:31:29Z",
+    "stage_standard_modified": "2026-09-23T01:42:32Z",
+    "request_doc_modified": "2026-09-25T10:31:15Z",
+    "result": "no changes since the claim; claim folder intact; no DC-X14 review in DC-INT1 Reviews (direction taken from Matt's chat: 'anything on the walls? plants in the corners? nothin???')"
   }
 }

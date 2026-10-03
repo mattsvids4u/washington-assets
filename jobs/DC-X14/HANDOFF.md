@@ -1,4 +1,4 @@
-# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v004 current; earlier sections kept as history, newest at the end)
+# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v005 current; earlier sections kept as history, newest at the end)
 
 Claimant claude-cloud-agent · DC-INT1 Interior Standard · P2 · AGENTS lane · stage A (asset)
 Request revision WASHINGTON-2026-09-22-v001 + Road Plan 04 addendum · built 2026-10-02 in the cloud sandbox (bpy 4.5.14, no GPU, no Unreal)
@@ -292,3 +292,63 @@ What Matt should look at: `renders/*_i09_*` (the rooms with the real I09 furnitu
 - The 1953 room reads closest to the Sept 1953 photo (E19): dark partitions, torchères, light steel
   files, wooden desks. The I09 files are olive rather than the photo's light finish (I09's call).
 
+
+## asset-v005 (2026-10-03) — set dressing: walls, corners, bookcases
+
+Matt: "anything on the walls? plants in the corners? nothin???". Fair: v004 had furniture and lamps
+but bare plaster and empty corners. v005 adds a **set-dressing layer to the kit**: ten `X14_DRESS_*`
+modules built like every other module (LOD0–LOD2, `UCX_` collision, UVs, stable `MI_X14_*` slots,
+base pivots, QA PASS), placed in both demo rooms.
+
+| Module | What it is | Evidence status |
+|---|---|---|
+| `X14_DRESS_Frame_Print_Large` | 0.66 × 0.52 m oak frame, cream mat, sepia engraving "A View on the Potomac" | APPROXIMATE object; picture FICTIONALISED |
+| `X14_DRESS_Frame_Photo_Small` | 0.48 × 0.40 m black metal frame, silver-gelatin style photo of a generic domed civic building | APPROXIMATE; picture FICTIONALISED (no specific building) |
+| `X14_DRESS_Wall_Calendar_1963_11` | November 1963 sheet (1 Nov = Friday, 30 days) on a tin strip and nail | dates VERIFIED (E24); design FICTIONALISED, no publisher imprint |
+| `X14_DRESS_Bulletin_Board_090` | 0.90 × 0.60 m oak-framed cork board, typed memos, yellow notes, red pins | APPROXIMATE |
+| `X14_DRESS_Bookcase_Oak_090` | 0.90 × 0.30 × 1.80 m open oak bookcase, five shelves of cloth-bound books, a lying stack | VERIFIED type (E19: bookcases between desk groups); size APPROXIMATE |
+| `X14_DRESS_Plant_Rubber` | rubber plant (Ficus elastica), ~1.6 m, terracotta pot | APPROXIMATE (period-typical; not in sources) |
+| `X14_DRESS_Plant_Pothos_Small` | small trailing pothos in a clay pot (bookcase tops, sills) | APPROXIMATE |
+| `X14_DRESS_Coat_Tree` | oak coat tree, brass double hooks, felt fedora on the finial | APPROXIMATE |
+| `X14_DRESS_Flag_Stand_US` | 3 × 5 ft 50-star flag drawn to EO 10834 proportions, oak pole, brass finial, weighted base | flag VERIFIED for 1963 (E23); stand APPROXIMATE |
+| `X14_DRESS_Wastebasket` | olive steel wastebasket with crumpled paper | APPROXIMATE |
+
+Placement in both rooms (layout FICTIONALISED, shared by `place_dressing()` in `build.py`):
+- Corridor (south) wall: bulletin board, large print, flag beside the door, coat tree, calendar
+  next to the I09 clock; rubber plants in both south corners, clear of the window radiators.
+- Each cubicle: framed picture on the north wall centred under the sconce, bookcase against the
+  west divider with a pothos on top, wastebasket beside the desk.
+
+Defects found and fixed before delivery (all in the generator):
+1. Wastebasket LOD0 lost its steel body (bmesh op reallocation made the "new verts" set return every vertex).
+2. Top-shelf books poked through the bookcase top (heights now capped per shelf).
+3. Rubber plant read as sparse bamboo (now four stems, larger, denser, glossier, darker leaves).
+4. Fedora hung sideways off a hook (now seated on the finial).
+5. Pictures and calendar were mirrored seen from the room (UV u flipped on the room face).
+6. First-draft print textures read as blobs (both redrawn).
+7. In the 1953 room the coat tree hid the door sign (moved 0.22 m east). Bookcases moved to clear the 4 cm partition skins and the baseboards.
+
+Unchanged: all 22 v004 modules and all 24 v004 textures are byte-identical; the I09 sockets are
+unchanged. Only the two demo rooms change (they now include the dressing).
+
+Renders: two new interior cameras, `int_south_wall` (corridor wall dressing) and
+`int_cubicle_dress` (bookcase, picture, wastebasket). Each room is rendered three ways: kit only,
+clay, and with the real DC-I09 v004 furniture (`_i09_`). Orbits for the ten new modules are in
+`renders/modules/`. The earlier modules' orbits are carried over from v004 (identical geometry).
+
+Gates: QA 34/34 GLBs PASS; clean rebuild in an isolated copy byte-identical (34 GLBs + 30
+textures); Unreal import / motion **NOT_RUN — needs local Unreal (UE 5.8)**. Approval PENDING.
+
+Expected register change (head agent applies): delivery_integrity → "v005: set-dressing layer
+(10 DRESS modules), QA PASS 34/34, clean rebuild byte-identical; UE import NOT_RUN".
+asset_user_approval stays PENDING.
+
+UNIFICATION PROPOSAL (v005): the DRESS modules are generic 1963 U.S. office stock. Propose a
+shared `DRESS` component family for every DC office interior (X10, X11, X13, I-sets) and, with the
+calendar and flag, the DALLAS office interiors. Picture textures swap per room via the
+`MI_X14_Print_*` slots (UVs fitted 0..1, so any 4:3 image drops in).
+
+What Matt should look at:
+1. `renders/*_i09_int_south_wall.png` and `*_i09_int_corridor_east.png`: corridor wall dressing, flag, coat tree, corner plants.
+2. `renders/*_i09_int_cubicle_dress.png`: bookcase, pothos, framed picture, wastebasket in a cubicle.
+3. Whether you want more clutter (papers pinned everywhere, maps, a second flag, curtains) or less.
