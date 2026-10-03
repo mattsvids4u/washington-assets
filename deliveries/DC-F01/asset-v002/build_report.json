@@ -1,0 +1,393 @@
+{
+  "SM_F01_Cannon": {
+    "LOD0": {
+      "bbox_max": [
+        67.6760025024414,
+        63.95199966430664,
+        25.899999618530273
+      ],
+      "bbox_min": [
+        -70.03933715820312,
+        -58.673030853271484,
+        0.0
+      ],
+      "size_m": [
+        137.71533966064453,
+        122.62503051757812,
+        25.899999618530273
+      ],
+      "tris": 218240,
+      "verts": 130762,
+      "zero_area_faces": 0
+    },
+    "LOD1": {
+      "bbox_max": [
+        67.6760025024414,
+        63.95199966430664,
+        25.899999618530273
+      ],
+      "bbox_min": [
+        -70.03933715820312,
+        -58.673030853271484,
+        0.0
+      ],
+      "size_m": [
+        137.71533966064453,
+        122.62503051757812,
+        25.899999618530273
+      ],
+      "tris": 72420,
+      "verts": 44546,
+      "zero_area_faces": 0
+    },
+    "LOD2": {
+      "bbox_max": [
+        67.55599975585938,
+        63.95199966430664,
+        25.899999618530273
+      ],
+      "bbox_min": [
+        -70.03933715820312,
+        -58.673030853271484,
+        0.0
+      ],
+      "size_m": [
+        137.5953369140625,
+        122.62503051757812,
+        25.899999618530273
+      ],
+      "tris": 6836,
+      "verts": 4380,
+      "zero_area_faces": 0
+    },
+    "collision_hulls": 10,
+    "glb_bytes": 22513124,
+    "inward_wound_shells": {
+      "LOD0": 0,
+      "LOD1": 0,
+      "LOD2": 0
+    },
+    "materials": [
+      "M_F01_Concrete",
+      "M_F01_Glass",
+      "M_F01_Glass_NightLit",
+      "M_F01_Granite_Grey",
+      "M_F01_Limestone_Court",
+      "M_F01_Marble_Cannon",
+      "M_F01_Metal_Bronze",
+      "M_F01_Roof_Tar",
+      "M_F01_Window_Frame_Dark"
+    ],
+    "sockets": [
+      {
+        "location_m": [
+          -60.2399,
+          52.5386,
+          3.2
+        ],
+        "name": "SOCKET_Entrance_Main_NW_Rotunda",
+        "rotation_z_rad": 2.474
+      },
+      {
+        "location_m": [
+          -35.8853,
+          58.112,
+          3.2
+        ],
+        "name": "SOCKET_Entrance_Independence_W",
+        "rotation_z_rad": 1.5708
+      },
+      {
+        "location_m": [
+          0.0,
+          -58.112,
+          0.0
+        ],
+        "name": "SOCKET_CourtArchway_PENDING_location_NF",
+        "rotation_z_rad": -1.5708
+      },
+      {
+        "location_m": [
+          6.7534,
+          57.062,
+          9.4
+        ],
+        "name": "SOCKET_C19_Order_Swap_Colonnade",
+        "rotation_z_rad": 1.5708
+      },
+      {
+        "location_m": [
+          6.7534,
+          58.012,
+          19.75
+        ],
+        "name": "SOCKET_Signage_PENDING",
+        "rotation_z_rad": 1.5708
+      }
+    ]
+  },
+  "SM_F01_Folger": {
+    "LOD0": {
+      "bbox_max": [
+        34.742401123046875,
+        29.11639976501465,
+        14.630399703979492
+      ],
+      "bbox_min": [
+        -50.642398834228516,
+        -17.216400146484375,
+        0.0
+      ],
+      "size_m": [
+        85.38479995727539,
+        46.33279991149902,
+        14.630399703979492
+      ],
+      "tris": 63878,
+      "verts": 37522,
+      "zero_area_faces": 0
+    },
+    "LOD1": {
+      "bbox_max": [
+        34.742401123046875,
+        29.11639976501465,
+        14.630399703979492
+      ],
+      "bbox_min": [
+        -50.642398834228516,
+        -17.216400146484375,
+        0.0
+      ],
+      "size_m": [
+        85.38479995727539,
+        46.33279991149902,
+        14.630399703979492
+      ],
+      "tris": 7054,
+      "verts": 4616,
+      "zero_area_faces": 0
+    },
+    "LOD2": {
+      "bbox_max": [
+        34.742401123046875,
+        27.3164005279541,
+        14.630399703979492
+      ],
+      "bbox_min": [
+        -34.742401123046875,
+        -17.216400146484375,
+        0.0
+      ],
+      "size_m": [
+        69.48480224609375,
+        44.53280067443848,
+        14.630399703979492
+      ],
+      "tris": 1008,
+      "verts": 672,
+      "zero_area_faces": 0
+    },
+    "collision_hulls": 6,
+    "glb_bytes": 6089956,
+    "inward_wound_shells": {
+      "LOD0": 0,
+      "LOD1": 0,
+      "LOD2": 0
+    },
+    "materials": [
+      "M_F01_Brick_Glazed",
+      "M_F01_Glass",
+      "M_F01_Glass_NightLit",
+      "M_F01_Marble_Folger",
+      "M_F01_Marble_Incised",
+      "M_F01_Marble_Smooth",
+      "M_F01_Metal_Aluminium",
+      "M_F01_Paving_Bluestone",
+      "M_F01_Roof_Tar",
+      "M_F01_Turf_Placeholder",
+      "M_F01_Window_Frame_Dark"
+    ],
+    "sockets": [
+      {
+        "location_m": [
+          27.8582,
+          17.1164,
+          1.31
+        ],
+        "name": "SOCKET_Entrance_North_East",
+        "rotation_z_rad": 1.5708
+      },
+      {
+        "location_m": [
+          -27.6332,
+          17.1164,
+          1.31
+        ],
+        "name": "SOCKET_Entrance_North_West",
+        "rotation_z_rad": 1.5708
+      },
+      {
+        "location_m": [
+          -47.4424,
+          0.0,
+          0.0
+        ],
+        "name": "SOCKET_PuckFountain",
+        "rotation_z_rad": 3.14159
+      },
+      {
+        "location_m": [
+          0.0,
+          22.5264,
+          0.7
+        ],
+        "name": "SOCKET_Lawn_N03_Turf",
+        "rotation_z_rad": 0.0
+      },
+      {
+        "location_m": [
+          0.0,
+          16.9664,
+          12.9
+        ],
+        "name": "SOCKET_Signage_BuildingName_PENDING",
+        "rotation_z_rad": 1.5708
+      }
+    ]
+  },
+  "SM_F01_LOCAnnex": {
+    "LOD0": {
+      "bbox_max": [
+        63.47999954223633,
+        34.35649871826172,
+        31.200000762939453
+      ],
+      "bbox_min": [
+        -63.47999954223633,
+        -38.47999954223633,
+        0.0
+      ],
+      "size_m": [
+        126.95999908447266,
+        72.83649826049805,
+        31.200000762939453
+      ],
+      "tris": 103476,
+      "verts": 65724,
+      "zero_area_faces": 0
+    },
+    "LOD1": {
+      "bbox_max": [
+        63.47999954223633,
+        34.349998474121094,
+        31.200000762939453
+      ],
+      "bbox_min": [
+        -63.47999954223633,
+        -38.47999954223633,
+        0.0
+      ],
+      "size_m": [
+        126.95999908447266,
+        72.82999801635742,
+        31.200000762939453
+      ],
+      "tris": 41836,
+      "verts": 27824,
+      "zero_area_faces": 0
+    },
+    "LOD2": {
+      "bbox_max": [
+        60.9900016784668,
+        34.31999969482422,
+        31.200000762939453
+      ],
+      "bbox_min": [
+        -60.9900016784668,
+        -34.31999969482422,
+        0.0
+      ],
+      "size_m": [
+        121.9800033569336,
+        68.63999938964844,
+        31.200000762939453
+      ],
+      "tris": 5556,
+      "verts": 3704,
+      "zero_area_faces": 0
+    },
+    "collision_hulls": 5,
+    "glb_bytes": 12576096,
+    "inward_wound_shells": {
+      "LOD0": 0,
+      "LOD1": 0,
+      "LOD2": 0
+    },
+    "materials": [
+      "M_F01_Glass",
+      "M_F01_Glass_NightLit",
+      "M_F01_Granite_Pink",
+      "M_F01_Lamp_Glass",
+      "M_F01_Marble_Ashlar",
+      "M_F01_Marble_Smooth",
+      "M_F01_Metal_Bronze",
+      "M_F01_Roof_Copper"
+    ],
+    "sockets": [
+      {
+        "location_m": [
+          -61.16,
+          0.0,
+          1.35
+        ],
+        "name": "SOCKET_Entrance_West_2ndSt",
+        "rotation_z_rad": 3.14159
+      },
+      {
+        "location_m": [
+          61.16,
+          0.0,
+          1.35
+        ],
+        "name": "SOCKET_Entrance_East_3rdSt",
+        "rotation_z_rad": 0.0
+      },
+      {
+        "location_m": [
+          0.0,
+          -34.49,
+          1.35
+        ],
+        "name": "SOCKET_Entrance_South_Independence",
+        "rotation_z_rad": -1.5708
+      },
+      {
+        "location_m": [
+          -5.1,
+          -38.13,
+          0.9
+        ],
+        "name": "SOCKET_Lamp_SouthStair_W",
+        "rotation_z_rad": -1.5708
+      },
+      {
+        "location_m": [
+          5.1,
+          -38.13,
+          0.9
+        ],
+        "name": "SOCKET_Lamp_SouthStair_E",
+        "rotation_z_rad": -1.5708
+      },
+      {
+        "location_m": [
+          0.0,
+          -34.39,
+          22.5
+        ],
+        "name": "SOCKET_Signage_PENDING_NoInscriptionFound",
+        "rotation_z_rad": -1.5708
+      }
+    ]
+  }
+}

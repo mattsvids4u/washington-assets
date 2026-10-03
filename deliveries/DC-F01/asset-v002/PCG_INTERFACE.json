@@ -1,0 +1,552 @@
+{
+  "job_id": "DC-F01",
+  "version": "v002",
+  "kind": "PCG assembly - named overrides (not generic repetition)",
+  "assets": {
+    "SM_F01_Cannon": {
+      "file": "SM_F01_Cannon.glb",
+      "units": "glTF metres (UE 5.8 import -> cm); Blender source Z-up, glTF Y-up",
+      "pivot": "footprint bounding-box centre at grade (z = 0); Cannon: centre of the un-chamfered trapezoid bbox",
+      "axes": "+X east, +Y north (map-aligned named building; R02 UE frame is +X east, +Y south, cm)",
+      "lods": {
+        "LOD0": {
+          "object": "SM_F01_Cannon_LOD0",
+          "tris": 218240,
+          "size_m": [
+            137.715,
+            122.625,
+            25.9
+          ]
+        },
+        "LOD1": {
+          "object": "SM_F01_Cannon_LOD1",
+          "tris": 72420,
+          "size_m": [
+            137.715,
+            122.625,
+            25.9
+          ]
+        },
+        "LOD2": {
+          "object": "SM_F01_Cannon_LOD2",
+          "tris": 6836,
+          "size_m": [
+            137.595,
+            122.625,
+            25.9
+          ]
+        }
+      },
+      "suggested_lod_screen_size": {
+        "LOD0": 1.0,
+        "LOD1": 0.35,
+        "LOD2": 0.12
+      },
+      "collision": "10 convex hulls named UCX_SM_F01_Cannon_NN",
+      "sockets": [
+        {
+          "name": "SOCKET_Entrance_Main_NW_Rotunda",
+          "location_m": [
+            -60.2399,
+            52.5386,
+            3.2
+          ],
+          "rotation_z_rad": 2.474
+        },
+        {
+          "name": "SOCKET_Entrance_Independence_W",
+          "location_m": [
+            -35.8853,
+            58.112,
+            3.2
+          ],
+          "rotation_z_rad": 1.5708
+        },
+        {
+          "name": "SOCKET_CourtArchway_PENDING_location_NF",
+          "location_m": [
+            0.0,
+            -58.112,
+            0.0
+          ],
+          "rotation_z_rad": -1.5708
+        },
+        {
+          "name": "SOCKET_C19_Order_Swap_Colonnade",
+          "location_m": [
+            6.7534,
+            57.062,
+            9.4
+          ],
+          "rotation_z_rad": 1.5708
+        },
+        {
+          "name": "SOCKET_Signage_PENDING",
+          "location_m": [
+            6.7534,
+            58.012,
+            19.75
+          ],
+          "rotation_z_rad": 1.5708
+        }
+      ],
+      "material_slots": [
+        {
+          "slot": "M_F01_Concrete",
+          "its_alive_family": "MM",
+          "exposure": [
+            "HW"
+          ],
+          "role": "Cannon court garage deck (1955)"
+        },
+        {
+          "slot": "M_F01_Glass",
+          "its_alive_family": "GL",
+          "exposure": [
+            "VE"
+          ],
+          "role": "glazing, day slot A"
+        },
+        {
+          "slot": "M_F01_Glass_NightLit",
+          "its_alive_family": "GL",
+          "exposure": [
+            "VE"
+          ],
+          "role": "glazing slot B (~35 % of windows): identical by day; drive emissive for night"
+        },
+        {
+          "slot": "M_F01_Granite_Grey",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "HW",
+            "GT"
+          ],
+          "role": "Cannon granite plinth course and steps (APPROXIMATE)"
+        },
+        {
+          "slot": "M_F01_Limestone_Court",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE"
+          ],
+          "role": "Cannon court fronts, Bedford Indiana limestone"
+        },
+        {
+          "slot": "M_F01_Marble_Cannon",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "RE",
+            "HW"
+          ],
+          "role": "Cannon marble (South Dover NY / Georgia) walls, order, entablature"
+        },
+        {
+          "slot": "M_F01_Metal_Bronze",
+          "its_alive_family": "MT",
+          "exposure": [
+            "FH",
+            "VE"
+          ],
+          "role": "statuary bronze doors, window metal, Annex spandrels (PROBABLE)"
+        },
+        {
+          "slot": "M_F01_Roof_Tar",
+          "its_alive_family": "AP",
+          "exposure": [
+            "RE"
+          ],
+          "role": "flat bituminous roofs behind parapets"
+        },
+        {
+          "slot": "M_F01_Window_Frame_Dark",
+          "its_alive_family": "CT",
+          "exposure": [
+            "VE"
+          ],
+          "role": "painted sash over WD/MT substrate (APPROXIMATE)"
+        }
+      ]
+    },
+    "SM_F01_Folger": {
+      "file": "SM_F01_Folger.glb",
+      "units": "glTF metres (UE 5.8 import -> cm); Blender source Z-up, glTF Y-up",
+      "pivot": "footprint bounding-box centre at grade (z = 0); Cannon: centre of the un-chamfered trapezoid bbox",
+      "axes": "+X east, +Y north (map-aligned named building; R02 UE frame is +X east, +Y south, cm)",
+      "lods": {
+        "LOD0": {
+          "object": "SM_F01_Folger_LOD0",
+          "tris": 63878,
+          "size_m": [
+            85.385,
+            46.333,
+            14.63
+          ]
+        },
+        "LOD1": {
+          "object": "SM_F01_Folger_LOD1",
+          "tris": 7054,
+          "size_m": [
+            85.385,
+            46.333,
+            14.63
+          ]
+        },
+        "LOD2": {
+          "object": "SM_F01_Folger_LOD2",
+          "tris": 1008,
+          "size_m": [
+            69.485,
+            44.533,
+            14.63
+          ]
+        }
+      },
+      "suggested_lod_screen_size": {
+        "LOD0": 1.0,
+        "LOD1": 0.35,
+        "LOD2": 0.12
+      },
+      "collision": "6 convex hulls named UCX_SM_F01_Folger_NN",
+      "sockets": [
+        {
+          "name": "SOCKET_Entrance_North_East",
+          "location_m": [
+            27.8582,
+            17.1164,
+            1.31
+          ],
+          "rotation_z_rad": 1.5708
+        },
+        {
+          "name": "SOCKET_Entrance_North_West",
+          "location_m": [
+            -27.6332,
+            17.1164,
+            1.31
+          ],
+          "rotation_z_rad": 1.5708
+        },
+        {
+          "name": "SOCKET_PuckFountain",
+          "location_m": [
+            -47.4424,
+            0.0,
+            0.0
+          ],
+          "rotation_z_rad": 3.14159
+        },
+        {
+          "name": "SOCKET_Lawn_N03_Turf",
+          "location_m": [
+            0.0,
+            22.5264,
+            0.7
+          ],
+          "rotation_z_rad": 0.0
+        },
+        {
+          "name": "SOCKET_Signage_BuildingName_PENDING",
+          "location_m": [
+            0.0,
+            16.9664,
+            12.9
+          ],
+          "rotation_z_rad": 1.5708
+        }
+      ],
+      "material_slots": [
+        {
+          "slot": "M_F01_Brick_Glazed",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE"
+          ],
+          "role": "Folger rear / courtyard glazed brick (location PROBABLE)"
+        },
+        {
+          "slot": "M_F01_Glass",
+          "its_alive_family": "GL",
+          "exposure": [
+            "VE"
+          ],
+          "role": "glazing, day slot A"
+        },
+        {
+          "slot": "M_F01_Glass_NightLit",
+          "its_alive_family": "GL",
+          "exposure": [
+            "VE"
+          ],
+          "role": "glazing slot B (~35 % of windows): identical by day; drive emissive for night"
+        },
+        {
+          "slot": "M_F01_Marble_Folger",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "RE",
+            "HW"
+          ],
+          "role": "Folger Georgia marble ashlar, alternating course heights"
+        },
+        {
+          "slot": "M_F01_Marble_Incised",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE"
+          ],
+          "role": "carved inscription strokes (reads as incised shadow)"
+        },
+        {
+          "slot": "M_F01_Marble_Smooth",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "RE",
+            "HW"
+          ],
+          "role": "monolithic marble trim, pilasters, plinths, relief stand-ins"
+        },
+        {
+          "slot": "M_F01_Metal_Aluminium",
+          "its_alive_family": "MT",
+          "exposure": [
+            "FH",
+            "VE"
+          ],
+          "role": "Folger cast-aluminium grilles and doors"
+        },
+        {
+          "slot": "M_F01_Paving_Bluestone",
+          "its_alive_family": "UM",
+          "exposure": [
+            "HW"
+          ],
+          "role": "Folger forecourt bluestone accents"
+        },
+        {
+          "slot": "M_F01_Roof_Tar",
+          "its_alive_family": "AP",
+          "exposure": [
+            "RE"
+          ],
+          "role": "flat bituminous roofs behind parapets"
+        },
+        {
+          "slot": "M_F01_Turf_Placeholder",
+          "its_alive_family": "LG",
+          "exposure": [
+            "GT"
+          ],
+          "role": "PLACEHOLDER lawn bed: replace with DC-N03 turf via SOCKET_Lawn_N03_Turf"
+        },
+        {
+          "slot": "M_F01_Window_Frame_Dark",
+          "its_alive_family": "CT",
+          "exposure": [
+            "VE"
+          ],
+          "role": "painted sash over WD/MT substrate (APPROXIMATE)"
+        }
+      ]
+    },
+    "SM_F01_LOCAnnex": {
+      "file": "SM_F01_LOCAnnex.glb",
+      "units": "glTF metres (UE 5.8 import -> cm); Blender source Z-up, glTF Y-up",
+      "pivot": "footprint bounding-box centre at grade (z = 0); Cannon: centre of the un-chamfered trapezoid bbox",
+      "axes": "+X east, +Y north (map-aligned named building; R02 UE frame is +X east, +Y south, cm)",
+      "lods": {
+        "LOD0": {
+          "object": "SM_F01_LOCAnnex_LOD0",
+          "tris": 103476,
+          "size_m": [
+            126.96,
+            72.836,
+            31.2
+          ]
+        },
+        "LOD1": {
+          "object": "SM_F01_LOCAnnex_LOD1",
+          "tris": 41836,
+          "size_m": [
+            126.96,
+            72.83,
+            31.2
+          ]
+        },
+        "LOD2": {
+          "object": "SM_F01_LOCAnnex_LOD2",
+          "tris": 5556,
+          "size_m": [
+            121.98,
+            68.64,
+            31.2
+          ]
+        }
+      },
+      "suggested_lod_screen_size": {
+        "LOD0": 1.0,
+        "LOD1": 0.35,
+        "LOD2": 0.12
+      },
+      "collision": "5 convex hulls named UCX_SM_F01_LOCAnnex_NN",
+      "sockets": [
+        {
+          "name": "SOCKET_Entrance_West_2ndSt",
+          "location_m": [
+            -61.16,
+            0.0,
+            1.35
+          ],
+          "rotation_z_rad": 3.14159
+        },
+        {
+          "name": "SOCKET_Entrance_East_3rdSt",
+          "location_m": [
+            61.16,
+            0.0,
+            1.35
+          ],
+          "rotation_z_rad": 0.0
+        },
+        {
+          "name": "SOCKET_Entrance_South_Independence",
+          "location_m": [
+            0.0,
+            -34.49,
+            1.35
+          ],
+          "rotation_z_rad": -1.5708
+        },
+        {
+          "name": "SOCKET_Lamp_SouthStair_W",
+          "location_m": [
+            -5.1,
+            -38.13,
+            0.9
+          ],
+          "rotation_z_rad": -1.5708
+        },
+        {
+          "name": "SOCKET_Lamp_SouthStair_E",
+          "location_m": [
+            5.1,
+            -38.13,
+            0.9
+          ],
+          "rotation_z_rad": -1.5708
+        },
+        {
+          "name": "SOCKET_Signage_PENDING_NoInscriptionFound",
+          "location_m": [
+            0.0,
+            -34.39,
+            22.5
+          ],
+          "rotation_z_rad": -1.5708
+        }
+      ],
+      "material_slots": [
+        {
+          "slot": "M_F01_Glass",
+          "its_alive_family": "GL",
+          "exposure": [
+            "VE"
+          ],
+          "role": "glazing, day slot A"
+        },
+        {
+          "slot": "M_F01_Glass_NightLit",
+          "its_alive_family": "GL",
+          "exposure": [
+            "VE"
+          ],
+          "role": "glazing slot B (~35 % of windows): identical by day; drive emissive for night"
+        },
+        {
+          "slot": "M_F01_Granite_Pink",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "HW",
+            "GT"
+          ],
+          "role": "Annex North Carolina pink granite skirt and stairs"
+        },
+        {
+          "slot": "M_F01_Lamp_Glass",
+          "its_alive_family": "GL",
+          "exposure": [
+            "FH"
+          ],
+          "role": "opal lamp globes: night emissive slot"
+        },
+        {
+          "slot": "M_F01_Marble_Ashlar",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "RE"
+          ],
+          "role": "Annex Georgia white marble ashlar walls"
+        },
+        {
+          "slot": "M_F01_Marble_Smooth",
+          "its_alive_family": "UM",
+          "exposure": [
+            "VE",
+            "RE",
+            "HW"
+          ],
+          "role": "monolithic marble trim, pilasters, plinths, relief stand-ins"
+        },
+        {
+          "slot": "M_F01_Metal_Bronze",
+          "its_alive_family": "MT",
+          "exposure": [
+            "FH",
+            "VE"
+          ],
+          "role": "statuary bronze doors, window metal, Annex spandrels (PROBABLE)"
+        },
+        {
+          "slot": "M_F01_Roof_Copper",
+          "its_alive_family": "MT",
+          "exposure": [
+            "RE"
+          ],
+          "role": "Annex copper roof tiers (~25-year patina)"
+        }
+      ]
+    }
+  },
+  "typed_slots": {
+    "night_glazing": "M_F01_Glass_NightLit carries ~35 % of windows, chosen by md5(window key) % 100 < 35 (stable across rebuilds). Drive emissive (moodbook TUNGSTEN #C49D63) for night states (DC-L01).",
+    "kit_swaps": {
+      "DC-C19": "SOCKET_C19_Order_Swap_Colonnade on the Cannon: the 34 single Doric columns (and the six in antis at the NW corner) are a lightweight background-LOD derivation of C19 vocabulary; swap to a C19 runtime variant when one exists.",
+      "DC-C18": "no approved C18 delivery; Annex curtain bays / Cannon pilastrade bays are named-building bays, not C18 substitutes (request: kits are vocabulary, not silhouette substitutes).",
+      "DC-C20": "not applicable to C10 (no red tile roofs).",
+      "DC-N03": "SOCKET_Lawn_N03_Turf (Folger terrace lawn bed placeholder)."
+    },
+    "signage_pending": "SOCKET_Signage_* mark positions where 1963 building names may be carved; positions NOT verified, nothing carved except the two verified Folger quotations."
+  },
+  "seeds": {
+    "glass_slot": "md5 hash of '<building>-<facade>-<window index>' keys",
+    "textures": {
+      "M_F01_Marble_Ashlar": 101,
+      "M_F01_Marble_Folger": 109,
+      "M_F01_Marble_Smooth": 102,
+      "M_F01_Marble_Cannon": 103,
+      "M_F01_Granite_Grey": 104,
+      "M_F01_Granite_Pink": 105,
+      "M_F01_Brick_Glazed": 108,
+      "M_F01_Roof_Copper": 106,
+      "M_F01_Roof_Tar": 107
+    },
+    "relief_standins": "Python random.Random(seed) per panel (Folger 1000+k); deterministic"
+  },
+  "placement": "NOT placed. Re-snap footprints to DC-R02 v001 evidence cards; DC-B01 owns the level. Base is flat at z = 0 (real sites slope: Folger/Annex block falls toward Independence Ave) - B01 to sink / extend plinths into terrain."
+}
