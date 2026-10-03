@@ -240,4 +240,3 @@ then `renders/modules/X14_PART_Panel_Wood_090_*`, `X14_ARCH_Wall_Door_300_*` and
 - Left as is: the drop-ceiling island still has no perimeter closure strip (memoir says "temporary");
   sconce and torchère shades are plain bowls; partition-top faces catch grazing light from the
   render's fill lights a little (normal-map strength halved in v003).
-
