@@ -1,0 +1,646 @@
+{
+  "job_id": "DC-F01",
+  "version": "asset-v001",
+  "claimant": "claude-cloud-agent",
+  "created_utc": "2026-10-02T13:22:31+00:00",
+  "source_commit": "74a86457c74f463cb15716859cdd13a5d042083e",
+  "gates": {
+    "clean_rebuild": "see HANDOFF.md",
+    "glb_reopen_qa": "see HANDOFF.md",
+    "unreal_import_readback": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "matt_approval": "PENDING"
+  },
+  "files": [
+    {
+      "path": "CONTEXT_ACK.json",
+      "bytes": 9922,
+      "sha256": "df3cbb5ec798dfb505c3f5b0c44f61e7f18293efd93c0cf9d0339d54f7f533e5"
+    },
+    {
+      "path": "DEPENDENCY_LOCK.json",
+      "bytes": 4242,
+      "sha256": "a125ff452edb00e0aa0f7ed94b9421e411a8fad17648c12bb3b52dd9941703e9"
+    },
+    {
+      "path": "DISPATCH_LOG.json",
+      "bytes": 1186,
+      "sha256": "47e4c1ab3e9367ddacadb47fbecc1b929a4535a1d023d716e0b993e3146b0b74"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 20360,
+      "sha256": "ea17896dadd162b42d45392f9a63cfc995fcd3499c0d992c3b10a50d471823c9"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 14320,
+      "sha256": "74f4371510ce31a836f7a7850039e31321556137244a8c0a3966ee9b487aedc9"
+    },
+    {
+      "path": "NEXT_CHAT_PROMPT.txt",
+      "bytes": 2229,
+      "sha256": "dd77d0d0f844b9b8f5eacad630a4770532a2bb5ec871a04fc0ab76c7f2bdb64f"
+    },
+    {
+      "path": "PASS_PLAN.md",
+      "bytes": 14907,
+      "sha256": "e396c605efb4af08d699db7a98b645796040b0152b41ac897df7d4f14808654f"
+    },
+    {
+      "path": "PCG_INTERFACE.json",
+      "bytes": 14914,
+      "sha256": "74c3bc89273d83110af9594e461536f0fe0a0fcb9ec2685e7b91c92f31d35048"
+    },
+    {
+      "path": "REUSABLE_COMPONENTS.json",
+      "bytes": 6052,
+      "sha256": "cc8533f5a3f2c4f30ab619be19d5e75acd601603bc75782bbb34526a4c22e4b4"
+    },
+    {
+      "path": "build_report.json",
+      "bytes": 7824,
+      "sha256": "fff1a05cd8284b4360372d2696c30e94439d668bb135601dc2f9609aeef8e65e"
+    },
+    {
+      "path": "context/REQUEST_DC-F01_export_2026-10-02.txt",
+      "bytes": 3070,
+      "sha256": "3c7747bd19b7b2a0a5e64f401a9d5ed29b2b502b5c780fcf096ae31aaa5e1bcb"
+    },
+    {
+      "path": "coplanar_report.txt",
+      "bytes": 2171,
+      "sha256": "b4a42bb1f1195907c1848ed64afea16d0e5daef4e3529565560e82b30bd2bd2f"
+    },
+    {
+      "path": "drive_previews/F01_compare_ref01_Folger.png",
+      "bytes": 109092,
+      "sha256": "1e940bc59a2c63ef4e524d76db3738d1962047c01707ce9c27898841738c88cd"
+    },
+    {
+      "path": "drive_previews/F01_preview_Cannon.png",
+      "bytes": 91766,
+      "sha256": "16c25ceae1fe261142840a1cc0819d8407384ccec746994c2822a295c5af4ea4"
+    },
+    {
+      "path": "drive_previews/F01_preview_Folger.png",
+      "bytes": 96379,
+      "sha256": "fe0b6d36da2199a93848d615babcee7395a13f3e417f5ada027c8e32c24b5700"
+    },
+    {
+      "path": "drive_previews/F01_preview_LOCAnnex.png",
+      "bytes": 105446,
+      "sha256": "432b9527a267a670e118e0e82b593e675679745d37ad8c6eaa39b875b5b449cf"
+    },
+    {
+      "path": "meshes/SM_F01_Cannon.glb",
+      "bytes": 22698756,
+      "sha256": "975c94cfba89f0d61c8994dcfbcaf538f77c7b82b66bfab244e3531f86d73391"
+    },
+    {
+      "path": "meshes/SM_F01_Folger.glb",
+      "bytes": 6089956,
+      "sha256": "7dd8e0727c3eccfe57c5538a3684056840634b15cb7e1a43b892ebc9caab29ae"
+    },
+    {
+      "path": "meshes/SM_F01_LOCAnnex.glb",
+      "bytes": 12576096,
+      "sha256": "90002b962ec0ba4b127ef2f5b5b6fb6ea62e676f0f4a98453f23cdde90959653"
+    },
+    {
+      "path": "references/01_Folger_2025.jpg",
+      "bytes": 408636,
+      "sha256": "03f99ac877b56c56713e78ace53ad86e1988f5d7fe52c401393414039543b0a9"
+    },
+    {
+      "path": "references/02_Adams_2017.jpg",
+      "bytes": 383877,
+      "sha256": "7a6e3eb18a05356a29bd16e24d4132ab1e946cc0182222cfca6a293c43a31315"
+    },
+    {
+      "path": "references/SOURCES.md",
+      "bytes": 1017,
+      "sha256": "b81303eebfeaf6ee0bf8e2c6cf3a9311efb9d535965b8f13e85dc311874af677"
+    },
+    {
+      "path": "renders/review/CMP_ref01_vs_photo01_ne.png",
+      "bytes": 1615297,
+      "sha256": "4e932a360af2419844fb837a03196c7af7bed981a855040abe462495b84b6e60"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_basecolor_detail_colonnade.png",
+      "bytes": 1196688,
+      "sha256": "82f1959454352dde536aef1ccb57326db9d415487dc8e7c02e3e807ec5bb6685"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_clay_street_ne.png",
+      "bytes": 1059928,
+      "sha256": "13155a60c177757cba109c408930b87765246f2a786d8edd68379ad722daf7e9"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_night_street_ne.png",
+      "bytes": 1141468,
+      "sha256": "9b5f561b3b786516a470d0ea9d99dc82be377ff44ea8125e145c5a403f38436f"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_night_street_nw.png",
+      "bytes": 1098181,
+      "sha256": "266a466cb19ce1531ff496496616671848794f203d348d49011cec85f5204a67"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_normal_detail_colonnade.png",
+      "bytes": 1549155,
+      "sha256": "60083f06fc7bafe4179a8c7e70e4a290ac422503bb0db6560db2e27a7ee1f91a"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_roughness_detail_colonnade.png",
+      "bytes": 1299222,
+      "sha256": "3df4aaee186ef0728f4cc85da9fec849f95f52d9e7ea732f31da4600a74a5296"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_LOD1_street_ne.png",
+      "bytes": 1150453,
+      "sha256": "25a793561f95581638a5af40b6ed1aed1307fe3cf3f074430ce4800d5542e063"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_LOD2_street_ne.png",
+      "bytes": 1098119,
+      "sha256": "7f43fe47d04d1fbcd889b258ddd2cfb4624ca04bb0112554785543873df37e9f"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_detail_colonnade.png",
+      "bytes": 1304592,
+      "sha256": "b2a5463cb989d2bc26a427002cf7d8b49db360b544df5a458c1c92f6f288c638"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_street_n.png",
+      "bytes": 1159190,
+      "sha256": "eb26d1a5cac812e17a7474781ec61c4c232aaa888bd45fb5e3cd105ad817ffc6"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_street_ne.png",
+      "bytes": 1179281,
+      "sha256": "97144304e98dac87230f99a18912c0625e1763b7484ff31ffde9781f1c21247d"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_street_nw.png",
+      "bytes": 1126100,
+      "sha256": "4937a7b9213d2be99f49d9cd1efced483e535a01581526882dbd6e36648de9db"
+    },
+    {
+      "path": "renders/review/SM_F01_Cannon_textured_street_se.png",
+      "bytes": 1194717,
+      "sha256": "d1d926b8eb163576a9120fc8de702460100825940c59c0f8ad5fd0fda4172d6d"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_basecolor_detail_bays.png",
+      "bytes": 1237727,
+      "sha256": "5f9c065111750a532b24b158143ce82967df9126a54240055bd9d79487dd635e"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_clay_street_ne.png",
+      "bytes": 958765,
+      "sha256": "2f2834002c7b1e1228387b6d83ce307ed0f8a476464135c789935c3ad300a007"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_night_street_ne.png",
+      "bytes": 1077492,
+      "sha256": "1641fe60dda7e969df3addcd2fdd03118d51da1387c27b056aac7296e3ba4504"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_night_street_nw.png",
+      "bytes": 1085269,
+      "sha256": "37d67f904c7b4e7d725fde2592c457b5d632bfb35475bfc2dd07a424f735a866"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_normal_detail_bays.png",
+      "bytes": 1378414,
+      "sha256": "bee79d7849f9bb7da07a8657c0749dc1a786c5a384397736743138f0edcf4ab4"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_roughness_detail_bays.png",
+      "bytes": 1311648,
+      "sha256": "09e3526686333ec1888f004143e7b97159b053afc0beff252fe07b7171ed254f"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_LOD1_street_ne.png",
+      "bytes": 1009617,
+      "sha256": "cb299d3165222b4b38411fae1d1622845b90875d347b8e01ab2be87b2aa75b4b"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_LOD2_street_ne.png",
+      "bytes": 991464,
+      "sha256": "b4d5824b7e883a80b07ca1a9cd0af8c0b191545ab5290d9188089818c1b9c0ed"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_detail_bays.png",
+      "bytes": 1295488,
+      "sha256": "449d2840e455d8be238b6bca5c5ffcc94815e80c6fec0947ae393c5367e292ae"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_photo01_ne.png",
+      "bytes": 1035024,
+      "sha256": "1c6e936062bad3312360502d42edbb91e5a162e728816c55d140d613e3fcefd9"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_rear_se.png",
+      "bytes": 991751,
+      "sha256": "f1dee9c801283910b7d81d7e019c8b0bc076ef2aee57f328267aacc703a12a43"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_street_n.png",
+      "bytes": 1068313,
+      "sha256": "2a119edc35b02a9d99f8302907a59bdce08807c874b53d2b4a33f9a29eca21bc"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_street_ne.png",
+      "bytes": 1074646,
+      "sha256": "a7de0fd4ffadf0e70cc19faa6d921874e5e40d02f897be5ff8082b1dd77b469f"
+    },
+    {
+      "path": "renders/review/SM_F01_Folger_textured_street_nw.png",
+      "bytes": 1078488,
+      "sha256": "d6627ff62aca05432052fc14e0e4fd7afbd3ca9a402d27002de9ead4cf5268c0"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_basecolor_street_w.png",
+      "bytes": 1152807,
+      "sha256": "a956e69429da52d0c654538b2c7b1b0ca4cb49db8077cb6eb94142a4a36bc2bc"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_clay_street_sw.png",
+      "bytes": 969278,
+      "sha256": "3476d48d367d45ea10ed3550629cc0ad905312a31c958bbbdd5009ee03b42031"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_night_street_sw.png",
+      "bytes": 1177250,
+      "sha256": "0f92433948af256303e2f1283a9f8d0ea04093bbe59d64975c5a67e42cb42d26"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_night_street_w.png",
+      "bytes": 1221454,
+      "sha256": "829557aa80b0bbdf607beae40bf9ba7d90cd970207efeafbe682cb6cac0cecff"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_normal_street_w.png",
+      "bytes": 1437440,
+      "sha256": "efe54376269cc25b59c67c7e756a3eaf387f455a2bd86b812c58d76b28861eab"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_roughness_street_w.png",
+      "bytes": 1225734,
+      "sha256": "6d9edaee0c6839dbcc9ac0cbcde36b2cc7ceb7e98b2a6340b2ee5e243105a8f9"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_LOD1_street_sw.png",
+      "bytes": 1105129,
+      "sha256": "fc5d78b19fd1db1264183c60328f44655cc8fa8b272b370a4d6273aaf7a7c5a1"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_LOD2_street_sw.png",
+      "bytes": 1067980,
+      "sha256": "f9dbea5bd39cee18f2829d058e4e17cf2db1d6c206cb5a1310ad14a284bee292"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_detail_entrance_s.png",
+      "bytes": 1190808,
+      "sha256": "091a527838992184582ce7137f061bdeda7b955f2ba65e086be8a4618fbe515c"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_street_ne.png",
+      "bytes": 1212278,
+      "sha256": "a7d1746e1d4a2205f532d7aba841bb433ed6ff28526e9ee06f47daaf67d38827"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_street_s.png",
+      "bytes": 1114798,
+      "sha256": "67196faf98753bf0368c3b5011ad7dcc4f09b41a178b813fa7f46f1ddd0b2e2a"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_street_sw.png",
+      "bytes": 1146430,
+      "sha256": "30f6118d7e9ba116a1c21744d3bb37e195595d7d7bb6bd5efee96580361709de"
+    },
+    {
+      "path": "renders/review/SM_F01_LOCAnnex_textured_street_w.png",
+      "bytes": 1232977,
+      "sha256": "4b4941b1f2abd2eaebad6ea6e64b85e26ad7090ad9332ab228e3b6fcfd240c6e"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_clay_front.png",
+      "bytes": 1021399,
+      "sha256": "1a9f53863cb2cd73d495feb8158bfcd802202ab0df6147a6c90ec8329ea62ef8"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_clay_profile.png",
+      "bytes": 1015178,
+      "sha256": "1e5d38c82b664ceef116b185200e0c4a7d04bf6b9ee1d064f594b5591db5cec2"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_clay_rear.png",
+      "bytes": 1007025,
+      "sha256": "3f52b1c3cfd2154ace609c77e2ed3cd98274e8220fb399f5c81add157d7fcb47"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_clay_three_quarter.png",
+      "bytes": 1088464,
+      "sha256": "2eb80e9b1166132240cec61e38c82ed3e21cb76c39c02c13563d04a6373082c7"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_textured_front.png",
+      "bytes": 1063018,
+      "sha256": "6c81cee9c7b08e980f937d545d3abe42dfb615ff72a5f6ee69d91353d4c9c718"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_textured_profile.png",
+      "bytes": 1055269,
+      "sha256": "b23a6ffbbf4c7c8ce58f9f6d651fcf7ed9ac1cb99c8c43d732a770f18a21a1d4"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_textured_rear.png",
+      "bytes": 1055376,
+      "sha256": "05e3031c02c2ff27323bc3d0500b62398c516e05ec88d3c9165a18ea290e1a35"
+    },
+    {
+      "path": "renders/standard/SM_F01_Cannon_textured_three_quarter.png",
+      "bytes": 1149178,
+      "sha256": "ed014166d1a1d9c80b11c48e8a1760ac1195c492116cca93bb9f5e8f684d9a69"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_clay_front.png",
+      "bytes": 993967,
+      "sha256": "9abef29396cea242c7fa3e162f79a613ce81e47d35587977b677827c9fa70838"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_clay_profile.png",
+      "bytes": 992424,
+      "sha256": "6a2f4ad13529d734b3609cd2bdf60761b8ea309b68d5ce146fca4e48680df066"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_clay_rear.png",
+      "bytes": 986370,
+      "sha256": "037604f8e6e260cb66d3e21cab53463928fd084a9eeaec6441151be863d4d24d"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_clay_three_quarter.png",
+      "bytes": 1043707,
+      "sha256": "e58bfb2423d022c56020cec4ada70f295dc75158c3f50b16be932f71de016abd"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_textured_front.png",
+      "bytes": 1041138,
+      "sha256": "a98a2e6c70e2a904ee37b5543f21707a83c864c18291871b07e3534361a64ddb"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_textured_profile.png",
+      "bytes": 1020752,
+      "sha256": "dfb782d87ac8c4bb52f0f3fb1af9aa8645b90c8e0a59af319c5584cf5991bd1e"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_textured_rear.png",
+      "bytes": 1024285,
+      "sha256": "057d641e18b2cbeaae0e16b1853f06f1e8b4e3e33f6205544cef1c77cb075626"
+    },
+    {
+      "path": "renders/standard/SM_F01_Folger_textured_three_quarter.png",
+      "bytes": 1099491,
+      "sha256": "12dd19311bebee2e4a848069e68ba4076d8584c52e9b37c61cef61966f2db07b"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_clay_front.png",
+      "bytes": 1027777,
+      "sha256": "85640581e08adb557a04f59ebdec5b2ef3f7b1b920c4a98c062e1ebc8fbcd980"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_clay_profile.png",
+      "bytes": 1018472,
+      "sha256": "8ecd1476eaa2b386cc9b6333310d461b04982faca013816f5a39f29aa0b8d5d0"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_clay_rear.png",
+      "bytes": 1009595,
+      "sha256": "bad7e8783fe292e2a26fab46e90172d04a9392d2459e26e38ca57147497f146a"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_clay_three_quarter.png",
+      "bytes": 1079477,
+      "sha256": "75d97004a8ceb879788e4d0ec9891a5718501e8c4b43b0bcacb5d533726d5881"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_textured_front.png",
+      "bytes": 1120612,
+      "sha256": "5c969bd8fb5fcea908437f1c6d4f4144bfb47300ec6d4e833769243420a60ccd"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_textured_profile.png",
+      "bytes": 1087688,
+      "sha256": "df8391001bf5f3df39d7bd8af69dc98995de7935711c9133dfe31112129e083d"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_textured_rear.png",
+      "bytes": 1104269,
+      "sha256": "b05de46b3d067a8b83e39e7b521c3fc389b44d6ac266566791c0c00f2a79c628"
+    },
+    {
+      "path": "renders/standard/SM_F01_LOCAnnex_textured_three_quarter.png",
+      "bytes": 1223452,
+      "sha256": "678a4ac1a5cdb60309efc5ffffa2270ce801d6405d9400c20b7de6c0119576f2"
+    },
+    {
+      "path": "research/ANNEX_factsheet_agent_2026-10-02.md",
+      "bytes": 6176,
+      "sha256": "1c6ddbfc73105d27ab4a8d815e38d99909f2e362a4fbb3ee056c37d62f85b994"
+    },
+    {
+      "path": "research/CANNON_factsheet_agent_2026-10-02.md",
+      "bytes": 5558,
+      "sha256": "261bf3ef9e1c5a69c4bb78ca787562e1bffecd9ad063e74b06ca15a765d9e0be"
+    },
+    {
+      "path": "research/FOLGER_factsheet_agent_2026-10-02.md",
+      "bytes": 7231,
+      "sha256": "38d845428b1dbb59ab00ad8d75968d97088e00d41d17ddcb6d683e6782ee051e"
+    },
+    {
+      "path": "source/build.py",
+      "bytes": 73559,
+      "sha256": "7679683e369ab5be5eaee1ae275f3e1d219d36df889eb427b07450433eb03523"
+    },
+    {
+      "path": "source/coplanar_check.py",
+      "bytes": 11098,
+      "sha256": "6ca1d2dd8eb41395a71ea32ad267d6d6954956975524c6047bddfca500981f36"
+    },
+    {
+      "path": "source/f01lib.py",
+      "bytes": 38609,
+      "sha256": "e8a3e7b2d347f83fd6b9678adc1dde9a036c45f470bf65472a0db11d18d40327"
+    },
+    {
+      "path": "source/f01mat.py",
+      "bytes": 16814,
+      "sha256": "c48e7149af8399d8d29dd1e3772340fb0efbb9119381ecc77ae1fbd56b2d4cd0"
+    },
+    {
+      "path": "source/make_delivery.sh",
+      "bytes": 1217,
+      "sha256": "d55c4b7f2a69220919fb3e5f7f3786eb808fbed96eb1f8c8a7ae93fcf1e8d633"
+    },
+    {
+      "path": "source/make_previews.py",
+      "bytes": 3573,
+      "sha256": "2137136730ec4b7753d3971ab90429c5ebfb940f0cea7cce54de904f2c8b0d70"
+    },
+    {
+      "path": "source/render_all.sh",
+      "bytes": 2787,
+      "sha256": "560e2fac5c1e85626ddbe293a055cb930d070e35ad844b4e29753612bb3e0d3d"
+    },
+    {
+      "path": "source/render_review.py",
+      "bytes": 11801,
+      "sha256": "f475b9bf5a2ebca63a200c1e67f085e774cbee3ba94f8f0cce011bf6dba777be"
+    },
+    {
+      "path": "source/run_coplanar.sh",
+      "bytes": 615,
+      "sha256": "6e910af696606bb5d2629f59e1bf447b21174daf25f824e0abc116a372e6d7c7"
+    },
+    {
+      "path": "textures/M_F01_Brick_Glazed_BaseColor.png",
+      "bytes": 363099,
+      "sha256": "fb8a8db1a9a962d27b2739a3d1aec8c9f3e0c1491be1ef68840cf78b5e600fea"
+    },
+    {
+      "path": "textures/M_F01_Brick_Glazed_Normal.png",
+      "bytes": 1295348,
+      "sha256": "0ea06fe5eef38ff5c2647197148c79f293608f6e14b3773ac57481e0eb91620d"
+    },
+    {
+      "path": "textures/M_F01_Brick_Glazed_ORM.png",
+      "bytes": 760678,
+      "sha256": "3a046ee7311c5cae04a34cb1e284235916ddddcee2a26687efe3ed96b9450ea9"
+    },
+    {
+      "path": "textures/M_F01_Granite_Grey_BaseColor.png",
+      "bytes": 2626058,
+      "sha256": "6b3db2dff0533c47331d870ce8ac3c02964c77726dce1001a7e629d7c6e1e938"
+    },
+    {
+      "path": "textures/M_F01_Granite_Grey_Normal.png",
+      "bytes": 1980070,
+      "sha256": "a969774197156091d6b2a67c2620a44d5c54a5791fbf76b16559d0e7f554f28f"
+    },
+    {
+      "path": "textures/M_F01_Granite_Grey_ORM.png",
+      "bytes": 842606,
+      "sha256": "596edcabde0520ee7757bd750dcead3b64474cd25733fc5321f5841b69353f34"
+    },
+    {
+      "path": "textures/M_F01_Granite_Pink_BaseColor.png",
+      "bytes": 2778525,
+      "sha256": "52db25fc5fe20d7c1c80c076bacd32602c76bd5789f8e9c4912725c6c9c9f05e"
+    },
+    {
+      "path": "textures/M_F01_Granite_Pink_Normal.png",
+      "bytes": 1982011,
+      "sha256": "74bb28c574ff82436fa4b86652c55276858a8fbb7863a1a114d401fb4d3647a4"
+    },
+    {
+      "path": "textures/M_F01_Granite_Pink_ORM.png",
+      "bytes": 826854,
+      "sha256": "fca5ef8fa1a00dfc32cf2435f01d10327b08b9200f5612ada6da681ce6ac46a2"
+    },
+    {
+      "path": "textures/M_F01_Marble_Ashlar_BaseColor.png",
+      "bytes": 711290,
+      "sha256": "b3533eb90393b4ea7c3fc07e38fa704a949c33af448d2c10c990cb841cd9c13f"
+    },
+    {
+      "path": "textures/M_F01_Marble_Ashlar_Normal.png",
+      "bytes": 1318288,
+      "sha256": "a289dd08a4d1614c98fef10f8579ac70e6fc8e9551134bbc2d001e44e499c8bd"
+    },
+    {
+      "path": "textures/M_F01_Marble_Ashlar_ORM.png",
+      "bytes": 834981,
+      "sha256": "36dba1ee453a853ef39e6dd89e09b68d314272afea1787ac9d01f638f3c4030d"
+    },
+    {
+      "path": "textures/M_F01_Marble_Cannon_BaseColor.png",
+      "bytes": 652090,
+      "sha256": "446b396cf9ad4f9ea1f3727c9a535c63376234364c250283ea50181c2ecc0f9a"
+    },
+    {
+      "path": "textures/M_F01_Marble_Cannon_Normal.png",
+      "bytes": 1332072,
+      "sha256": "69b23700446c664795cad656e4096eb2ae2e097359135c59660b8e9479b29c7d"
+    },
+    {
+      "path": "textures/M_F01_Marble_Cannon_ORM.png",
+      "bytes": 839112,
+      "sha256": "c6be404e1445c25a422b18e21ba36d7d6393f88db50b6e39ba26f838c4da2bc3"
+    },
+    {
+      "path": "textures/M_F01_Marble_Folger_BaseColor.png",
+      "bytes": 776094,
+      "sha256": "3eb700a88b6441a843c2666ccf54e688deaacbe8ee5741909723bf36743943f3"
+    },
+    {
+      "path": "textures/M_F01_Marble_Folger_Normal.png",
+      "bytes": 1295541,
+      "sha256": "c67fb1325d06e3e937bc13cc0b54c8f8810b2ea82658f82ada10c264cdb22621"
+    },
+    {
+      "path": "textures/M_F01_Marble_Folger_ORM.png",
+      "bytes": 829044,
+      "sha256": "c5b505c1ddfe0d5e6f9d05199c677c6be0b8037af9d0d735c2320ca22f138230"
+    },
+    {
+      "path": "textures/M_F01_Marble_Smooth_BaseColor.png",
+      "bytes": 691006,
+      "sha256": "0c9cc32330c0c54814349872c5d45f53b1048e4c1aaae67a293f6d21be42dc17"
+    },
+    {
+      "path": "textures/M_F01_Marble_Smooth_Normal.png",
+      "bytes": 1226038,
+      "sha256": "7322faa5f73007aa5444ab8a5b8f121ac37300d896a3ffa33c93568bbcd1f125"
+    },
+    {
+      "path": "textures/M_F01_Marble_Smooth_ORM.png",
+      "bytes": 839111,
+      "sha256": "cb3678b9d064e80795dcff0fa63453768ea9515298f2b8146910245e65aba312"
+    },
+    {
+      "path": "textures/M_F01_Roof_Copper_BaseColor.png",
+      "bytes": 215301,
+      "sha256": "0aa2f730f1c7b174621c32abd6e5403b433ef2f4546fe521b835f9f0aaaaeb1d"
+    },
+    {
+      "path": "textures/M_F01_Roof_Copper_Normal.png",
+      "bytes": 440253,
+      "sha256": "8ca39967f810ef0e74f3891e0c8e11ef4d716b4697b277d8bba0223ccf9bf62d"
+    },
+    {
+      "path": "textures/M_F01_Roof_Copper_ORM.png",
+      "bytes": 395164,
+      "sha256": "1bc506651bc9e1b5d8c9587d175926adb0dab870a025b7a8f2f83374df98500b"
+    },
+    {
+      "path": "textures/M_F01_Roof_Tar_BaseColor.png",
+      "bytes": 228676,
+      "sha256": "28a0b5e706a75551a1297786e408874eeece7569f48003118650eb9488a08c7b"
+    },
+    {
+      "path": "textures/M_F01_Roof_Tar_Normal.png",
+      "bytes": 685366,
+      "sha256": "1d00021c20f945d8f48d184b0b8f5ce226bef6d9c46f4f8063d8295907d1a796"
+    },
+    {
+      "path": "textures/M_F01_Roof_Tar_ORM.png",
+      "bytes": 207695,
+      "sha256": "8b486a14f8523b5b50890f5b8ac01428a19e170e1c85b88440b774add3277a92"
+    }
+  ]
+}

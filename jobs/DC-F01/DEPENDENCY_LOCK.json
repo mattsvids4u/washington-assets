@@ -1,0 +1,70 @@
+{
+  "job_id": "DC-F01",
+  "version": "v001",
+  "dallas_relation": "NEW (no DALLAS equivalent; no DALLAS file, register or folder read for reuse or touched)",
+  "washington_dependencies": [
+    {
+      "id": "DC-C19",
+      "name": "Classical colonnade/pilaster order module",
+      "version": "v004",
+      "status": "APPROVED (Drive folder 'DC-C19 — asset — v004 APPROVED' 1ZPzsGBzzehDsnuDenvwHU-3Equ28AJRR; review folder 'DC-C19 — REVIEW — v004 APPROVED' 10pM7mfAJl17wCdVg0tU_0VhxLvAh5XnJ; register APPROVED)",
+      "files_read": [
+        {"name": "HANDOFF.md", "drive_id": "1OSN7SkXQl83xg7GqkXrx1iQpLmOgIZzO", "bytes": 3284},
+        {"name": "PASS06_SUMMARY.md", "drive_id": "1mhZ3q_1GrvP2fVw6ZVzRKf4PZWrtDA-i", "bytes": 1330}
+      ],
+      "use_in_v001": "VOCABULARY / INTERFACE ONLY. The Cannon's 34 fluted Doric columns (coupled) are a lightweight background-LOD derivation of the classical Doric vocabulary C19 also covers; no C19 mesh is reused.",
+      "why_not_mesh_reuse": [
+        "C19 v004 is a sculpt-review-density kit by its own handoff ('NOT GAME-READY'; Corinthian LOD0 740,332 tris) with 'measured building-specific proportions' and 'a substantially lighter runtime version' listed as open",
+        "Cannon needs a fluted Doric order sized to this building (column 1.2 m, order 9.6 m, coupled at 1.75 m); C19 nominal dimensions are authored, not measured",
+        "the C19 GLBs ship in a ZIP that cannot be transferred into this cloud sandbox (Drive connector returns base64 into context only)"
+      ],
+      "swap_point": "SOCKET_C19_Order_Swap_Colonnade (see PCG_INTERFACE.json)"
+    },
+    {
+      "id": "DC-C18",
+      "name": "Federal limestone bay module",
+      "version": null,
+      "status": "NOT AVAILABLE: register UNCLAIMED; working-pass docs on Drive (PASS 4-6, 2026-09-25) but no approved delivery found",
+      "use_in_v001": "none. The Annex and Cannon bays are named-building bays (the request: kits are 'reusable vocabulary, not silhouette substitutes'). C18 adapters can be proposed once C18 is approved."
+    },
+    {
+      "id": "DC-C20",
+      "name": "Federal Triangle red tile roof and dormer kit",
+      "version": "v005",
+      "status": "APPROVED per Drive folder 'DC-C20 — asset — v005 APPROVED' (1BbeeW5-vTSU-0FrNWFOHUH7meozEsLMg, 2026-10-01); register row still UNCLAIMED (stale)",
+      "use_in_v001": "none (no red tile roofs on the C10 buildings). Needed for v002 IRS / Post Office Department."
+    },
+    {
+      "id": "DC-R02",
+      "name": "Corridor parcel and footprint dataset",
+      "version": "v001",
+      "status": "APPROVED (register); full package on Matt's PC (MyProject_Collaborator/SourceData/Washington/DC_R02), Drive holds HANDOFF v001 (1IUp3LtiAPcyYNncGg4gCdR4sgd-r6r8WQXPPY6JedJE) and SHA256SUMS.txt (1NuRxi-IYKRWAcUqPS8U343CwYLavSJzq)",
+      "use_in_v001": "AUTHORITY NOT CONSUMED: R02 evidence cards (1963 footprint, height, year per named hard-lock) could not be read here. Footprints use published dimensions (EVIDENCE.md). Re-snap before placement."
+    },
+    {
+      "id": "DC-R01",
+      "name": "District/Street/Building routing matrix",
+      "version": "v002 (via R02)",
+      "status": "DELIVERED, awaiting Matt",
+      "use_in_v001": "1963 name locks only (Library of Congress Annex; Cannon House Office Building; Folger Shakespeare Library) as restated in Road Plans canon v002"
+    }
+  ],
+  "build_environment": {
+    "blender_bpy": "4.5.14 LTS (pip wheel)",
+    "python": "3.11.15",
+    "numpy": "1.26.4",
+    "pillow": "12.3.0",
+    "gltf_exporter": "io_scene_gltf2 bundled with bpy 4.5.14 (GLB, JPEG q92 embedded textures, Y-up)",
+    "font": {
+      "path": "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+      "package": "fonts-liberation 1:2.1.5-3",
+      "sha256": "705903ae1382f0150f115d6f10a30f5b2f3d6ade649c474afe6366c39174fb65",
+      "use": "stand-in typeface for the two verified Folger inscriptions (period letterforms not matched)"
+    }
+  },
+  "source_files": {
+    "generator": "jobs/DC-F01/build.py (+ f01lib.py geometry, f01mat.py textures/materials)",
+    "review_renders": "jobs/DC-F01/render_review.py, jobs/DC-F01/render_all.sh, tools/render_views.py",
+    "qa": "tools/qa_check.py"
+  }
+}

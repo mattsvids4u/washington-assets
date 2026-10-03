@@ -1,0 +1,25 @@
+SM_F01_Cannon.glb LOD0: 1 EXPOSED coplanar same-direction overlaps, visible area 0.0015 m^2 (6063 buried overlaps, 196.5 m^2, ignored)
+  0.0015 m^2 visible of 0.0020  M_F01_Marble_Cannon / M_F01_Marble_Cannon  at (-39.01, -57.62, 9.8)  normal (0.0, 0.0, 1.0)
+  by material pair / normal:
+      0.0015 m^2  x1    M_F01_Marble_Cannon / M_F01_Marble_Cannon  normal (0.0, 0.0, 1.0)
+SM_F01_Cannon.glb LOD1: 2 EXPOSED coplanar same-direction overlaps, visible area 0.0027 m^2 (937 buried overlaps, 95.5 m^2, ignored)
+  0.0015 m^2 visible of 0.0020  M_F01_Marble_Cannon / M_F01_Marble_Cannon  at (-39.01, -57.62, 9.8)  normal (0.0, 0.0, 1.0)
+  0.0012 m^2 visible of 0.0054  M_F01_Marble_Cannon / M_F01_Marble_Cannon  at (-39.24, -57.91, 0.71)  normal (0.233, -0.972, 0.0)
+  by material pair / normal:
+      0.0015 m^2  x1    M_F01_Marble_Cannon / M_F01_Marble_Cannon  normal (0.0, 0.0, 1.0)
+      0.0012 m^2  x1    M_F01_Marble_Cannon / M_F01_Marble_Cannon  normal (0.233, -0.972, 0.0)
+SM_F01_Cannon.glb LOD2: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (590 buried overlaps, 44.1 m^2, ignored)
+  by material pair / normal:
+SM_F01_Folger.glb LOD0: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (1240 buried overlaps, 481.4 m^2, ignored)
+  by material pair / normal:
+SM_F01_Folger.glb LOD1: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (647 buried overlaps, 480.7 m^2, ignored)
+  by material pair / normal:
+SM_F01_Folger.glb LOD2: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (43 buried overlaps, 440.3 m^2, ignored)
+  by material pair / normal:
+SM_F01_LOCAnnex.glb LOD0: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (9572 buried overlaps, 12.9 m^2, ignored)
+  by material pair / normal:
+SM_F01_LOCAnnex.glb LOD1: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (68 buried overlaps, 4.3 m^2, ignored)
+  by material pair / normal:
+SM_F01_LOCAnnex.glb LOD2: 0 EXPOSED coplanar same-direction overlaps, visible area 0.0000 m^2 (0 buried overlaps, 0.0 m^2, ignored)
+  by material pair / normal:
+gate: PASS (fail threshold 0.05 m^2 visible per LOD)
