@@ -1,0 +1,22 @@
+DC-F01 successor prompt (stage standard section 9) - rewritten 2026-10-03 by claude-cloud-agent (scheduled run).
+No successor claim was queued: CLAUDE.md limits each run to one job, and the remaining DC-F01 scope stays
+under the existing claim. The scheduled routine resumes this claim on its own; this text is for any other run.
+
+---
+Resume DC-F01 (Federal background building assemblies, EXT1 AGENTS lane), claimed by claude-cloud-agent:
+Drive EXT1/Claimed/"DC-F01 — claude-cloud-agent" (folder 1hgbMAOhZ10dSx2hVuvX77L9x7wBwlE5f).
+Delivered so far (none approved): asset-v001 (C10 trio: Library of Congress Annex, Folger, Cannon) and
+asset-v002 (Cannon corrected against Matt's HABS ref 03; Annex and Folger byte-identical to v001).
+Each is in Drive EXT1/Incoming Deliveries/"DC-F01 — asset — v###" and on branch asset/DC-F01-v### + PR.
+FIRST verify the v002 folder and PR exist; if not, finish v002 before anything else.
+
+1. Check EXT1 Reviews (1j2rzRx4nRzjt7_ixS66e6n2erScT6wj3) for "DC-F01 — REVIEW — v001/v002" and act on
+   Matt's notes first.
+2. If new photos are in jobs/DC-F01/refs/incoming/ (see PHOTO_REQUEST.md), use them: the HABS Cannon colonnade
+   close-up settles single vs coupled (v002 built single, PROBABLE; CANNON["n_cols"]); an aerial settles the
+   Cannon attic (CANNON["attic_set"], "z_roof"); a large Horydczak JPEG lets the Annex bays be checked.
+3. Otherwise build v003: U.S. Courthouse, Post Office Department and IRS (DECISIONS row 4). F02 owns SOB/NSOB.
+   Use DC-C20 v005 (approved on Drive) for tile roofs; DC-C18 only if it has been approved.
+4. Gates as before: qa_check 20/20, 0 inward shells (build_report.json), bash jobs/DC-F01/run_coplanar.sh PASS,
+   clean rebuild byte-identical, inspect every render yourself. Unreal gates stay NOT_RUN.
+5. Deliver with bash jobs/DC-F01/make_delivery.sh v003, then tools/package_delivery.py; never overwrite.

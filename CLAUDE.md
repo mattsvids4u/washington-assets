@@ -46,10 +46,20 @@ You may only claim requests in the **AGENTS lane** that are currently **UNCLAIME
 Never touch: worker-lane folders, hero sets (EXT2/INT2), DALLAS files or registers,
 another worker's claim, the B_WEATHERING_STAGE, or anything in Reviews.
 
+### Claimant names
+
+- Scheduled routine runs claim as `claude-cloud-agent`.
+- Interactive sessions (a person started the session and is talking to it) claim as
+  `claude-interactive-agent`.
+- Resume only claims under your own claimant name. A claim under the other name belongs to
+  another worker: leave it alone unless Matt hands it over.
+
+Below, `<claimant>` means your claimant name.
+
 ## 3. Pick the job
 
 1. **Resume first.** Look in both AGENTS `Claimed` folders for a folder whose CLAIM.json
-   has `"claimant": "claude-cloud-agent"`. If one exists and has no Matt review saying
+   has `"claimant": "<claimant>"`. If one exists and has no Matt review saying
    it's rejected-and-released, continue it (next pass) instead of claiming new work.
    Check Reviews for Matt's feedback on earlier versions and act on it.
 2. Otherwise list both `Unclaimed` folders. Prefer the highest priority (P0 > P1 > …,
@@ -61,10 +71,10 @@ another worker's claim, the B_WEATHERING_STAGE, or anything in Reviews.
 ## 4. Claim (protocol from the stage standard §2 — follow exactly)
 
 1. Re-read the brief and register.
-2. In that set's `Claimed` folder create a folder `"[ID] — claude-cloud-agent"`.
+2. In that set's `Claimed` folder create a folder `"[ID] — <claimant>"`.
 3. Move the request doc into it (Drive `update_file` with the new `parentId`).
 4. Create `CLAIM.json` in it (plain text, `disableConversionToGoogleType: true`):
-   `{"job_id","claimant":"claude-cloud-agent","task_link":"<github repo URL>",
+   `{"job_id","claimant":"<claimant>","task_link":"<github repo URL>",
    "claimed_utc","stage":"asset","request_revision"}`.
 5. Re-read the folder and the Unclaimed folder. If a competing claim appeared, stop,
    undo nothing of theirs, and report it.

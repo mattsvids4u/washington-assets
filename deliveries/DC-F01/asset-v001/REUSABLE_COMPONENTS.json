@@ -1,0 +1,151 @@
+{
+  "job_id": "DC-F01",
+  "version": "v001",
+  "note": "Components below are reusable by other WASHINGTON jobs as code (deterministic generators) or as material slots. Building identities themselves are named overrides and are not for generic PCG repetition.",
+  "generator_components": [
+    {
+      "name": "facade frame + wall_with_openings",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "facade-local frame (a along facade, b outward, c height) and a solid slab with rectangular through-openings decomposed into maximal closed boxes, so every reveal is real geometry; works on any edge direction (diagonal avenues)",
+      "its_alive": "UM/VE host",
+      "candidate_users": [
+        "DC-F02 named uplifts",
+        "DC-C18 adapters",
+        "DC-H hero facades (block-out stage)"
+      ]
+    },
+    {
+      "name": "corner rule + obtuse-corner wedge fill (cannon_slab_edges)",
+      "file": "jobs/DC-F01/build.py",
+      "what": "facade slabs around any CCW footprint: right-angle corners by the stop-short rule, obtuse corners by a hidden wedge prism; no coplanar z-fighting faces",
+      "candidate_users": [
+        "any non-orthogonal L'Enfant block (New Jersey / Pennsylvania / Delaware avenues)"
+      ]
+    },
+    {
+      "name": "window_unit",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "frame + glazing + mullions/transoms set into a reveal; LOD-aware; glass slot A/B for night-lit selection",
+      "its_alive": "GL + MT/CT opening-component adapter"
+    },
+    {
+      "name": "fluted_pilaster / doric_profile + fluted lathe",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "flat fluted pilasters with real channels at LOD0; Vignola-proportioned Roman Doric column profile with entasis, 20 flutes (2 segments per flute) - a background-LOD Doric (~1.8k tris per column)",
+      "unification": "proposed as the runtime-light Doric variant missing from DC-C19 v004 (see HANDOFF UNIFICATION PROPOSALS)"
+    },
+    {
+      "name": "balustrade / sweep mouldings",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "mitred profile sweeps along closed or open footprints (plinths, band courses, cornices, coping, balustrade rails) + LOD-aware balusters"
+    },
+    {
+      "name": "relief_standin_smooth / relief_blob / anthemion",
+      "file": "jobs/DC-F01/f01lib.py, build.py",
+      "what": "labelled simplified stand-ins for rights-unconfirmed figural relief (smooth domed forms, never likenesses) and the Annex honeysuckle (anthemion) ornament",
+      "rights_rule": "use only where faithful reproduction is not cleared (stage standard section 7)"
+    },
+    {
+      "name": "text_inscription",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "carved inscription stand-in from verified wording (thin darker-marble letter solids, degenerate faces stripped)"
+    },
+    {
+      "name": "ring_prism / offset_polygon_per_edge",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "closed prisms of courtyard buildings (outer polygon with one hole) and per-edge polygon insets (loggias, attics)"
+    },
+    {
+      "name": "orientation_audit (per-shell outward winding check)",
+      "file": "jobs/DC-F01/f01lib.py",
+      "what": "Mesh records every closed shell; shell_volume / orientation_audit report any shell whose faces are wound inward (negative signed volume). build.py runs it on every LOD and writes inward_wound_shells into build_report.json. It catches inverted parts that a whole-mesh signed-volume test misses.",
+      "its_alive": "QA (all families)",
+      "candidate_users": [
+        "any procedural generator in the AGENTS lane",
+        "tools/qa_check.py extension (UNIFICATION PROPOSAL 5)"
+      ]
+    },
+    {
+      "name": "coplanar_check.py (visible z-fighting detector)",
+      "file": "jobs/DC-F01/coplanar_check.py",
+      "what": "Finds coincident same-direction faces in a GLB LOD mesh and ray-tests each overlap from 1 mm off the face (glass transparent, terrain plane at z = 0). Reports only overlaps a viewer can see; exit status 1 above a visible-area threshold. Generator-agnostic: works on any exported GLB.",
+      "its_alive": "QA (all families)",
+      "candidate_users": [
+        "every EXT/INT agent delivery",
+        "tools/ (UNIFICATION PROPOSAL 5)"
+      ]
+    }
+  ],
+  "material_slots": [
+    {
+      "slot": "M_F01_Marble_Ashlar",
+      "family": "UM/VE",
+      "texture_set": "textures/M_F01_Marble_Ashlar_{BaseColor,ORM,Normal}.png",
+      "tile_m": 3.66,
+      "use": "1930s Georgia white marble ashlar, 0.61 m courses"
+    },
+    {
+      "slot": "M_F01_Marble_Folger",
+      "family": "UM/VE",
+      "tile_m": 3.43,
+      "use": "alternating tall/short course ashlar"
+    },
+    {
+      "slot": "M_F01_Marble_Cannon",
+      "family": "UM/VE",
+      "tile_m": 3.0,
+      "use": "Beaux-Arts white marble ashlar"
+    },
+    {
+      "slot": "M_F01_Marble_Smooth",
+      "family": "UM/VE+RE",
+      "tile_m": 2.0,
+      "use": "monolithic marble trim, columns"
+    },
+    {
+      "slot": "M_F01_Granite_Pink",
+      "family": "UM/VE+HW",
+      "tile_m": 3.0,
+      "use": "North Carolina pink granite base/stairs"
+    },
+    {
+      "slot": "M_F01_Granite_Grey",
+      "family": "UM/VE+HW",
+      "tile_m": 3.0,
+      "use": "grey granite plinth/steps"
+    },
+    {
+      "slot": "M_F01_Brick_Glazed",
+      "family": "UM/VE",
+      "tile_m": 1.2,
+      "use": "glazed brick secondary walls"
+    },
+    {
+      "slot": "M_F01_Roof_Copper",
+      "family": "MT/RE",
+      "tile_m": 4.0,
+      "use": "c. 25-year copper, batten seams"
+    },
+    {
+      "slot": "M_F01_Roof_Tar",
+      "family": "AP/RE",
+      "tile_m": 6.0,
+      "use": "flat bituminous roof"
+    },
+    {
+      "slot": "M_F01_Metal_Bronze",
+      "family": "MT/FH",
+      "use": "statuary bronze (factor-only)"
+    },
+    {
+      "slot": "M_F01_Metal_Aluminium",
+      "family": "MT/FH",
+      "use": "1930s cast aluminium (factor-only)"
+    },
+    {
+      "slot": "M_F01_Glass / M_F01_Glass_NightLit",
+      "family": "GL/VE",
+      "use": "day glazing A / night-lit candidate B"
+    }
+  ]
+}
