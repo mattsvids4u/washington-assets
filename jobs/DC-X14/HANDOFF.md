@@ -1,4 +1,4 @@
-# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v002; v001 section below unchanged)
+# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v003 current; earlier sections kept as history, newest at the end)
 
 Claimant claude-cloud-agent · DC-INT1 Interior Standard · P2 · AGENTS lane · stage A (asset)
 Request revision WASHINGTON-2026-09-22-v001 + Road Plan 04 addendum · built 2026-10-02 in the cloud sandbox (bpy 4.5.14, no GPU, no Unreal)
@@ -226,4 +226,18 @@ pass); QA PASS; clean rebuild identical; UE import NOT_RUN". asset_user_approval
 What Matt should look at: `renders/*_dressed_*` (the room as it will read in game once I09 is placed),
 then `renders/modules/X14_PART_Panel_Wood_090_*`, `X14_ARCH_Wall_Door_300_*` and
 `X14_ARCH_Pendant_Lamp_*` for the grain and shade fixes.
+
+### Render review v003 (every image looked at: 30 interior views, 176 module orbits)
+
+- Oak now reads as varnished oak, not stripes: rings run along every rail, baseboard, picture rail
+  and sash bar, and up every stile, post and panel; partitions are the dark oak of the 1953 photo,
+  doors walnut-stained, trim golden. Texture tiles seamlessly at 1 m (checked 2 × 2).
+- Pendant, torchère and sconce shades are smooth at the overview camera; no facets in silhouette.
+- Dressed views (`*_dressed_*`): desks, chairs, files, typewriters, phones, banker's lamps, fans,
+  paper and document boxes sit on their sockets with no collisions; the clock hangs on plain wall.
+  These stand-ins are rough by design and are not part of the kit.
+- Clay views: no coincident-face black patches in either room.
+- Left as is: the drop-ceiling island still has no perimeter closure strip (memoir says "temporary");
+  sconce and torchère shades are plain bowls; partition-top faces catch grazing light from the
+  render's fill lights a little (normal-map strength halved in v003).
 
