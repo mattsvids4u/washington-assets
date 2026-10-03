@@ -1,7 +1,8 @@
 """Interior views of the assembled DC-X14 demo room (the tools/render_views.py orbit shoots a room
 from outside, which only shows wall backs). Cycles CPU, textured or clay.
 
-Usage: python jobs/DC-X14/render_interior.py jobs/DC-X14/out/X14_DEMO_LRS_Room.glb jobs/DC-X14/renders [--mode textured|clay] [--res 1280] [--samples 96]
+Usage: python jobs/DC-X14/render_interior.py jobs/DC-X14/out/X14_DEMO_LRS_Room.glb jobs/DC-X14/renders [--mode textured|clay] [--res 1280] [--samples 96] [--dress]
+--dress adds PREVIEW-ONLY DC-I09 stand-ins (preview_dressing.py) at the furniture sockets; they are never exported.
 """
 import argparse
 import math
@@ -33,6 +34,7 @@ def parse_args():
     p.add_argument("--res", type=int, default=1280)
     p.add_argument("--samples", type=int, default=96)
     p.add_argument("--views", default="")
+    p.add_argument("--dress", action="store_true", help="add PREVIEW-ONLY DC-I09 stand-ins at the furniture sockets")
     return p.parse_args(argv)
 
 
@@ -46,6 +48,11 @@ def main():
         n = o.name.upper()
         if n.startswith(("UCX_", "UBX_", "USP_")) or "_LOD1" in n or "_LOD2" in n:
             o.hide_render = True
+    if a.dress:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import preview_dressing
+        preview_dressing.dress(list(bpy.context.scene.objects))
+        meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
     visible = [o for o in meshes if not o.hide_render]
     if a.mode == "clay":
         clay = bpy.data.materials.new("Clay")
@@ -104,7 +111,7 @@ def main():
         pos, look = VIEWS[name]
         cam.location = Vector(pos)
         cam.rotation_euler = (Vector(look) - Vector(pos)).to_track_quat("-Z", "Y").to_euler()
-        scene.render.filepath = os.path.join(a.out_dir, f"{base}_{a.mode}_{name}.png")
+        scene.render.filepath = os.path.join(a.out_dir, f"{base}_{a.mode}{'_dressed' if a.dress else ''}_{name}.png")
         bpy.ops.render.render(write_still=True)
         print("wrote", scene.render.filepath)
 

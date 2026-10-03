@@ -88,7 +88,7 @@
         "DC-X03 Great Hall second-floor CRS offices",
         "DALLAS office interiors"
       ],
-      "notes": "1.95 m; proportions from the 1953 photo (E19)"
+      "notes": "1.95 m; proportions from the 1953 photo (E19); dark oak albedo T_X14_OakDark_BC (v003)"
     },
     {
       "name": "X14_ARCH_Torchere_Lamp, X14_ARCH_Wall_Sconce",
@@ -112,6 +112,7 @@
     "T_X14_PlasterCeiling_BC",
     "T_X14_Oak_BC/R/N",
     "T_X14_OakDoor_BC",
+    "T_X14_OakDark_BC",
     "T_X14_OakFloor_BC/R/N",
     "T_X14_Linoleum_BC/R",
     "T_X14_PartitionGray_BC",

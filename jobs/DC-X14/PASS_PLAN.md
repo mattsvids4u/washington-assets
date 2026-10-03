@@ -96,3 +96,23 @@ requests (HABS DC-351 data pages, Annual Report FY1963 Ch. V / App. XII, the fiv
 frames) are **waived**. The approximate dimensions in `build.py` stand as the delivered values;
 no v003 is planned for dimension checks. Everything labelled APPROXIMATE stays labelled that way.
 This is a scoping decision, not an approval: asset_user_approval remains PENDING.
+
+## Pass 7 — asset-v003 full surfacing pass (Matt, 2026-10-03: "yep do a full pass. go for it.")
+
+Trigger: Matt asked whether v002 was done; the honest review of the renders said no, because the
+procedural oak read as wavy zebra stripes and the lamp shades were faceted. Changes (build.py):
+1. New tileable oak grain (uneven ring spacing, gentle drift, open pores, slow tone) for trim,
+   doors, partitions, mahogany variant and strip floor; new `T_X14_OakDark_BC` for the dark
+   partitions (E19).
+2. Grain-aligned UVs on every wood face (`orient_wood_uvs`): rails, baseboards and sash bars run
+   horizontal, stiles, posts and panels vertical.
+3. Smooth-shaded lathes at 48/24/12 segments for the pendant, torchère and sconce shades; all
+   round cylinder sides smooth with hard cap edges.
+4. Furniture socket fixes: file cabinets faced the wall (and collided with a torchère in the 1953
+   room), the wall clock sat on the door leaf, and the typewriter was on the far edge of the desk.
+5. Faint 2 m sheet seams in the linoleum (E19).
+6. Preview-only DC-I09 stand-ins (`preview_dressing.py`, `render_interior.py --dress`) so the rooms
+   can be judged dressed; never exported.
+Acceptance: QA 24/24 PASS; clean rebuild byte-identical (24 GLBs + 24 textures); every render
+reviewed. Delivered as `deliveries/DC-X14/asset-v003/`.
+

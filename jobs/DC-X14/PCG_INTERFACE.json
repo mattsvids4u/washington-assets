@@ -123,13 +123,14 @@
       }
     },
     "FURNITURE sockets (consumed by DC-I09)": [
-      "SOCKET_I09_Desk_NN (desk centre, forward = local +Y)",
-      "SOCKET_I09_Chair_NN",
-      "SOCKET_I09_FileCabinet_NN",
-      "SOCKET_I09_Typewriter_NN (z 0.75)",
-      "SOCKET_I09_DeskLamp_NN (z 0.75)",
-      "SOCKET_I09_Telephone_NN (z 0.75)",
-      "SOCKET_I09_WallClock_01 (z 2.4 on the wall)"
+      "SOCKET_I09_Desk_NN (desk centre on the floor; the sitter faces local +Y, drawers face local -Y)",
+      "SOCKET_I09_Chair_NN (seat centre; sitter faces local +Y)",
+      "SOCKET_I09_FileCabinet_NN (front faces local +Y; v003: back to the north wall, rotated 180°, beside the desk)",
+      "SOCKET_I09_Typewriter_NN (z 0.75, on the sitter's edge of the desk; keyboard toward the sitter)",
+      "SOCKET_I09_DeskLamp_NN (z 0.75, back-left of the desk)",
+      "SOCKET_I09_Telephone_NN (z 0.75, back-right of the desk)",
+      "SOCKET_I09_PedestalFan_NN (1953 room only; v003: faces into the cubicle)",
+      "SOCKET_I09_WallClock_01 (v003: south wall at x 7.2, z 2.3, facing +Y; was on the door leaf)"
     ],
     "INTEGRATION sockets": [
       "SOCKET_X15_StaffAccess_Door — the room's corridor door for X15 staff/back-of-house routing"
@@ -197,5 +198,12 @@
     "file": "X14_DEMO_LRS_Room_1953.glb",
     "room": "same 9 × 6 × 4.6 m shell; wood partitions, coffered ceilings, 6 pendants, 3 torchères, 3 sconces, linoleum",
     "layout_status": "FICTIONALISED layout; construction per E19/E20"
+  },
+  "v003_changes": {
+    "uvs": "Wood faces (MI_X14_Oak_Trim, MI_X14_Oak_Door, MI_X14_Oak_Partition_Dark) are re-projected so texture U follows each face's long axis (grain along the member). Still 1 UV unit = 1 m.",
+    "textures": "New tileable oak grain for T_X14_Oak_BC/R/N, T_X14_OakDoor_BC, T_X14_PartitionMahogany_BC, T_X14_OakFloor_*; new T_X14_OakDark_BC drives MI_X14_Oak_Partition_Dark; linoleum gets a faint sheet seam every 2 m.",
+    "shading": "Lathed opal shades (pendant, torchère, sconce) and every round cylinder side are smooth-shaded with hard cap edges; LOD0/1/2 segments 48/24/12 (sconce 40/20/10).",
+    "sockets": "Furniture socket fixes listed above; names and counts unchanged. Material slot names unchanged.",
+    "preview_dressing": "render_interior.py --dress adds PREVIEW-ONLY stand-ins at SOCKET_I09_* for renders; nothing is exported."
   }
 }

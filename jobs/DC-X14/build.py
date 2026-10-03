@@ -88,6 +88,52 @@ def _normal_from_height(path, h, strength=2.0):
     _save_rgb(path, n)
 
 
+def _pnoise(size, bu, bv, octaves, persistence, rng):
+    """Seamlessly tiling (periodic) anisotropic value-noise fBm in [0,1].
+    bu / bv = random-grid cells across U / V at the first octave (each octave doubles both)."""
+    acc = np.zeros((size, size), dtype=np.float32)
+    amp, total = 1.0, 0.0
+    for o in range(octaves):
+        nu, nv = max(1, bu * (2 ** o)), max(1, bv * (2 ** o))
+        grid = rng.random((nv, nu)).astype(np.float32)
+        big = np.tile(grid, (3, 3))
+        img = Image.fromarray(big).resize((3 * size, 3 * size), Image.BICUBIC)
+        acc += amp * np.asarray(img, dtype=np.float32)[size:2 * size, size:2 * size]
+        total += amp
+        amp *= persistence
+    acc /= total
+    return (acc - acc.min()) / max(acc.max() - acc.min(), 1e-6)
+
+
+def _oak_grain(S, rng, rings_per_m=70.0, drift=2.2):
+    """Plain/rift-sawn oak, grain running along U (texture rows), tiling at 1 m.
+    Returns (figure, pores, tone) fields in [0,1]: figure = latewood ring lines (sawtooth, sharp
+    dark edge), pores = open-grain dashes stretched along the grain, tone = slow colour drift."""
+    # Uneven ring spacing: integrate a smooth random density across V (periodic → still tiles).
+    dens = 0.55 + 1.1 * _pnoise(S, 1, 28, 2, 0.5, rng)[:, S // 2]
+    F = np.concatenate([[0.0], np.cumsum(dens)[:-1]]) / dens.sum()
+    k = round(rings_per_m)                                 # integer → rings tile at the V seam
+    warp = (_pnoise(S, 1, 5, 3, 0.45, rng) - 0.5) + 0.5 * (_pnoise(S, 2, 9, 2, 0.45, rng) - 0.5)
+    wobble = _pnoise(S, 3, 40, 2, 0.4, rng) - 0.5
+    phase = F[:, None].astype(np.float32) * k + warp * drift * 2 + wobble * 0.25
+    r = phase - np.floor(phase)
+    ring_id = np.floor(phase).astype(np.int64) % 997
+    strength = (0.35 + 0.65 * rng.random(997).astype(np.float32))[ring_id]
+    late = np.clip((r - 0.50) / 0.50, 0, 1) ** 1.8        # earlywood → latewood, sharp return
+    figure = late * strength
+    pores = (_pnoise(S, 48, 384, 1, 0.5, rng) > 0.82).astype(np.float32)
+    pores *= 0.3 + 0.7 * late                              # pores sit mostly in the ring band
+    tone = _pnoise(S, 1, 3, 3, 0.5, rng)
+    return figure, pores, tone
+
+
+def _wood_maps(name, base, figure, pores, tone, lo=0.62, hi=1.10, rough=(0.36, 0.14)):
+    """Write BC/R for a wood finish from shared grain fields (normal map is shared per species)."""
+    n = 1.0 - (0.70 * figure + 0.16 * pores) + 0.36 * (tone - 0.5)
+    _save_rgb(f"{TEX}/{name}_BC.png", _tint(base, np.clip(n, 0, 1), lo, hi))
+    return n
+
+
 def _tint(base, n, lo, hi):
     """Blend a grey-level noise field onto a base colour between lo..hi multipliers."""
     m = lo + (hi - lo) * n[..., None]
@@ -109,45 +155,47 @@ def build_textures():
     # Plaster ceiling, whiter.
     _save_rgb(f"{TEX}/T_X14_PlasterCeiling_BC.png", _tint((0.86, 0.85, 0.80), n * 0.5 + fine * 0.5, 0.94, 1.02))
 
-    # Oak: streaky grain along U, quarter-sawn flecks.
-    u = np.linspace(0, 1, S, dtype=np.float32)[None, :].repeat(S, 0)
-    grain = _noise(S, 4, 0.5, rng, 2)
-    streak = 0.5 + 0.5 * np.sin((u * 60 + grain * 6) * math.pi)
-    streak = streak ** 1.6
-    fleck = (_noise(S, 2, 0.5, rng, 256) > 0.74).astype(np.float32) * 0.35
-    oak = _tint((0.62, 0.45, 0.28), streak * 0.8 + fleck, 0.72, 1.08)
-    _save_rgb(f"{TEX}/T_X14_Oak_BC.png", oak)
-    _save_l(f"{TEX}/T_X14_Oak_R.png", 0.42 + 0.2 * streak)
-    _normal_from_height(f"{TEX}/T_X14_Oak_N.png", streak * 0.5 + grain * 0.5, 0.8)
+    # Oak (v003): straight plain/rift-sawn grain along U, open pores, slow tone drift; tiles at 1 m.
+    # Wood faces get grain-aligned UVs (orient_wood_uvs) so U follows each member's length.
+    figure, pores, tone = _oak_grain(S, rng)
+    u = (np.arange(S, dtype=np.float32) / S)[None, :].repeat(S, 0)
+    v = (np.arange(S, dtype=np.float32) / S)[:, None].repeat(S, 1)
+    _wood_maps("T_X14_Oak", (0.60, 0.43, 0.26), figure, pores, tone)                 # golden oak trim, varnished
+    _wood_maps("T_X14_OakDoor", (0.40, 0.26, 0.16), figure, pores, tone, 0.66, 1.10)  # walnut-stained oak doors
+    _wood_maps("T_X14_OakDark", (0.29, 0.18, 0.11), figure, pores, tone, 0.70, 1.12)  # dark oak partitions (E19)
+    _save_l(f"{TEX}/T_X14_Oak_R.png", 0.34 + 0.10 * figure + 0.14 * pores)
+    _normal_from_height(f"{TEX}/T_X14_Oak_N.png", 0.5 - 0.35 * pores - 0.12 * figure, 1.5)
 
-    # Walnut-stained oak for doors (closer to WALNUT swatch).
-    _save_rgb(f"{TEX}/T_X14_OakDoor_BC.png", _tint((0.42, 0.28, 0.19), streak * 0.8 + fleck * 0.5, 0.70, 1.10))
-
-    # Oak strip flooring: 75 mm strips with staggered end joints and a dark joint line.
+    # Oak strip flooring: 75 mm strips along U, staggered end joints, grain along each strip.
     strip_w = 1 / 13.33           # 75 mm strips per 1 m tile
-    v = np.linspace(0, 1, S, dtype=np.float32)[:, None].repeat(S, 1)
-    strip_idx = np.floor(v / strip_w)
-    joint = ((v % strip_w) < 0.006).astype(np.float32)
-    per_strip = rng.random(64)[strip_idx.astype(int) % 64]
-    ends = (((u + per_strip[:, :]) % 0.5) < 0.004).astype(np.float32)
-    g2 = 0.5 + 0.5 * np.sin((u * 80 + grain * 8 + per_strip * 20) * math.pi)
-    floor = _tint((0.55, 0.38, 0.22), g2 ** 1.4 * 0.9 + (per_strip - 0.5) * 0.5, 0.70, 1.05)
-    floor *= (1 - 0.5 * np.maximum(joint, ends))[..., None]
+    strip_idx = np.floor(v / strip_w).astype(int)
+    joint = ((v % strip_w) < 0.0045).astype(np.float32)
+    per_strip = rng.random(64).astype(np.float32)
+    ps = per_strip[strip_idx % 64]
+    ends = (((u + ps) % 0.5) < 0.0035).astype(np.float32)
+    # shift the grain field per strip so neighbouring boards don't continue the same rings
+    row_strip = (np.arange(S) * 13.33 / S).astype(int) % 64
+    fig_s = figure[(np.arange(S) + (per_strip[row_strip] * S).astype(int)) % S, :]
+    floor_n = 1.0 - 0.55 * fig_s - 0.15 * pores + 0.45 * (ps - 0.5)
+    floor = _tint((0.52, 0.36, 0.21), np.clip(floor_n, 0, 1), 0.62, 1.08)
+    floor *= (1 - 0.42 * np.maximum(joint, ends))[..., None]
     _save_rgb(f"{TEX}/T_X14_OakFloor_BC.png", floor)
-    _save_l(f"{TEX}/T_X14_OakFloor_R.png", 0.35 + 0.15 * g2 + 0.3 * np.maximum(joint, ends))
-    _normal_from_height(f"{TEX}/T_X14_OakFloor_N.png", -0.8 * np.maximum(joint, ends) + 0.15 * g2, 2.5)
+    _save_l(f"{TEX}/T_X14_OakFloor_R.png", 0.38 + 0.10 * fig_s + 0.3 * np.maximum(joint, ends))
+    _normal_from_height(f"{TEX}/T_X14_OakFloor_N.png", -0.8 * np.maximum(joint, ends) - 0.1 * pores, 2.5)
 
     # Linoleum (1950s battleship / marbled olive-gray).
     m = _noise(S, 5, 0.65, rng, 6)
     speck = _noise(S, 2, 0.5, rng, 256)
     lino = _tint((0.42, 0.45, 0.38), m * 0.7 + speck * 0.3, 0.80, 1.10)
+    seam = ((u % 1.0) < 0.0015).astype(np.float32)          # one roll seam per 2 m repeat (E19 sheet seams)
+    lino *= (1 - 0.18 * seam)[..., None]
     _save_rgb(f"{TEX}/T_X14_Linoleum_BC.png", lino)
     _save_l(f"{TEX}/T_X14_Linoleum_R.png", 0.45 + 0.1 * speck)
 
     # Partition paint: gray (E4) and faux-mahogany (E5) variants, brushed-enamel micro noise.
     pm = _noise(S, 3, 0.5, rng, 64)
     _save_rgb(f"{TEX}/T_X14_PartitionGray_BC.png", _tint((0.52, 0.53, 0.52), pm, 0.94, 1.04))
-    _save_rgb(f"{TEX}/T_X14_PartitionMahogany_BC.png", _tint((0.38, 0.20, 0.14), streak * 0.6 + pm * 0.4, 0.80, 1.10))
+    _save_rgb(f"{TEX}/T_X14_PartitionMahogany_BC.png", _tint((0.38, 0.20, 0.14), np.clip(1 - 0.5 * figure - 0.15 * pores + 0.3 * (pm - 0.5), 0, 1), 0.70, 1.10))
     _save_l(f"{TEX}/T_X14_Partition_R.png", 0.38 + 0.12 * pm)
 
     # Acoustic tile: 12-inch fissured tiles, 2 per 0.6 m module tile.
@@ -248,7 +296,7 @@ def materials():
     M["opal"] = material("MI_X14_Opal_Glass", color=(0.95, 0.93, 0.86, 1), roughness=0.35, alpha=0.9, emission=(1.0, 0.85, 0.6, 1), emission_strength=1.5)
     M["signtext"] = material("MI_X14_Sign_Text", color=(0.05, 0.05, 0.05, 1), roughness=0.4)
     M["coffer"] = material("MI_X14_Paint_Coffer", color=(0.42, 0.47, 0.44, 1), roughness=0.7)   # painted coffer panel, olive-grey (APPROXIMATE, from DC-351-23 tonality)
-    M["woodpart"] = material("MI_X14_Oak_Partition_Dark", "T_X14_OakDoor_BC.png", "T_X14_Oak_R.png", "T_X14_Oak_N.png", uv_scale=1.0)
+    M["woodpart"] = material("MI_X14_Oak_Partition_Dark", "T_X14_OakDark_BC.png", "T_X14_Oak_R.png", "T_X14_Oak_N.png", uv_scale=1.0)
     return M
 
 
@@ -286,9 +334,12 @@ def cylinder(bm, cx, cy, z0, z1, r, segs=16, mat=0, axis="Z"):
         j = (i + 1) % segs
         f = bm.faces.new([ring0[i], ring0[j], ring1[j], ring1[i]])
         f.material_index = mat
+        f.smooth = segs >= 8            # v003: round sides shade smooth, caps stay flat
     f0 = bm.faces.new(list(reversed(ring0)))
     f1 = bm.faces.new(ring1)
     f0.material_index = f1.material_index = mat
+    for e in f0.edges[:] + f1.edges[:]:
+        e.smooth = False                # hard edge at the cap rims
     return ring0, ring1
 
 
@@ -338,6 +389,41 @@ def box_uv(bm, scale=1.0):
                 l[uv].uv = (c.x * scale, c.z * scale)
             else:
                 l[uv].uv = (c.x * scale, c.y * scale)
+
+
+WOOD_MATS = {"MI_X14_Oak_Trim", "MI_X14_Oak_Door", "MI_X14_Oak_Partition_Dark"}
+
+
+def orient_wood_uvs(objs):
+    """Re-project UVs on wood faces so texture U (the grain direction) follows each face's long
+    axis: baseboards, rails, sash bars and partition rails get horizontal grain, stiles, posts,
+    architrave legs and panels get vertical grain. World-scale stays 1 UV = 1 m. Idempotent
+    (derived from geometry, not from existing UVs), so shared/instanced meshes are safe."""
+    done = set()
+    for o in objs:
+        if o.type != "MESH" or o.data.name in done:
+            continue
+        done.add(o.data.name)
+        wood = {i for i, m in enumerate(o.data.materials) if m and m.name in WOOD_MATS}
+        if not wood:
+            continue
+        bm = bmesh.new()
+        bm.from_mesh(o.data)
+        uv = bm.loops.layers.uv.verify()
+        for f in bm.faces:
+            if f.material_index not in wood:
+                continue
+            nrm = f.normal
+            ax = max(range(3), key=lambda i: abs(nrm[i]))
+            pa, pb = {0: (1, 2), 1: (0, 2), 2: (0, 1)}[ax]
+            A = [l.vert.co[pa] for l in f.loops]
+            B = [l.vert.co[pb] for l in f.loops]
+            ea, eb = max(A) - min(A), max(B) - min(B)
+            vertical_grain = eb > ea if ax == 2 else eb >= 0.8 * ea
+            for l, a_, b_ in zip(f.loops, A, B):
+                l[uv].uv = (b_, a_) if vertical_grain else (a_, b_)
+        bm.to_mesh(o.data)
+        bm.free()
 
 
 def clean(bm):
@@ -782,6 +868,52 @@ def build_ceiling(M):
     return name, objs
 
 
+def smooth_profile(pts, sub=4):
+    """Catmull-Rom resample of an (r, z) lathe profile; keeps the end points."""
+    if sub <= 1 or len(pts) < 3:
+        return list(pts)
+    P = [pts[0]] + list(pts) + [pts[-1]]
+    out = []
+    for i in range(1, len(P) - 2):
+        p0, p1, p2, p3 = P[i - 1], P[i], P[i + 1], P[i + 2]
+        for s in range(sub):
+            t = s / sub
+            t2, t3 = t * t, t * t * t
+            out.append(tuple(0.5 * ((2 * p1[k]) + (-p0[k] + p2[k]) * t + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2
+                                    + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * t3) for k in range(2)))
+    out.append(pts[-1])
+    return [(max(0.0, r), z) for r, z in out]
+
+
+def lathe(bm, prof, segs, cx=0.0, cy=0.0, z0=0.0, mat=0, flip_z=False, h=0.0, sharp_rows=()):
+    """Revolve an (r, z) profile about Z; faces smooth-shaded, edges along `sharp_rows` kept sharp."""
+    rings = []
+    for (rr, zz) in prof:
+        zz = z0 + (h - zz if flip_z else zz)
+        if rr <= 1e-6:
+            rings.append([bm.verts.new((cx, cy, zz))] * segs)
+        else:
+            rings.append([bm.verts.new((cx + rr * math.cos(2 * math.pi * i / segs), cy + rr * math.sin(2 * math.pi * i / segs), zz)) for i in range(segs)])
+    for a, b in zip(rings[:-1], rings[1:]):
+        for i in range(segs):
+            j = (i + 1) % segs
+            quad = [a[i], a[j], b[j], b[i]]
+            uniq = []
+            for v in quad:
+                if v not in uniq:
+                    uniq.append(v)
+            if len(uniq) >= 3:
+                f = bm.faces.new(uniq)
+                f.material_index = mat
+                f.smooth = True
+    for r_i in sharp_rows:
+        row = set(rings[r_i])
+        for e in bm.edges:
+            if e.verts[0] in row and e.verts[1] in row:
+                e.smooth = False
+    return rings
+
+
 def build_pendant(M):
     """Period opal-glass bowl pendant on a chain. Pivot at the ceiling canopy; hangs down (-Z).
     Exported with geometry above z=0 (bowl at the base) so the module 'sits' on z=0; the socket
@@ -800,25 +932,10 @@ def build_pendant(M):
                 cylinder(bm, 0, 0, z, z + 0.03, 0.012, 8, mat=0)
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["brass"]]))
         bm = new_bm()
-        # bowl: stacked frusta
-        segs = 20 if lod == 0 else 10
-        rings = []
+        # bowl: smooth lathe (v003 — was a 20-segment faceted stack)
+        segs = (48, 24, 12)[lod]
         prof = [(0.0, 0.0), (0.09, 0.0), (0.16, 0.05), (0.19, 0.12), (0.17, 0.18), (0.035, 0.20), (0.0, 0.20)]
-        for (r, z) in prof:
-            if r == 0:
-                rings.append([bm.verts.new((0, 0, z))] * segs)
-            else:
-                rings.append([bm.verts.new((r * math.cos(2 * math.pi * i / segs), r * math.sin(2 * math.pi * i / segs), z)) for i in range(segs)])
-        for a, b in zip(rings[:-1], rings[1:]):
-            for i in range(segs):
-                j = (i + 1) % segs
-                quad = [a[i], a[j], b[j], b[i]]
-                uniq = []
-                for v in quad:
-                    if v not in uniq:
-                        uniq.append(v)
-                if len(uniq) >= 3:
-                    bm.faces.new(uniq)
+        lathe(bm, smooth_profile(prof, (4, 2, 1)[lod]), segs)
         objs.append(finish(bm, f"{name}_Glass_LOD{lod}", [M["opal"]]))
     objs += ucx_boxes(name, [(-0.19, -0.19, 0, 0.19, 0.19, 0.2)], M)
     return name, objs
@@ -1106,29 +1223,13 @@ def build_wood_door(M):
     return name, objs
 
 
-def opal_bowl(bm, cx, cy, z0, r, h, segs, mat=0, up=True):
-    """Lathe an opal glass bowl (open at the top if up=True): closed solid with a thin rim."""
-    prof_out = [(0.0, 0.0), (r * 0.45, 0.0), (r * 0.85, h * 0.35), (r, h * 0.75), (r, h)]
-    prof_in = [(r - 0.006, h), (r - 0.006, h * 0.75), (r * 0.85 - 0.006, h * 0.35 + 0.004), (r * 0.45 - 0.01, 0.008), (0.0, 0.008)]
+def opal_bowl(bm, cx, cy, z0, r, h, segs, mat=0, up=True, sub=4):
+    """Lathe an opal glass bowl open at the top (up=True): 6 mm wall, rounded body, sharp rim."""
+    prof_out = smooth_profile([(0.0, 0.0), (r * 0.45, 0.0), (r * 0.85, h * 0.35), (r, h * 0.75), (r, h)], sub)
+    prof_in = smooth_profile([(r - 0.006, h), (r - 0.006, h * 0.75), (r * 0.85 - 0.006, h * 0.35 + 0.004), (r * 0.45 - 0.01, 0.008), (0.0, 0.008)], sub)
     prof = prof_out + prof_in
-    rings = []
-    for (rr, zz) in prof:
-        zz = z0 + (zz if up else h - zz)
-        if rr <= 0:
-            rings.append([bm.verts.new((cx, cy, zz))] * segs)
-        else:
-            rings.append([bm.verts.new((cx + rr * math.cos(2 * math.pi * i / segs), cy + rr * math.sin(2 * math.pi * i / segs), zz)) for i in range(segs)])
-    for a, b in zip(rings[:-1], rings[1:]):
-        for i in range(segs):
-            j = (i + 1) % segs
-            quad = [a[i], a[j], b[j], b[i]]
-            uniq = []
-            for v in quad:
-                if v not in uniq:
-                    uniq.append(v)
-            if len(uniq) >= 3:
-                f = bm.faces.new(uniq)
-                f.material_index = mat
+    rim = len(prof_out) - 1
+    lathe(bm, prof, segs, cx, cy, z0, mat, flip_z=not up, h=h, sharp_rows=(rim, rim + 1))
 
 
 def build_torchere(M):
@@ -1136,7 +1237,7 @@ def build_torchere(M):
     name = "X14_ARCH_Torchere_Lamp"
     objs = []
     for lod in range(3):
-        segs = 20 if lod == 0 else 10
+        segs = (48, 24, 12)[lod]
         bm = new_bm()
         cylinder(bm, 0, 0, 0.0, 0.025, 0.16, segs, mat=0)             # weighted base
         cylinder(bm, 0, 0, 0.025, 0.06, 0.05, segs, mat=0)            # base collar
@@ -1146,7 +1247,7 @@ def build_torchere(M):
         cylinder(bm, 0, 0, 1.55, 1.60, 0.05, segs, mat=0)             # fitter cup
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["brass"]]))
         bm = new_bm()
-        opal_bowl(bm, 0, 0, 1.59, 0.15, 0.17, segs, mat=0, up=True)
+        opal_bowl(bm, 0, 0, 1.59, 0.15, 0.17, segs, mat=0, up=True, sub=(4, 2, 1)[lod])
         objs.append(finish(bm, f"{name}_Glass_LOD{lod}", [M["opal"]]))
     objs += ucx_boxes(name, [(-0.16, -0.16, 0, 0.16, 0.16, 0.06), (-0.03, -0.03, 0.06, 0.03, 0.03, 1.55), (-0.15, -0.15, 1.55, 0.15, 0.15, 1.76)], M)
     return name, objs
@@ -1157,14 +1258,14 @@ def build_sconce(M):
     name = "X14_ARCH_Wall_Sconce"
     objs = []
     for lod in range(3):
-        segs = 16 if lod == 0 else 8
+        segs = (40, 20, 10)[lod]
         bm = new_bm()
         box(bm, -0.05, 0.0, 0.0, 0.05, 0.012, 0.16, 0)                         # backplate (pivot at its bottom, on the wall)
         cylinder(bm, 0.0, 0.08, 0.012, 0.16, 0.010, 8, mat=0, axis="Y")         # arm at z 0.08
         cylinder(bm, 0.0, 0.08, 0.16, 0.20, 0.035, segs, mat=0, axis="Y")       # fitter
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["brass"]]))
         bm = new_bm()
-        opal_bowl(bm, 0.0, 0.18, 0.07, 0.10, 0.12, segs, mat=0, up=True)
+        opal_bowl(bm, 0.0, 0.18, 0.07, 0.10, 0.12, segs, mat=0, up=True, sub=(4, 2, 1)[lod])
         objs.append(finish(bm, f"{name}_Glass_LOD{lod}", [M["opal"]]))
     objs += ucx_boxes(name, [(-0.10, 0.0, 0.0, 0.10, 0.28, 0.20)], M)
     return name, objs
@@ -1255,12 +1356,14 @@ def build_demo_1953(M, built):
     for c, cx in enumerate(cub_x):
         objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_Chair_{c+1:02d}", (cx, 4.4, 0), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx - 1.0, 5.6, 0), (0, 0, 0)))
-        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.4, 3.5, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.5, 3.75, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.6, 3.75, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_PedestalFan_{c+1:02d}", (cx + 1.1, 5.4, 0), (0, 0, 0)))
-    objs.append(empty("SOCKET_I09_WallClock_01", (4.5, 0.03, 2.4), (0, 0, 0)))
+        # v003: cabinet back to the north wall facing into the cubicle (was facing the wall and, in the
+        # 1953 room, colliding with the torchère); typewriter on the sitter's edge, lamp/phone at the back.
+        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.62, 0), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.2, 3.80, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.38, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.55, 3.38, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_PedestalFan_{c+1:02d}", (cx + 1.0, 5.45, 0), (0, 0, math.pi)))
+    objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.3), (0, 0, 0)))   # v003: was on the door leaf at x 4.5
     objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
     return "X14_DEMO_LRS_Room_1953", objs
 
@@ -1396,11 +1499,13 @@ def build_demo(M, built):
     for c, cx in enumerate(cub_x):
         objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_Chair_{c+1:02d}", (cx, 4.4, 0), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx - 1.0, 5.6, 0), (0, 0, 0)))
-        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.4, 3.5, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.5, 3.75, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.6, 3.75, 0.75), (0, 0, math.pi)))
-    objs.append(empty("SOCKET_I09_WallClock_01", (4.5, 0.03, 2.4), (0, 0, 0)))
+        # v003: cabinet back to the north wall facing into the cubicle (was facing the wall and, in the
+        # 1953 room, colliding with the torchère); typewriter on the sitter's edge, lamp/phone at the back.
+        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.62, 0), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.2, 3.80, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.38, 0.75), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.55, 3.38, 0.75), (0, 0, math.pi)))
+    objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.3), (0, 0, 0)))   # v003: was on the door leaf at x 4.5
     objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
     return "X14_DEMO_LRS_Room", objs
 
@@ -1418,6 +1523,7 @@ def main():
     manifest = {"units": "metres (glTF spec); UE 5.8 glTF import → cm", "seed": SEED, "modules": {}}
     for name, fn in MODULES:
         n, objs = fn(M)
+        orient_wood_uvs(objs)
         built.append((n, objs))
         path = os.path.join(OUT, f"{n}.glb")
         export_glb(n, objs, path)

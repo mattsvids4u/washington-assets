@@ -189,3 +189,41 @@ Register expectation (head agent applies): unchanged from the v002 note — DELI
 delivery_integrity "v002 complete kit; v001 modules byte-identical; QA PASS; UE import NOT_RUN";
 evidence note "dimensions APPROXIMATE, archive gate waived by Matt 2026-10-02".
 asset_user_approval remains PENDING — this note is scoping, not approval.
+
+## asset-v003 (2026-10-03) — full surfacing pass
+
+Matt asked "youd say its done? send screenshots"; the screenshots showed the procedural oak reading
+as wavy zebra stripes on every wood surface and faceted opal shades. He then asked for a full pass.
+
+What changed (all in `build.py`, reproducible, seed 1963):
+- **Oak:** new tileable grain with uneven ring spacing, gentle drift and open pores. Trim is golden
+  oak, doors walnut-stained, partitions dark oak (new `T_X14_OakDark_BC`, E19). Floor strips carry
+  their own offset grain; joints lighter.
+- **Grain direction:** every wood face is re-projected so the grain runs along the member. This was
+  the root cause of the "zebra" look on rails, baseboards and sash bars, where it previously ran across.
+- **Lamps:** pendant, torchère and sconce shades are smooth-shaded Catmull-Rom lathes at 48/24/12
+  segments (sconce 40/20/10) with a hard rim; cylinder sides kit-wide are smooth with hard cap edges.
+- **Linoleum:** faint sheet seam every 2 m.
+- **Sockets:** file cabinets now stand back-to-wall facing into the cubicle (they faced the wall and,
+  in the 1953 room, collided with a torchère); the wall clock moved off the door leaf to the south
+  wall at x 7.2 m; typewriter, lamp and phone sockets moved to sensible desk positions. Names and
+  counts unchanged.
+- **Preview dressing (not exported):** `preview_dressing.py` drops simple period stand-ins — flat-top
+  pedestal desk, wooden swivel armchair, 4-drawer steel file, typewriter, telephone, banker's lamp,
+  pedestal fan, wall clock, paper and document boxes — on the `SOCKET_I09_*` empties via
+  `render_interior.py --dress`. They exist only in renders named `*_dressed_*`; DC-I09 owns furniture.
+  The DC-I09 v005 ZIP is a Drive binary the sandbox connector cannot transfer, so the real set was not used.
+
+Unchanged: module names, dimensions, pivots, material slot names, LODs, UCX, the 1953-default /
+gray-alternate decision. Every GLB changed bytes (UVs, normals, textures), so v003 supersedes v002.
+
+Gates: QA 24/24 PASS; clean rebuild in an isolated copy byte-identical (24 GLBs + 24 textures);
+Unreal 5.8 import and motion tests NOT_RUN — needs local Unreal (UE 5.8). Approval PENDING.
+
+Expected register change (head agent applies): delivery_integrity → "v003 complete kit (surfacing
+pass); QA PASS; clean rebuild identical; UE import NOT_RUN". asset_user_approval stays PENDING.
+
+What Matt should look at: `renders/*_dressed_*` (the room as it will read in game once I09 is placed),
+then `renders/modules/X14_PART_Panel_Wood_090_*`, `X14_ARCH_Wall_Door_300_*` and
+`X14_ARCH_Pendant_Lamp_*` for the grain and shade fixes.
+
