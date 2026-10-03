@@ -1,0 +1,272 @@
+{
+  "job_id": "DC-X14",
+  "units": "metres in Blender/glTF; UE 5.8 glTF import converts to centimetres (1 m = 100 UU)",
+  "axes": "+X along the module run, interior/room side +Y, Z up; pivot at the module's own base (z = 0) on its left end",
+  "import_path_suggestion": "/Game/LibraryOfCongress1963/Interiors/X14_StaffOffices/",
+  "seeds": {
+    "generator_seed": 1963,
+    "textures": "deterministic numpy RNG seeded 1963"
+  },
+  "typed_slots": {
+    "ARCH (1897 shell, ITS ALIVE WD + plaster)": {
+      "X14_ARCH_Wall_Plain_300": {
+        "run": 3.0,
+        "thickness": 0.3,
+        "height": 4.6,
+        "sockets": [
+          "SOCKET_X14_WallPrev (0,0,0)",
+          "SOCKET_X14_WallNext (3,0,0)"
+        ]
+      },
+      "X14_ARCH_Wall_Window_300": {
+        "run": 3.0,
+        "thickness": 0.6,
+        "height": 4.6,
+        "opening": "arched 1.50 w × (0.90 sill + 2.45 rect + 0.75 arch)",
+        "sockets": [
+          "SOCKET_X14_WallPrev",
+          "SOCKET_X14_WallNext",
+          "SOCKET_X14_WindowCentre (1.5,0,0.9)"
+        ],
+        "placement": "outer walls only; interior face on y=0 like the plain wall, extra thickness goes outward"
+      },
+      "X14_ARCH_Wall_Door_300": {
+        "run": 3.0,
+        "thickness": 0.3,
+        "height": 4.6,
+        "opening": "1.10 × 2.60 door + 0.40 transom",
+        "pivots": [
+          "PIVOT_X14_DoorHinge at (0.998, -0.16, 0.01); leaf children rotate about local Z, open into -Y (away from the room) up to 100°"
+        ],
+        "sockets": [
+          "SOCKET_X14_WallPrev",
+          "SOCKET_X14_WallNext",
+          "SOCKET_X14_DoorSign (2.3, 0, 1.55) — plate hangs on the room face, latch side"
+        ]
+      },
+      "X14_ARCH_Corner": {
+        "footprint": "[-0.3,0]×[-0.3,0]",
+        "placement": "at each inside corner point, rotated to fill the outside notch; wall trims form the inside mitre automatically"
+      },
+      "X14_ARCH_Floor_300": {
+        "tile": "3 × 3 m",
+        "variants": [
+          "_Linoleum"
+        ],
+        "placement": "grid at z = 0 (geometry is −0.05..0 in the mesh and offset +0.05 so the walking surface is z = 0)"
+      },
+      "X14_ARCH_Ceiling_300": {
+        "tile": "3 × 3 m",
+        "placement": "z = 4.60",
+        "sockets": [
+          "SOCKET_X14_Pendant (1.5,1.5,0) rotated 180° about X — hang the pendant with its canopy here"
+        ]
+      },
+      "X14_ARCH_Pendant_Lamp": {
+        "drop": 1.1,
+        "placement": "at SOCKET_X14_Pendant; module geometry has the bowl at z=0..0.2 and the canopy at z=1.1, so place at ceiling z − 1.10 unrotated"
+      }
+    },
+    "PART (1950s–60s temporary overlay)": {
+      "X14_PART_Panel_Solid_120": {
+        "run": 1.2,
+        "height": 2.13,
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext (1.2,0,0)"
+        ]
+      },
+      "X14_PART_Panel_Solid_060": {
+        "run": 0.6,
+        "note": "filler so runs can hit 0.3 m increments"
+      },
+      "X14_PART_Panel_Glazed_120": {
+        "run": 1.2,
+        "glazing": "clear, 1.26–2.03 m",
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext"
+        ]
+      },
+      "X14_PART_Door_090": {
+        "run": 0.9,
+        "pivots": [
+          "PIVOT_X14_PartDoorHinge at (0.052, 0, 0.012); leaf opens ±100°"
+        ],
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext (0.9,0,0)",
+          "SOCKET_X14_DoorSign (0.45, 0.027, 1.75)"
+        ]
+      },
+      "X14_PART_Post": {
+        "placement": "centred on every panel joint, corner and run end; panels butt at the post centre line"
+      },
+      "X14_PART_DropCeiling_120": {
+        "tile": "1.2 × 1.2 m (4 × 0.6 m tiles)",
+        "placement": "grid at z = 2.75 (DROP_Z); hanger wires reach 0.5 m above",
+        "sockets": [
+          "SOCKET_X14_Fixture (0.6,0.6,0) rotated 180° about X"
+        ]
+      },
+      "X14_PART_Fluorescent_120": {
+        "length": 1.22,
+        "placement": "fixture base at DROP_Z − 0.62 (chains reach the grid underside)",
+        "states": {
+          "lit": "MI_X14_FluorTube_Lit emissive 6.0",
+          "unlit": "swap the Tubes object material to MI_X14_Glass_Clear or set emissive 0 — no separate mesh needed"
+        }
+      },
+      "X14_PART_Sign_Door": {
+        "size": "0.42 × 0.14 m",
+        "placement": "at SOCKET_X14_DoorSign, plate on y=0 facing +Y"
+      }
+    },
+    "FURNITURE sockets (consumed by DC-I09)": [
+      "Frame matches the DC-I09 v004 INTERFACE_CONTRACT: metres, Z up, the user stands on local -Y looking +Y; every I09 front (drawers, keys, dial, clock face) faces local -Y.",
+      "SOCKET_I09_Desk_NN (desk centre on the floor; rotated 180° so the sitter is on the cubicle side)",
+      "SOCKET_I09_Chair_NN (seat centre; sitter faces local +Y) — no I09 chair exists; stand-in in previews",
+      "SOCKET_I09_FileCabinet_NN (v004: unrotated, back to the north wall, drawers face into the cubicle)",
+      "SOCKET_I09_Typewriter_NN / _Telephone_NN / _DeskLamp_NN (v004: exactly the I09 desk's own SOCKET_TYPEWRITER / SOCKET_PHONE / SOCKET_LAMP carried through the desk socket; z 0.7405 / 0.74942 / 0.7605)",
+      "SOCKET_I09_PedestalFan_NN (1953 room only; no I09 fan exists; stand-in in previews)",
+      "SOCKET_I09_WallClock_01 (v004: south wall x 7.2, z 2.2 at the clock's bottom, rotated 180° so the I09 face looks into the room)"
+    ],
+    "INTEGRATION sockets": [
+      "SOCKET_X15_StaffAccess_Door — the room's corridor door for X15 staff/back-of-house routing"
+    ],
+    "PART_WOOD (1953 condition, v002)": {
+      "X14_PART_Panel_Wood_090": {
+        "run": 0.9,
+        "height": 1.95,
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext (0.9,0,0)"
+        ],
+        "note": "60 mm end posts included; panels butt post-to-post, no separate joint post needed"
+      },
+      "X14_PART_Panel_Wood_060": {
+        "run": 0.6,
+        "note": "filler"
+      },
+      "X14_PART_Door_Wood_090": {
+        "run": 0.9,
+        "pivots": [
+          "PIVOT_X14_WoodDoorHinge at (0.062, 0, 0.012); leaf opens ±100°"
+        ],
+        "sockets": [
+          "SOCKET_X14_PartPrev",
+          "SOCKET_X14_PartNext"
+        ]
+      },
+      "X14_ARCH_Torchere_Lamp": {
+        "footprint": "0.32 m dia base",
+        "height": 1.76,
+        "placement": "free-standing on the floor; opal bowl emissive 1.5"
+      },
+      "X14_ARCH_Wall_Sconce": {
+        "placement": "pivot at the bottom of the backplate on the wall face (y=0), arm into the room (+Y); mount at z ≈ 2.32 m",
+        "size": "0.10 w × 0.20 h, projects 0.28 m"
+      },
+      "X14_ARCH_Ceiling_Coffered_300": {
+        "tile": "3 × 3 m",
+        "placement": "z = ROOM_H − 0.30 (pivot on the beam underside; coffer soffits at ROOM_H)",
+        "sockets": [
+          "SOCKET_X14_Pendant (1.5,1.5,0) rotated 180° about X"
+        ]
+      }
+    },
+    "DRESS (v005 set dressing; period-typical, APPROXIMATE)": {
+      "X14_DRESS_Frame_Print_Large": {
+        "size": "0.66 w x 0.52 h x 0.045 d",
+        "pivot": "bottom centre on the wall face, picture faces local +Y",
+        "hang": "centre at ~1.45 m above floor"
+      },
+      "X14_DRESS_Frame_Photo_Small": {
+        "size": "0.48 x 0.40 x 0.045",
+        "pivot": "as Frame_Print_Large"
+      },
+      "X14_DRESS_Wall_Calendar_1963_11": {
+        "size": "0.31 x 0.47 x 0.012",
+        "pivot": "bottom centre on the wall face, faces +Y",
+        "note": "November 1963 sheet (1 Nov 1963 = Friday)"
+      },
+      "X14_DRESS_Bulletin_Board_090": {
+        "size": "0.90 x 0.60 x 0.035",
+        "pivot": "bottom centre on the wall face, faces +Y"
+      },
+      "X14_DRESS_Bookcase_Oak_090": {
+        "size": "0.90 w x 0.30 d x 1.80 h",
+        "pivot": "bottom centre of the back, back on y = 0, opens to +Y",
+        "top_surface_z": 1.8
+      },
+      "X14_DRESS_Plant_Rubber": {
+        "footprint": "pot r 0.17, canopy ~0.75 m",
+        "height": "~1.6 m",
+        "pivot": "pot base centre",
+        "placement": "room corners, >= 0.35 m from walls"
+      },
+      "X14_DRESS_Plant_Pothos_Small": {
+        "footprint": "pot r 0.085, trails ~0.25 m",
+        "pivot": "pot base centre",
+        "placement": "bookcase tops, sills, file-cabinet tops"
+      },
+      "X14_DRESS_Coat_Tree": {
+        "footprint": "0.62 m legs",
+        "height": "1.91 m with hat",
+        "pivot": "floor centre"
+      },
+      "X14_DRESS_Flag_Stand_US": {
+        "footprint": "base r 0.17",
+        "height": "2.53 m",
+        "pivot": "floor centre",
+        "drape": "flag hangs toward local +X/-Z; rotate so the union (canton) is on the viewer's left as seen from the room's main approach"
+      },
+      "X14_DRESS_Wastebasket": {
+        "footprint": "r 0.16",
+        "height": "0.33 m",
+        "pivot": "floor centre",
+        "placement": "one per desk, beside the pedestal"
+      }
+    }
+  },
+  "demo_assembly": {
+    "file": "X14_DEMO_LRS_Room.glb",
+    "room": "9 × 6 × 4.6 m, windows on +X (east), door on −Y (south), 3 cubicles behind a 1.8 m corridor",
+    "layout_status": "FICTIONALISED (plausible per E4/E12/E18; not a documented 1963 plan)"
+  },
+  "collision": "UCX_<module>_NN convex boxes per module; door leaves have their own UCX in the closed pose",
+  "lods": {
+    "LOD0": "full mouldings, muntins, hardware",
+    "LOD1": "no picture rail / muntins / hardware",
+    "LOD2": "slab + openings only",
+    "note_v002": "wood partitions: LOD0 beads, LOD1 rails + panels, LOD2 same (already low); coffered ceiling: LOD0 rosettes + coves, LOD1 coves, LOD2 beams + panels only"
+  },
+  "pcg_rules": [
+    "walls snap WallNext→WallPrev in 3.0 m steps",
+    "partitions snap PartNext→PartPrev in 1.2/0.9/0.6 m steps with a Post at each joint",
+    "drop-ceiling grid is independent of the 3 m architectural grid (1.2 m) and may stop short of walls by up to 0.6 m (1960s practice: perimeter soffit filler not modelled — see uncertainties)",
+    "DRESS modules scatter on walls/floor independently of the 3 m grid; wall-hung items need clear plaster (skip trim, radiators, partitions under 1.8 m); keep 0.9 m clear walkways (corridor) and door swings"
+  ],
+  "demo_assembly_1953": {
+    "file": "X14_DEMO_LRS_Room_1953.glb",
+    "room": "same 9 × 6 × 4.6 m shell; wood partitions, coffered ceilings, 6 pendants, 3 torchères, 3 sconces, linoleum",
+    "layout_status": "FICTIONALISED layout; construction per E19/E20"
+  },
+  "v003_changes": {
+    "uvs": "Wood faces (MI_X14_Oak_Trim, MI_X14_Oak_Door, MI_X14_Oak_Partition_Dark) are re-projected so texture U follows each face's long axis (grain along the member). Still 1 UV unit = 1 m.",
+    "textures": "New tileable oak grain for T_X14_Oak_BC/R/N, T_X14_OakDoor_BC, T_X14_PartitionMahogany_BC, T_X14_OakFloor_*; new T_X14_OakDark_BC drives MI_X14_Oak_Partition_Dark; linoleum gets a faint sheet seam every 2 m.",
+    "shading": "Lathed opal shades (pendant, torchère, sconce) and every round cylinder side are smooth-shaded with hard cap edges; LOD0/1/2 segments 48/24/12 (sconce 40/20/10).",
+    "sockets": "Furniture socket fixes listed above; names and counts unchanged. Material slot names unchanged.",
+    "preview_dressing": "render_interior.py --dress adds PREVIEW-ONLY stand-ins at SOCKET_I09_* for renders; nothing is exported."
+  },
+  "v004_changes": {
+    "sockets": "Furniture sockets aligned to the DC-I09 v004 contract (see list above). Names unchanged.",
+    "node_names": "The 1953 demo room no longer exports Blender '.001' suffixes: 156 of its 417 node names (all SOCKET_I09_*, UCX_ and part nodes) were suffixed in v002-v003 because both rooms were built in one scene.",
+    "modules": "All 22 kit modules and all textures are byte-identical to asset-v003."
+  },
+  "v005_changes": {
+    "modules": "10 new X14_DRESS_* modules (frames, calendar, bulletin board, bookcase, two plants, coat tree, flag, wastebasket). The 22 v004 modules and 24 v004 textures are byte-identical.",
+    "textures": "6 new: T_X14_Print_Engraving_BC, T_X14_Print_Photo_BC, T_X14_Calendar_1963-11_BC, T_X14_Flag_US_50Star_BC, T_X14_Cork_BC, T_X14_Memo_BC",
+    "demo_rooms": "Both rooms place: rubber plants in the two south corners, flag stand, coat tree, bulletin board, large print and calendar on the south wall; per cubicle a framed picture on the north wall, a bookcase against the west divider with a pothos on top, and a wastebasket."
+  }
+}

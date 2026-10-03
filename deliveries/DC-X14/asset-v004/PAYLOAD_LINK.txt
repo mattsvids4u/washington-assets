@@ -1,0 +1,12 @@
+DC-X14 — Staff offices and Legislative Reference Service room — asset-v004
+Claimant: claude-cloud-agent · delivered 2026-10-03 · supersedes asset-v003 (DC-I09 fit test; demo-room sockets and node names)
+
+Full payload (meshes/*.glb, textures/*.png, source/build.py + preview_dressing.py + DC-X14_kit.blend, renders/, all docs):
+  GitHub repo:    https://github.com/mattsvids4u/washington-assets
+  Branch:         asset/DC-X14-v004
+  Path:           deliveries/DC-X14/asset-v004/
+  Pull request:   https://github.com/mattsvids4u/washington-assets/pull/1
+  Work branch:    claude/eager-cray-vpg2j3 (PR #1); branch asset/DC-X14-v004 points at the same delivery commit
+
+Integrity: DELIVERY_MANIFEST.json + SHA256SUMS.txt in the same folder (SHA256SUMS also uploaded here as text).
+The GLBs (textures embedded) are too large for the Drive connector; fetch them from the branch.

@@ -1,0 +1,144 @@
+{
+  "job_id": "DC-X14",
+  "components": [
+    {
+      "name": "X14_ARCH_Wall_Plain_300",
+      "family": "plaster + WD trim",
+      "reusable_for": [
+        "DC-X13 service corridors (with linoleum floor)",
+        "DC-X11 painted corridors (as blank base before painting)",
+        "DC-X10/X08 back-of-house rooms"
+      ],
+      "notes": "3.000 m run, 0.30 m thick, 4.60 m high; baseboard/picture rail/cove cornice"
+    },
+    {
+      "name": "X14_ARCH_Wall_Window_300",
+      "family": "plaster + stone + WD + GL + MT",
+      "reusable_for": [
+        "any first-floor Main Building room on an outer wall (X10, X11, X13 light wells)"
+      ],
+      "notes": "round-arched 1.5 m opening, 0.60 m reveal, marble sill, double-hung sash + arched transom, cast-iron radiator"
+    },
+    {
+      "name": "X14_ARCH_Wall_Door_300",
+      "family": "plaster + WD + GL + brass",
+      "reusable_for": [
+        "X11 corridor doors",
+        "X13 service doors (swap to flush door)"
+      ],
+      "notes": "1.10 × 2.60 m panelled oak door on PIVOT_X14_DoorHinge, glazed transom, architraves both faces"
+    },
+    {
+      "name": "X14_ARCH_Floor_300 / _Linoleum",
+      "family": "WD / linoleum",
+      "reusable_for": [
+        "any LOC office",
+        "X13 (linoleum)"
+      ],
+      "notes": "3 × 3 m, 50 mm slab, box-mapped 1 m tiling"
+    },
+    {
+      "name": "X14_ARCH_Ceiling_300",
+      "family": "plaster",
+      "reusable_for": [
+        "any LOC office"
+      ],
+      "notes": "pendant socket at centre"
+    },
+    {
+      "name": "X14_ARCH_Pendant_Lamp",
+      "family": "brass + opal GL (emissive)",
+      "reusable_for": [
+        "X11, X13, X10 service areas"
+      ],
+      "notes": "1.10 m drop; opal bowl emissive 1.5 — tune in UE"
+    },
+    {
+      "name": "X14_PART_Panel_Solid_120 / _060 / _Glazed_120 / _Door_090 / _Post",
+      "family": "MT (painted steel) + GL",
+      "reusable_for": [
+        "DC-X03 Great Hall second-floor CRS offices (1960s state, if ever needed)",
+        "DC-X07 MRR gallery bays (use wooden-partition variant — see UNIFICATION PROPOSALS)",
+        "DALLAS office interiors (gray steel partitions are generic 1950s–60s US office stock)"
+      ],
+      "notes": "2.13 m high; alternate albedo T_X14_PartitionMahogany_BC.png supplied for the 'faux mahogany' finish documented in the House Reading Room (E5)"
+    },
+    {
+      "name": "X14_PART_DropCeiling_120 + X14_PART_Fluorescent_120",
+      "family": "mineral tile + MT + emissive GL",
+      "reusable_for": [
+        "any 1960s temporary office overlay, both cities"
+      ],
+      "notes": "place grid at z = 2.75; fixture hangs 0.62 m below the grid on chains"
+    },
+    {
+      "name": "X14_PART_Sign_Door",
+      "family": "brass + paint",
+      "reusable_for": [
+        "other 1963 LOC division doors — regenerate text via build.py"
+      ],
+      "notes": "text is geometry; LOD1/2 are the plain plate"
+    },
+    {
+      "name": "X14_PART_Panel_Wood_090 / _060 / X14_PART_Door_Wood_090",
+      "family": "WD (dark oak)",
+      "reusable_for": [
+        "DC-X07 MRR gallery bays (Nov 1966 wooden partitions)",
+        "DC-X10 Members' Room LRS director's partitioned offices",
+        "DC-X03 Great Hall second-floor CRS offices",
+        "DALLAS office interiors"
+      ],
+      "notes": "1.95 m; proportions from the 1953 photo (E19); dark oak albedo T_X14_OakDark_BC (v003)"
+    },
+    {
+      "name": "X14_ARCH_Torchere_Lamp, X14_ARCH_Wall_Sconce",
+      "family": "brass + opal GL (emissive)",
+      "reusable_for": [
+        "X10, X11, X13, any LOC office; DALLAS hotel/office interiors"
+      ],
+      "notes": "1953 LRS photo (E19)"
+    },
+    {
+      "name": "X14_ARCH_Ceiling_Coffered_300",
+      "family": "plaster + paint",
+      "reusable_for": [
+        "X10 Members' Room grade rooms (adjust height), X11 pavilions, X14 better offices"
+      ],
+      "notes": "from HABS DC-351-23 (E20); ornament simplified to rosettes"
+    }
+  ],
+  "textures_portable": [
+    "T_X14_Plaster_BC/R/N",
+    "T_X14_PlasterCeiling_BC",
+    "T_X14_Oak_BC/R/N",
+    "T_X14_OakDoor_BC",
+    "T_X14_OakDark_BC",
+    "T_X14_OakFloor_BC/R/N",
+    "T_X14_Linoleum_BC/R",
+    "T_X14_PartitionGray_BC",
+    "T_X14_PartitionMahogany_BC",
+    "T_X14_Partition_R",
+    "T_X14_AcousticTile_BC/R/N",
+    "T_X14_MetalPaint_BC/R",
+    "T_X14_Marble_BC/R"
+  ],
+  "material_slots_stable": [
+    "MI_X14_Plaster_Wall",
+    "MI_X14_Plaster_Ceiling",
+    "MI_X14_Oak_Trim",
+    "MI_X14_Oak_Door",
+    "MI_X14_Oak_Floor",
+    "MI_X14_Linoleum",
+    "MI_X14_Marble_Sill",
+    "MI_X14_Glass_Clear",
+    "MI_X14_Paint_Partition_Gray",
+    "MI_X14_Metal_Painted",
+    "MI_X14_Brass",
+    "MI_X14_Acoustic_Tile",
+    "MI_X14_FluorTube_Lit",
+    "MI_X14_Opal_Glass",
+    "MI_X14_Sign_Text",
+    "MI_X14_Paint_Coffer",
+    "MI_X14_Oak_Partition_Dark"
+  ]
+}
