@@ -2,8 +2,8 @@
   "job_id": "DC-X14",
   "version": "asset-v005",
   "claimant": "claude-cloud-agent",
-  "created_utc": "2026-10-03T20:15:15+00:00",
-  "source_commit": "e6ff74e5140cfb37e4b48d4d351d4b4a628fee0f",
+  "created_utc": "2026-10-03T20:18:30+00:00",
+  "source_commit": "8cee8ddf887320f6631c2d866a8e008027c1b0ec",
   "gates": {
     "clean_rebuild": "see HANDOFF.md",
     "glb_reopen_qa": "see HANDOFF.md",
@@ -49,8 +49,8 @@
     },
     {
       "path": "RENDER_INDEX.md",
-      "bytes": 25125,
-      "sha256": "baf2e4278ebcb15b34b5a6603f810307340c3989d155f53c796289eb59871256"
+      "bytes": 25124,
+      "sha256": "d46ff094a3dcbdec6c2009ecb92af2e4900f3285c678ce985cebf48b6b7c9b28"
     },
     {
       "path": "REUSABLE_COMPONENTS.json",
