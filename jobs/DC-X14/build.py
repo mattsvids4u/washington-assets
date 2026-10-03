@@ -24,7 +24,7 @@ import bpy
 import bmesh
 import numpy as np
 from mathutils import Vector, Matrix
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "out")
@@ -215,6 +215,7 @@ def build_textures():
     vein = np.abs(np.sin((_noise(S, 4, 0.6, rng, 3) * 9 + u * 2) * math.pi)) ** 8
     _save_rgb(f"{TEX}/T_X14_Marble_BC.png", _tint((0.84, 0.82, 0.78), 1 - vein * 0.5, 0.9, 1.0))
     _save_l(f"{TEX}/T_X14_Marble_R.png", np.full((S, S), 0.22, np.float32))
+    build_dress_textures()
 
 
 # =============================================================================== materials
@@ -297,7 +298,7 @@ def materials():
     M["signtext"] = material("MI_X14_Sign_Text", color=(0.05, 0.05, 0.05, 1), roughness=0.4)
     M["coffer"] = material("MI_X14_Paint_Coffer", color=(0.42, 0.47, 0.44, 1), roughness=0.7)   # painted coffer panel, olive-grey (APPROXIMATE, from DC-351-23 tonality)
     M["woodpart"] = material("MI_X14_Oak_Partition_Dark", "T_X14_OakDark_BC.png", "T_X14_Oak_R.png", "T_X14_Oak_N.png", uv_scale=1.0)
-    return M
+    return dress_materials(M)
 
 
 # =============================================================================== bmesh helpers
@@ -434,14 +435,14 @@ def clean(bm):
     bm.normal_update()
 
 
-def finish(bm, name, mats, cleanup=True):
+def finish(bm, name, mats, cleanup=True, uv_fn=None):
     """bmesh → object with materials, cleaned, UV'd, normals recalculated, linked to scene."""
     if cleanup:
         clean(bm)
     else:
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
         bm.normal_update()
-    box_uv(bm)
+    (uv_fn or box_uv)(bm)
     me = bpy.data.meshes.new(name)
     bm.to_mesh(me)
     bm.free()
@@ -1352,6 +1353,7 @@ def build_demo_1953(M, built):
         objs += place(B["X14_ARCH_Pendant_Lamp"], (1.5 + i * 3, 4.5, ROOM_H - 1.10), 0, f".pl2{i}")
         objs += place(B["X14_ARCH_Torchere_Lamp"], (0.9 + i * 3, 5.4, 0), 0, f".tl{i}")
         objs += place(B["X14_ARCH_Wall_Sconce"], (1.5 + i * 3, D, 2.32), math.pi, f".sc{i}")
+    objs = place_dressing(B, objs, "", True)   # v005 set dressing (DRESS_ modules)
     cub_x = [1.8, 4.5, 7.2]
     for c, cx in enumerate(cub_x):
         objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
@@ -1385,6 +1387,534 @@ def export_glb(name, objs, path):
     )
 
 
+# =============================================================================== set dressing (v005)
+# DRESS_ layer: wall dressing and loose props that belong to the room, not to DC-I09 furniture.
+# Wall-hung pieces: pivot at the bottom centre of the piece on the wall face (y = 0), room on +Y.
+# Floor pieces: pivot at the bottom centre (bookcase: bottom centre of its back, back on y = 0).
+FONT_SERIF_B = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
+FONT_SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+
+
+def _font(path, size):
+    try:
+        return ImageFont.truetype(path, size)
+    except Exception:
+        return ImageFont.load_default()
+
+
+def _engraving(w, h, rng):
+    """Sepia hatched landscape (generic print, FICTIONALISED subject)."""
+    x = np.linspace(0, 1, w, dtype=np.float32)[None, :].repeat(h, 0)
+    y = np.linspace(0, 1, h, dtype=np.float32)[:, None].repeat(w, 1)
+    n = np.asarray(Image.fromarray((_pnoise(512, 6, 6, 4, 0.5, rng) * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC), np.float32) / 255
+    far = 0.52 + 0.05 * np.sin(x * 6.0 + 1.3) + 0.03 * np.sin(x * 17 + 0.4)
+    near = 0.70 + 0.07 * np.sin(x * 4.0 + 2.2) + 0.02 * np.sin(x * 23)
+    dark = 0.10 + 0.18 * y                                                    # sky
+    dark = np.where(y > far, 0.42 + 0.18 * n, dark)                            # far hills
+    dark = np.where(y > near, 0.62 + 0.22 * n, dark)                           # foreground
+    tree = ((x - 0.24) ** 2 / 0.004 + (y - (near - 0.13)) ** 2 / 0.02) < 1     # a single tree mass
+    tree |= ((x - 0.78) ** 2 / 0.002 + (y - (near - 0.08)) ** 2 / 0.008) < 1
+    dark = np.where(tree, 0.78 + 0.15 * n, dark)
+    hatch = 0.5 + 0.5 * np.sin((y * h / 2.6 + n * 4.0 + x * 9.0) * math.pi)
+    ink = (hatch < dark).astype(np.float32)
+    paper = np.array((0.93, 0.88, 0.76), np.float32)
+    inkc = np.array((0.30, 0.22, 0.15), np.float32)
+    img = paper[None, None, :] * (1 - ink[..., None]) + inkc[None, None, :] * ink[..., None]
+    m = 0.05
+    border = (x < m) | (x > 1 - m) | (y < m) | (y > 1 - m)
+    img[border] = paper * 0.98
+    return np.clip(img, 0, 1)
+
+
+def build_dress_textures():
+    rng = np.random.default_rng(SEED + 5)          # own stream: earlier textures stay byte-identical
+    _save_rgb(f"{TEX}/T_X14_Print_Engraving_BC.png", _engraving(1024, 768, rng))
+
+    # Gray photograph of a generic domed civic building (FICTIONALISED view), with grain and vignette.
+    w, h = 1024, 768
+    im = Image.new("L", (w, h), 0)
+    d = ImageDraw.Draw(im)
+    for yy in range(h):
+        d.line([(0, yy), (w, yy)], fill=int(200 - 60 * yy / h))
+    d.rectangle([90, 520, 934, 640], fill=150)                     # wings
+    d.rectangle([330, 400, 694, 640], fill=165)                    # central block
+    for k in range(9):                                             # columns
+        cx = 350 + k * 41
+        d.rectangle([cx, 420, cx + 14, 600], fill=205)
+    d.polygon([(320, 400), (512, 330), (704, 400)], fill=175)      # pediment
+    d.rectangle([420, 250, 604, 340], fill=170)                    # drum
+    for k in range(8):
+        d.rectangle([428 + k * 22, 262, 438 + k * 22, 330], fill=210)
+    d.pieslice([400, 120, 624, 380], 180, 360, fill=185)           # dome
+    d.rectangle([496, 70, 528, 130], fill=180)                     # lantern
+    d.rectangle([0, 640, w, h], fill=95)                           # lawn
+    a = np.asarray(im, np.float32) / 255
+    a = a + (rng.random((h, w)).astype(np.float32) - 0.5) * 0.08
+    yy, xx = np.mgrid[0:h, 0:w]
+    vig = 1 - 0.35 * (((xx - w / 2) / (w / 2)) ** 2 + ((yy - h / 2) / (h / 2)) ** 2)
+    a = np.clip(a * vig, 0, 1)
+    _save_rgb(f"{TEX}/T_X14_Print_Photo_BC.png", np.stack([a * 0.98, a * 0.97, a * 0.93], -1))
+
+    # Wall calendar, November 1963 (1 Nov 1963 was a Friday). Generic, no publisher imprint.
+    w, h = 1024, 1536
+    cal = Image.new("RGB", (w, h), (236, 232, 220))
+    pic = Image.fromarray((_engraving(900, 600, rng) * 255).astype(np.uint8))
+    cal.paste(pic, (62, 50))
+    d = ImageDraw.Draw(cal)
+    d.text((70, 690), "NOVEMBER", font=_font(FONT_SERIF_B, 110), fill=(40, 36, 32))
+    d.text((720, 715), "1963", font=_font(FONT_SERIF_B, 80), fill=(150, 30, 30))
+    days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+    gx, gy, cw, chh = 62, 860, 128, 120
+    for i, dname in enumerate(days):
+        d.text((gx + i * cw + 30, gy - 50), dname, font=_font(FONT_SANS, 30), fill=(150, 30, 30) if i == 0 else (60, 56, 50))
+    for r in range(6):
+        for c in range(7):
+            d.rectangle([gx + c * cw, gy + r * chh, gx + (c + 1) * cw, gy + (r + 1) * chh], outline=(170, 165, 150), width=2)
+    for day in range(1, 31):
+        idx = 5 + day - 1
+        r, c = divmod(idx, 7)
+        d.text((gx + c * cw + 12, gy + r * chh + 8), str(day), font=_font(FONT_SANS, 46), fill=(150, 30, 30) if c == 0 else (40, 36, 32))
+    cal.save(f"{TEX}/T_X14_Calendar_1963-11_BC.png")
+
+    # United States flag, 50 stars (in use from 4 July 1960), 1:1.9 proportion. Government emblem.
+    fw, fh = 1900, 1000
+    flag = Image.new("RGB", (fw, fh), (255, 255, 255))
+    d = ImageDraw.Draw(flag)
+    sh = fh / 13
+    for i in range(13):
+        if i % 2 == 0:
+            d.rectangle([0, round(i * sh), fw, round((i + 1) * sh) - 1], fill=(178, 34, 52))
+    ch, cw_ = 7 * sh, 0.76 * fh
+    d.rectangle([0, 0, round(cw_), round(ch)], fill=(60, 59, 110))
+    E, G, R = ch / 10, cw_ / 12, 0.0616 * fh / 2
+    for row in range(1, 10):
+        cols = range(1, 12, 2) if row % 2 == 1 else range(2, 11, 2)
+        for col in cols:
+            cx, cy = col * G, row * E
+            pts = []
+            for k in range(10):
+                rr = R if k % 2 == 0 else R * 0.382
+                a = -math.pi / 2 + k * math.pi / 5
+                pts.append((cx + rr * math.cos(a), cy + rr * math.sin(a)))
+            d.polygon(pts, fill=(255, 255, 255))
+    flag.save(f"{TEX}/T_X14_Flag_US_50Star_BC.png")
+
+    # Cork board and typed memo paper.
+    S = 512
+    cn = _pnoise(S, 32, 32, 3, 0.6, rng)
+    speck = (rng.random((S, S)) > 0.86).astype(np.float32)
+    _save_rgb(f"{TEX}/T_X14_Cork_BC.png", _tint((0.60, 0.43, 0.28), np.clip(cn * 0.7 + 0.3 - speck * 0.35, 0, 1), 0.70, 1.12))
+    memo = Image.new("RGB", (510, 660), (240, 238, 230))
+    d = ImageDraw.Draw(memo)
+    d.rectangle([40, 40, 300, 58], fill=(70, 70, 70))
+    yy = 100
+    while yy < 610:
+        ln = int(rng.integers(220, 430))
+        d.rectangle([40, yy, 40 + ln, yy + 7], fill=(120, 120, 118))
+        yy += int(rng.choice([22, 22, 22, 44]))
+    memo.save(f"{TEX}/T_X14_Memo_BC.png")
+
+
+def dress_materials(M):
+    M["print"] = material("MI_X14_Print_Engraving", "T_X14_Print_Engraving_BC.png", roughness=0.85)
+    M["photo"] = material("MI_X14_Print_Photo", "T_X14_Print_Photo_BC.png", roughness=0.45)
+    M["calendar"] = material("MI_X14_Calendar_1963_11", "T_X14_Calendar_1963-11_BC.png", roughness=0.85)
+    M["flag"] = material("MI_X14_Flag_US_50Star", "T_X14_Flag_US_50Star_BC.png", roughness=0.9)
+    M["cork"] = material("MI_X14_Cork", "T_X14_Cork_BC.png", uv_scale=2.0, roughness=0.9)
+    M["memo"] = material("MI_X14_Memo_Paper", "T_X14_Memo_BC.png", roughness=0.85)
+    M["paper"] = material("MI_X14_Paper_Plain", color=(0.86, 0.84, 0.78, 1), roughness=0.85)
+    M["paper_y"] = material("MI_X14_Paper_Yellow", color=(0.88, 0.78, 0.40, 1), roughness=0.85)
+    M["matboard"] = material("MI_X14_Matboard", color=(0.84, 0.81, 0.72, 1), roughness=0.9)
+    M["leaf"] = material("MI_X14_Leaf_Dark", color=(0.06, 0.16, 0.05, 1), roughness=0.4)
+    M["leaf2"] = material("MI_X14_Leaf_Light", color=(0.18, 0.33, 0.09, 1), roughness=0.5)
+    M["terracotta"] = material("MI_X14_Terracotta", color=(0.52, 0.25, 0.15, 1), roughness=0.85)
+    M["soil"] = material("MI_X14_Soil", color=(0.09, 0.06, 0.045, 1), roughness=0.95)
+    M["book_a"] = material("MI_X14_BookCloth_Maroon", color=(0.28, 0.05, 0.05, 1), roughness=0.75)
+    M["book_b"] = material("MI_X14_BookCloth_Navy", color=(0.05, 0.08, 0.19, 1), roughness=0.75)
+    M["book_c"] = material("MI_X14_BookCloth_Green", color=(0.06, 0.15, 0.09, 1), roughness=0.75)
+    M["book_d"] = material("MI_X14_BookCloth_Tan", color=(0.47, 0.37, 0.24, 1), roughness=0.75)
+    M["felt"] = material("MI_X14_Felt_Hat", color=(0.22, 0.19, 0.16, 1), roughness=0.95)
+    M["olive"] = material("MI_X14_Metal_Olive", color=(0.27, 0.30, 0.21, 1), roughness=0.5, metallic=0.3)
+    M["pin"] = material("MI_X14_Pin_Red", color=(0.60, 0.05, 0.04, 1), roughness=0.3)
+    return M
+
+
+def fit_uv(mat_indices):
+    """uv_fn: box UVs, then every ±Y face of the given material slots gets its own 0..1 (x, z) fit
+    (prints, calendar sheet, memos)."""
+    def fn(bm):
+        box_uv(bm)
+        uv = bm.loops.layers.uv.verify()
+        for f in bm.faces:
+            if f.material_index in mat_indices and abs(f.normal.y) > 0.9:
+                xs = [l.vert.co.x for l in f.loops]
+                zs = [l.vert.co.z for l in f.loops]
+                x0, x1, z0, z1 = min(xs), max(xs), min(zs), max(zs)
+                for l in f.loops:
+                    u = (l.vert.co.x - x0) / max(x1 - x0, 1e-6)
+                    l[uv].uv = (u if f.normal.y > 0 else 1 - u, (l.vert.co.z - z0) / max(z1 - z0, 1e-6))
+    return fn
+
+
+def _xf(bm, verts, mat):
+    bmesh.ops.transform(bm, matrix=mat, verts=list(verts), space=Matrix.Identity(4))
+
+
+def _new_verts(bm, before):
+    return [v for v in bm.verts if v.index == -1 or v not in before]
+
+
+def rod(bm, p0, p1, r, segs=10, mat=0):
+    """Cylinder between two points."""
+    p0, p1 = Vector(p0), Vector(p1)
+    before = set(bm.verts)
+    cylinder(bm, 0, 0, 0, (p1 - p0).length, r, segs, mat=mat)
+    q = Vector((0, 0, 1)).rotation_difference((p1 - p0).normalized())
+    _xf(bm, [v for v in bm.verts if v not in before], Matrix.Translation(p0) @ q.to_matrix().to_4x4())
+
+
+def leaf(bm, length, width, droop, mat, nx=6):
+    """Pointed oval leaf along +X with a mid-rib fold and a droop; returns its new verts."""
+    before = set(bm.verts)
+    rows = []
+    for i in range(nx + 1):
+        t = i / nx
+        half = 0.5 * width * math.sin(math.pi * min(max(t, 0.02), 0.98)) ** 0.8
+        x = t * length
+        z = -droop * t * t
+        rows.append([bm.verts.new((x, -half, z - 0.15 * half)), bm.verts.new((x, 0, z + 0.05 * half)), bm.verts.new((x, half, z - 0.15 * half))])
+    for a, b in zip(rows[:-1], rows[1:]):
+        for j in range(2):
+            f = bm.faces.new([a[j], b[j], b[j + 1], a[j + 1]])
+            f.material_index = mat
+            f.smooth = True
+    return [v for v in bm.verts if v not in before]
+
+
+def _frame(bm, ow, oh, fw, depth, mat, bead=True):
+    x0, x1 = -ow / 2, ow / 2
+    box(bm, x0, 0, 0, x1, depth, fw, mat)
+    box(bm, x0, 0, oh - fw, x1, depth, oh, mat)
+    box(bm, x0, 0, fw, x0 + fw, depth, oh - fw, mat)
+    box(bm, x1 - fw, 0, fw, x1, depth, oh - fw, mat)
+    if bead:   # raised inner bead, butt-jointed like the bars
+        b, t = 0.012, 0.008
+        box(bm, x0 + fw - b, depth - 0.002, fw - b, x1 - fw + b, depth + t, fw, mat)
+        box(bm, x0 + fw - b, depth - 0.002, oh - fw, x1 - fw + b, depth + t, oh - fw + b, mat)
+        box(bm, x0 + fw - b, depth - 0.002, fw, x0 + fw, depth + t, oh - fw, mat)
+        box(bm, x1 - fw, depth - 0.002, fw, x1 - fw + b, depth + t, oh - fw, mat)
+
+
+def build_dress_frame(M, name, ow, oh, pw, ph, frame_key, pic_key):
+    """Framed picture on a cream mat. Pivot: bottom centre on the wall face."""
+    objs = []
+    fw = 0.045
+    for lod in range(3):
+        bm = new_bm()
+        if lod < 2:
+            _frame(bm, ow, oh, fw, 0.035, 0, bead=(lod == 0))
+            box(bm, -ow / 2 + fw, 0.004, fw, ow / 2 - fw, 0.012, oh - fw, 1)               # mat board
+            box(bm, -pw / 2, 0.012, (oh - ph) / 2, pw / 2, 0.0135, (oh + ph) / 2, 2)          # picture
+        else:
+            box(bm, -ow / 2, 0, 0, ow / 2, 0.03, oh, 0)
+            box(bm, -pw / 2, 0.03, (oh - ph) / 2, pw / 2, 0.031, (oh + ph) / 2, 2)
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M[frame_key], M["matboard"], M[pic_key]], uv_fn=fit_uv({2})))
+    objs += ucx_boxes(name, [(-ow / 2, 0, 0, ow / 2, 0.045, oh)], M)
+    return name, objs
+
+
+def build_dress_calendar(M):
+    name = "X14_DRESS_Wall_Calendar_1963_11"
+    objs = []
+    w, h = 0.30, 0.45
+    for lod in range(3):
+        bm = new_bm()
+        box(bm, -w / 2, 0.002, 0, w / 2, 0.004, h, 0)                                   # printed sheet
+        if lod < 2:
+            box(bm, -w / 2 - 0.005, 0.002, h, w / 2 + 0.005, 0.009, h + 0.018, 1)       # tin binding strip
+        if lod == 0:
+            box(bm, -0.002, 0.0, h + 0.008, 0.002, 0.012, h + 0.012, 1)                  # nail
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["calendar"], M["metal"]], uv_fn=fit_uv({0})))
+    objs += ucx_boxes(name, [(-w / 2, 0, 0, w / 2, 0.012, h + 0.02)], M)
+    return name, objs
+
+
+def build_dress_bulletin(M):
+    """Oak-framed cork bulletin board with pinned typed memos and notes."""
+    name = "X14_DRESS_Bulletin_Board_090"
+    objs = []
+    w, h, fw = 0.90, 0.60, 0.04
+    sheets = [(-0.27, 0.12, 0.16, 0.21, 2), (-0.06, 0.20, 0.16, 0.21, 2), (0.16, 0.10, 0.16, 0.21, 2),
+              (0.30, 0.38, 0.10, 0.10, 3), (-0.30, 0.42, 0.10, 0.10, 3), (0.08, 0.40, 0.16, 0.12, 2)]
+    for lod in range(3):
+        bm = new_bm()
+        _frame(bm, w, h, fw, 0.030, 0, bead=False)
+        box(bm, -w / 2 + fw, 0.0, fw, w / 2 - fw, 0.020, h - fw, 1)                          # cork
+        if lod < 2:
+            for i, (cx, z0, sw, sh, m) in enumerate(sheets):
+                y0 = 0.020 + 0.0006 * i
+                box(bm, cx - sw / 2, y0, z0, cx + sw / 2, y0 + 0.0008, z0 + sh, m)
+                if lod == 0:
+                    cylinder(bm, cx, z0 + sh - 0.015, y0, y0 + 0.012, 0.0045, 8, mat=4, axis="Y")
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["oak"], M["cork"], M["memo"], M["paper_y"], M["pin"]], uv_fn=fit_uv({2})))
+    objs += ucx_boxes(name, [(-w / 2, 0, 0, w / 2, 0.035, h)], M)
+    return name, objs
+
+
+def build_dress_bookcase(M):
+    """Open oak bookcase, 0.90 × 0.30 × 1.80 m, five shelves of cloth-bound books (1953 photo, E19:
+    bookcases used between desk groups). Pivot: bottom centre of the back, back on y = 0."""
+    import random
+    name = "X14_DRESS_Bookcase_Oak_090"
+    W, Dp, H, t = 0.90, 0.30, 1.80, 0.025
+    shelves = [0.08, 0.44, 0.80, 1.16, 1.52]
+    objs = []
+    for lod in range(3):
+        rnd = random.Random(SEED + 9)
+        bm = new_bm()
+        box(bm, -W / 2, 0, 0, -W / 2 + t, Dp, H, 0)                                 # sides
+        box(bm, W / 2 - t, 0, 0, W / 2, Dp, H, 0)
+        box(bm, -W / 2 + t, 0, H - t, W / 2 - t, Dp, H, 0)                          # top
+        box(bm, -W / 2 + t, 0, 0, W / 2 - t, 0.008, H - t, 0)                       # back
+        box(bm, -W / 2 + t, Dp - 0.04, 0.0, W / 2 - t, Dp - 0.02, 0.08 - 0.022, 0)  # recessed plinth
+        for z in shelves:
+            box(bm, -W / 2 + t, 0.008, z - 0.022, W / 2 - t, Dp, z, 0)              # shelf boards
+        for si, z in enumerate(shelves):
+            x = -W / 2 + t + 0.004
+            xend = W / 2 - t - 0.004
+            if lod == 2:
+                box(bm, x, 0.012, z, xend - 0.06, 0.20, z + 0.24, 1 + si % 4)
+                continue
+            if si == 4:
+                xend -= 0.20          # top shelf: leave room for a lying stack
+            while x < xend - 0.02:
+                bw = rnd.uniform(0.022, 0.048) if lod == 0 else rnd.uniform(0.08, 0.14)
+                bh = rnd.uniform(0.20, 0.30)
+                bd = rnd.uniform(0.16, 0.22)
+                if x + bw > xend:
+                    break
+                if rnd.random() < 0.06:
+                    x += 0.03          # occasional gap
+                    continue
+                box(bm, x, 0.012, z, x + bw, 0.012 + bd, z + bh, 1 + rnd.randrange(4))
+                x += bw + 0.001
+            if si == 4:
+                zz = z
+                for k in range(3 if lod == 0 else 1):
+                    th = rnd.uniform(0.03, 0.045)
+                    box(bm, W / 2 - t - 0.20, 0.02, zz, W / 2 - t - 0.01, 0.02 + rnd.uniform(0.15, 0.2), zz + th, 1 + k % 4)
+                    zz += th
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["door"], M["book_a"], M["book_b"], M["book_c"], M["book_d"]]))
+    objs += ucx_boxes(name, [(-W / 2, 0, 0, W / 2, Dp, H)], M)
+    return name, objs
+
+
+def _pot(bm, r_bot, r_top, h, mat_pot, mat_soil, segs):
+    prof = [(0.0, 0.0), (r_bot, 0.0), (r_top, h * 0.88), (r_top * 1.08, h * 0.90), (r_top * 1.08, h), (r_top * 0.95, h), (r_top * 0.93, h * 0.86), (0.0, h * 0.86)]
+    lathe(bm, prof, segs, mat=mat_pot, sharp_rows=(1, 3, 4, 5))
+    cylinder(bm, 0, 0, h * 0.85, h * 0.89, r_top * 0.93, segs, mat=mat_soil)
+
+
+def build_dress_rubber_plant(M):
+    """Rubber plant (Ficus elastica) in a terracotta pot, c. 1.5 m — common mid-century office plant
+    (APPROXIMATE; not in the 1953 photo)."""
+    import random
+    name = "X14_DRESS_Plant_Rubber"
+    objs = []
+    for lod in range(3):
+        rnd = random.Random(SEED + 11)
+        bm = new_bm()
+        segs = (32, 16, 10)[lod]
+        _pot(bm, 0.12, 0.17, 0.30, 0, 1, segs)
+        stems = [(0.03, 0.02, 1.05, 0.10, 0.0), (-0.04, 0.02, 1.25, -0.08, 1.9), (0.0, -0.04, 0.85, 0.05, 3.6)]
+        for (sx, sy, L, lean, az) in stems:
+            base = Vector((sx, sy, 0.26))
+            top = base + Vector((lean * math.cos(az), lean * math.sin(az), L))
+            rod(bm, base, top, 0.011, (8, 6, 4)[lod], mat=2)
+            n_leaves = int(L / (0.075 if lod == 0 else 0.15 if lod == 1 else 0.3))
+            for k in range(n_leaves):
+                t = 0.30 + 0.70 * k / max(n_leaves - 1, 1)
+                p = base.lerp(top, t)
+                ln = rnd.uniform(0.19, 0.26) * (0.75 + 0.25 * t)
+                vs = leaf(bm, ln, ln * 0.45, 0.06, 3, nx=(6, 4, 3)[lod])
+                elev = math.radians(rnd.uniform(25, 50)) * (1.2 - 0.4 * t)
+                azl = k * 2.39996 + az
+                m = Matrix.Translation(p) @ Matrix.Rotation(azl, 4, "Z") @ Matrix.Rotation(-elev, 4, "Y")
+                _xf(bm, vs, m)
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["terracotta"], M["soil"], M["door"], M["leaf"]], cleanup=False))
+    objs += ucx_boxes(name, [(-0.18, -0.18, 0, 0.18, 0.18, 0.30), (-0.30, -0.30, 0.30, 0.30, 0.30, 1.55)], M)
+    return name, objs
+
+
+def build_dress_pothos(M):
+    """Small pothos in a clay pot for a bookcase top or window sill (APPROXIMATE)."""
+    import random
+    name = "X14_DRESS_Plant_Pothos_Small"
+    objs = []
+    for lod in range(3):
+        rnd = random.Random(SEED + 13)
+        bm = new_bm()
+        segs = (24, 12, 8)[lod]
+        _pot(bm, 0.06, 0.085, 0.11, 0, 1, segs)
+        trails = (7, 4, 2)[lod]
+        for k in range(trails):
+            az = k * 2 * math.pi / trails + rnd.uniform(-0.3, 0.3)
+            for j in range((4, 3, 2)[lod]):
+                s = j / 3.0
+                r = 0.03 + 0.08 * s
+                z = 0.12 + 0.06 * math.sin(math.pi * (0.3 + 0.7 * s)) - 0.07 * s * s
+                p = Vector((r * math.cos(az), r * math.sin(az), max(z, 0.04)))
+                vs = leaf(bm, rnd.uniform(0.06, 0.08), 0.05, 0.01, 2, nx=(4, 3, 2)[lod])
+                m = Matrix.Translation(p) @ Matrix.Rotation(az + rnd.uniform(-0.6, 0.6), 4, "Z") @ Matrix.Rotation(math.radians(rnd.uniform(-10, 35)), 4, "Y")
+                _xf(bm, vs, m)
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["terracotta"], M["soil"], M["leaf2"]], cleanup=False))
+    objs += ucx_boxes(name, [(-0.12, -0.12, 0, 0.12, 0.12, 0.20)], M)
+    return name, objs
+
+
+def build_dress_coat_tree(M):
+    """Oak coat tree with brass hooks and a felt fedora on one hook (APPROXIMATE, period-typical)."""
+    name = "X14_DRESS_Coat_Tree"
+    objs = []
+    for lod in range(3):
+        bm = new_bm()
+        sg = (10, 6, 4)[lod]
+        cylinder(bm, 0, 0, 0.16, 1.76, 0.022, (16, 8, 6)[lod], mat=0)                      # pole
+        lathe(bm, smooth_profile([(0.0, 1.76), (0.03, 1.77), (0.035, 1.80), (0.02, 1.83), (0.0, 1.84)], (3, 1, 1)[lod]), (16, 8, 6)[lod], mat=0)
+        for k in range(4):                                                                 # splayed legs
+            a = math.pi / 4 + k * math.pi / 2
+            rod(bm, (0, 0, 0.22), (0.30 * math.cos(a), 0.30 * math.sin(a), 0.016), 0.016, sg, mat=0)
+            cylinder(bm, 0.30 * math.cos(a), 0.30 * math.sin(a), 0.0, 0.02, 0.022, sg, mat=0)
+        if lod < 2:
+            for k in range(4):
+                a = k * math.pi / 2
+                for (zh, out, up) in ((1.66, 0.12, 0.10), (1.50, 0.09, 0.07)):
+                    tip = (out * math.cos(a), out * math.sin(a), zh + up)
+                    rod(bm, (0.02 * math.cos(a), 0.02 * math.sin(a), zh), tip, 0.006, 6, mat=1)
+                    cylinder(bm, tip[0], tip[1], tip[2] - 0.008, tip[2] + 0.008, 0.011, 8, mat=1)
+        if lod < 2:                                                                        # fedora on the +X hook
+            before = set(bm.verts)
+            crown = smooth_profile([(0.0, 0.0), (0.090, 0.0), (0.088, 0.07), (0.080, 0.105), (0.040, 0.118), (0.020, 0.105), (0.0, 0.110)], (3, 1, 1)[lod])
+            lathe(bm, crown, (28, 12, 8)[lod], mat=2, sharp_rows=(1,))
+            lathe(bm, [(0.088, 0.004), (0.165, 0.008), (0.168, 0.0), (0.090, -0.004)], (28, 12, 8)[lod], mat=2, sharp_rows=(1, 2))
+            cylinder(bm, 0, 0, 0.004, 0.028, 0.0915, (28, 12, 8)[lod], mat=3)                 # band
+            hv = [v for v in bm.verts if v not in before]
+            _xf(bm, hv, Matrix.Translation((0.13, 0.0, 1.66)) @ Matrix.Rotation(math.radians(-70), 4, "Y") @ Matrix.Translation((0, 0, -0.06)))
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["door"], M["brass"], M["felt"], M["signtext"]], cleanup=False))
+    objs += ucx_boxes(name, [(-0.31, -0.31, 0, 0.31, 0.31, 0.22), (-0.06, -0.06, 0.22, 0.06, 0.06, 1.84)], M)
+    return name, objs
+
+
+def build_dress_flag(M):
+    """Indoor U.S. flag (50 stars, 3 × 5 ft) hanging from an oak pole on a weighted base, brass
+    ball-and-spear finial. Government emblem, rendered accurately. Pivot: base centre."""
+    name = "X14_DRESS_Flag_Stand_US"
+    objs = []
+    z_top, hoist, fly = 2.28, 0.91, 1.52
+    for lod in range(3):
+        bm = new_bm()
+        segs = (24, 12, 8)[lod]
+        lathe(bm, smooth_profile([(0.0, 0.0), (0.17, 0.0), (0.17, 0.02), (0.12, 0.06), (0.04, 0.09), (0.03, 0.12), (0.0, 0.12)], (3, 1, 1)[lod]), segs, mat=1, sharp_rows=(1,))
+        cylinder(bm, 0, 0, 0.12, 2.36, 0.016, (12, 8, 6)[lod], mat=0)
+        lathe(bm, smooth_profile([(0.0, 2.36), (0.02, 2.37), (0.035, 2.40), (0.02, 2.43), (0.008, 2.44), (0.004, 2.52), (0.0, 2.53)], (3, 1, 1)[lod]), segs, mat=1)
+        nu, nv = (24, 12, 6)[lod], (10, 5, 3)[lod]
+        grid, param = [], {}
+        for i in range(nu + 1):
+            u = i / nu
+            row = []
+            for j in range(nv + 1):
+                v = j / nv
+                px = 0.022 + 0.30 * (1 - math.exp(-3.2 * u))
+                pz = z_top - v * hoist - 0.85 * u ** 1.6
+                py = 0.055 * math.sin(u * math.pi * 5.0 + 0.4) * (0.25 + u) + 0.012 * math.sin(v * math.pi * 3 + u * 5)
+                vert = bm.verts.new((px, py, pz))
+                param[vert] = (u, 1 - v)
+                row.append(vert)
+            grid.append(row)
+        for i in range(nu):
+            for j in range(nv):
+                f = bm.faces.new([grid[i][j], grid[i][j + 1], grid[i + 1][j + 1], grid[i + 1][j]])
+                f.material_index = 2
+                f.smooth = True
+
+        def flag_uv(b, param=param):
+            box_uv(b)
+            uvl = b.loops.layers.uv.verify()
+            for f in b.faces:
+                if f.material_index == 2:
+                    for l in f.loops:
+                        l[uvl].uv = param[l.vert]
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["oak"], M["brass"], M["flag"]], cleanup=False, uv_fn=flag_uv))
+    objs += ucx_boxes(name, [(-0.17, -0.17, 0, 0.17, 0.17, 0.12), (-0.03, -0.03, 0.12, 0.03, 0.03, 2.53)], M)
+    return name, objs
+
+
+def build_dress_wastebasket(M):
+    """Painted steel wastebasket with a few crumpled sheets (APPROXIMATE)."""
+    import random
+    name = "X14_DRESS_Wastebasket"
+    objs = []
+    for lod in range(3):
+        rnd = random.Random(SEED + 17)
+        bm = new_bm()
+        segs = (32, 16, 10)[lod]
+        prof = [(0.0, 0.0), (0.12, 0.0), (0.155, 0.32), (0.16, 0.33), (0.152, 0.33), (0.148, 0.32), (0.114, 0.006), (0.0, 0.006)]
+        lathe(bm, prof, segs, mat=0, sharp_rows=(1, 3, 4, 6))
+        if lod < 2:
+            for k in range(3 if lod == 0 else 1):
+                before = set(bm.verts)
+                bmesh.ops.create_icosphere(bm, subdivisions=(2 if lod == 0 else 1), radius=0.045)
+                vs = [v for v in bm.verts if v not in before]
+                for v in vs:
+                    v.co *= rnd.uniform(0.8, 1.15)
+                for f in {f for v in vs for f in v.link_faces}:
+                    f.material_index = 1
+                a = k * 2.1
+                _xf(bm, vs, Matrix.Translation((0.05 * math.cos(a), 0.05 * math.sin(a), 0.05 + 0.03 * k)))
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["olive"], M["paper"]], cleanup=False))
+    objs += ucx_boxes(name, [(-0.16, -0.16, 0, 0.16, 0.16, 0.33)], M)
+    return name, objs
+
+
+DRESS_MODULES = [
+    ("X14_DRESS_Frame_Print_Large", lambda M: build_dress_frame(M, "X14_DRESS_Frame_Print_Large", 0.66, 0.52, 0.45, 0.33, "oak", "print")),
+    ("X14_DRESS_Frame_Photo_Small", lambda M: build_dress_frame(M, "X14_DRESS_Frame_Photo_Small", 0.48, 0.40, 0.33, 0.25, "metal", "photo")),
+    ("X14_DRESS_Wall_Calendar_1963_11", build_dress_calendar),
+    ("X14_DRESS_Bulletin_Board_090", build_dress_bulletin),
+    ("X14_DRESS_Bookcase_Oak_090", build_dress_bookcase),
+    ("X14_DRESS_Plant_Rubber", build_dress_rubber_plant),
+    ("X14_DRESS_Plant_Pothos_Small", build_dress_pothos),
+    ("X14_DRESS_Coat_Tree", build_dress_coat_tree),
+    ("X14_DRESS_Flag_Stand_US", build_dress_flag),
+    ("X14_DRESS_Wastebasket", build_dress_wastebasket),
+]
+
+
+def place_dressing(B, objs, room_tag, room_1953=True):
+    """Set dressing shared by both demo rooms (layout FICTIONALISED, objects period-typical)."""
+    D = 6.0
+    o = []
+    o += place(B["X14_DRESS_Plant_Rubber"], (0.42, 0.42, 0), 0.0, ".pl_w")
+    o += place(B["X14_DRESS_Plant_Rubber"], (8.58, 0.42, 0), 1.3, ".pl_e")
+    o += place(B["X14_DRESS_Flag_Stand_US"], (3.45, 0.30, 0), math.pi, ".flag")
+    o += place(B["X14_DRESS_Coat_Tree"], (5.80, 0.34, 0), 0.4, ".coat")
+    o += place(B["X14_DRESS_Bulletin_Board_090"], (1.60, 0.0, 1.22), 0.0, ".bb")
+    o += place(B["X14_DRESS_Frame_Print_Large"], (2.55, 0.0, 1.45), 0.0, ".pr_s")
+    o += place(B["X14_DRESS_Wall_Calendar_1963_11"], (6.55, 0.0, 1.30), 0.0, ".cal")
+    divider_x = [0.0, 3.15, 5.85]
+    for c, cx in enumerate([1.8, 4.5, 7.2]):
+        key = "X14_DRESS_Frame_Print_Large" if c == 1 else "X14_DRESS_Frame_Photo_Small"
+        o += place(B[key], (cx - 0.60, D, 1.45), math.pi, f".pr_n{c}")
+        bx = divider_x[c] + 0.03
+        o += place(B["X14_DRESS_Bookcase_Oak_090"], (bx, 4.85, 0), -math.pi / 2, f".bk{c}")
+        o += place(B["X14_DRESS_Plant_Pothos_Small"], (bx + 0.16, 4.62, 1.80), 0.5 * c, f".po{c}")
+        o += place(B["X14_DRESS_Wastebasket"], (cx + 0.95, 3.75, 0), 0.0, f".wb{c}")
+    for ob in o:
+        ob.name = ob.name + room_tag
+    objs += o
+    return objs
+
+
 MODULES = [
     ("X14_ARCH_Wall_Plain_300", build_wall_plain),
     ("X14_ARCH_Wall_Window_300", build_wall_window),
@@ -1408,6 +1938,7 @@ MODULES = [
     ("X14_ARCH_Torchere_Lamp", build_torchere),
     ("X14_ARCH_Wall_Sconce", build_sconce),
     ("X14_ARCH_Ceiling_Coffered_300", build_ceiling_coffered),
+] + DRESS_MODULES + [
 ]
 
 
@@ -1497,6 +2028,7 @@ def build_demo(M, built):
     for i in range(3):
         objs += place(B["X14_ARCH_Pendant_Lamp"], (1.5 + i * 3, 0.9, ROOM_H - 1.10), 0, f".pl{i}")
     # I09 furniture sockets (desk faces -Y toward the corridor; chair behind; file cabinet on divider)
+    objs = place_dressing(B, objs, "", True)   # v005 set dressing (DRESS_ modules)
     cub_x = [1.8, 4.5, 7.2]
     for c, cx in enumerate(cub_x):
         objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
