@@ -1,0 +1,580 @@
+{
+  "units": "metres (glTF spec); UE 5.8 glTF import \u2192 cm",
+  "seed": 1963,
+  "modules": {
+    "X14_ARCH_Wall_Plain_300": {
+      "file": "X14_ARCH_Wall_Plain_300.glb",
+      "objects": [
+        "X14_ARCH_Wall_Plain_300_LOD0",
+        "X14_ARCH_Wall_Plain_300_LOD1",
+        "X14_ARCH_Wall_Plain_300_LOD2",
+        "UCX_X14_ARCH_Wall_Plain_300_01",
+        "SOCKET_X14_WallNext",
+        "SOCKET_X14_WallPrev"
+      ],
+      "lod0_faces": 38,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Trim",
+        "MI_X14_Plaster_Wall"
+      ]
+    },
+    "X14_ARCH_Wall_Window_300": {
+      "file": "X14_ARCH_Wall_Window_300.glb",
+      "objects": [
+        "X14_ARCH_Wall_Window_300_LOD0",
+        "X14_ARCH_Wall_Window_300_Glass_LOD0",
+        "X14_ARCH_Wall_Window_300_LOD1",
+        "X14_ARCH_Wall_Window_300_Glass_LOD1",
+        "X14_ARCH_Wall_Window_300_LOD2",
+        "X14_ARCH_Wall_Window_300_Glass_LOD2",
+        "UCX_X14_ARCH_Wall_Window_300_01",
+        "UCX_X14_ARCH_Wall_Window_300_02",
+        "UCX_X14_ARCH_Wall_Window_300_03",
+        "UCX_X14_ARCH_Wall_Window_300_04",
+        "UCX_X14_ARCH_Wall_Window_300_05",
+        "SOCKET_X14_WallNext.001",
+        "SOCKET_X14_WallPrev.001",
+        "SOCKET_X14_WindowCentre"
+      ],
+      "lod0_faces": 732,
+      "materials": [
+        "MI_X14_Glass_Clear",
+        "MI_X14_Marble_Sill",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Door",
+        "MI_X14_Oak_Trim",
+        "MI_X14_Plaster_Wall"
+      ]
+    },
+    "X14_ARCH_Wall_Door_300": {
+      "file": "X14_ARCH_Wall_Door_300.glb",
+      "objects": [
+        "X14_ARCH_Wall_Door_300_LOD0",
+        "X14_ARCH_Wall_Door_300_Glass_LOD0",
+        "X14_ARCH_Wall_Door_300_LOD1",
+        "X14_ARCH_Wall_Door_300_Glass_LOD1",
+        "X14_ARCH_Wall_Door_300_LOD2",
+        "X14_ARCH_Wall_Door_300_Glass_LOD2",
+        "PIVOT_X14_DoorHinge",
+        "X14_ARCH_Wall_Door_300_Leaf_LOD0",
+        "X14_ARCH_Wall_Door_300_Leaf_LOD1",
+        "X14_ARCH_Wall_Door_300_Leaf_LOD2",
+        "UCX_X14_ARCH_Wall_Door_300_01",
+        "UCX_X14_ARCH_Wall_Door_300_02",
+        "UCX_X14_ARCH_Wall_Door_300_03",
+        "UCX_X14_ARCH_Wall_Door_300_Leaf_01",
+        "SOCKET_X14_WallNext.002",
+        "SOCKET_X14_WallPrev.002",
+        "SOCKET_X14_DoorSign"
+      ],
+      "lod0_faces": 307,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Glass_Clear",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Door",
+        "MI_X14_Oak_Trim",
+        "MI_X14_Plaster_Wall"
+      ]
+    },
+    "X14_ARCH_Corner": {
+      "file": "X14_ARCH_Corner.glb",
+      "objects": [
+        "X14_ARCH_Corner_LOD0",
+        "X14_ARCH_Corner_LOD1",
+        "X14_ARCH_Corner_LOD2",
+        "UCX_X14_ARCH_Corner_01"
+      ],
+      "lod0_faces": 6,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Plaster_Wall"
+      ]
+    },
+    "X14_ARCH_Floor_300": {
+      "file": "X14_ARCH_Floor_300.glb",
+      "objects": [
+        "X14_ARCH_Floor_300_LOD0",
+        "X14_ARCH_Floor_300_LOD1",
+        "X14_ARCH_Floor_300_LOD2",
+        "UCX_X14_ARCH_Floor_300_01"
+      ],
+      "lod0_faces": 6,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Floor"
+      ]
+    },
+    "X14_ARCH_Floor_300_Linoleum": {
+      "file": "X14_ARCH_Floor_300_Linoleum.glb",
+      "objects": [
+        "X14_ARCH_Floor_300_Linoleum_LOD0",
+        "X14_ARCH_Floor_300_Linoleum_LOD1",
+        "X14_ARCH_Floor_300_Linoleum_LOD2",
+        "UCX_X14_ARCH_Floor_300_Linoleum_01"
+      ],
+      "lod0_faces": 6,
+      "materials": [
+        "MI_X14_Linoleum",
+        "MI_X14_Metal_Painted"
+      ]
+    },
+    "X14_ARCH_Ceiling_300": {
+      "file": "X14_ARCH_Ceiling_300.glb",
+      "objects": [
+        "X14_ARCH_Ceiling_300_LOD0",
+        "X14_ARCH_Ceiling_300_LOD1",
+        "X14_ARCH_Ceiling_300_LOD2",
+        "UCX_X14_ARCH_Ceiling_300_01",
+        "SOCKET_X14_Pendant"
+      ],
+      "lod0_faces": 6,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Plaster_Ceiling"
+      ]
+    },
+    "X14_ARCH_Pendant_Lamp": {
+      "file": "X14_ARCH_Pendant_Lamp.glb",
+      "objects": [
+        "X14_ARCH_Pendant_Lamp_LOD0",
+        "X14_ARCH_Pendant_Lamp_Glass_LOD0",
+        "X14_ARCH_Pendant_Lamp_LOD1",
+        "X14_ARCH_Pendant_Lamp_Glass_LOD1",
+        "X14_ARCH_Pendant_Lamp_LOD2",
+        "X14_ARCH_Pendant_Lamp_Glass_LOD2",
+        "UCX_X14_ARCH_Pendant_Lamp_01"
+      ],
+      "lod0_faces": 1278,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Opal_Glass"
+      ]
+    },
+    "X14_PART_Panel_Solid_120": {
+      "file": "X14_PART_Panel_Solid_120.glb",
+      "objects": [
+        "X14_PART_Panel_Solid_120_LOD0",
+        "X14_PART_Panel_Solid_120_LOD1",
+        "X14_PART_Panel_Solid_120_LOD2",
+        "UCX_X14_PART_Panel_Solid_120_01",
+        "SOCKET_X14_PartNext",
+        "SOCKET_X14_PartPrev"
+      ],
+      "lod0_faces": 36,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paint_Partition_Gray"
+      ]
+    },
+    "X14_PART_Panel_Glazed_120": {
+      "file": "X14_PART_Panel_Glazed_120.glb",
+      "objects": [
+        "X14_PART_Panel_Glazed_120_LOD0",
+        "X14_PART_Panel_Glazed_120_Glass_LOD0",
+        "X14_PART_Panel_Glazed_120_LOD1",
+        "X14_PART_Panel_Glazed_120_Glass_LOD1",
+        "X14_PART_Panel_Glazed_120_LOD2",
+        "X14_PART_Panel_Glazed_120_Glass_LOD2",
+        "UCX_X14_PART_Panel_Glazed_120_01",
+        "SOCKET_X14_PartNext.001",
+        "SOCKET_X14_PartPrev.001"
+      ],
+      "lod0_faces": 72,
+      "materials": [
+        "MI_X14_Glass_Clear",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paint_Partition_Gray"
+      ]
+    },
+    "X14_PART_Panel_Solid_060": {
+      "file": "X14_PART_Panel_Solid_060.glb",
+      "objects": [
+        "X14_PART_Panel_Solid_060_LOD0",
+        "X14_PART_Panel_Solid_060_LOD1",
+        "X14_PART_Panel_Solid_060_LOD2",
+        "UCX_X14_PART_Panel_Solid_060_01",
+        "SOCKET_X14_PartNext.002",
+        "SOCKET_X14_PartPrev.002"
+      ],
+      "lod0_faces": 36,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paint_Partition_Gray"
+      ]
+    },
+    "X14_PART_Door_090": {
+      "file": "X14_PART_Door_090.glb",
+      "objects": [
+        "X14_PART_Door_090_LOD0",
+        "X14_PART_Door_090_LOD1",
+        "X14_PART_Door_090_LOD2",
+        "PIVOT_X14_PartDoorHinge",
+        "X14_PART_Door_090_Leaf_LOD0",
+        "X14_PART_Door_090_Leaf_LOD1",
+        "X14_PART_Door_090_Leaf_LOD2",
+        "UCX_X14_PART_Door_090_01",
+        "UCX_X14_PART_Door_090_02",
+        "UCX_X14_PART_Door_090_03",
+        "UCX_X14_PART_Door_090_Leaf_01",
+        "SOCKET_X14_PartNext.003",
+        "SOCKET_X14_PartPrev.003",
+        "SOCKET_X14_DoorSign.001"
+      ],
+      "lod0_faces": 84,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paint_Partition_Gray"
+      ]
+    },
+    "X14_PART_Post": {
+      "file": "X14_PART_Post.glb",
+      "objects": [
+        "X14_PART_Post_LOD0",
+        "X14_PART_Post_LOD1",
+        "X14_PART_Post_LOD2",
+        "UCX_X14_PART_Post_01"
+      ],
+      "lod0_faces": 18,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paint_Partition_Gray"
+      ]
+    },
+    "X14_PART_DropCeiling_120": {
+      "file": "X14_PART_DropCeiling_120.glb",
+      "objects": [
+        "X14_PART_DropCeiling_120_LOD0",
+        "X14_PART_DropCeiling_120_LOD1",
+        "X14_PART_DropCeiling_120_LOD2",
+        "UCX_X14_PART_DropCeiling_120_01",
+        "SOCKET_X14_Fixture"
+      ],
+      "lod0_faces": 102,
+      "materials": [
+        "MI_X14_Acoustic_Tile",
+        "MI_X14_Metal_Painted"
+      ]
+    },
+    "X14_PART_Fluorescent_120": {
+      "file": "X14_PART_Fluorescent_120.glb",
+      "objects": [
+        "X14_PART_Fluorescent_120_LOD0",
+        "X14_PART_Fluorescent_120_Tubes_LOD0",
+        "X14_PART_Fluorescent_120_LOD1",
+        "X14_PART_Fluorescent_120_Tubes_LOD1",
+        "X14_PART_Fluorescent_120_LOD2",
+        "X14_PART_Fluorescent_120_Tubes_LOD2",
+        "UCX_X14_PART_Fluorescent_120_01"
+      ],
+      "lod0_faces": 71,
+      "materials": [
+        "MI_X14_FluorTube_Lit",
+        "MI_X14_Metal_Painted"
+      ]
+    },
+    "X14_PART_Sign_Door": {
+      "file": "X14_PART_Sign_Door.glb",
+      "objects": [
+        "X14_PART_Sign_Door_LOD0",
+        "X14_PART_Sign_Door_LOD1",
+        "X14_PART_Sign_Door_LOD2",
+        "UCX_X14_PART_Sign_Door_01"
+      ],
+      "lod0_faces": 3880,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Sign_Text"
+      ]
+    },
+    "X14_PART_Panel_Wood_090": {
+      "file": "X14_PART_Panel_Wood_090.glb",
+      "objects": [
+        "X14_PART_Panel_Wood_090_LOD0",
+        "X14_PART_Panel_Wood_090_LOD1",
+        "X14_PART_Panel_Wood_090_LOD2",
+        "UCX_X14_PART_Panel_Wood_090_01",
+        "SOCKET_X14_PartNext.004",
+        "SOCKET_X14_PartPrev.004"
+      ],
+      "lod0_faces": 138,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Partition_Dark"
+      ]
+    },
+    "X14_PART_Panel_Wood_060": {
+      "file": "X14_PART_Panel_Wood_060.glb",
+      "objects": [
+        "X14_PART_Panel_Wood_060_LOD0",
+        "X14_PART_Panel_Wood_060_LOD1",
+        "X14_PART_Panel_Wood_060_LOD2",
+        "UCX_X14_PART_Panel_Wood_060_01",
+        "SOCKET_X14_PartNext.005",
+        "SOCKET_X14_PartPrev.005"
+      ],
+      "lod0_faces": 138,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Partition_Dark"
+      ]
+    },
+    "X14_PART_Door_Wood_090": {
+      "file": "X14_PART_Door_Wood_090.glb",
+      "objects": [
+        "X14_PART_Door_Wood_090_LOD0",
+        "X14_PART_Door_Wood_090_LOD1",
+        "X14_PART_Door_Wood_090_LOD2",
+        "PIVOT_X14_WoodDoorHinge",
+        "X14_PART_Door_Wood_090_Leaf_LOD0",
+        "X14_PART_Door_Wood_090_Leaf_LOD1",
+        "X14_PART_Door_Wood_090_Leaf_LOD2",
+        "UCX_X14_PART_Door_Wood_090_01",
+        "UCX_X14_PART_Door_Wood_090_02",
+        "UCX_X14_PART_Door_Wood_090_03",
+        "UCX_X14_PART_Door_Wood_090_Leaf_01",
+        "SOCKET_X14_PartNext.006",
+        "SOCKET_X14_PartPrev.006"
+      ],
+      "lod0_faces": 164,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Partition_Dark"
+      ]
+    },
+    "X14_ARCH_Torchere_Lamp": {
+      "file": "X14_ARCH_Torchere_Lamp.glb",
+      "objects": [
+        "X14_ARCH_Torchere_Lamp_LOD0",
+        "X14_ARCH_Torchere_Lamp_Glass_LOD0",
+        "X14_ARCH_Torchere_Lamp_LOD1",
+        "X14_ARCH_Torchere_Lamp_Glass_LOD1",
+        "X14_ARCH_Torchere_Lamp_LOD2",
+        "X14_ARCH_Torchere_Lamp_Glass_LOD2",
+        "UCX_X14_ARCH_Torchere_Lamp_01",
+        "UCX_X14_ARCH_Torchere_Lamp_02",
+        "UCX_X14_ARCH_Torchere_Lamp_03"
+      ],
+      "lod0_faces": 1762,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Opal_Glass"
+      ]
+    },
+    "X14_ARCH_Wall_Sconce": {
+      "file": "X14_ARCH_Wall_Sconce.glb",
+      "objects": [
+        "X14_ARCH_Wall_Sconce_LOD0",
+        "X14_ARCH_Wall_Sconce_Glass_LOD0",
+        "X14_ARCH_Wall_Sconce_LOD1",
+        "X14_ARCH_Wall_Sconce_Glass_LOD1",
+        "X14_ARCH_Wall_Sconce_LOD2",
+        "X14_ARCH_Wall_Sconce_Glass_LOD2",
+        "UCX_X14_ARCH_Wall_Sconce_01"
+      ],
+      "lod0_faces": 1378,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Opal_Glass"
+      ]
+    },
+    "X14_ARCH_Ceiling_Coffered_300": {
+      "file": "X14_ARCH_Ceiling_Coffered_300.glb",
+      "objects": [
+        "X14_ARCH_Ceiling_Coffered_300_LOD0",
+        "X14_ARCH_Ceiling_Coffered_300_LOD1",
+        "X14_ARCH_Ceiling_Coffered_300_LOD2",
+        "UCX_X14_ARCH_Ceiling_Coffered_300_01",
+        "SOCKET_X14_Pendant.001"
+      ],
+      "lod0_faces": 516,
+      "materials": [
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paint_Coffer",
+        "MI_X14_Plaster_Ceiling"
+      ]
+    },
+    "X14_DRESS_Frame_Print_Large": {
+      "file": "X14_DRESS_Frame_Print_Large.glb",
+      "objects": [
+        "X14_DRESS_Frame_Print_Large_LOD0",
+        "X14_DRESS_Frame_Print_Large_LOD1",
+        "X14_DRESS_Frame_Print_Large_LOD2",
+        "UCX_X14_DRESS_Frame_Print_Large_01"
+      ],
+      "lod0_faces": 60,
+      "materials": [
+        "MI_X14_Matboard",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Trim",
+        "MI_X14_Print_Engraving"
+      ]
+    },
+    "X14_DRESS_Frame_Photo_Small": {
+      "file": "X14_DRESS_Frame_Photo_Small.glb",
+      "objects": [
+        "X14_DRESS_Frame_Photo_Small_LOD0",
+        "X14_DRESS_Frame_Photo_Small_LOD1",
+        "X14_DRESS_Frame_Photo_Small_LOD2",
+        "UCX_X14_DRESS_Frame_Photo_Small_01"
+      ],
+      "lod0_faces": 60,
+      "materials": [
+        "MI_X14_Matboard",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Print_Photo"
+      ]
+    },
+    "X14_DRESS_Wall_Calendar_1963_11": {
+      "file": "X14_DRESS_Wall_Calendar_1963_11.glb",
+      "objects": [
+        "X14_DRESS_Wall_Calendar_1963_11_LOD0",
+        "X14_DRESS_Wall_Calendar_1963_11_LOD1",
+        "X14_DRESS_Wall_Calendar_1963_11_LOD2",
+        "UCX_X14_DRESS_Wall_Calendar_1963_11_01"
+      ],
+      "lod0_faces": 18,
+      "materials": [
+        "MI_X14_Calendar_1963_11",
+        "MI_X14_Metal_Painted"
+      ]
+    },
+    "X14_DRESS_Bulletin_Board_090": {
+      "file": "X14_DRESS_Bulletin_Board_090.glb",
+      "objects": [
+        "X14_DRESS_Bulletin_Board_090_LOD0",
+        "X14_DRESS_Bulletin_Board_090_LOD1",
+        "X14_DRESS_Bulletin_Board_090_LOD2",
+        "UCX_X14_DRESS_Bulletin_Board_090_01"
+      ],
+      "lod0_faces": 126,
+      "materials": [
+        "MI_X14_Cork",
+        "MI_X14_Memo_Paper",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Trim",
+        "MI_X14_Paper_Yellow",
+        "MI_X14_Pin_Red"
+      ]
+    },
+    "X14_DRESS_Bookcase_Oak_090": {
+      "file": "X14_DRESS_Bookcase_Oak_090.glb",
+      "objects": [
+        "X14_DRESS_Bookcase_Oak_090_LOD0",
+        "X14_DRESS_Bookcase_Oak_090_LOD1",
+        "X14_DRESS_Bookcase_Oak_090_LOD2",
+        "UCX_X14_DRESS_Bookcase_Oak_090_01"
+      ],
+      "lod0_faces": 702,
+      "materials": [
+        "MI_X14_BookCloth_Green",
+        "MI_X14_BookCloth_Maroon",
+        "MI_X14_BookCloth_Navy",
+        "MI_X14_BookCloth_Tan",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Door"
+      ]
+    },
+    "X14_DRESS_Plant_Rubber": {
+      "file": "X14_DRESS_Plant_Rubber.glb",
+      "objects": [
+        "X14_DRESS_Plant_Rubber_LOD0",
+        "X14_DRESS_Plant_Rubber_LOD1",
+        "X14_DRESS_Plant_Rubber_LOD2",
+        "UCX_X14_DRESS_Plant_Rubber_01",
+        "UCX_X14_DRESS_Plant_Rubber_02"
+      ],
+      "lod0_faces": 1610,
+      "materials": [
+        "MI_X14_Leaf_Dark",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Door",
+        "MI_X14_Soil",
+        "MI_X14_Terracotta"
+      ]
+    },
+    "X14_DRESS_Plant_Pothos_Small": {
+      "file": "X14_DRESS_Plant_Pothos_Small.glb",
+      "objects": [
+        "X14_DRESS_Plant_Pothos_Small_LOD0",
+        "X14_DRESS_Plant_Pothos_Small_LOD1",
+        "X14_DRESS_Plant_Pothos_Small_LOD2",
+        "UCX_X14_DRESS_Plant_Pothos_Small_01"
+      ],
+      "lod0_faces": 418,
+      "materials": [
+        "MI_X14_Leaf_Light",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Soil",
+        "MI_X14_Terracotta"
+      ]
+    },
+    "X14_DRESS_Coat_Tree": {
+      "file": "X14_DRESS_Coat_Tree.glb",
+      "objects": [
+        "X14_DRESS_Coat_Tree_LOD0",
+        "X14_DRESS_Coat_Tree_LOD1",
+        "X14_DRESS_Coat_Tree_LOD2",
+        "UCX_X14_DRESS_Coat_Tree_01",
+        "UCX_X14_DRESS_Coat_Tree_02"
+      ],
+      "lod0_faces": 1068,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Felt_Hat",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Door",
+        "MI_X14_Sign_Text"
+      ]
+    },
+    "X14_DRESS_Flag_Stand_US": {
+      "file": "X14_DRESS_Flag_Stand_US.glb",
+      "objects": [
+        "X14_DRESS_Flag_Stand_US_LOD0",
+        "X14_DRESS_Flag_Stand_US_LOD1",
+        "X14_DRESS_Flag_Stand_US_LOD2",
+        "UCX_X14_DRESS_Flag_Stand_US_01",
+        "UCX_X14_DRESS_Flag_Stand_US_02"
+      ],
+      "lod0_faces": 1118,
+      "materials": [
+        "MI_X14_Brass",
+        "MI_X14_Flag_US_50Star",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Oak_Trim"
+      ]
+    },
+    "X14_DRESS_Wastebasket": {
+      "file": "X14_DRESS_Wastebasket.glb",
+      "objects": [
+        "X14_DRESS_Wastebasket_LOD0",
+        "X14_DRESS_Wastebasket_LOD1",
+        "X14_DRESS_Wastebasket_LOD2",
+        "UCX_X14_DRESS_Wastebasket_01"
+      ],
+      "lod0_faces": 464,
+      "materials": [
+        "MI_X14_Metal_Olive",
+        "MI_X14_Metal_Painted",
+        "MI_X14_Paper_Plain"
+      ]
+    },
+    "X14_DEMO_LRS_Room": {
+      "file": "X14_DEMO_LRS_Room.glb",
+      "objects": 683,
+      "note": "assembly of kit instances + I09 sockets"
+    },
+    "X14_DEMO_LRS_Room_1953": {
+      "file": "X14_DEMO_LRS_Room_1953.glb",
+      "objects": 497,
+      "note": "assembly of kit instances + I09 sockets"
+    }
+  }
+}

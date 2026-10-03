@@ -1,0 +1,82 @@
+{
+  "job_id": "DC-X14",
+  "claimant": "claude-cloud-agent",
+  "acknowledged_utc": "2026-10-02T09:38:00Z",
+  "brief": {
+    "file_id": "1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4",
+    "revision": "WASHINGTON-2026-09-22-v001",
+    "read": true
+  },
+  "register": {
+    "file_id": "1vdCK73ALs-X-7o0MBlJLz7VxJzeqAvZt_AFCDDeTX-g",
+    "read_utc": "2026-10-02T09:36:00Z",
+    "row": "DC-X14 | INT1 | Standard | P2 | LOC | WD + plaster | NEW | depends DC-I09 | HEAD_AUTH_2026-09-22 | UNCLAIMED (at claim time)"
+  },
+  "stage_standard": {
+    "file_id": "1czqr-kWYX_AFdcbH7T-I-NgoQJV4e0nuqFq9oEGUcLA",
+    "revision": "WASHINGTON-2026-09-22-v001",
+    "read": true
+  },
+  "moodbook_guide": {
+    "file_id": "1Zvp-ypgEsHXXBSH9r8cO0U_M1jJx0YzB0Rv6f_9CPkQ",
+    "read": true
+  },
+  "road_plans_canon": {
+    "file_id": "1ia8TnxZefKOT4H6PdnNB9BIKIdf5E-Y-muyGJ_j4vQY",
+    "revision": "WASHINGTON-ROADPLANS-v002 (2026-09-30)",
+    "read": true
+  },
+  "request_doc": {
+    "file_id": "1oIjCdJRdzzsqTALO20IDFCAvxxQTzskmFwJBk5VhK0k",
+    "modified": "2026-09-25T10:31:15Z",
+    "includes": "Road Plan 04 integration addendum",
+    "read": true
+  },
+  "moodbook": {
+    "file": "SAVE_JFK_Visual_Benchmark_Moodbook.pdf",
+    "file_ids": [
+      "11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr (EXT1 References copy, linked from request)",
+      "1zP8yyVRfk8_WCUbiLLXpXMcN443I_d-- (INT1 References copy)"
+    ],
+    "pages_used": "10 (props, materials & vehicles: object logic, material character), 11 (environments, palette & light: compose before dressing, key source, colour relationships), 12 (AI build brief & approval: reviewable stages, deliver the evidence)",
+    "inspection": "Text of all 12 pages read through the Drive connector. Page IMAGES could not be rendered in the sandbox (PDF too large for the connector's base64 path, egress blocked) — recorded honestly; Matt should confirm the visual match locally.",
+    "palette": {
+      "charcoal": "#131D1B",
+      "olive": "#667363",
+      "walnut": "#6B4734",
+      "tungsten": "#C49D63",
+      "cold_paper": "#DFDFD4"
+    }
+  },
+  "references_folder": {
+    "set": "DC-INT1",
+    "folder_id": "1otZqRmP5OwoHbpfS67sxAeUM8k072gKe",
+    "asset_subfolder_id": "1xeNS9O1j-BKbPVC0Czt9PCnLQL9aoMc8",
+    "starter_pack_read": "00_READ_FIRST_SOURCES.md + 2 analog office photos (1960 Portland; Feb 1963 MPD station) inspected; files added by Matt on 2026-10-02 inspected (see EVIDENCE.md E12–E18)"
+  },
+  "dallas_unification": {
+    "relation": "NEW (no DALLAS equivalent)",
+    "reuse_register_checked": "register column 'DALLAS relation' = NEW; no DALLAS LibraryID applies; I09 furniture (SHARED with DALLAS I01/I04/I05/I06/I09/I13) is consumed through sockets only"
+  },
+  "drive_available": true,
+  "cached_context_used": false,
+  "sandbox_limits": "no GPU, no Unreal; egress blocks loc.gov / Wikimedia / archive.org",
+  "v003_recheck": {
+    "checked_utc": "2026-10-03",
+    "method": "Drive metadata modifiedTime",
+    "brief_modified": "2026-09-25T05:06:18Z",
+    "register_modified": "2026-10-01T12:31:29Z",
+    "stage_standard_modified": "2026-09-23T01:42:32Z",
+    "request_doc_modified": "2026-09-25T10:31:15Z",
+    "result": "no changes since the claim; claim folder intact (request doc, CLAIM.json, archive-gate note)"
+  },
+  "v005_recheck": {
+    "checked_utc": "2026-10-03",
+    "method": "Drive metadata modifiedTime + listing of the claim folder and DC-INT1 Reviews",
+    "brief_modified": "2026-09-25T05:06:18Z",
+    "register_modified": "2026-10-01T12:31:29Z",
+    "stage_standard_modified": "2026-09-23T01:42:32Z",
+    "request_doc_modified": "2026-09-25T10:31:15Z",
+    "result": "no changes since the claim; claim folder intact; no DC-X14 review in DC-INT1 Reviews (direction taken from Matt's chat: 'anything on the walls? plants in the corners? nothin???')"
+  }
+}
