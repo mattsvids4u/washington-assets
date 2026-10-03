@@ -7,7 +7,7 @@ evidence or Matt review overrides them.
 
 | # | Question | Decision | Basis | Effect on v001 |
 |---|---|---|---|---|
-| 1 | Cannon columns: coupled or single | **Coupled** (17 pairs, 34 columns) | SAH Archipedia on the twin buildings: "doubled fluted columns … doubled pilasters"; the Colonnade du Louvre that SAH names as the model is coupled. Still PROBABLE until a photo is checked. | None (already coupled). F02's single-column SOB is the one to change. Raise it with F02's owner; F01 does not edit F02. |
+| 1 | Cannon columns: coupled or single | **REOPENED 2026-10-03, see PHOTO_FINDINGS.md: single now PROBABLE.** Was: coupled (17 pairs, 34 columns) | SAH Archipedia on the twin buildings: "doubled fluted columns … doubled pilasters"; the Colonnade du Louvre that SAH names as the model is coupled. Still PROBABLE until a photo is checked. | None (already coupled). F02's single-column SOB is the one to change. Raise it with F02's owner; F01 does not edit F02. |
 | 2 | Annex spandrel material | **Bronze** (stays PROBABLE) | SAH contrasts the window bays with the marble-clad piers, so the bays are probably not marble. Nothing seen contradicts bronze. Verify on the Horydczak photos. | None |
 | 3 | Folger east-end door in 1963 | **Not present, stays unmodelled** | SAH: the east end is "a blank wall broken only by masks of comedy and tragedy". The 2019–24 renovation added the sunken east and west entries, which matches the door in the 2025 photo. | None |
 | 4 | SOB / NSOB owner | **F02 keeps both** | F02 has delivered the SOB v001. Its twin pairing with Cannon needs one owner per building, and splitting the SOB pair across jobs gains nothing. | F01 scope for v002: U.S. Courthouse, Post Office Department, IRS |
