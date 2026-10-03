@@ -1402,67 +1402,134 @@ def _font(path, size):
         return ImageFont.load_default()
 
 
-def _engraving(w, h, rng):
-    """Sepia hatched landscape (generic print, FICTIONALISED subject)."""
+def _ellipse(x, y, cx, cy, rx, ry):
+    return ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 < 1
+
+
+def _civic_tone(w, h, rng):
+    """Brightness field (0 black .. 1 white) of a generic domed civic building in sunlight with
+    trees and lawn (FICTIONALISED view, no specific building). Used for the framed photograph."""
     x = np.linspace(0, 1, w, dtype=np.float32)[None, :].repeat(h, 0)
     y = np.linspace(0, 1, h, dtype=np.float32)[:, None].repeat(w, 1)
-    n = np.asarray(Image.fromarray((_pnoise(512, 6, 6, 4, 0.5, rng) * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC), np.float32) / 255
-    far = 0.52 + 0.05 * np.sin(x * 6.0 + 1.3) + 0.03 * np.sin(x * 17 + 0.4)
-    near = 0.70 + 0.07 * np.sin(x * 4.0 + 2.2) + 0.02 * np.sin(x * 23)
-    dark = 0.10 + 0.18 * y                                                    # sky
-    dark = np.where(y > far, 0.42 + 0.18 * n, dark)                            # far hills
-    dark = np.where(y > near, 0.62 + 0.22 * n, dark)                           # foreground
-    tree = ((x - 0.24) ** 2 / 0.004 + (y - (near - 0.13)) ** 2 / 0.02) < 1     # a single tree mass
-    tree |= ((x - 0.78) ** 2 / 0.002 + (y - (near - 0.08)) ** 2 / 0.008) < 1
-    dark = np.where(tree, 0.78 + 0.15 * n, dark)
-    hatch = 0.5 + 0.5 * np.sin((y * h / 2.6 + n * 4.0 + x * 9.0) * math.pi)
-    ink = (hatch < dark).astype(np.float32)
-    paper = np.array((0.93, 0.88, 0.76), np.float32)
-    inkc = np.array((0.30, 0.22, 0.15), np.float32)
-    img = paper[None, None, :] * (1 - ink[..., None]) + inkc[None, None, :] * ink[..., None]
-    m = 0.05
-    border = (x < m) | (x > 1 - m) | (y < m) | (y > 1 - m)
-    img[border] = paper * 0.98
-    return np.clip(img, 0, 1)
+    n = np.asarray(Image.fromarray((_pnoise(512, 5, 5, 4, 0.55, rng) * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC), np.float32) / 255
+    t = 0.70 + 0.14 * y + 0.10 * (n - 0.5)                                     # sky with soft cloud
+    hz = 0.80
+    t = np.where(y > hz, 0.42 + 0.10 * n - 0.10 * (y - hz), t)                 # lawn
+    t = np.where((y > hz) & (np.abs(x - 0.5) < 0.04 + 0.5 * (y - hz)), 0.70, t)   # path
+    # wings with window grid and a shadowed cornice
+    wing = (y > 0.62) & (y < hz) & (x > 0.07) & (x < 0.93)
+    t = np.where(wing, 0.80, t)
+    win = wing & (y > 0.655) & (((y - 0.655) % 0.07) < 0.04) & (((x - 0.07) % 0.035) > 0.014) & (y < 0.79)
+    t = np.where(win, 0.30, t)
+    t = np.where(wing & (y < 0.635), 0.55, t)
+    # portico: dark recess, lit fluted columns, entablature, pediment
+    por = (x > 0.37) & (x < 0.63) & (y > 0.50) & (y < hz)
+    t = np.where(por, 0.24, t)
+    pitch = 0.26 / 8
+    ph = ((x - 0.37) % pitch) / pitch
+    col = por & (y > 0.535) & (y < 0.775) & (ph > 0.25) & (ph < 0.75)
+    t = np.where(col, 0.55 + 0.40 * np.clip(np.sin((ph - 0.25) / 0.5 * math.pi), 0, 1) ** 0.6, t)
+    t = np.where(por & (y >= 0.775), 0.78, t)                                   # steps
+    t = np.where(por & (((y - 0.775) % 0.008) < 0.002) & (y >= 0.775), 0.6, t)
+    t = np.where((x > 0.36) & (x < 0.64) & (y > 0.50) & (y < 0.535), 0.86, t)    # entablature
+    ped = (y > 0.44) & (y <= 0.50) & (np.abs(x - 0.5) < 0.145 * (y - 0.44) / 0.06)
+    t = np.where(ped, 0.82, t)
+    t = np.where(ped & (np.abs(x - 0.5) < 0.12 * (y - 0.452) / 0.06) & (y > 0.455) & (y < 0.494), 0.66, t)
+    # drum with colonnade, dome with ribs and side shading, lantern
+    drum = (x > 0.395) & (x < 0.605) & (y > 0.31) & (y < 0.44)
+    t = np.where(drum, 0.36, t)
+    dp = ((x - 0.395) % 0.0175) / 0.0175
+    t = np.where(drum & (y > 0.33) & (y < 0.425) & (dp > 0.3) & (dp < 0.75), 0.82 - 0.25 * np.abs(x - 0.47) / 0.13, t)
+    t = np.where(drum & ((y < 0.33) | (y > 0.425)), 0.80, t)
+    dome = _ellipse(x, y, 0.5, 0.31, 0.105, 0.14) & (y < 0.31)
+    shade = 0.86 - 0.45 * np.clip((x - 0.44) / 0.17, 0, 1) - 0.20 * (0.31 - y) / 0.14
+    rib = (np.abs(((np.arcsin(np.clip((x - 0.5) / 0.105, -1, 1)) / (math.pi / 14)) % 1) - 0.5) < 0.06)
+    t = np.where(dome, np.where(rib, shade - 0.12, shade), t)
+    t = np.where((x > 0.488) & (x < 0.512) & (y > 0.13) & (y < 0.175), 0.76, t)
+    t = np.where(_ellipse(x, y, 0.5, 0.13, 0.014, 0.012), 0.7, t)
+    # flanking trees
+    trees = np.zeros_like(x, bool)
+    for (cx, cy, rx, ry) in ((0.05, 0.66, 0.09, 0.17), (0.15, 0.71, 0.07, 0.12), (0.95, 0.65, 0.09, 0.18), (0.86, 0.72, 0.06, 0.11)):
+        trees |= ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 < 0.8 + 0.5 * n
+    t = np.where(trees & (y < 0.86), 0.16 + 0.22 * n, t)
+    return np.clip(t, 0, 1)
+
+
+def _engraving(w, h, rng, caption="A VIEW ON THE POTOMAC"):
+    """Sepia line engraving of a river landscape with a domed rotunda on a rise (generic period
+    print, FICTIONALISED subject). Tone is rendered as hatching: line width follows darkness,
+    cross-hatched in the deep shadows; plate mark and engraved caption in the margin."""
+    pm = 0.07                                                                  # plate margin
+    iw, ih = int(w * (1 - 2 * pm)), int(h * (1 - 2 * pm - 0.06))
+    x = np.linspace(0, 1, iw, dtype=np.float32)[None, :].repeat(ih, 0)
+    y = np.linspace(0, 1, ih, dtype=np.float32)[:, None].repeat(iw, 1)
+    n = np.asarray(Image.fromarray((_pnoise(512, 6, 6, 4, 0.5, rng) * 255).astype(np.uint8)).resize((iw, ih), Image.BICUBIC), np.float32) / 255
+    far = 0.50 + 0.03 * np.sin(x * 7.0 + 1.3) + 0.02 * np.sin(x * 19 + 0.4)
+    d = 0.05 + 0.20 * (1 - y) ** 2 + 0.04 * n                                   # sky, darker overhead
+    d = np.where(y > far, 0.34 + 0.06 * n, d)                                  # distant hills
+    river = (y > 0.62) & (y < 0.80)
+    d = np.where(river, 0.12 + 0.30 * ((np.sin(y * 220 + n * 6) > 0.6) * 0.5) + 0.10 * (y - 0.62) / 0.18, d)
+    bank = 0.62 - 0.20 * np.exp(-((x - 0.72) / 0.16) ** 2)                      # rise on the right
+    d = np.where((y > bank) & (y < 0.66) & (x > 0.45), 0.46 + 0.20 * n, d)
+    d = np.where(y > 0.80, 0.55 + 0.30 * n, d)                                 # foreground bank
+    # rotunda on the rise: drum, columns, shallow dome
+    cx, base = 0.72, 0.43
+    drum = (np.abs(x - cx) < 0.06) & (y > base - 0.09) & (y < base)
+    d = np.where(drum, 0.08, d)
+    cp = ((x - cx + 0.06) % 0.015) / 0.015
+    d = np.where(drum & (y > base - 0.08) & (cp > 0.55), 0.55, d)
+    dome = _ellipse(x, y, cx, base - 0.09, 0.065, 0.06) & (y < base - 0.09)
+    d = np.where(dome, 0.15 + 0.5 * np.clip((x - cx + 0.02) / 0.08, 0, 1), d)
+    # framing trees
+    tr = np.zeros_like(x, bool)
+    for (tx, ty, rx, ry) in ((0.10, 0.45, 0.14, 0.42), (0.24, 0.62, 0.08, 0.20), (0.96, 0.55, 0.07, 0.30)):
+        tr |= ((x - tx) / rx) ** 2 + ((y - ty) / ry) ** 2 < 0.75 + 0.5 * n
+    d = np.where(tr, 0.62 + 0.30 * n, d)
+    d = np.where((np.abs(x - 0.11) < 0.012) & (y > 0.6), 0.85, d)              # trunk
+    gap = 3.2
+    hatch = 0.5 + 0.5 * np.cos((y * ih / gap + n * 0.6) * 2 * math.pi)
+    ink = hatch > 1 - d * 0.95
+    cross = 0.5 + 0.5 * np.cos(((x + y * 0.9) * iw / (gap * 1.1) + n) * 2 * math.pi)
+    ink |= (d > 0.55) & (cross > 1 - (d - 0.55) * 1.4)
+    paper = np.array((0.93, 0.89, 0.78), np.float32)
+    inkc = np.array((0.27, 0.20, 0.14), np.float32)
+    pic = paper[None, None, :] * (1 - ink[..., None]) + inkc[None, None, :] * ink[..., None]
+    page = Image.new("RGB", (w, h), tuple(int(c * 255) for c in paper))
+    page.paste(Image.fromarray((np.clip(pic, 0, 1) * 255).astype(np.uint8)), (int(w * pm), int(h * pm)))
+    dr = ImageDraw.Draw(page)
+    x0, y0 = int(w * pm) - 10, int(h * pm) - 10
+    dr.rectangle([x0, y0, w - x0, int(h * pm) + ih + 10], outline=(205, 195, 172), width=3)   # plate mark
+    dr.rectangle([int(w * pm) - 1, int(h * pm) - 1, int(w * pm) + iw, int(h * pm) + ih], outline=tuple(int(c * 255) for c in inkc), width=2)
+    f = _font(FONT_SERIF_B, max(12, h // 32))
+    tw = dr.textlength(caption, font=f)
+    dr.text(((w - tw) / 2, int(h * pm) + ih + 18), caption, font=f, fill=tuple(int(c * 255) for c in inkc))
+    return np.asarray(page, np.float32) / 255
 
 
 def build_dress_textures():
     rng = np.random.default_rng(SEED + 5)          # own stream: earlier textures stay byte-identical
     _save_rgb(f"{TEX}/T_X14_Print_Engraving_BC.png", _engraving(1024, 768, rng))
 
-    # Gray photograph of a generic domed civic building (FICTIONALISED view), with grain and vignette.
+    # Gray photograph of a generic domed civic building (FICTIONALISED view): tone field, grain,
+    # vignette, slight warm silver toning, white print border.
     w, h = 1024, 768
-    im = Image.new("L", (w, h), 0)
-    d = ImageDraw.Draw(im)
-    for yy in range(h):
-        d.line([(0, yy), (w, yy)], fill=int(200 - 60 * yy / h))
-    d.rectangle([90, 520, 934, 640], fill=150)                     # wings
-    d.rectangle([330, 400, 694, 640], fill=165)                    # central block
-    for k in range(9):                                             # columns
-        cx = 350 + k * 41
-        d.rectangle([cx, 420, cx + 14, 600], fill=205)
-    d.polygon([(320, 400), (512, 330), (704, 400)], fill=175)      # pediment
-    d.rectangle([420, 250, 604, 340], fill=170)                    # drum
-    for k in range(8):
-        d.rectangle([428 + k * 22, 262, 438 + k * 22, 330], fill=210)
-    d.pieslice([400, 120, 624, 380], 180, 360, fill=185)           # dome
-    d.rectangle([496, 70, 528, 130], fill=180)                     # lantern
-    d.rectangle([0, 640, w, h], fill=95)                           # lawn
-    a = np.asarray(im, np.float32) / 255
-    a = a + (rng.random((h, w)).astype(np.float32) - 0.5) * 0.08
+    a = _civic_tone(w, h, rng)
+    a = a + (rng.random((h, w)).astype(np.float32) - 0.5) * 0.06
     yy, xx = np.mgrid[0:h, 0:w]
-    vig = 1 - 0.35 * (((xx - w / 2) / (w / 2)) ** 2 + ((yy - h / 2) / (h / 2)) ** 2)
-    a = np.clip(a * vig, 0, 1)
-    _save_rgb(f"{TEX}/T_X14_Print_Photo_BC.png", np.stack([a * 0.98, a * 0.97, a * 0.93], -1))
+    a = np.clip(a * (1 - 0.30 * (((xx - w / 2) / (w / 2)) ** 2 + ((yy - h / 2) / (h / 2)) ** 2)), 0, 1)
+    img = np.stack([a * 0.98, a * 0.96, a * 0.91], -1)
+    bw = 26
+    img[:bw], img[-bw:], img[:, :bw], img[:, -bw:] = 0.93, 0.93, 0.93, 0.93
+    _save_rgb(f"{TEX}/T_X14_Print_Photo_BC.png", img)
 
     # Wall calendar, November 1963 (1 Nov 1963 was a Friday). Generic, no publisher imprint.
     w, h = 1024, 1536
     cal = Image.new("RGB", (w, h), (236, 232, 220))
-    pic = Image.fromarray((_engraving(900, 600, rng) * 255).astype(np.uint8))
+    pic = Image.fromarray((_engraving(900, 600, rng, caption="") * 255).astype(np.uint8))
     cal.paste(pic, (62, 50))
     d = ImageDraw.Draw(cal)
-    d.text((70, 690), "NOVEMBER", font=_font(FONT_SERIF_B, 110), fill=(40, 36, 32))
-    d.text((720, 715), "1963", font=_font(FONT_SERIF_B, 80), fill=(150, 30, 30))
+    d.text((66, 700), "NOVEMBER", font=_font(FONT_SERIF_B, 92), fill=(40, 36, 32))
+    d.text((765, 712), "1963", font=_font(FONT_SERIF_B, 76), fill=(150, 30, 30))
     days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     gx, gy, cw, chh = 62, 860, 128, 120
     for i, dname in enumerate(days):
@@ -1525,7 +1592,7 @@ def dress_materials(M):
     M["paper"] = material("MI_X14_Paper_Plain", color=(0.86, 0.84, 0.78, 1), roughness=0.85)
     M["paper_y"] = material("MI_X14_Paper_Yellow", color=(0.88, 0.78, 0.40, 1), roughness=0.85)
     M["matboard"] = material("MI_X14_Matboard", color=(0.84, 0.81, 0.72, 1), roughness=0.9)
-    M["leaf"] = material("MI_X14_Leaf_Dark", color=(0.06, 0.16, 0.05, 1), roughness=0.4)
+    M["leaf"] = material("MI_X14_Leaf_Dark", color=(0.03, 0.09, 0.025, 1), roughness=0.22)
     M["leaf2"] = material("MI_X14_Leaf_Light", color=(0.18, 0.33, 0.09, 1), roughness=0.5)
     M["terracotta"] = material("MI_X14_Terracotta", color=(0.52, 0.25, 0.15, 1), roughness=0.85)
     M["soil"] = material("MI_X14_Soil", color=(0.09, 0.06, 0.045, 1), roughness=0.95)
@@ -1552,7 +1619,7 @@ def fit_uv(mat_indices):
                 x0, x1, z0, z1 = min(xs), max(xs), min(zs), max(zs)
                 for l in f.loops:
                     u = (l.vert.co.x - x0) / max(x1 - x0, 1e-6)
-                    l[uv].uv = (u if f.normal.y > 0 else 1 - u, (l.vert.co.z - z0) / max(z1 - z0, 1e-6))
+                    l[uv].uv = (1 - u if f.normal.y > 0 else u, (l.vert.co.z - z0) / max(z1 - z0, 1e-6))
     return fn
 
 
@@ -1680,16 +1747,17 @@ def build_dress_bookcase(M):
         for z in shelves:
             box(bm, -W / 2 + t, 0.008, z - 0.022, W / 2 - t, Dp, z, 0)              # shelf boards
         for si, z in enumerate(shelves):
+            clear = (shelves[si + 1] - 0.022 if si + 1 < len(shelves) else H - t) - z - 0.025
             x = -W / 2 + t + 0.004
             xend = W / 2 - t - 0.004
             if lod == 2:
-                box(bm, x, 0.012, z, xend - 0.06, 0.20, z + 0.24, 1 + si % 4)
+                box(bm, x, 0.012, z, xend - 0.06, 0.20, z + min(0.24, clear), 1 + si % 4)
                 continue
             if si == 4:
                 xend -= 0.20          # top shelf: leave room for a lying stack
             while x < xend - 0.02:
                 bw = rnd.uniform(0.022, 0.048) if lod == 0 else rnd.uniform(0.08, 0.14)
-                bh = rnd.uniform(0.20, 0.30)
+                bh = min(rnd.uniform(0.20, 0.30), clear - rnd.uniform(0.0, 0.03))
                 bd = rnd.uniform(0.16, 0.22)
                 if x + bw > xend:
                     break
@@ -1726,23 +1794,28 @@ def build_dress_rubber_plant(M):
         bm = new_bm()
         segs = (32, 16, 10)[lod]
         _pot(bm, 0.12, 0.17, 0.30, 0, 1, segs)
-        stems = [(0.03, 0.02, 1.05, 0.10, 0.0), (-0.04, 0.02, 1.25, -0.08, 1.9), (0.0, -0.04, 0.85, 0.05, 3.6)]
-        for (sx, sy, L, lean, az) in stems:
+        stems = [(0.03, 0.02, 1.10, 0.10, 0.0), (-0.04, 0.02, 1.28, -0.08, 1.9), (0.0, -0.04, 0.86, 0.06, 3.6), (0.02, 0.04, 0.70, 0.12, 5.0)]
+        for si, (sx, sy, L, lean, az) in enumerate(stems):
             base = Vector((sx, sy, 0.26))
             top = base + Vector((lean * math.cos(az), lean * math.sin(az), L))
-            rod(bm, base, top, 0.011, (8, 6, 4)[lod], mat=2)
-            n_leaves = int(L / (0.075 if lod == 0 else 0.15 if lod == 1 else 0.3))
+            rod(bm, base, top, 0.012, (8, 6, 4)[lod], mat=2)
+            n_leaves = int(L / (0.06 if lod == 0 else 0.12 if lod == 1 else 0.26))
             for k in range(n_leaves):
-                t = 0.30 + 0.70 * k / max(n_leaves - 1, 1)
+                t = 0.22 + 0.78 * k / max(n_leaves - 1, 1)
                 p = base.lerp(top, t)
-                ln = rnd.uniform(0.19, 0.26) * (0.75 + 0.25 * t)
-                vs = leaf(bm, ln, ln * 0.45, 0.06, 3, nx=(6, 4, 3)[lod])
-                elev = math.radians(rnd.uniform(25, 50)) * (1.2 - 0.4 * t)
-                azl = k * 2.39996 + az
-                m = Matrix.Translation(p) @ Matrix.Rotation(azl, 4, "Z") @ Matrix.Rotation(-elev, 4, "Y")
+                ln = rnd.uniform(0.24, 0.32) * (0.70 + 0.30 * (1 - abs(t - 0.6)))
+                vs = leaf(bm, ln, ln * 0.46, 0.05 + 0.05 * (1 - t), 3, nx=(7, 4, 3)[lod])
+                _xf(bm, vs, Matrix.Translation((0.025, 0, 0)))                     # petiole gap
+                elev = math.radians(rnd.uniform(-5, 25) + 40 * t)                  # lower leaves level, top ones rise
+                azl = k * 2.39996 + az + si
+                m = Matrix.Translation(p) @ Matrix.Rotation(azl, 4, "Z") @ Matrix.Rotation(-elev, 4, "Y") @ Matrix.Rotation(rnd.uniform(-0.4, 0.4), 4, "X")
                 _xf(bm, vs, m)
+                if lod == 0:
+                    rod(bm, p, p + Vector((0.028 * math.cos(azl), 0.028 * math.sin(azl), 0.028 * math.sin(elev))), 0.003, 4, mat=2)
+            if lod < 2:   # rolled new leaf (sheath) at the growing tip
+                cylinder(bm, top.x, top.y, top.z, top.z + 0.07, 0.006, 6, mat=3)
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["terracotta"], M["soil"], M["door"], M["leaf"]], cleanup=False))
-    objs += ucx_boxes(name, [(-0.18, -0.18, 0, 0.18, 0.18, 0.30), (-0.30, -0.30, 0.30, 0.30, 0.30, 1.55)], M)
+    objs += ucx_boxes(name, [(-0.18, -0.18, 0, 0.18, 0.18, 0.30), (-0.38, -0.38, 0.30, 0.38, 0.38, 1.62)], M)
     return name, objs
 
 
@@ -1773,7 +1846,7 @@ def build_dress_pothos(M):
 
 
 def build_dress_coat_tree(M):
-    """Oak coat tree with brass hooks and a felt fedora on one hook (APPROXIMATE, period-typical)."""
+    """Oak coat tree with brass hooks and a felt fedora on the finial (APPROXIMATE, period-typical)."""
     name = "X14_DRESS_Coat_Tree"
     objs = []
     for lod in range(3):
@@ -1792,16 +1865,16 @@ def build_dress_coat_tree(M):
                     tip = (out * math.cos(a), out * math.sin(a), zh + up)
                     rod(bm, (0.02 * math.cos(a), 0.02 * math.sin(a), zh), tip, 0.006, 6, mat=1)
                     cylinder(bm, tip[0], tip[1], tip[2] - 0.008, tip[2] + 0.008, 0.011, 8, mat=1)
-        if lod < 2:                                                                        # fedora on the +X hook
+        if lod < 2:                                                                        # fedora
             before = set(bm.verts)
             crown = smooth_profile([(0.0, 0.0), (0.090, 0.0), (0.088, 0.07), (0.080, 0.105), (0.040, 0.118), (0.020, 0.105), (0.0, 0.110)], (3, 1, 1)[lod])
             lathe(bm, crown, (28, 12, 8)[lod], mat=2, sharp_rows=(1,))
             lathe(bm, [(0.088, 0.004), (0.165, 0.008), (0.168, 0.0), (0.090, -0.004)], (28, 12, 8)[lod], mat=2, sharp_rows=(1, 2))
             cylinder(bm, 0, 0, 0.004, 0.028, 0.0915, (28, 12, 8)[lod], mat=3)                 # band
             hv = [v for v in bm.verts if v not in before]
-            _xf(bm, hv, Matrix.Translation((0.13, 0.0, 1.66)) @ Matrix.Rotation(math.radians(-70), 4, "Y") @ Matrix.Translation((0, 0, -0.06)))
+            _xf(bm, hv, Matrix.Translation((0.0, 0.0, 1.785)) @ Matrix.Rotation(math.radians(5), 4, "X"))   # hung on the finial
         objs.append(finish(bm, f"{name}_LOD{lod}", [M["door"], M["brass"], M["felt"], M["signtext"]], cleanup=False))
-    objs += ucx_boxes(name, [(-0.31, -0.31, 0, 0.31, 0.31, 0.22), (-0.06, -0.06, 0.22, 0.06, 0.06, 1.84)], M)
+    objs += ucx_boxes(name, [(-0.31, -0.31, 0, 0.31, 0.31, 0.22), (-0.06, -0.06, 0.22, 0.06, 0.06, 1.91)], M)
     return name, objs
 
 
@@ -1862,9 +1935,7 @@ def build_dress_wastebasket(M):
         lathe(bm, prof, segs, mat=0, sharp_rows=(1, 3, 4, 6))
         if lod < 2:
             for k in range(3 if lod == 0 else 1):
-                before = set(bm.verts)
-                bmesh.ops.create_icosphere(bm, subdivisions=(2 if lod == 0 else 1), radius=0.045)
-                vs = [v for v in bm.verts if v not in before]
+                vs = bmesh.ops.create_icosphere(bm, subdivisions=(2 if lod == 0 else 1), radius=0.045)["verts"]
                 for v in vs:
                     v.co *= rnd.uniform(0.8, 1.15)
                 for f in {f for v in vs for f in v.link_faces}:

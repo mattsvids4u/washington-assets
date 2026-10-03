@@ -174,6 +174,59 @@
           "SOCKET_X14_Pendant (1.5,1.5,0) rotated 180° about X"
         ]
       }
+    },
+    "DRESS (v005 set dressing; period-typical, APPROXIMATE)": {
+      "X14_DRESS_Frame_Print_Large": {
+        "size": "0.66 w x 0.52 h x 0.045 d",
+        "pivot": "bottom centre on the wall face, picture faces local +Y",
+        "hang": "centre at ~1.45 m above floor"
+      },
+      "X14_DRESS_Frame_Photo_Small": {
+        "size": "0.48 x 0.40 x 0.045",
+        "pivot": "as Frame_Print_Large"
+      },
+      "X14_DRESS_Wall_Calendar_1963_11": {
+        "size": "0.31 x 0.47 x 0.012",
+        "pivot": "bottom centre on the wall face, faces +Y",
+        "note": "November 1963 sheet (1 Nov 1963 = Friday)"
+      },
+      "X14_DRESS_Bulletin_Board_090": {
+        "size": "0.90 x 0.60 x 0.035",
+        "pivot": "bottom centre on the wall face, faces +Y"
+      },
+      "X14_DRESS_Bookcase_Oak_090": {
+        "size": "0.90 w x 0.30 d x 1.80 h",
+        "pivot": "bottom centre of the back, back on y = 0, opens to +Y",
+        "top_surface_z": 1.8
+      },
+      "X14_DRESS_Plant_Rubber": {
+        "footprint": "pot r 0.17, canopy ~0.75 m",
+        "height": "~1.6 m",
+        "pivot": "pot base centre",
+        "placement": "room corners, >= 0.35 m from walls"
+      },
+      "X14_DRESS_Plant_Pothos_Small": {
+        "footprint": "pot r 0.085, trails ~0.25 m",
+        "pivot": "pot base centre",
+        "placement": "bookcase tops, sills, file-cabinet tops"
+      },
+      "X14_DRESS_Coat_Tree": {
+        "footprint": "0.62 m legs",
+        "height": "1.91 m with hat",
+        "pivot": "floor centre"
+      },
+      "X14_DRESS_Flag_Stand_US": {
+        "footprint": "base r 0.17",
+        "height": "2.53 m",
+        "pivot": "floor centre",
+        "drape": "flag hangs toward local +X/-Z; rotate so the union (canton) is on the viewer's left as seen from the room's main approach"
+      },
+      "X14_DRESS_Wastebasket": {
+        "footprint": "r 0.16",
+        "height": "0.33 m",
+        "pivot": "floor centre",
+        "placement": "one per desk, beside the pedestal"
+      }
     }
   },
   "demo_assembly": {
@@ -191,7 +244,8 @@
   "pcg_rules": [
     "walls snap WallNext→WallPrev in 3.0 m steps",
     "partitions snap PartNext→PartPrev in 1.2/0.9/0.6 m steps with a Post at each joint",
-    "drop-ceiling grid is independent of the 3 m architectural grid (1.2 m) and may stop short of walls by up to 0.6 m (1960s practice: perimeter soffit filler not modelled — see uncertainties)"
+    "drop-ceiling grid is independent of the 3 m architectural grid (1.2 m) and may stop short of walls by up to 0.6 m (1960s practice: perimeter soffit filler not modelled — see uncertainties)",
+    "DRESS modules scatter on walls/floor independently of the 3 m grid; wall-hung items need clear plaster (skip trim, radiators, partitions under 1.8 m); keep 0.9 m clear walkways (corridor) and door swings"
   ],
   "demo_assembly_1953": {
     "file": "X14_DEMO_LRS_Room_1953.glb",
@@ -209,5 +263,10 @@
     "sockets": "Furniture sockets aligned to the DC-I09 v004 contract (see list above). Names unchanged.",
     "node_names": "The 1953 demo room no longer exports Blender '.001' suffixes: 156 of its 417 node names (all SOCKET_I09_*, UCX_ and part nodes) were suffixed in v002-v003 because both rooms were built in one scene.",
     "modules": "All 22 kit modules and all textures are byte-identical to asset-v003."
+  },
+  "v005_changes": {
+    "modules": "10 new X14_DRESS_* modules (frames, calendar, bulletin board, bookcase, two plants, coat tree, flag, wastebasket). The 22 v004 modules and 24 v004 textures are byte-identical.",
+    "textures": "6 new: T_X14_Print_Engraving_BC, T_X14_Print_Photo_BC, T_X14_Calendar_1963-11_BC, T_X14_Flag_US_50Star_BC, T_X14_Cork_BC, T_X14_Memo_BC",
+    "demo_rooms": "Both rooms place: rubber plants in the two south corners, flag stand, coat tree, bulletin board, large print and calendar on the south wall; per cubicle a framed picture on the north wall, a bookcase against the west divider with a pothos on top, and a wastebasket."
   }
 }

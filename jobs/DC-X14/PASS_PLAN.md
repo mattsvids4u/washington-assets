@@ -130,3 +130,32 @@ reviewed. Delivered as `deliveries/DC-X14/asset-v003/`.
 - Acceptance: QA 24/24 PASS; clean rebuild byte-identical; 22 modules + textures byte-identical to v003;
   12 new furnished interior views reviewed. Delivered as `deliveries/DC-X14/asset-v004/`.
 
+
+## Pass 9 — asset-v005: set dressing (Matt, 2026-10-03: "anything on the walls? plants in the corners? nothin???")
+
+Problem: both demo rooms had bare walls and empty corners. Furniture is DC-I09's job, but nothing in
+the kit covered the wall and floor dressing a 1963 government office would carry.
+Deliverable: ten new `X14_DRESS_*` modules built like every other kit module (LOD0–2, UCX_, UVs,
+stable `MI_X14_*` slots, base pivots), placed in both demo rooms:
+- Walls: large framed print (oak frame, engraved river view), small framed photograph (metal frame,
+  generic domed civic building), November 1963 wall calendar, 0.9 m cork bulletin board with typed memos.
+- Floor: 0.9 m oak bookcase (five shelves of cloth-bound books; E19 shows bookcases between desk
+  groups), rubber plant in terracotta pot, small pothos on each bookcase, oak coat tree with a felt
+  fedora, U.S. flag (50 stars, correct since 4 July 1960) on an oak pole with a weighted base, olive
+  steel wastebasket per cubicle.
+Locked sources: E19 (1953 LRS photo: bookcases between desk groups), the moodbook palette. Everything else
+is period-typical APPROXIMATE; picture subjects and the room layout are FICTIONALISED.
+Acceptance: QA PASS on all 34 GLBs; the 22 v004 modules and 24 v004 textures byte-identical; clean
+rebuild byte-identical; module orbits and every interior view looked at.
+Defects found and fixed during the pass (before any delivery):
+1. Wastebasket LOD0 lost its steel body: `bmesh.ops.create_icosphere` reallocates the bmesh elements,
+   so the set-difference "new verts" trick returned every vertex and the body was retagged as paper and
+   moved. Fixed by using the op's returned verts.
+2. Bookcase: top-shelf books (up to 0.30 m) poked through the top; book height now capped by each
+   shelf's clearance.
+3. Rubber plant read as sparse bamboo: four stems, 0.24–0.32 m leaves at 6 cm spacing, darker glossy
+   leaf material, petioles and rolled tip sheaths.
+4. Fedora hung sideways off a hook; now seated on the finial.
+5. Prints and calendar were mirrored when seen from the room (fit_uv u flipped on +Y faces).
+6. First-draft print textures read as blobs: the photo is now a tonal render of a domed civic building
+   with trees and lawn; the engraving is a hatched river view with plate mark and caption.

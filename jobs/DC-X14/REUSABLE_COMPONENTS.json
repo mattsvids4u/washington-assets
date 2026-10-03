@@ -105,6 +105,67 @@
         "X10 Members' Room grade rooms (adjust height), X11 pavilions, X14 better offices"
       ],
       "notes": "from HABS DC-351-23 (E20); ornament simplified to rosettes"
+    },
+    {
+      "name": "X14_DRESS_Frame_Print_Large / _Frame_Photo_Small",
+      "family": "WD or MT frame + mat + printed picture",
+      "reusable_for": [
+        "any DC office or corridor wall (X10, X11, X13)",
+        "swap MI_X14_Print_* texture for other pictures"
+      ],
+      "notes": "picture slot UVs fitted 0..1, so any 4:3 image drops in"
+    },
+    {
+      "name": "X14_DRESS_Wall_Calendar_1963_11",
+      "family": "paper + tin strip",
+      "reusable_for": [
+        "every 1963 DC interior (date-locked to November 1963)"
+      ],
+      "notes": "texture is the month sheet; other months = new texture only"
+    },
+    {
+      "name": "X14_DRESS_Bulletin_Board_090",
+      "family": "oak + cork + memos",
+      "reusable_for": [
+        "office, staff room, guard post interiors"
+      ]
+    },
+    {
+      "name": "X14_DRESS_Bookcase_Oak_090",
+      "family": "oak + cloth books",
+      "reusable_for": [
+        "LoC reading/office rooms",
+        "any 1960s government office"
+      ],
+      "notes": "E19 shows bookcases between desk groups"
+    },
+    {
+      "name": "X14_DRESS_Plant_Rubber / _Plant_Pothos_Small",
+      "family": "terracotta + foliage",
+      "reusable_for": [
+        "any interior corner/sill"
+      ]
+    },
+    {
+      "name": "X14_DRESS_Coat_Tree",
+      "family": "oak + brass + felt",
+      "reusable_for": [
+        "offices, waiting rooms"
+      ]
+    },
+    {
+      "name": "X14_DRESS_Flag_Stand_US",
+      "family": "oak + brass + 50-star flag",
+      "reusable_for": [
+        "any federal office 1960-on (50-star flag official from 4 July 1960)"
+      ]
+    },
+    {
+      "name": "X14_DRESS_Wastebasket",
+      "family": "olive steel + paper",
+      "reusable_for": [
+        "every office desk"
+      ]
     }
   ],
   "textures_portable": [
@@ -120,7 +181,13 @@
     "T_X14_Partition_R",
     "T_X14_AcousticTile_BC/R/N",
     "T_X14_MetalPaint_BC/R",
-    "T_X14_Marble_BC/R"
+    "T_X14_Marble_BC/R",
+    "T_X14_Print_Engraving_BC",
+    "T_X14_Print_Photo_BC",
+    "T_X14_Calendar_1963-11_BC",
+    "T_X14_Flag_US_50Star_BC",
+    "T_X14_Cork_BC",
+    "T_X14_Memo_BC"
   ],
   "material_slots_stable": [
     "MI_X14_Plaster_Wall",
@@ -139,6 +206,26 @@
     "MI_X14_Opal_Glass",
     "MI_X14_Sign_Text",
     "MI_X14_Paint_Coffer",
-    "MI_X14_Oak_Partition_Dark"
+    "MI_X14_Oak_Partition_Dark",
+    "MI_X14_Print_Engraving",
+    "MI_X14_Print_Photo",
+    "MI_X14_Calendar_1963_11",
+    "MI_X14_Flag_US_50Star",
+    "MI_X14_Cork",
+    "MI_X14_Memo_Paper",
+    "MI_X14_Paper_Plain",
+    "MI_X14_Paper_Yellow",
+    "MI_X14_Matboard",
+    "MI_X14_Leaf_Dark",
+    "MI_X14_Leaf_Light",
+    "MI_X14_Terracotta",
+    "MI_X14_Soil",
+    "MI_X14_BookCloth_Maroon",
+    "MI_X14_BookCloth_Navy",
+    "MI_X14_BookCloth_Green",
+    "MI_X14_BookCloth_Tan",
+    "MI_X14_Felt_Hat",
+    "MI_X14_Metal_Olive",
+    "MI_X14_Pin_Red"
   ]
 }

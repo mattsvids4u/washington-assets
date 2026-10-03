@@ -20,6 +20,7 @@ VIEWS = {
     "int_door_and_sign": ((2.4, 1.5, 1.6), (4.6, 0.0, 1.6)),
     "int_high_overview": ((0.5, 0.5, 4.2), (6.5, 4.5, 1.2)),
     "int_cubicle_ceiling": ((4.5, 2.2, 1.0), (4.5, 5.5, 2.9)),
+    "int_south_wall": ((8.3, 2.9, 1.65), (2.2, 0.0, 1.15)),   # v005: wall dressing, plants, flag
 }
 
 
