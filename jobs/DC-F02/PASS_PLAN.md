@@ -109,3 +109,13 @@ That is too much for one honest delivery. The job is split into bounded versions
   - Delaware centre pavilion with columns in antis (APPROXIMATE).
   - Slope-exposed basement windows under the pavilions.
   Packaged as asset-v003; the New SOB moves to asset-v004.
+- 2026-10-03 (scheduled run, claimant claude-cloud-agent): **asset-v004 Pass 1 (New SOB): text evidence
+  only.** All four claude-cloud-agent claims (X14, V01, F01, F02) are delivered and waiting on Matt; no
+  Reviews entry exists for any of them. F02 v004 (the New SOB) is the only pass that is planned and not
+  waiting on a review, so this run resumed it. Result: EVIDENCE.md E23–E28 (WebSearch text). **Build
+  NOT started.** The request requires "expand the exact-photo pack before building each added anchor;
+  never genericise a named silhouette". The network policy blocks every image and archive host
+  (loc.gov, wikimedia, aoc.gov, senate.gov), so no NSOB photo can be inspected from this sandbox.
+  **Blocked on:** an NSOB photo pack (the list is in EVIDENCE.md) and/or an allowed-domains change for
+  loc.gov / upload.wikimedia.org / aoc.gov. Once photos are available, v004 = `SM_F02_NewSenateOfficeBuilding.glb`
+  in a new build module that shares MB/material/texture helpers with build.py.

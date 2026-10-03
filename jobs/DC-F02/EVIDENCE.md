@@ -108,3 +108,45 @@ B. Russell only in 1972 (E06). "Russell" is a production label only. Nothing in 
 | Roof: flat, behind the balustrade, with low skylight ridges over corridors | Flat roof plus parapet | Flat roof behind the parapet **VERIFIED (E10, 1967)**. Skylight ridges **APPROXIMATE** |
 | Window AC units, flags, lamps, signage | Not modelled (no signage on the building in 1963 that is known) | — |
 | Window interior states (lit / dark / blinds) for the night read | Atlas on the glazing, seeded per window | **FICTIONALISED** (gameplay dressing) |
+
+## asset-v004 (New Senate Office Building): Pass 1 text evidence, 2026-10-03 (scheduled run)
+
+Scope: the **New Senate Office Building** (1963 name; it was named Dirksen in 1972, E06). It was
+accepted for occupancy on 15 Oct 1958, so in Oct–Nov 1963 it was five years old. The Hart building
+on its east side dates from 1982 and **must not appear**.
+
+Access limit for this run: the sandbox network policy blocks loc.gov, wikimedia, wikipedia,
+senate.gov, aoc.gov and sah-archipedia.org (direct and WebFetch). Only WebSearch result text was
+available. **No NSOB photograph was inspected this run.** E17 (Alamy, 1960s, inspected in an earlier
+session and not stored) is still the only NSOB image anyone has looked at.
+
+| ID | Source (as surfaced by WebSearch, not opened) | Date | Supports | Status |
+|---|---|---|---|---|
+| E23 | AOC, "Dirksen Senate Office Building", https://www.aoc.gov/explore-capitol-campus/buildings-grounds/senate-office-buildings/dirksen | current page | Eggers & Higgins; seven storeys; E-shaped; marble and limestone; site bounded by Constitution Ave, First St, Second St and C St NE; half the block between First and Second in 1958; occupancy 15 Oct 1958; 750,520 sq ft. "Tall ribbons of glass and dark panels alternated with marble to suggest a colonnade" | TEXT ONLY |
+| E24 | SAH Archipedia DC-01-CH06, https://sah-archipedia.org/buildings/DC-01-CH06 | current page | "Synthesis of the classical and contemporary". **First St** is the principal elevation, with a **pilastered central bay, entablature and pediment**. Windows alternate with wall strips of equal width (a colonnade rhythm), with matching basement and attic windows. **Entries are on Constitution Ave**, through doors in the centre of **three-bay wall projections at each end**. Danby marble and Chelmsford granite on the street fronts; limestone on the court fronts | TEXT ONLY |
+| E25 | Search summary of the AOC art record for the Dirksen spandrel reliefs (search hit only; the record URL was not surfaced) | — | **51 bronze reliefs** on the spandrels between the 3rd- and 4th-floor windows. Five subjects: shipping, farming, manufacturing, mining, lumbering. Figures 2'2" square set in 3'4" square panels; Eggers design, modelled by Rochette & Parzini, cast by Flour City Ornamental Iron. 1958 work, so **rights unconfirmed**. Use labelled simplified stand-ins (stage standard §7) | TEXT ONLY |
+| E26 | Visit the Capitol, "Preliminary Design for the Dirksen Senate Office Building", Eggers & Higgins, 1948, https://www.visitthecapitol.gov/artifact/preliminary-design-dirksen-senate-office-building-eggars-higgins-1948 | 1948 drawing | Design intent only. The 1948 scheme differs from the building as constructed in 1956–58 | LEAD (not opened) |
+| E27 | LoC P&P 2023631785, "Back exterior of the Hart Senate Office Building with the Dirksen Senate Office Building in the background, Second St and C St NE", https://www.loc.gov/pictures/item/2023631785/ | post-1982 | C St / Second St side of the NSOB. Shows later context (Hart), so the date mismatch must be noted | LEAD (not opened) |
+| E28 | AOC Dirksen photo gallery and the senate.gov Dirksen page, https://www.senate.gov/about/historic-buildings-spaces/office-buildings/dirksen-building.htm | current | Modern and possibly 1958 construction or dedication photos | LEAD (not opened) |
+
+### Conflicts and gaps (must be resolved before the v004 build)
+
+1. **Frontage dimensions.** No length or height figures were found. The footprint needs the DC-R02
+   card or a dated plan.
+2. **First St portico.** E17 (memory of an earlier session's inspection) shows a "central pedimented
+   portico with columns". E24 says "pilastered central bay ... pediment". Columns or pilasters? Only a
+   photo settles this.
+3. **Constitution Ave entrances.** E24 says "three-bay projections at each end". E17 noted "a corner
+   entrance". Compatible, but bay counts and door forms are unverified.
+4. **The 1963 east end.** The Hart site was vacant or used for other things in 1963. What stood there
+   (parking, other buildings) is unknown.
+5. **Window and spandrel pattern.** "Tall ribbons of glass and dark panels" plus bronze spandrels
+   between floors 3 and 4: the dark panel material and mullion layout need a photo.
+
+### Photo pack wanted (put permitted images in References / DC-F02, or send them in chat)
+
+- A 1958–65 view of the Constitution Ave front (or the earliest available), showing the end
+  projections and the entrances.
+- A First St front view of the central bay, to answer columns vs pilasters.
+- A close view of a window bay with spandrel reliefs, to measure the glass/panel/marble rhythm.
+- Any dated plan or elevation (AOC) for the footprint and height.
