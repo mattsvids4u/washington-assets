@@ -35,9 +35,10 @@ through the glass, MP/DC roof letters, single red beacon, POLICE trunk marking, 
 1. **Evidence** — done 2026-10-02 (EVIDENCE.md). Identity gate: exact MPD make/model for 1963 is
    NOT proven; body modelled as a 1963 Ford-pattern full-size sedan (APPROXIMATE, justified by the
    DALLAS V07 shared-base relationship and the in-map Galaxie-derived civilian cars).
-2. **Build** — `build.py` (bpy 4.5): lofted body skin from parametric cross-sections → subdivision →
-   solidified shell → boolean window apertures, wheel wells, panel gaps → doors/hood/trunk split into
-   separate hinged objects → glazing, chrome, lamps, grille, bumpers, wheels (tyre/whitewall/rim/cap),
+2. **Build** — `build.py` (bpy 4.5). From v003: a structured body grid (stations × rows around a
+   filleted section outline with C1 key curves) → wheel openings, pillar plane cuts, grille and lamp
+   openings → openings, mouldings and panels selected on the grid → glass taken from the skin →
+   solidified shell with panel gaps → doors/hood/trunk split into separate hinged objects → glazing, chrome, lamps, grille, bumpers, wheels (tyre/whitewall/rim/cap),
    interior (floor, dash, column, wheel, benches, door cards), MPD layer (roof-ID decal, beacon,
    trunk POLICE decal, door seal decal, antenna), decals via shrinkwrap, procedural textures (PIL),
    LOD1/LOD2 (decimate), UCX collision, sockets as empties; export GLB (metres; UE imports as cm).
@@ -88,6 +89,24 @@ through the glass, MP/DC roof letters, single red beacon, POLICE trunk marking, 
   in v001's final GLB), floating rocker strip (v001 too), mirrored door-seal text, chrome-plug
   headlamps. Determinism regression (bevelled plate UVs) found and fixed; sliver-face cleanup added (meshes now
   exported pre-triangulated, QA 585/585 + 520/520); rocker strip wrap target extended to the door skins.
+- 2026-10-03 05:00–06:40Z **Pass 5 (asset-v003) — shape and text** (Matt on v002: "still needs
+  hella work. next pass. shape is wonky. text is wacked out."). Diagnosis from v002 renders:
+  - ripples and lumps from the smoothstep key blending, plus a dented fender-tip push;
+  - torn A-pillar and "horns" from flat-plane window cuts on a subdivided loft;
+  - floating flat glass with spikes at the corners;
+  - grey valance bricks;
+  - mirrored and rotated roof letters, and a crowded seal.
+  Rebuilt:
+  - the body as a structured filleted-section grid with C1 curves;
+  - openings and panels selected on the grid, plus pillar plane cuts;
+  - glass taken from the skin, with straight chrome surrounds;
+  - a flat front face with a full-width grille and lamps inside it;
+  - U-shaped wheel openings and liners, a thinner shell and rounded whitewall tyres.
+  Also:
+  - roof text fixed and verified from the GLB UVs (D M / C P per E1), beacon and antenna moved to
+    E1 positions, seal and plate text redrawn;
+  - interior and underbody parts that clipped the wheels moved inboard (clash probe clean).
+  Results: QA 645/645 + 580/580; clean rebuild byte-identical.
 - Next pass (after Matt's review): identity correction if the 1963 make is established; body
   side sculpting (side spear / fender character line), trunk dressing, siren and spotlight, DPD
   livery layer for V07, lit beacon state as a material switch in UE.

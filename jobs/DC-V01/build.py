@@ -31,7 +31,7 @@ TYRE_SAG = 1.0             # loaded-tyre deflection: hub height = OD/2 - SAG, fl
 RIM_D = 35.6               # 14 in
 AXLE_F, AXLE_R = -151.0, 151.0
 NOSE, TAIL = -240.0, 278.0  # sheet-metal ends (bumpers add ~6 cm each)
-SHELL_T = 2.5
+SHELL_T = 1.2              # v003: sheet + inner panel read thinner at every opening
 
 # ----------------------------------------------------------------------------- helpers
 
@@ -39,17 +39,45 @@ def V(x, y, z):
     return Vector((x / 100.0, y / 100.0, z / 100.0))
 
 
+_PCHIP = {}
+
+
+def _pchip_slopes(keys):
+    """Fritsch-Carlson monotone cubic slopes: C1-continuous, no overshoot between keys."""
+    ts = [k[0] for k in keys]; vs = [k[1] for k in keys]
+    n = len(keys)
+    d = [(vs[i + 1] - vs[i]) / (ts[i + 1] - ts[i]) for i in range(n - 1)]
+    m = [0.0] * n
+    m[0], m[-1] = d[0], d[-1]
+    for i in range(1, n - 1):
+        if d[i - 1] * d[i] <= 0:
+            m[i] = 0.0
+        else:
+            h0, h1 = ts[i] - ts[i - 1], ts[i + 1] - ts[i]
+            w0, w1 = 2 * h1 + h0, h1 + 2 * h0
+            m[i] = (w0 + w1) / (w0 / d[i - 1] + w1 / d[i])
+    return m
+
+
 def interp(keys, t):
-    """Piecewise-linear interpolation over [(t, value), ...] sorted by t."""
+    """Smooth (C1, monotone-preserving) interpolation over [(t, value), ...] sorted by t.
+    v003: replaces the v001/v002 per-segment smoothstep, whose zero slope at every key put
+    flat spots and ripples into the hood, fenders and roof."""
     if t <= keys[0][0]:
         return keys[0][1]
     if t >= keys[-1][0]:
         return keys[-1][1]
-    for (t0, v0), (t1, v1) in zip(keys, keys[1:]):
+    key = id(keys)
+    if key not in _PCHIP:
+        _PCHIP[key] = _pchip_slopes(keys)
+    m = _PCHIP[key]
+    for i, ((t0, v0), (t1, v1)) in enumerate(zip(keys, keys[1:])):
         if t0 <= t <= t1:
-            f = (t - t0) / (t1 - t0) if t1 > t0 else 0
-            f = f * f * (3 - 2 * f)  # smoothstep between keys
-            return v0 + (v1 - v0) * f
+            h = t1 - t0
+            s = (t - t0) / h
+            h00 = 2 * s ** 3 - 3 * s ** 2 + 1; h10 = s ** 3 - 2 * s ** 2 + s
+            h01 = -2 * s ** 3 + 3 * s ** 2; h11 = s ** 3 - s ** 2
+            return h00 * v0 + h10 * h * m[i] + h01 * v1 + h11 * h * m[i + 1]
     return keys[-1][1]
 
 
@@ -409,56 +437,83 @@ def make_textures():
     os.makedirs(TEX, exist_ok=True)
     TEAL = (72, 150, 150, 255)
     BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    SANS = "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"   # Helvetica-class caps (closest to E1)
+    if not os.path.exists(SANS):
+        SANS = BOLD
     out = {}
 
-    # Roof identifier: texture U = +X (driver side at U=1), V = car Y (front at V=0 top).
-    # Two stacked letter pairs: M (driver) / P (passenger) over the front seat,
-    # D / C over the rear seat; letter tops point to the driver side (+X) -> rotate glyphs 90 deg.
+    # Roof identifier (E1): from above with the nose to the right, the roof reads "D M" over "C P":
+    # M (driver side) / P (passenger) over the front seat, D / C over the rear seat, letter tops toward
+    # the driver side (+X). Decal UVs: U = +X, image row 0 = front of the plane (y = -14), so the
+    # rendered roof is this image flipped top-to-bottom -> glyphs are turned clockwise, then flipped.
     S = 1024
+    X0, X1, Y0, Y1 = -72.0, 72.0, -14.0, 116.0          # decal plane extent (cm), see police_layer()
     im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    font = ImageFont.truetype(BOLD, 540)
-    def glyph(ch):
-        g = Image.new("RGBA", (560, 560), (0, 0, 0, 0))
+    font = ImageFont.truetype(SANS, 420)
+    def glyph(ch, along_cm, across_cm):
+        g = Image.new("L", (520, 520), 0)
         d = ImageDraw.Draw(g)
-        bb = d.textbbox((0, 0), ch, font=font)
-        d.text(((560 - (bb[2] - bb[0])) / 2 - bb[0], (560 - (bb[3] - bb[1])) / 2 - bb[1]), ch, font=font, fill=TEAL)
-        return g.rotate(90, expand=False)   # top of the glyph now points to +U (driver side, +X)
-    # decal plane spans x -72..72 (U), y -12..96 (V, front at V=0)
-    for ch, u_c, v_c in (("M", 0.75, 0.22), ("P", 0.25, 0.22), ("D", 0.75, 0.77), ("C", 0.25, 0.77)):
-        g = glyph(ch)
-        im.alpha_composite(g, (int(u_c * S - 280), int(v_c * S - 280)))
+        d.text((40, 20), ch, font=font, fill=255)
+        g = g.crop(g.getbbox())
+        w = int(round(along_cm / (Y1 - Y0) * S)); h = int(round(across_cm / (X1 - X0) * S))
+        g = g.resize((w, h), Image.LANCZOS)            # upright: width = along the car, height = across
+        g = g.transpose(Image.ROTATE_270)              # tops now point to +U (driver side)
+        g = g.transpose(Image.FLIP_TOP_BOTTOM)         # undo the plane's front-at-top row order
+        tile = Image.new("RGBA", g.size, TEAL[:3] + (0,))
+        tile.putalpha(g)
+        return tile
+    # (letter, centre x cm, centre y cm, width along car cm, cap height across car cm) — sizes from E1
+    for ch, xc, yc, wl, hc in (("M", 38, 16, 47, 39), ("P", -38, 16, 40, 39),
+                               ("D", 38, 82, 43, 39), ("C", -38, 82, 43, 39)):
+        g = glyph(ch, wl, hc)
+        u = (xc - X0) / (X1 - X0) * S; row = (yc - Y0) / (Y1 - Y0) * S
+        im.alpha_composite(g, (int(round(u - g.size[0] / 2)), int(round(row - g.size[1] / 2))))
     p = os.path.join(TEX, "T_V01_Decal_RoofID.png"); im.save(p); out["roof"] = p
 
-    # Door seal: circular seal with generic text (APPROXIMATE, no copied artwork).
-    S = 512
+    # Door seal (APPROXIMATE, generic — no copied artwork): rings, a star, and evenly spaced ring text
+    # (upper arc reads left-to-right with tops outward, lower arc left-to-right with tops inward).
+    S = 1024
     im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    d.ellipse((16, 16, S - 16, S - 16), outline=TEAL, width=18)
-    d.ellipse((120, 120, S - 120, S - 120), outline=TEAL, width=10)
-    d.ellipse((190, 190, S - 190, S - 190), fill=TEAL)
-    fs = ImageFont.truetype(BOLD, 44)
-    def arc_text(text, r, a0, a1, flip=False):
-        n = len(text)
-        if flip:
-            a0, a1 = a1, a0          # lower arc: place glyphs right-to-left in angle so the text reads left-to-right
-        for i, ch in enumerate(text):
-            a = math.radians(a0 + (a1 - a0) * (i + 0.5) / n)
-            cx, cy = S / 2 + r * math.cos(a), S / 2 + r * math.sin(a)
-            g = Image.new("RGBA", (80, 80), (0, 0, 0, 0))
+    c = S / 2
+    d.ellipse((24, 24, S - 24, S - 24), outline=TEAL, width=30)
+    d.ellipse((250, 250, S - 250, S - 250), outline=TEAL, width=16)
+    star = []
+    for i in range(10):
+        r = 190 if i % 2 == 0 else 78
+        a = math.radians(-90 + 36 * i)
+        star.append((c + r * math.cos(a), c + r * math.sin(a)))
+    d.polygon(star, fill=TEAL)
+    fs = ImageFont.truetype(SANS, 92)
+    def arc_text(text, r, upper):
+        track = 6.0
+        adv = [fs.getlength(ch) + track for ch in text]
+        total = sum(adv) - track
+        ang = total / r                                   # radians spanned
+        acc = 0.0
+        for ch, w in zip(text, adv):
+            mid = acc + (w - track) / 2
+            acc += w
+            if upper:
+                psi = math.pi / 2 + ang / 2 - mid / r     # left -> right across the top
+                rot = math.degrees(psi) - 90
+            else:
+                psi = -math.pi / 2 - ang / 2 + mid / r    # left -> right across the bottom
+                rot = math.degrees(psi) + 90
+            gx, gy = c + r * math.cos(psi), c - r * math.sin(psi)
+            g = Image.new("RGBA", (160, 160), (0, 0, 0, 0))
             gd = ImageDraw.Draw(g)
-            bb = gd.textbbox((0, 0), ch, font=fs)
-            gd.text(((80 - (bb[2] - bb[0])) / 2 - bb[0], (80 - (bb[3] - bb[1])) / 2 - bb[1]), ch, font=fs, fill=TEAL)
-            rot = -math.degrees(a) - 90 + (180 if flip else 0)
+            gd.text((80, 80), ch, font=fs, fill=TEAL, anchor="mm")
             g = g.rotate(rot, resample=Image.BICUBIC)
-            im.alpha_composite(g, (int(cx - 40), int(cy - 40)))
-    arc_text("METROPOLITAN POLICE", 190, 200, 340)
-    arc_text("WASHINGTON D.C.", 190, 20, 160, flip=True)
+            im.alpha_composite(g, (int(round(gx - 80)), int(round(gy - 80))))
+    arc_text("METROPOLITAN POLICE", 372, True)
+    arc_text("WASHINGTON, D.C.", 372, False)
     p = os.path.join(TEX, "T_V01_Decal_DoorSeal.png"); im.save(p); out["seal"] = p
 
     # Trunk POLICE: U = -X..+X? plane maps U = car X (driver at U=0), V = car Y; read from behind.
     im = Image.new("RGBA", (1024, 256), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    f2 = ImageFont.truetype(BOLD, 150)
+    f2 = ImageFont.truetype(SANS, 150)
     bb = d.textbbox((0, 0), "POLICE", font=f2)
     d.text(((1024 - (bb[2] - bb[0])) / 2 - bb[0], (256 - (bb[3] - bb[1])) / 2 - bb[1]), "POLICE", font=f2, fill=TEAL)
     im = im.transpose(Image.FLIP_LEFT_RIGHT)  # viewer behind the car, driver side on their left
@@ -468,7 +523,7 @@ def make_textures():
     im = Image.new("RGBA", (512, 256), (28, 36, 54, 255))
     d = ImageDraw.Draw(im)
     d.rectangle((8, 8, 503, 247), outline=(230, 230, 220, 255), width=6)
-    f3 = ImageFont.truetype(BOLD, 112)
+    f3 = ImageFont.truetype(SANS, 100)
     bb = d.textbbox((0, 0), "MP 1963", font=f3)
     d.text(((512 - (bb[2] - bb[0])) / 2 - bb[0], 86 - bb[1]), "MP 1963", font=f3, fill=(235, 235, 225, 255))
     f4 = ImageFont.truetype(BOLD, 34)
@@ -487,118 +542,255 @@ def load_images(paths):
     return imgs
 
 
-# ----------------------------------------------------------------------------- body cross-sections
-# Feature curves along Y (cm). Each returns a value at station y.
+# ----------------------------------------------------------------------------- body surface (v003)
+# The skin is a structured grid: STATIONS along Y x section ROWS around a filleted control polygon.
+# Every panel line, window opening and moulding is selected along grid rows/stations (plus a few
+# straight plane cuts for slanted pillar edges), so apertures are clean and pillars keep their width.
+# Control polygon per half-section (+X), top centre -> bottom centre:
+#   0 centre top | 1 crown | 2 roof/hood mid | 3 drip rail (greenhouse) / hood+deck panel edge |
+#   4 belt (window sill) / fender top | 5 shoulder crease | 6 upper side | 7 lower side |
+#   8 rocker top | 9 rocker bottom | 10 floor edge | 11 floor centre
 K = {
     # centreline top: hood -> windshield -> roof -> rear window -> deck
-    "zc":   [(NOSE, 85.0), (-225, 87.0), (-150, 89.0), (-70, 91.5), (-58, 93.5), (-24, 136.5), (35, 140.5),
-             (118, 138.5), (122, 136.0), (158, 98.0), (166, 96.0), (240, 93.0), (TAIL, 90.0)],
-    # near-centre crown point (hood crease / roof crown)
-    "x1":   [(NOSE, 14), (-60, 14), (-24, 30), (118, 30), (158, 20), (TAIL, 20)],
-    "dz1":  [(NOSE, -1.8), (-62, -1.8), (-50, -0.6), (-24, -0.4), (118, -0.4), (158, -0.4), (TAIL, -0.8)],
-    # outer top panel point (hood edge / roof edge at the drip rail)
-    "x3":   [(NOSE, 54), (-150, 60), (-70, 64), (-58, 66), (-34, 70), (-24, 72), (40, 74), (118, 72),
-             (124, 70), (158, 70), (166, 72), (240, 68), (TAIL, 60)],
-    "z3":   [(NOSE, 84.0), (-225, 86.0), (-150, 88.0), (-70, 90.5), (-58, 92.5), (-24, 134.0), (35, 137.5),
-             (118, 135.0), (122, 133.0), (158, 97.0), (166, 95.0), (240, 92.0), (TAIL, 89.0)],
-    # fender top inner / belt sill (window base)
-    "x4":   [(NOSE, 76), (-225, 82), (-150, 86), (-70, 89), (-58, 90), (-34, 91.5), (-24, 92), (40, 93),
-             (130, 93), (158, 92), (166, 91), (240, 88), (TAIL, 80)],
-    "z4":   [(NOSE, 84.5), (-225, 86.5), (-150, 88.5), (-70, 91.0), (-58, 93.0), (-34, 95.5), (-24, 96.5), (40, 96.5),
-             (158, 96.5), (166, 95.5), (240, 93.0), (TAIL, 90.0)],
-    # shoulder crease (max width upper) - sharp horizontal character line
-    "x5":   [(NOSE, 88), (-225, 95), (-150, 98.5), (-70, 100.5), (0, 101.5), (120, 101.5), (160, 100.5), (240, 97), (TAIL, 90)],
-    "z5":   [(NOSE, 81.5), (-225, 83.5), (-150, 85.5), (-70, 88.0), (0, 90.5), (158, 91.0), (240, 89.5), (TAIL, 86.5)],
-    # side mid (slightly convex door skin)
-    "x6":   [(NOSE, 87), (-225, 94.5), (-150, 98.5), (-70, 100.8), (0, 102.0), (120, 102.0), (160, 100.8), (240, 96.5), (TAIL, 89)],
-    "z6":   [(NOSE, 64), (-70, 64), (0, 64), (TAIL, 64)],
-    # lower side
-    "x7":   [(NOSE, 84), (-225, 92), (-150, 95.5), (-70, 97.5), (0, 98.5), (120, 98.5), (160, 97.5), (240, 94), (TAIL, 86)],
-    "z7":   [(NOSE, 46), (-70, 44), (0, 44), (TAIL, 46)],
-    # rocker top / bottom (tucked under)
-    "x8":   [(NOSE, 78), (-225, 86), (-150, 90), (-70, 92), (0, 93), (120, 93), (160, 92), (240, 88), (TAIL, 80)],
-    "z8":   [(NOSE, 36), (-70, 31), (0, 30), (120, 30), (TAIL, 36)],
-    "x9":   [(NOSE, 70), (-225, 78), (-150, 82), (-70, 84), (0, 85), (120, 85), (160, 84), (240, 80), (TAIL, 72)],
-    "z9":   [(NOSE, 31), (-70, 25), (0, 24), (120, 24), (TAIL, 30)],
-    # floor
-    "x10":  [(NOSE, 56), (-100, 66), (0, 70), (120, 70), (TAIL, 58)],
-    "z10":  [(NOSE, 30), (-70, 24), (0, 22), (120, 22), (TAIL, 29)],
+    "zc":  [(NOSE, 86.0), (-225, 87.5), (-150, 89.5), (-70, 91.5), (-58, 93.0), (-40, 116.5), (-24, 136.5),
+            (35, 140.8), (118, 138.6), (122, 136.6), (140, 117.5), (158, 98.5), (166, 96.6), (240, 94.6), (TAIL, 91.5)],
+    "x1":  [(NOSE, 18), (-62, 18), (-24, 30), (118, 30), (158, 22), (TAIL, 22)],
+    "dz1": [(NOSE, -0.5), (-62, -0.5), (-24, -0.8), (118, -0.8), (158, -0.5), (TAIL, -0.5)],
+    "dz2": [(NOSE, -1.2), (-62, -1.2), (-24, -2.4), (118, -2.4), (158, -1.2), (TAIL, -1.2)],
+    # drip rail (greenhouse) / hood & deck-lid edge
+    "x3":  [(NOSE, 66), (-150, 69), (-70, 71), (-58, 75.5), (-24, 71.5), (35, 73.5), (118, 71.5), (122, 71.5),
+            (158, 77.0), (166, 75), (240, 73), (TAIL, 69)],
+    "z3":  [(NOSE, 84.8), (-225, 86.3), (-150, 88.2), (-70, 90.0), (-58, 92.2), (-40, 113.5), (-24, 133.8),
+            (35, 137.6), (118, 135.6), (122, 133.6), (140, 115.0), (158, 97.2), (166, 95.4), (240, 93.4), (TAIL, 90.3)],
+    # belt (window sill) / fender top
+    "x4":  [(NOSE, 84), (-225, 87), (-150, 89.5), (-70, 91.5), (-58, 92.5), (-24, 93.0), (120, 93.0),
+            (158, 92.5), (166, 91.5), (240, 89), (TAIL, 85)],
+    "z4":  [(NOSE, 84.2), (-225, 85.8), (-150, 87.6), (-70, 89.6), (-58, 92.0), (-40, 95.6), (-24, 96.5),
+            (120, 96.5), (158, 96.3), (166, 95.0), (240, 92.8), (TAIL, 89.6)],
+    # shoulder crease: the sharp full-length character line
+    "x5":  [(NOSE, 92.5), (-225, 97.0), (-150, 99.5), (-70, 101.0), (0, 101.6), (120, 101.6), (160, 101.0),
+            (240, 98.5), (TAIL, 94.0)],
+    "z5":  [(NOSE, 82.0), (-225, 83.6), (-150, 85.4), (-70, 87.8), (0, 89.8), (158, 90.6), (240, 89.4), (TAIL, 87.0)],
+    "x6":  [(NOSE, 92.0), (-225, 96.6), (-150, 99.3), (-70, 101.0), (0, 101.8), (120, 101.8), (160, 101.0),
+            (240, 98.2), (TAIL, 93.5)],
+    "z6":  [(NOSE, 66), (TAIL, 66)],
+    "x7":  [(NOSE, 89.5), (-225, 94.5), (-150, 97.3), (-70, 99.0), (0, 99.6), (120, 99.6), (160, 99.0),
+            (240, 96.0), (TAIL, 91.0)],
+    "z7":  [(NOSE, 44), (-70, 42), (0, 42), (TAIL, 44)],
+    "x8":  [(NOSE, 84), (-225, 90), (-150, 93), (-70, 95), (0, 95.5), (120, 95.5), (160, 94.5), (240, 91), (TAIL, 85)],
+    "z8":  [(NOSE, 33), (-70, 30), (0, 29.5), (120, 29.5), (TAIL, 33)],
+    "x9":  [(NOSE, 78), (-225, 84), (-150, 87), (-70, 88.5), (0, 89), (120, 89), (160, 88), (240, 84), (TAIL, 78)],
+    "z9":  [(NOSE, 27), (-70, 24), (0, 23.5), (120, 23.5), (TAIL, 27)],
+    "x10": [(NOSE, 66), (-100, 72), (0, 74), (120, 74), (TAIL, 66)],
+    "z10": [(NOSE, 27), (-70, 22.5), (0, 22), (120, 22), (TAIL, 26)],
+    # fillet radii (cm) at control points 1..10; small = crisp edge, large = soft curve
+    "r1":  [(NOSE, 80), (TAIL, 80)],
+    "r2":  [(NOSE, 80), (TAIL, 80)],
+    "r3":  [(NOSE, 14), (-70, 14), (-58, 2.0), (158, 2.0), (166, 14), (TAIL, 14)],
+    "r4":  [(NOSE, 8), (-70, 8), (-58, 1.4), (158, 1.4), (166, 8), (TAIL, 8)],
+    "r5":  [(NOSE, 0.9), (TAIL, 0.9)],
+    "r6":  [(NOSE, 120), (TAIL, 120)],
+    "r7":  [(NOSE, 50), (TAIL, 50)],
+    "r8":  [(NOSE, 6), (TAIL, 6)],
+    "r9":  [(NOSE, 3), (TAIL, 3)],
+    "r10": [(NOSE, 4), (TAIL, 4)],
 }
 
+# rows per span between control points i -> i+1, as cumulative fractions of the span length
+SPAN_FRACS = [
+    [0, 0.34, 0.67, 1.0],                                   # 0-1 centre -> crown
+    [0, 0.25, 0.5, 0.75, 1.0],                              # 1-2
+    [0, 0.30, 0.55, 0.75, 0.88, 0.95, 1.0],                 # 2-3 (dense toward the drip / panel edge)
+    [0, 0.04, 0.10] + [0.10 + 0.87 * i / 9 for i in range(1, 10)] + [1.0],   # 3-4 window band
+    [0, 0.25, 0.55, 0.85, 1.0],                             # 4-5 shoulder top
+    [0, 0.12, 0.3, 0.5, 0.7, 0.88, 1.0],                    # 5-6
+    [0, 0.2, 0.4, 0.6, 0.8, 1.0],                           # 6-7
+    [0, 0.3, 0.6, 0.85, 1.0],                               # 7-8
+    [0, 0.33, 0.67, 1.0],                                   # 8-9 rocker
+    [0, 0.5, 1.0],                                          # 9-10
+    [0, 0.3, 0.65, 1.0],                                    # 10-11 floor
+]
+CP_ROW = [0]
+for _f in SPAN_FRACS:
+    CP_ROW.append(CP_ROW[-1] + len(_f) - 1)
+HALF_ROWS = CP_ROW[-1]                                      # faces per half-ring
 
-def half_ring(y):
+
+def control_polygon(y):
     g = lambda k: interp(K[k], y)
-    zc = g("zc")
-    pts = [
-        (0.0, zc),
-        (g("x1"), zc + g("dz1")),
-        (g("x3") * 0.55, (zc + g("dz1") + g("z3")) / 2 + 0.4),
-        (g("x3"), g("z3")),
-        (g("x4"), g("z4")),
-        (g("x5"), g("z5")),
-        (g("x6"), g("z6")),
-        (g("x7"), g("z7")),
-        (g("x8"), g("z8")),
-        (g("x9"), g("z9")),
-        (g("x10"), g("z10")),
-        (0.0, g("z10")),
-    ]
-    return pts
+    zc = g("zc"); x3, z3 = g("x3"), g("z3")
+    pts = [(0.0, zc), (g("x1"), zc + g("dz1")), (0.6 * x3, zc + g("dz2")), (x3, z3), (g("x4"), g("z4")),
+           (g("x5"), g("z5")), (g("x6"), g("z6")), (g("x7"), g("z7")), (g("x8"), g("z8")), (g("x9"), g("z9")),
+           (g("x10"), g("z10")), (0.0, g("z10"))]
+    radii = [0.0] + [g(f"r{i}") for i in range(1, 11)] + [0.0]
+    return pts, radii
+
+
+def _fillet(p_prev, p, p_next, r):
+    """Tangent points + arc samples for a fillet of radius r at polygon corner p (2D tuples)."""
+    a = Vector((p_prev[0] - p[0], p_prev[1] - p[1])); b = Vector((p_next[0] - p[0], p_next[1] - p[1]))
+    la, lb = a.length, b.length
+    if la < 1e-6 or lb < 1e-6 or r <= 0:
+        return [p]
+    a.normalize(); b.normalize()
+    cosphi = max(-1.0, min(1.0, a.dot(b)))
+    phi = math.acos(cosphi)                      # interior angle
+    if phi > math.radians(179.5):
+        return [p]
+    d = r / math.tan(phi / 2)
+    dmax = 0.45 * min(la, lb)
+    if d > dmax:
+        d = dmax; r = d * math.tan(phi / 2)
+    t0 = Vector(p) + a * d; t1 = Vector(p) + b * d
+    bis = (a + b).normalized()
+    c = Vector(p) + bis * (r / math.sin(phi / 2))
+    v0, v1 = t0 - c, t1 - c
+    ang0, ang1 = math.atan2(v0.y, v0.x), math.atan2(v1.y, v1.x)
+    da = ang1 - ang0
+    while da > math.pi: da -= 2 * math.pi
+    while da < -math.pi: da += 2 * math.pi
+    n = 8
+    return [(c.x + r * math.cos(ang0 + da * i / n), c.y + r * math.sin(ang0 + da * i / n)) for i in range(n + 1)]
+
+
+def half_section(y):
+    """Resampled half section at station y: list of HALF_ROWS + 1 (x, z) points, top -> bottom."""
+    pts, radii = control_polygon(y)
+    # build a dense polyline with fillets; remember where each control point's arc midpoint lies
+    poly, marks = [], []
+    for i, p in enumerate(pts):
+        if 0 < i < len(pts) - 1:
+            arc = _fillet(pts[i - 1], p, pts[i + 1], radii[i])
+        else:
+            arc = [p]
+        marks.append(len(poly) + len(arc) // 2)
+        poly.extend(arc)
+    # cumulative arc length
+    s = [0.0]
+    for (x0, z0), (x1, z1) in zip(poly, poly[1:]):
+        s.append(s[-1] + math.hypot(x1 - x0, z1 - z0))
+    def at(sv):
+        for k in range(len(s) - 1):
+            if s[k] <= sv <= s[k + 1]:
+                f = (sv - s[k]) / (s[k + 1] - s[k]) if s[k + 1] > s[k] else 0.0
+                return (poly[k][0] + (poly[k + 1][0] - poly[k][0]) * f, poly[k][1] + (poly[k + 1][1] - poly[k][1]) * f)
+        return poly[-1]
+    out = []
+    for i, fr in enumerate(SPAN_FRACS):
+        s0, s1 = s[marks[i]], s[marks[i + 1]]
+        for f in fr[:-1]:
+            out.append(at(s0 + (s1 - s0) * f))
+    out.append(poly[-1])
+    out[0] = (0.0, out[0][1]); out[-1] = (0.0, out[-1][1])
+    return out
+
+
+def side_x(y, z):
+    """Outer body x (cm, +X side) at station y and height z, searched between the drip rail and rocker."""
+    h = half_section(y)
+    for (x0, z0), (x1, z1) in zip(h[CP_ROW[3]:CP_ROW[9]], h[CP_ROW[3] + 1:CP_ROW[9] + 1]):
+        if min(z0, z1) <= z <= max(z0, z1) and abs(z1 - z0) > 1e-6:
+            return x0 + (x1 - x0) * (z - z0) / (z1 - z0)
+    return interp(K["x5"], y)
+
+
+ROLL_R = 2.5                      # radius of the rolled edge around the flat front and rear faces
+# exact stations where panel lines / openings fall (cm)
+HOOD_Y0, HOOD_Y1 = NOSE + ROLL_R, -62.0
+TRUNK_Y0, TRUNK_Y1 = 162.0, TAIL - ROLL_R
+WS_Y = (-55.0, -26.5)             # windshield opening (between cowl and header)
+BL_Y = (125.0, 155.5)             # backlight opening
+DOOR_F_Y = (-47.0, 50.0)          # front door, below the belt
+DOOR_R_Y = (51.0, 106.0)          # rear door, below the belt (ahead of the rear wheel arch)
+WIN_F_Y1, WIN_R_Y0 = 45.0, 57.0   # B-pillar between the side windows
+TRIM_W = 2.0                      # bright window-surround moulding width
+WS_TRIM_Y = (WS_Y[0] - 1.5, WS_Y[1] + 1.5)
+BL_TRIM_Y = (BL_Y[0] - 1.5, BL_Y[1] + 1.5)
+EXACT_Y = [HOOD_Y0, HOOD_Y1, *WS_Y, *BL_Y, *DOOR_F_Y, *DOOR_R_Y, WIN_F_Y1, WIN_R_Y0, TRUNK_Y0, TRUNK_Y1,
+           -24.0, -58.0, 122.0, 158.0, *WS_TRIM_Y, *BL_TRIM_Y, WIN_F_Y1 + TRIM_W, WIN_R_Y0 - TRIM_W]
+# slanted edges in side view (y, z) pairs: A-pillar side and C-pillar side
+L_DOOR_F = ((-47.0, 96.5), (-18.4, 131.0))      # front-door frame front edge (parallel to the A-pillar)
+L_WIN_F = ((-41.0, 97.5), (-13.2, 131.0))       # front side-window front edge
+L_WIN_R = ((112.0, 131.0), (120.0, 97.5))       # rear side-window rear edge (C-pillar)
+L_DOOR_R = ((115.5, 131.0), (123.5, 97.5))      # rear-door frame rear edge
+L_TRIM_F = tuple((y - TRIM_W, z) for y, z in L_WIN_F)   # outer edge of the front-window moulding
+L_TRIM_R = tuple((y + TRIM_W, z) for y, z in L_WIN_R)   # outer edge of the rear-window moulding
+
+
+def body_stations():
+    ys = []
+    # front roll: quarter circle from the hood/fender top down onto the flat front face
+    rolls_f = [(NOSE + ROLL_R * (1 - math.sin(t)), ROLL_R * (1 - math.cos(t)))
+               for t in [math.radians(a) for a in (90, 70, 50, 30, 15, 0)]]
+    rolls_r = [(TAIL - ROLL_R * (1 - math.sin(t)), ROLL_R * (1 - math.cos(t)))
+               for t in [math.radians(a) for a in (0, 15, 30, 50, 70, 90)]]
+    y0, y1 = NOSE + ROLL_R, TAIL - ROLL_R
+    n = int(round((y1 - y0) / 3.0))
+    mids = [y0 + (y1 - y0) * i / n for i in range(n + 1)]
+    mids = [y for y in mids if all(abs(y - e) > 0.9 for e in EXACT_Y) or y in (y0, y1)]
+    mids = sorted(set([round(y, 4) for y in mids + EXACT_Y if y0 <= y <= y1]))
+    st = [(y, ins) for y, ins in rolls_f[:-1]] + [(y, 0.0) for y in mids] + [(y, ins) for y, ins in rolls_r[1:]]
+    return st
+
+
+def _inset_ring(ring, d):
+    """Offset a closed 2D ring (list of (x, z)) inward by d along per-vertex normals."""
+    if d <= 0:
+        return ring
+    n = len(ring)
+    cx = sum(p[0] for p in ring) / n; cz = sum(p[1] for p in ring) / n
+    out = []
+    for i in range(n):
+        p0, p1, p2 = ring[i - 1], ring[i], ring[(i + 1) % n]
+        t = Vector((p2[0] - p0[0], p2[1] - p0[1]))
+        if t.length < 1e-9:
+            out.append(p1); continue
+        t.normalize()
+        nrm = Vector((t.y, -t.x))
+        if nrm.dot(Vector((cx - p1[0], cz - p1[1]))) < 0:
+            nrm = -nrm
+        out.append((p1[0] + nrm.x * d, p1[1] + nrm.y * d))
+    return out
 
 
 def full_ring(y):
-    h = half_ring(y)
-    right = [(x, z) for x, z in h]                    # +X side, top -> bottom
-    left = [(-x, z) for x, z in reversed(h[1:-1])]    # -X side, bottom -> top
-    return right + left
+    h = half_section(y)
+    return [(x, z) for x, z in h] + [(-x, z) for x, z in reversed(h[1:-1])]
 
 
-STATIONS = [NOSE, -236, -228, -216, -200, -180, -160, -140, -120, -100, -84, -70, -62, -58, -52, -44,
-            -36, -30, -24, -12, 4, 20, 36, 52, 68, 84, 100, 112, 118, 122, 128, 136, 144, 150, 156,
-            160, 166, 176, 190, 205, 220, 240, 256, 268, 274, TAIL]
-
-
-def build_loft():
-    """Open body skin: lofted, Catmull-Clark subdivided, fender tips pushed forward/back."""
+def build_body():
+    """Closed body skin with per-face grid indices (layers: st = station, row = half-ring row,
+    side = +1/-1, 0 for the end caps)."""
     bm = bmesh.new()
+    st_l = bm.faces.layers.int.new("st"); row_l = bm.faces.layers.int.new("row"); side_l = bm.faces.layers.int.new("side")
+    stations = body_stations()
+    STATION_Y[:] = [y for y, _ in stations]
     rings = []
-    for y in STATIONS:
-        rings.append([bm.verts.new(V(x, y, z)) for x, z in full_ring(y)])
+    for y, ins in stations:
+        ring = _inset_ring(full_ring(min(max(y, NOSE), TAIL)), ins)
+        rings.append([bm.verts.new(V(x, y, z)) for x, z in ring])
     n = len(rings[0])
-    for ra, rb in zip(rings, rings[1:]):
+    for si, (ra, rb) in enumerate(zip(rings, rings[1:])):
         for i in range(n):
             j = (i + 1) % n
-            bm.faces.new([ra[i], rb[i], rb[j], ra[j]])
-    cap_f = bm.faces.new(list(rings[0]))
-    cap_r = bm.faces.new(list(reversed(rings[-1])))
+            f = bm.faces.new([ra[i], rb[i], rb[j], ra[j]])
+            f[st_l] = si
+            if i < HALF_ROWS:
+                f[row_l], f[side_l] = i, 1
+            else:
+                f[row_l], f[side_l] = n - 1 - i, -1
+    for ring in (rings[0], rings[-1]):
+        f = bm.faces.new(list(ring)); f[st_l] = -1; f[row_l] = -1; f[side_l] = 0
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-    crease = bm.edges.layers.float.new("crease_edge")
-    for e in cap_f.edges:
-        e[crease] = 0.8
-    for e in cap_r.edges:
-        e[crease] = 0.8
-    for ra, rb in zip(rings, rings[1:]):
-        for idx, w in ((5, 0.85), (n - 5, 0.85), (4, 0.3), (n - 4, 0.3), (9, 0.7), (n - 9, 0.7), (8, 0.3), (n - 8, 0.3)):
-            e = bm.edges.get((ra[idx], rb[idx]))
-            if e:
-                e[crease] = w
-    obj = new_obj("BODY", bm, [M["MI_V01_Paint_Body"], M["MI_V01_Interior_Trim"], M["MI_V01_Undercoat"]])
-    sub = obj.modifiers.new("sub", "SUBSURF")
-    sub.levels = 2
-    sub.use_creases = True
-    apply_mod(obj, sub)
-    # fender tips: push the outer corners of the nose/tail forward of the centre (plan-view V)
-    me = obj.data
-    for v in me.vertices:
-        x, y, z = v.co
-        zw = min(1.0, max(0.0, (z - 0.30) / 0.15)); zw = zw * zw * (3 - 2 * zw)   # upper fender only
-        if y < -2.10:
-            w = min(1.0, (-2.10 - y) / 0.30); w = w * w * (3 - 2 * w)
-            v.co.y -= 0.07 * w * zw * (abs(x) / 0.90) ** 2
-        if y > 2.45:
-            w = min(1.0, (y - 2.45) / 0.33); w = w * w * (3 - 2 * w)
-            v.co.y += 0.04 * w * zw * (abs(x) / 0.88) ** 2
+    for f in bm.faces:
+        f.material_index = 0
+        if f[row_l] >= CP_ROW[9]:
+            f.material_index = 2                     # underside reads as undercoat
+    obj = new_obj("BODY", bm, [M["MI_V01_Paint_Body"], M["MI_V01_Interior_Trim"], M["MI_V01_Undercoat"], M["MI_V01_Chrome"]])
     return obj
+
+
+STATION_Y = []
 
 
 # ----------------------------------------------------------------------------- bisect-based cutting
@@ -798,179 +990,229 @@ def bevel(obj, width=0.004, segs=2, angle=50):
     apply_mod(obj, b)
 
 
-# ----------------------------------------------------------------------------- apertures
-WIN_FRONT = [(-43, 97.5), (-15, 131.0), (45, 131.0), (45, 97.5)]
-WIN_REAR = [(58, 97.5), (58, 131.0), (112, 131.0), (120, 97.5)]
-def band_x(z):
-    """Glass band plane: drip rail (x=72, z=135) to belt (x=92, z=97)."""
-    return 72.0 + (135.0 - z) * (20.0 / 38.0)
+# ----------------------------------------------------------------------------- apertures + panels (v003)
+GRILLE = (79.0, 53.0, 80.0)        # half-width, z0, z1: full-width '63-pattern grille, lamps inside it
+LAMP_X, LAMP_Z = (50.0, 68.0), 67.0
+TAIL_X, TAIL_Z = 70.0, 70.0
+R_BAND0, R_BAND1 = CP_ROW[3], CP_ROW[4]          # window band rows [R_BAND0, R_BAND1)
+GLASS_ROWS = (R_BAND0 + 2, R_BAND1 - 1)          # side glass rows (frame row above, sill reveal row below)
+DOOR_ROWS = (R_BAND0 + 1, CP_ROW[8])             # doors: from the frame row down to the rocker top
+PILLAR_ROWS = 2                                  # top-region rows kept as pillar beside windshield/backlight
 
 
-def side_window_pts(poly, side, inset=0.0):
-    cy = sum(p[0] for p in poly) / len(poly)
-    cz = sum(p[1] for p in poly) / len(poly)
-    out = []
-    for y, z in poly:
-        dy, dz = y - cy, z - cz
-        l = math.hypot(dy, dz)
-        y2, z2 = y - dy / l * inset, z - dz / l * inset
-        out.append(V(side * band_x(z2), y2, z2))
-    return out
+def _line_side(p, line):
+    """>0 when (y, z) point p is behind (toward +Y) the side-view line ((y0, z0), (y1, z1))."""
+    (y0, z0), (y1, z1) = line
+    dy, dz = y1 - y0, z1 - z0
+    nrm = Vector((dz, -dy)).normalized()     # rotate direction -> normal
+    if nrm.x < 0:
+        nrm = -nrm                           # point toward +Y
+    return nrm.dot(Vector((p[0] - y0, p[1] - z0)))
 
 
-def band_normal(side):
-    return Vector((side * 38.0, 0, 20.0)).normalized()
+def _bisect_line(bm, line, faces):
+    (y0, z0), (y1, z1) = line
+    no = Vector((0.0, z1 - z0, -(y1 - y0))).normalized()
+    co = Vector((0.0, y0 / 100.0, z0 / 100.0))
+    geom = list({v for f in faces for v in f.verts}) + list({e for f in faces for e in f.edges}) + list(faces)
+    bmesh.ops.bisect_plane(bm, geom=geom, plane_co=co, plane_no=no, dist=1e-6,
+                           use_snap_center=False, clear_outer=False, clear_inner=False)
 
 
-WS_TOP, WS_BASE = (-24.0, 135.5), (-57.0, 95.0)
-RW_TOP, RW_BASE = (122.0, 135.5), (158.0, 97.0)
-
-
-def glass_plane_pts(top, base, half_top, half_base, inset=0.0):
-    (yt, zt), (yb, zb) = top, base
-    d = Vector((0, yt - yb, zt - zb))
-    n = d.cross(Vector((1, 0, 0))).normalized()
-    ht, hb = half_top - inset, half_base - inset
-    k = inset / d.length
-    yt2, zt2 = yt - (yt - yb) * k, zt - (zt - zb) * k
-    yb2, zb2 = yb + (yt - yb) * k, zb + (zt - zb) * k
-    pts = [V(-hb, yb2, zb2), V(hb, yb2, zb2), V(ht, yt2, zt2), V(-ht, yt2, zt2)]
-    return pts, n
-
-
-# panel outlines (y, z) cm
-DOOR_F = [(-47, 27), (-47, 97.5), (-21.5, 134.5), (49, 134.5), (49, 27)]
-DOOR_R = [(52, 27), (52, 134.5), (115, 134.5), (124.5, 97.5), (124.5, 76), (113, 63), (106.5, 49), (105, 27)]
-HOOD_Y0, HOOD_Y1, HOOD_X = -236.0, -62.0, 72.0
-TRUNK_Y0, TRUNK_Y1, TRUNK_X = 162.0, 272.0, 78.0
-GRILLE = (58.0, 60.0, 79.0)   # half-width, z0, z1
-LAMP_X, LAMP_Z = (57.0, 74.0), 70.0
-TAIL_X, TAIL_Z = 72.0, 72.0
+def _yz(f):
+    c = f.calc_center_median()
+    return c.y * 100.0, c.z * 100.0
 
 
 def cut_and_split(body):
-    """All apertures + panel separation on the open skin. Returns (panels dict)."""
+    """Openings, mouldings and opening panels selected on the body grid. Returns (panels, glass, trims)."""
     bm = bmesh.new(); bm.from_mesh(body.data)
-    # windows
-    for side in (1, -1):
-        for poly in (WIN_FRONT, WIN_REAR):
-            prism_cut_x(bm, poly, side, 58, 125)
-    for top, base, ht, hb in ((WS_TOP, WS_BASE, 66, 86), (RW_TOP, RW_BASE, 60, 80)):
-        pts, n = glass_plane_pts(top, base, ht, hb)
-        plane_poly_cut(bm, pts, n, slab=0.12)
-    # wheel wells
+    st_l = bm.faces.layers.int["st"]; row_l = bm.faces.layers.int["row"]; side_l = bm.faces.layers.int["side"]
+    # wheel openings: round over the top, straight down below the hub line (no hanging tabs)
     for y in (AXLE_F, AXLE_R):
         for side in (1, -1):
-            circle_cut(bm, (0, y, TYRE_OD / 2 + 1.5), "x", 41.0, (side * 58, side * 125), segs=28)
-    # grille opening + lamp openings on the nose, tail lamps on the tail
+            arch_cut(bm, y, TYRE_OD / 2 + 1.5, 41.0, (side * 58, side * 125))
+    # slanted pillar edges: plane cuts limited to the window-band rows
+    band = lambda: [f for f in bm.faces if f[side_l] != 0 and R_BAND0 <= f[row_l] < CP_ROW[4]]
+    for line in (L_DOOR_F, L_TRIM_F, L_WIN_F, L_WIN_R, L_TRIM_R, L_DOOR_R):
+        _bisect_line(bm, line, band())
+    # grille, headlamp and tail-lamp openings in the flat end faces
     gh, gz0, gz1 = GRILLE
     planes = [((-gh / 100, 0, 0), (-1, 0, 0)), ((gh / 100, 0, 0), (1, 0, 0)), ((0, 0, gz0 / 100), (0, 0, -1)), ((0, 0, gz1 / 100), (0, 0, 1))]
-    bisect_cut(bm, planes, (-gh / 100 - 0.001, NOSE / 100 - 0.12, gz0 / 100 - 0.001), (gh / 100 + 0.001, NOSE / 100 + 0.08, gz1 / 100 + 0.001),
-               lambda p: abs(p.x) < gh / 100 and gz0 / 100 < p.z < gz1 / 100 and p.y < NOSE / 100 + 0.08)
-    for x in LAMP_X:
-        for sgn in (1, -1):
-            circle_cut(bm, (sgn * x, NOSE, LAMP_Z), "y", 8.3, (NOSE - 12, NOSE + 8), segs=20)
+    bisect_cut(bm, planes, (-gh / 100 - 0.001, NOSE / 100 - 0.01, gz0 / 100 - 0.001), (gh / 100 + 0.001, NOSE / 100 + 0.01, gz1 / 100 + 0.001),
+               lambda p: abs(p.x) < gh / 100 and gz0 / 100 < p.z < gz1 / 100 and p.y < NOSE / 100 + 0.005)
     for sgn in (1, -1):
-        circle_cut(bm, (sgn * TAIL_X, TAIL, TAIL_Z), "y", 8.3, (TAIL - 8, TAIL + 10), segs=20)
-    # panels
-    mats = [M["MI_V01_Paint_Body"], M["MI_V01_Interior_Trim"], M["MI_V01_Undercoat"]]
-    panels = {}
-    for side, tag in ((1, "L"), (-1, "R")):
-        f = prism_cut_x(bm, DOOR_F, side, 58, 125, delete=False)
-        panels[f"DOOR_F{tag}"] = extract_faces(bm, f, f"DOOR_F{tag}", mats)
-        f = prism_cut_x(bm, DOOR_R, side, 58, 125, delete=False)
-        panels[f"DOOR_R{tag}"] = extract_faces(bm, f, f"DOOR_R{tag}", mats)
-    hood = [(-HOOD_X, HOOD_Y0), (HOOD_X, HOOD_Y0), (HOOD_X, HOOD_Y1), (-HOOD_X, HOOD_Y1)]
-    f = prism_cut_z(bm, hood, 78, 110, delete=False)
-    panels["HOOD"] = extract_faces(bm, f, "HOOD", mats)
-    trunk = [(-TRUNK_X, TRUNK_Y0), (TRUNK_X, TRUNK_Y0), (TRUNK_X, TRUNK_Y1), (-TRUNK_X, TRUNK_Y1)]
-    f = prism_cut_z(bm, trunk, 82, 110, delete=False)
-    panels["TRUNK"] = extract_faces(bm, f, "TRUNK", mats)
+        circle_cut(bm, (sgn * TAIL_X, TAIL, TAIL_Z), "y", 8.3, (TAIL - 1, TAIL + 1), segs=28)
+
+    # ---- classify faces
+    sets = {k: [] for k in ("WINDSHIELD", "REAR", "DOOR_FL", "DOOR_FR", "DOOR_RL", "DOOR_RR", "HOOD", "TRUNK")}
+    for k in ("GDOOR_FL", "GDOOR_FR", "GDOOR_RL", "GDOOR_RR"):
+        sets[k] = []
+    drip = []
+    trims = {k: [] for k in ("WINDSHIELD", "REAR", "GDOOR_FL", "GDOOR_FR", "GDOOR_RL", "GDOOR_RR")}
+    for f in bm.faces:
+        sd, r = f[side_l], f[row_l]
+        if sd == 0 or r < 0:
+            continue
+        y, z = _yz(f)
+        tag = "L" if sd > 0 else "R"
+        if r < R_BAND0 - PILLAR_ROWS:
+            if WS_Y[0] < y < WS_Y[1]:
+                sets["WINDSHIELD"].append(f); continue
+            if BL_Y[0] < y < BL_Y[1]:
+                sets["REAR"].append(f); continue
+        if r < R_BAND0 - 1:
+            if WS_TRIM_Y[0] < y < WS_TRIM_Y[1]:
+                trims["WINDSHIELD"].append(f); continue
+            if BL_TRIM_Y[0] < y < BL_TRIM_Y[1]:
+                trims["REAR"].append(f); continue
+        if r < R_BAND0:
+            if HOOD_Y0 < y < HOOD_Y1:
+                sets["HOOD"].append(f); continue
+            if TRUNK_Y0 < y < TRUNK_Y1:
+                sets["TRUNK"].append(f); continue
+            if -24 < y < 122 and r >= R_BAND0 - 1:
+                drip.append(f)                                   # bright drip-rail moulding
+            continue
+        if r == R_BAND0 and -24 < y < 122:
+            drip.append(f)
+            continue
+        in_band = r < R_BAND1
+        # side glass
+        if GLASS_ROWS[0] <= r < GLASS_ROWS[1]:
+            if _line_side((y, z), L_WIN_F) > 0 and y < WIN_F_Y1:
+                sets[f"GDOOR_F{tag}"].append(f); continue
+            if y > WIN_R_Y0 and _line_side((y, z), L_WIN_R) < 0:
+                sets[f"GDOOR_R{tag}"].append(f); continue
+        # doors
+        if DOOR_ROWS[0] <= r < DOOR_ROWS[1]:
+            if in_band:
+                if _line_side((y, z), L_DOOR_F) > 0 and y < DOOR_F_Y[1]:
+                    if _line_side((y, z), L_TRIM_F) > 0 and y < WIN_F_Y1 + TRIM_W:
+                        trims[f"GDOOR_F{tag}"].append(f)      # frame top, pillar edges and sill reveal
+                    else:
+                        sets[f"DOOR_F{tag}"].append(f)
+                    continue
+                if DOOR_R_Y[0] < y and _line_side((y, z), L_DOOR_R) < 0:
+                    if y > WIN_R_Y0 - TRIM_W and _line_side((y, z), L_TRIM_R) < 0:
+                        trims[f"GDOOR_R{tag}"].append(f)
+                    else:
+                        sets[f"DOOR_R{tag}"].append(f)
+                    continue
+            else:
+                if DOOR_F_Y[0] < y < DOOR_F_Y[1]:
+                    sets[f"DOOR_F{tag}"].append(f); continue
+                if DOOR_R_Y[0] < y < DOOR_R_Y[1]:
+                    sets[f"DOOR_R{tag}"].append(f); continue
+    for f in drip:
+        f.material_index = 3                                     # bright drip-rail moulding (stays on the body)
+    glass_keys = ("WINDSHIELD", "REAR", "GDOOR_FL", "GDOOR_FR", "GDOOR_RL", "GDOOR_RR")
+
+    mats = [M["MI_V01_Paint_Body"], M["MI_V01_Interior_Trim"], M["MI_V01_Undercoat"], M["MI_V01_Chrome"]]
+    glass, trim_objs, panels = {}, {}, {}
+    gname = {"WINDSHIELD": "GLASS_WINDSHIELD", "REAR": "GLASS_REAR"}
+    for gk in glass_keys:
+        nm = gname.get(gk, "GLASS_" + gk[1:])
+        glass[nm] = extract_faces(bm, sets[gk], nm, [M["MI_V01_Glass"]])
+        trim_objs[nm] = extract_faces(bm, trims[gk], nm.replace("GLASS", "TRIM_WINDOW"), [M["MI_V01_Chrome"]])
+    for k in ("DOOR_FL", "DOOR_FR", "DOOR_RL", "DOOR_RR", "HOOD", "TRUNK"):
+        panels[k] = extract_faces(bm, sets[k], k, mats)
     bm.to_mesh(body.data); bm.free()
-    # gaps + thickness
+
+    # panel gaps + sheet thickness + rolled edges
     for name, p in panels.items():
         shrink_boundary(p, 0.0035)
         solidify(p, inner_mat=1 if name.startswith("DOOR") else 2, rim_mat=0)
     solidify(body, inner_mat=1, rim_mat=0)
-    # v002: rolled panel edges / flanged aperture rims (3.5 mm, 2 segments)
     for p in list(panels.values()) + [body]:
-        bevel(p, width=0.0035, segs=2, angle=55)
-    # v002: the floor pan / underside reads as dark undercoat, not body colour
-    me = body.data
-    for poly in me.polygons:
-        c = poly.center
-        if c.z < 0.40 and poly.normal.z < -0.55:
-            poly.material_index = 2
-    pivots = {"DOOR_FL": (97, -46, 62), "DOOR_FR": (-97, -46, 62), "DOOR_RL": (99, 53, 62), "DOOR_RR": (-99, 53, 62),
-              "HOOD": (0, HOOD_Y1, 91), "TRUNK": (0, TRUNK_Y0, 96)}
+        bevel(p, width=0.0025, segs=2, angle=55)
+    # glass sits just inside the frame; mouldings stand slightly proud
+    for nm, g in glass.items():
+        _offset_along_normals(g, -0.009)
+        assign_all(g, M["MI_V01_Glass"])
+        sol = g.modifiers.new("sol", "SOLIDIFY"); sol.thickness = 0.005; sol.offset = -1.0
+        apply_mod(g, sol)
+    for nm, t in trim_objs.items():
+        assign_all(t, M["MI_V01_Chrome"])
+        _offset_along_normals(t, 0.0015)
+        sol = t.modifiers.new("sol", "SOLIDIFY"); sol.thickness = 0.005; sol.offset = -1.0; sol.use_even_offset = True
+        apply_mod(t, sol)
+        bevel(t, width=0.0015, segs=1, angle=40)
+    pivots = {"DOOR_FL": (side_x(-46, 62), -46, 62), "DOOR_FR": (-side_x(-46, 62), -46, 62),
+              "DOOR_RL": (side_x(52, 62), 52, 62), "DOOR_RR": (-side_x(52, 62), 52, 62),
+              "HOOD": (0, HOOD_Y1, interp(K["zc"], HOOD_Y1)), "TRUNK": (0, TRUNK_Y0, interp(K["zc"], TRUNK_Y0))}
     for name, p in panels.items():
         set_origin(p, V(*pivots[name]))
-    return panels
+    # door glass + surround mouldings ride with their door
+    for nm in list(glass):
+        if "DOOR" in nm:
+            door = panels[nm.replace("GLASS_", "")]
+            for o in (glass[nm], trim_objs[nm]):
+                o.parent = door
+                o.matrix_parent_inverse = Matrix.Translation(-door.location)
+    return panels, glass
+
+
+def arch_cut(bm, yc_cm, zc_cm, r_cm, span_cm, segs=48):
+    """Wheel opening through the side skin: upper half-circle + vertical sides down past the sill."""
+    yc, zc, r = yc_cm / 100.0, zc_cm / 100.0, r_cm / 100.0
+    a0, a1 = sorted(v / 100.0 for v in span_cm)
+    rc = r * math.cos(math.pi / segs)
+    planes, normals = [], []
+    for i in range(segs // 2):                                    # upper half only
+        a = math.pi * (i + 0.5) / (segs // 2)
+        nn = Vector((0, math.cos(a), math.sin(a)))
+        normals.append(nn)
+        planes.append((Vector((0, yc, zc)) + nn * rc, nn))
+    planes += [((0, yc - rc, 0), (0, -1, 0)), ((0, yc + rc, 0), (0, 1, 0)), ((0, 0, zc), (0, 0, 1))]
+    lo, hi = (a0, yc - r - 0.01, -0.1), (a1, yc + r + 0.01, zc + r + 0.01)
+    def inside(p):
+        if not (a0 <= p.x <= a1 and abs(p.y - yc) < rc):
+            return False
+        if p.z <= zc:
+            return True
+        return all(nn.dot(Vector((0, p.y - yc, p.z - zc))) < rc for nn in normals)
+    bisect_cut(bm, planes, lo, hi, inside, True)
+
+
+def _offset_along_normals(obj, d):
+    bm = bmesh.new(); bm.from_mesh(obj.data)
+    bm.normal_update()
+    for v in bm.verts:
+        v.co += v.normal * d
+    bm.to_mesh(obj.data); bm.free()
 
 
 def wheel_houses():
-    """Inner wheel-house shells (closed solids) so the wells read as real cavities."""
+    """Inner wheel-house liners (closed, 1 cm thick): half-round over the tyre and straight walls down
+    to the sill line, matching the U-shaped wheel openings."""
     bm = bmesh.new()
+    cz = TYRE_OD / 2 + 1.5
     for y in (AXLE_F, AXLE_R):
         for side in (1, -1):
-            r0, r1 = 42.0, 44.5
-            segs = 24
-            cz = TYRE_OD / 2 + 1.5
-            xin, xout = (62, 102) if side > 0 else (-102, -62)
-            rings = []
-            for x in (xin, xout):
-                for r in (r0, r1):
-                    ring = []
-                    for i in range(segs + 1):
-                        a = math.pi * i / segs
-                        ring.append(bm.verts.new(V(x, y + r * math.cos(a), cz + r * math.sin(a))))
-                    rings.append(ring)
-            ri_in, ro_in, ri_out, ro_out = rings
-            for i in range(segs):
-                j = i + 1
-                bm.faces.new([ri_in[i], ri_in[j], ri_out[j], ri_out[i]])
-                bm.faces.new([ro_out[i], ro_out[j], ro_in[j], ro_in[i]])
-                bm.faces.new([ri_in[j], ri_in[i], ro_in[i], ro_in[j]])
-                bm.faces.new([ri_out[i], ri_out[j], ro_out[j], ro_out[i]])
-            for a in (0, segs):
-                bm.faces.new([ri_in[a], ro_in[a], ro_out[a], ri_out[a]])
+            xin, xout = (62, 93) if side > 0 else (-93, -62)       # stays inside the skin down to the rocker
+            for r in ((42.0, 43.0),):
+                r0, r1 = r
+                # profile in (y, z): down the front wall, over the arch, down the rear wall
+                zf, zr = interp(K["z8"], y - r0) + 1.0, interp(K["z8"], y + r0) + 1.0   # walls end at the rocker top
+                prof = lambda rr: ([(y - rr, zf)] +
+                                   [(y - rr * math.cos(math.pi * i / 32), cz + rr * math.sin(math.pi * i / 32)) for i in range(33)] +
+                                   [(y + rr, zr)])
+                rings = [[bm.verts.new(V(x, py, pz)) for py, pz in prof(rr)] for x in (xin, xout) for rr in (r0, r1)]
+                ri_in, ro_in, ri_out, ro_out = rings
+                n = len(ri_in)
+                for i in range(n - 1):
+                    j = i + 1
+                    bm.faces.new([ri_in[i], ri_in[j], ri_out[j], ri_out[i]])
+                    bm.faces.new([ro_out[i], ro_out[j], ro_in[j], ro_in[i]])
+                    bm.faces.new([ri_in[j], ri_in[i], ro_in[i], ro_in[j]])
+                    bm.faces.new([ri_out[i], ri_out[j], ro_out[j], ro_out[i]])
+                for k in (0, n - 1):
+                    bm.faces.new([ri_in[k], ro_in[k], ro_out[k], ri_out[k]])
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     for f in bm.faces:
         f.material_index = 0
     return new_obj("WHEELHOUSES", bm, [M["MI_V01_Undercoat"]])
-
-
-# ----------------------------------------------------------------------------- glazing + mouldings
-
-def glazing(panels):
-    objs = {}
-    for side, tag in ((1, "L"), (-1, "R")):
-        n = band_normal(side)
-        for poly, pname, gname in ((WIN_FRONT, f"DOOR_F{tag}", f"GLASS_DOOR_F{tag}"),
-                                   (WIN_REAR, f"DOOR_R{tag}", f"GLASS_DOOR_R{tag}")):
-            bm = bmesh.new()
-            pts = side_window_pts(poly, side, inset=0.6)
-            bm_plate(bm, pts, n, -0.003, 0.003, mat=0)
-            g = new_obj(gname, bm, [M["MI_V01_Glass"]])
-            # chrome moulding ring around the aperture
-            bm = bmesh.new()
-            outer = side_window_pts(poly, side, inset=-1.8)
-            inner = side_window_pts(poly, side, inset=0.9)
-            bm_ring_plate(bm, outer, inner, n, -0.004, 0.006, mat=0)
-            r = new_obj(gname.replace("GLASS", "TRIM_WINDOW"), bm, [M["MI_V01_Chrome"]])
-            for o in (g, r):
-                o.parent = panels[pname]
-                o.matrix_parent_inverse = Matrix.Translation(-panels[pname].location)
-            objs[gname] = g
-    for top, base, ht, hb, name in ((WS_TOP, WS_BASE, 66, 86, "GLASS_WINDSHIELD"), (RW_TOP, RW_BASE, 60, 80, "GLASS_REAR")):
-        pts, n = glass_plane_pts(top, base, ht, hb, inset=0.6)
-        bm = bmesh.new(); bm_plate(bm, pts, n, -0.003, 0.003, mat=0)
-        objs[name] = new_obj(name, bm, [M["MI_V01_Glass"]])
-        outer, _ = glass_plane_pts(top, base, ht, hb, inset=-1.8)
-        inner, _ = glass_plane_pts(top, base, ht, hb, inset=0.9)
-        bm = bmesh.new(); bm_ring_plate(bm, outer, inner, n, -0.004, 0.006, mat=0)
-        new_obj(name.replace("GLASS", "TRIM_WINDOW"), bm, [M["MI_V01_Chrome"]])
-    return objs
 
 
 # ----------------------------------------------------------------------------- exterior details
@@ -1013,49 +1255,47 @@ def bumpers():
 
 def front_end():
     gh, gz0, gz1 = GRILLE
-    # recessed dark grille box behind the opening, with a chrome surround and horizontal bars
+    # recessed dark grille back behind the full-width opening
     bm = bmesh.new()
-    bm_box(bm, -gh - 1, NOSE + 1.0, gz0 - 1, gh + 1, NOSE + 7.0, gz1 + 1)
+    bm_box(bm, -gh - 1, NOSE + 2.5, gz0 - 1, gh + 1, NOSE + 8.0, gz1 + 1)
     grille = new_obj("GRILLE_BACK", bm, [M["MI_V01_Grille_Dark"]])
     bm = bmesh.new()
-    for z in (gz0 + 3.0, gz0 + 6.8, gz0 + 10.6, gz0 + 14.4, gz0 + 18.2):
-        bm_box(bm, -gh, NOSE - 1.5, z - 0.6, gh, NOSE + 1.0, z + 0.6)
-    for x in (-19, 19):
-        bm_box(bm, x - 0.7, NOSE - 1.5, gz0, x + 0.7, NOSE + 1.0, gz1)
-    # surround (frame) proud of the skin
-    bm_box(bm, -gh - 2.0, NOSE - 2.5, gz0 - 2.0, gh + 2.0, NOSE + 0.5, gz0)
-    bm_box(bm, -gh - 2.0, NOSE - 2.5, gz1, gh + 2.0, NOSE + 0.5, gz1 + 2.0)
-    bm_box(bm, -gh - 2.0, NOSE - 2.5, gz0, -gh, NOSE + 0.5, gz1)
-    bm_box(bm, gh, NOSE - 2.5, gz0, gh + 2.0, NOSE + 0.5, gz1)
+    nb = 10
+    for i in range(nb):                                   # fine horizontal bars between the lamp pairs
+        z = gz0 + 2.0 + (gz1 - gz0 - 4.0) * i / (nb - 1)
+        bm_box(bm, -39.5, NOSE + 0.8, z - 0.45, 39.5, NOSE + 2.4, z + 0.45)
+    for x in (-39.5, -20, 0, 20, 39.5):                  # vertical dividers
+        bm_box(bm, x - 0.6, NOSE + 0.5, gz0, x + 0.6, NOSE + 2.4, gz1)
+    t = 1.6                                               # chrome surround, proud of the face
+    bm_box(bm, -gh - t, NOSE - 1.2, gz0 - t, gh + t, NOSE + 0.6, gz0)
+    bm_box(bm, -gh - t, NOSE - 1.2, gz1, gh + t, NOSE + 0.6, gz1 + t)
+    bm_box(bm, -gh - t, NOSE - 1.2, gz0, -gh, NOSE + 0.6, gz1)
+    bm_box(bm, gh, NOSE - 1.2, gz0, gh + t, NOSE + 0.6, gz1)
     bars = new_obj("GRILLE_BARS", bm, [M["MI_V01_Chrome"]])
-    # headlamps: bezel ring + sealed-beam lens, set into the lamp openings
+    # quad 5.75-in sealed beams: chrome bezel + lens, mounted in the grille opening
     bm = bmesh.new(); bm2 = bmesh.new()
     for x in LAMP_X:
         for sgn in (1, -1):
-            cx = sgn * x
-            yf = NOSE - 7.0 * (x / 90.0) ** 2   # follow the fender-tip projection
-            bm_revolve(bm, [(9.6, -2.0), (9.6, 1.0), (7.4, 1.0), (7.4, -2.0)], "y", (cx, yf, LAMP_Z), segs=28)
-            bm_revolve(bm2, [(0.0, -1.2), (5.0, -1.6), (7.4, -0.4), (7.4, 3.0), (0.0, 3.0)], "y", (cx, yf, LAMP_Z), segs=28, close=False)
+            cx, yf = sgn * x, NOSE + 0.6
+            bm_revolve(bm, [(9.6, -2.2), (9.6, 0.8), (7.4, 0.8), (7.4, -2.2)], "y", (cx, yf, LAMP_Z), segs=32)
+            bm_revolve(bm2, [(0.0, -1.6), (5.0, -1.9), (7.4, -0.6), (7.4, 2.0), (0.0, 2.0)], "y", (cx, yf, LAMP_Z), segs=32, close=False)
+            bm_cylinder(bm, (cx, yf, LAMP_Z), "y", 10.4, 0.8, 4.5, segs=32)    # lamp bucket
     bezels = new_obj("HEADLAMP_BEZELS", bm, [M["MI_V01_Chrome"]])
     lenses = new_obj("HEADLAMP_LENSES", bm2, [M["MI_V01_Headlamp"]])
-    # hood lip trim (generic, no brand)
-    bm = bmesh.new(); bm_box(bm, -10, NOSE - 1.0, 84.5, 10, NOSE + 3, 86.5)
-    new_obj("TRIM_HOOD_FRONT", bm, [M["MI_V01_Chrome"]])
     return [grille, bars, bezels, lenses]
 
 
 def rear_end():
     bm = bmesh.new(); bm2 = bmesh.new(); bm3 = bmesh.new()
     for sgn in (1, -1):
-        cx = sgn * TAIL_X
-        yr = TAIL + 4.0 * (TAIL_X / 88.0) ** 2
-        bm_revolve(bm, [(9.6, 2.0), (9.6, -1.0), (7.4, -1.0), (7.4, 2.0)], "y", (cx, yr, TAIL_Z), segs=28)
-        bm_revolve(bm2, [(0.0, 1.5), (5.0, 2.0), (7.4, 0.8), (7.4, -3.0), (0.0, -3.0)], "y", (cx, yr, TAIL_Z), segs=28, close=False)
-        bm_cylinder(bm3, (cx, yr, TAIL_Z - 12.5), "y", 4.0, -0.5, 1.2, segs=20)
+        cx, yr = sgn * TAIL_X, TAIL + 0.4
+        bm_revolve(bm, [(9.8, 2.2), (9.8, -0.8), (7.6, -0.8), (7.6, 2.2)], "y", (cx, yr, TAIL_Z), segs=32)
+        bm_revolve(bm2, [(0.0, 1.6), (5.0, 2.1), (7.6, 0.9), (7.6, -3.0), (0.0, -3.0)], "y", (cx, yr, TAIL_Z), segs=32, close=False)
+        bm_cylinder(bm3, (sgn * 40.0, yr, TAIL_Z), "y", 4.0, -0.5, 1.2, segs=24)     # back-up lamps
     new_obj("TAILLAMP_BEZELS", bm, [M["MI_V01_Chrome"]])
     new_obj("TAILLAMP_LENSES", bm2, [M["MI_V01_Lens_Red"]])
     new_obj("BACKUP_LENSES", bm3, [M["MI_V01_Lens_Clear"]])
-    bm = bmesh.new(); bm_box(bm, -58, TAIL - 0.5, 83, 58, TAIL + 1.2, 85)
+    bm = bmesh.new(); bm_box(bm, -58, TAIL - 0.5, 81, 58, TAIL + 1.0, 82.6)
     new_obj("TRIM_REAR_PANEL", bm, [M["MI_V01_Chrome"]])
 
 
@@ -1065,9 +1305,9 @@ def side_details(panels):
     bm = bmesh.new()
     for side in (1, -1):
         for y in (20, 88):
-            x = side * (band_x(88) + 7.5)
-            bm_box(bm, x - 1.2, y - 7, 84, x + 1.2, y + 7, 86.5)
-            bm_cylinder(bm, (x, y + 9, 85.2), "x", 1.1, -1.2, 1.8, segs=12)
+            x = side * (side_x(y, 85.5) + 1.0)
+            bm_box(bm, x - 1.2, y - 7, 84.5, x + 1.2, y + 7, 87.0)
+            bm_cylinder(bm, (x, y + 9, 85.7), "x", 1.1, -1.2, 1.8, segs=12)
     out.append(new_obj("DOOR_HANDLES", bm, [M["MI_V01_Chrome"]]))
     # rocker / lower body strip, following the body with a shrinkwrap
     # shrink-wrap target = body skin + door skins (doors are separate objects), merged with bmesh
@@ -1123,8 +1363,9 @@ def side_details(panels):
     bpy.data.objects.remove(body, do_unlink=True)
     # driver-side round mirror
     bm = bmesh.new()
-    bm_cylinder(bm, (band_x(100) + 4, -25, 100), "x", 0.8, 0, 9, segs=10)
-    bm_revolve(bm, [(0.5, 0.0), (5.5, 0.0), (5.5, 1.6), (0.5, 1.6)], "y", (band_x(100) + 14, -25, 100), segs=24)
+    mx = side_x(-34, 95.5)
+    bm_cylinder(bm, (mx - 1.0, -34, 97.5), "x", 0.8, 0, 10, segs=10)
+    bm_revolve(bm, [(0.5, 0.0), (5.5, 0.0), (5.5, 1.6), (0.5, 1.6)], "y", (mx + 9.5, -35, 99.5), segs=24)
     out.append(new_obj("MIRROR_DRIVER", bm, [M["MI_V01_Chrome"]]))
     # wipers
     bm = bmesh.new()
@@ -1145,14 +1386,16 @@ def wheel(name, side, pivot):
     for o in (-5.2, 0.0, 5.2):                      # three circumferential tread grooves
         tread += [(R, o - 0.55), (R - 0.7, o - 0.3), (R - 0.7, o + 0.3), (R, o + 0.55)]
     tread.append((R, w - 2))
-    prof = tread + [(R - 1.5, w), (rr + 6, w - 0.8), (rr + 1, w - 3), (rr, w - 3),
-                    (rr, -w + 3), (rr + 1, -w + 3), (rr + 6, -w + 0.8), (R - 1.5, -w)]
+    # v003: rounded shoulder + bulging sidewall (bias-ply 7.50-14 section)
+    side_out = [(R - 0.4, w - 0.7), (R - 1.6, w), (R - 4.0, w + 0.35), (R - 8.0, w + 0.45), (rr + 7.0, w + 0.1),
+                (rr + 3.5, w - 1.0), (rr + 1.0, w - 3.0)]
+    prof = tread + side_out + [(rr, w - 3), (rr, -w + 3)] + [(r_, -z_) for r_, z_ in reversed(side_out)]
     bm_revolve(bm, prof, "x", (0, 0, 0), segs=64, mat=0)
     tyre_faces = list(bm.faces)
     # whitewall band on the outboard sidewall
     ww = bmesh.new()
     s = 1 if side > 0 else -1
-    ww_prof = [(rr + 2.5, s * (w - 2.4)), (rr + 9.5, s * (w - 1.2)), (rr + 9.5, s * (w - 0.9)), (rr + 2.5, s * (w - 2.1))]
+    ww_prof = [(rr + 4.5, s * (w - 0.55)), (rr + 10.5, s * (w + 0.55)), (rr + 10.5, s * (w + 0.75)), (rr + 4.5, s * (w - 0.25))]
     bm_revolve(ww, ww_prof, "x", (0, 0, 0), segs=48, mat=1)
     ww.to_mesh(bpy.data.meshes.new("tmp"));
     tmp = bpy.data.meshes.new("tmp2"); ww.to_mesh(tmp); ww.free()
@@ -1195,9 +1438,10 @@ def interior():
     objs = []
     bm = bmesh.new()
     # floor pan + transmission tunnel + rear parcel shelf + firewall + trunk floor
-    bm_box(bm, -92, -60, 22, 92, 160, 26)
+    bm_box(bm, -90, -60, 22, 90, 106, 26)       # cabin floor (stops ahead of the rear wheel houses)
+    bm_box(bm, -60, 106, 22, 60, 160, 26)       # rear floor between the wheel houses
     bm_box(bm, -12, -60, 22, 12, 60, 34)
-    bm_box(bm, -80, 130, 22, 80, 162, 60)       # rear seat riser / rear floor
+    bm_box(bm, -60, 130, 22, 60, 162, 60)       # rear seat riser, between the wheel houses
     bm_box(bm, -88, 140, 92, 88, 160, 95)       # parcel shelf
     bm_box(bm, -90, -62, 22, 90, -58, 92)       # firewall
     floor = new_obj("INT_FLOOR", bm, [M["MI_V01_Interior_Dark"]])
@@ -1262,11 +1506,11 @@ def interior():
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     objs.append(new_obj("INT_STEERING_WHEEL", bm, [M["MI_V01_Interior_Dark"]]))
     # bench seats (cushion + backrest, soft rounded)
-    for y0, name in ((-2, "INT_SEAT_FRONT"), (94, "INT_SEAT_REAR")):
+    for y0, name, hw in ((-2, "INT_SEAT_FRONT", 78), (94, "INT_SEAT_REAR", 60)):   # rear bench sits between the wheel houses
         bm = bmesh.new()
-        bm_box(bm, -78, y0, 32, 78, y0 + 52, 46)              # cushion
-        bm_box(bm, -78, y0 + 44, 46, 78, y0 + 58, 96)         # backrest
-        bm_box(bm, -78, y0 + 40, 30, 78, y0 + 58, 46)
+        bm_box(bm, -hw, y0, 32, hw, y0 + 52, 46)              # cushion
+        bm_box(bm, -hw, y0 + 44, 46, hw, y0 + 58, 96)         # backrest
+        bm_box(bm, -hw, y0 + 40, 30, hw, y0 + 58, 46)
         s = new_obj(name, bm, [M["MI_V01_Interior_Vinyl"]])
         bev = s.modifiers.new("bev", "BEVEL"); bev.width = 0.05; bev.segments = 4; bev.limit_method = "NONE"
         apply_mod(s, bev)
@@ -1278,12 +1522,12 @@ def interior():
     bm_revolve(bm, [(0.0, 80.0), (17.0, 80.0), (17.0, 88.0), (0.0, 88.0)], "z", (0, -140, 0), segs=28, close=False)  # air cleaner
     bm_box(bm, -44, -232, 40, 44, -226, 78)             # radiator core
     bm_box(bm, -70, -225, 32, 70, -200, 36)             # front cross-member
-    bm_box(bm, -78, -236, 26, 78, -60, 30)              # engine-bay floor / splash pan
+    bm_box(bm, -60, -236, 26, 60, -60, 30)              # engine-bay splash pan (inboard of the wheel houses)
     objs.append(new_obj("INT_ENGINE_BAY", bm, [M["MI_V01_Interior_Dark"]]))
     bm = bmesh.new()
     bm_box(bm, -60, -234, 26, 60, -228, 79)             # radiator support (stays below the hood lip, z 84)
-    bm_box(bm, -74, -228, 26, -70, -64, 80)             # inner fender walls
-    bm_box(bm, 70, -228, 26, 74, -64, 80)
+    bm_box(bm, -61, -228, 26, -58, -64, 80)             # inner fender walls (inboard of the tyres)
+    bm_box(bm, 58, -228, 26, 61, -64, 80)
     objs.append(new_obj("INT_ENGINE_BAY_WALLS", bm, [M["MI_V01_Undercoat"]]))
     # sun visors + mirror
     bm = bmesh.new()
@@ -1316,10 +1560,8 @@ def underbody():
         bm_box(bm, sx - 3, AXLE_R - 58, 27, sx + 3, AXLE_R + 58, 30.5)   # leaf springs
         bm_box(bm, sx - 3.5, AXLE_R - 6, 26, sx + 3.5, AXLE_R + 6, 40)   # spring seats / U-bolts
     bm_box(bm, -44, 196, 12, 44, 252, 22)                                 # fuel tank (behind the axle)
-    bm_box(bm, -90, NOSE - 8, 21, 90, NOSE + 16, 38)                      # front valance / gravel pan
-    bm_box(bm, -86, TAIL - 16, 21, 86, TAIL + 8, 38)                      # rear valance
     bm_box(bm, -66, AXLE_F - 8, 28, 66, AXLE_F + 8, 36)                   # front cross-member
-    for sx in (-60, 60):
+    for sx in (-52, 52):
         bm_box(bm, sx - 10, AXLE_F - 20, 24, sx + 10, AXLE_F + 20, 32)    # lower control arms (block-in)
     objs.append(new_obj("UNDER_AXLES_TANK", bm, [M["MI_V01_Undercoat"]]))
     return objs
@@ -1333,7 +1575,7 @@ def armrests(panels):
             continue
         side = 1 if name.endswith("L") else -1
         y0, y1 = (-20, 24) if "_F" in name else (62, 104)
-        xin = side * (band_x(97.5) - SHELL_T - 1.5)
+        xin = side * (side_x((y0 + y1) / 2, 66) - SHELL_T - 1.0)
         bm = bmesh.new()
         bm_box(bm, min(xin, xin - side * 7), y0, 62, max(xin, xin - side * 7), y1, 68)
         o = new_obj(f"INT_ARMREST_{name[-2:]}", bm, [M["MI_V01_Interior_Vinyl"]])
@@ -1425,7 +1667,7 @@ def police_layer(body, panels):
     for side, tag in ((1, "L"), (-1, "R")):
         objs.append(side_decal(f"POLICE_DECAL_SEAL_F{tag}", -18, 46, 22, 86, side, M["MI_V01_Decal_DoorSeal"], panels[f"DOOR_F{tag}"]))
     # beacon: chrome base + red dome (Beacon Ray 17 class, APPROXIMATE), on the roof centreline
-    by = 32.0
+    by = 14.0                       # E1: between M and P, forward of the roof centre
     bz = interp(K["zc"], by)
     bm = bmesh.new()
     bm_revolve(bm, [(0.0, 0.0), (9.0, 0.0), (9.0, 2.5), (7.5, 4.5), (0.0, 4.5)], "z", (0, by, bz - 0.5), segs=36, close=False)
@@ -1437,7 +1679,7 @@ def police_layer(body, panels):
     objs += [base, dome_o]
     # roof antenna (APPROXIMATE): base + whip
     bm = bmesh.new()
-    ay = 68.0; az = interp(K["zc"], ay)
+    ay = 55.0; az = interp(K["zc"], ay)   # E1: dark dot near the roof centre
     bm_cylinder(bm, (0, ay, az - 0.5), "z", 2.0, 0, 2.5, segs=16)
     bm_cylinder(bm, (0, ay, az + 1.5), "z", 0.35, 0, 48, segs=8)   # quarter-wave VHF whip, APPROXIMATE
     objs.append(new_obj("POLICE_ANTENNA", bm, [M["MI_V01_Chrome"]]))
@@ -1549,17 +1791,16 @@ def main():
     tex = make_textures()
     make_materials(load_images(tex))
 
-    body = build_loft()
-    panels = cut_and_split(body)
+    body = build_body()
+    panels, glass = cut_and_split(body)
     if PREVIEW:
-        objs = [body] + list(panels.values())
+        objs = [body] + list(panels.values()) + list(glass.values())
         for o in objs:
             cleanup(o); box_uv(o); smooth(o)
         ws = wheels()
         export(os.path.join(OUT, "PREVIEW_shell.glb"), objs + list(ws.values()))
         return
     houses = wheel_houses()
-    glass = glazing(panels)
     front_end()
     rear_end()
     chrome = bumpers() + side_details(panels)
@@ -1589,13 +1830,13 @@ def main():
         ws[f"WHEEL_R{tag}"].parent = root
     empty("SOCKET_DRIVER", (41, 20, 60), root)
     empty("SOCKET_STEERING", (41, -12, 92), root)
-    empty("SOCKET_BEACON", (0, 32, interp(K["zc"], 32)), root)
-    empty("SOCKET_ANTENNA", (0, 68, interp(K["zc"], 68)), root)
+    empty("SOCKET_BEACON", (0, 14, interp(K["zc"], 14)), root)
+    empty("SOCKET_ANTENNA", (0, 55, interp(K["zc"], 55)), root)
     empty("SOCKET_ROOF_SIGN", (0, 48, interp(K["zc"], 48)), root)
     empty("SOCKET_PLATE_F", (0, NOSE - 12.5, 43.6), root)
     empty("SOCKET_PLATE_R", (0, TAIL + 12.5, 43.6), root)
-    empty("SOCKET_SPOTLIGHT_L", (band_x(104), -40, 104), root)
-    empty("SOCKET_SIREN", (band_x(88) - 6, -200, 88), root)
+    empty("SOCKET_SPOTLIGHT_L", (side_x(-30, 100), -30, 100), root)
+    empty("SOCKET_SIREN", (side_x(-200, 80) - 6, -200, 80), root)
     for name, p in panels.items():
         empty(f"HINGE_{name}", (0, 0, 0), p)
 

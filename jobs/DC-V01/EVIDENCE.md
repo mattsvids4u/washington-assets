@@ -48,16 +48,16 @@ in the project's Drive References folder. No image was redistributed whose right
 - **Gaps for Matt / future passes**: a dated Nov-1963 Washington photo of an MPD scout car (LoC U.S. News & World Report 1963 jobs, Abbie Rowe NPS funeral-procession frames at trumanlibrary.gov/photograph-records/73-4069 and jfklibrary.org JFKWHP-1963-11-24/25) could not be opened from this sandbox; verify make/model from those locally.
 
 ## Comparison of actual output with references (Pass 3, 2026-10-02)
-| Feature | E1 (1962 fleet photo) | asset-v001 | Note |
+| Feature | E1 (1962 fleet photo) | asset (v003 where noted) | Note |
 |---|---|---|---|
 | Body class | light four-door full-size sedan, formal roof, wide C-pillar | 1963 Ford-pattern four-door sedan, formal roof, wide C-pillar | make APPROXIMATE |
-| Roof letters | M/P front column, D/C rear column, tops toward driver side, ≈55 cm | same layout; cap height ≈ 55 cm; DejaVu Sans Bold | typeface APPROXIMATE |
-| Beacon | single small red dome, centreline, just forward of roof centre | 14 cm red dome on chrome base at y = +32 | model/size APPROXIMATE |
+| Roof letters | M/P front column, D/C rear column, tops toward driver side; from above with the nose right it reads "D M / C P"; caps ≈ 27 % of roof width (≈ 39 cm), letters ≈ 30 % of roof length (≈ 40–47 cm) | v003: same layout and orientation (verified from GLB UVs + zoomed top render); 39 cm caps, 40–47 cm wide, centres x = ±38, y = +16 / +82 cm; FreeSans Bold (v001–v002 were rotated/mirrored and oversized) | typeface APPROXIMATE |
+| Beacon | single small red dome on the centreline, between the M and P letters (front column) | v003: 14 cm red dome on a chrome base at y = +14, between M and P (v001–v002 had y = +32) | model/size APPROXIMATE |
 | Trunk marking | small "POLICE" across the lid near the rear edge | 13 cm letters, readable from behind | size APPROXIMATE |
-| Door seal | round seal + short text on front door | round generic seal 40 cm | artwork APPROXIMATE |
+| Door seal | round seal + short text on front door | round generic seal 40 cm; v003: evenly spaced ring text (METROPOLITAN POLICE / WASHINGTON, D.C., both reading left to right) + centre star, correct on both doors | artwork APPROXIMATE (no copied emblem) |
 | Wheels | whitewalls, bright full-width caps | narrow whitewall + chrome dog-dish on black rim | cap style APPROXIMATE |
 | Chrome | bumpers, window surrounds, lower-body bright strip | all present | — |
-| Antenna | dot near roof centre | 48 cm whip at y = +68 | APPROXIMATE |
+| Antenna | dot near roof centre | v003: 48 cm whip at y = +55, roof centre (was +68) | APPROXIMATE |
 Moodbook p.10 "design the vehicle as a whole": wheelbase, roof arc, window line, fenders and stance
 were set before trim; glass, chrome, rubber, paint and upholstery use distinct roughness/metallic
 values; doors, wheels and lights are separate nodes for motion. p.12 deliverables: clay silhouette,

@@ -23,7 +23,20 @@
     "file_id": "11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr",
     "file_name": "SAVE_JFK_Visual_Benchmark_Moodbook.pdf",
     "pages_total": 12,
-    "pages_inspected_as_images": [1,2,3,4,5,6,7,8,9,10,11,12],
+    "pages_inspected_as_images": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "pages_relied_on": {
       "10": "Props, materials & vehicles — 'design the vehicle as a whole': wheelbase, roof arc, window line, fenders, stance; body-panel curvature before trim; glass/chrome/rubber/gloss/upholstery distinct; align doors, wheels and lights for motion; readable at street-camera distance.",
       "11": "Palette (charcoal #131D1B, olive #667363, walnut #6B4734, tungsten #C49D63, cold paper #DFDFD4); material differences visible in the grade.",
@@ -40,7 +53,9 @@
   "request_doc": {
     "doc_id": "1CGp5evRrPST1P3r5soqPHBGuvm9VatvnqqleL0stpU8",
     "modified": "2026-09-29T22:27:12Z",
-    "addenda": ["Vehicle benchmark addendum — Matt, 2026-09-26"]
+    "addenda": [
+      "Vehicle benchmark addendum — Matt, 2026-09-26"
+    ]
   },
   "set_references_folder": "12z5B7Iny2hY5Uuq_udv2idRQm5WAhL57",
   "prior_worker_handoff_read": "1H32Ta1ygxYOIb4lmNlqYSqDE7B6GP2lb (RELEASED Lu / ChatGPT; PASS_PLAN, EVIDENCE, PASS2 audit, pass-1 render inspected)",
@@ -54,5 +69,8 @@
     "network": "WebSearch only; egress proxy blocks direct fetch/download from loc.gov, commons.wikimedia.org, trumanlibrary.gov, mpdc.dc.gov, dcmetropolicecollector.com — photo evidence is link-cited, not downloaded (see EVIDENCE.md)"
   },
   "pass4_instruction": "Matt (session chat, 2026-10-02): 'do another realism and geometry pass. fine beveling and grounding.' -> asset-v002",
-  "drive_available": true
+  "drive_available": true,
+  "pass5_instruction": "Matt (session chat, 2026-10-03, on asset-v002 renders): 'still needs hella work. next pass. shape is wonky. text is wacked out.' -> asset-v003",
+  "context_recheck_utc": "2026-10-03T06:30:00Z",
+  "context_recheck": "brief 1zoa4x5… modified 2026-09-25 (unchanged); no new files in Reviews EXT1 since 2026-10-02; DC-V01 claim folder present"
 }
