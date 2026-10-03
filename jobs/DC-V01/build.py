@@ -4,9 +4,10 @@ Run:  python jobs/DC-V01/build.py            (full build + GLB export)
       python jobs/DC-V01/build.py --preview  (body shell only, quick clay check)
 
 Builds a 1963 Ford-pattern full-size four-door sedan (APPROXIMATE identity, see EVIDENCE.md):
-lofted body skin from parametric cross-sections -> Catmull-Clark -> solidified shell ->
-boolean window apertures / wheel wells / panel gaps -> doors, hood, trunk split into hinged
-objects -> glazing, chrome, lamps, grille, bumpers, wheels, interior, MPD livery layer.
+structured body grid (stations x rows around a filleted section outline, C1 key curves) ->
+wheel openings, pillar plane cuts, grille/lamp openings -> windows, mouldings, doors, hood and
+trunk selected on the grid -> glass taken from the skin -> solidified shell with panel gaps ->
+hinged panels, chrome, lamps, grille, bumpers, wheels, interior, underbody, MPD livery layer.
 Units: Blender metres (authored in cm, converted by V()). Nose points to -Y, driver side +X,
 Z up, tyres on Z = 0. glTF export in metres; Unreal imports as centimetres.
 """
