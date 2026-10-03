@@ -326,7 +326,7 @@ Defects found and fixed before delivery (all in the generator):
 4. Fedora hung sideways off a hook (now seated on the finial).
 5. Pictures and calendar were mirrored seen from the room (UV u flipped on the room face).
 6. First-draft print textures read as blobs (both redrawn).
-7. In the 1953 room the coat tree hid the door sign (moved 0.22 m east). Bookcases moved to clear the 4 cm partition skins and the baseboards.
+7. The coat tree hid the door sign in both rooms (moved 0.22 m east). Bookcases moved to clear the 4 cm partition skins and the baseboards.
 
 Unchanged: all 22 v004 modules and all 24 v004 textures are byte-identical; the I09 sockets are
 unchanged. Only the two demo rooms change (they now include the dressing).
@@ -357,7 +357,7 @@ What Matt should look at:
 
 - **Corridor (south) wall, both rooms** (`int_corridor_east`, `int_corridor_west`, `int_south_wall`):
   the bulletin board, the oak-framed engraving, the flag beside the door, the coat tree with its fedora,
-  the November 1963 calendar under the I09 clock, and the rubber plant in the far corner all read at
+  the November 1963 calendar beside the I09 clock, and the rubber plant in the far corner all read at
   dialogue distance. The calendar month and the print caption read the right way round. Nothing
   intersects the door casing, sign, radiators or baseboard.
 - **Cubicles** (`int_cubicle_dress`, `int_high_overview`): bookcase against the west divider with a
