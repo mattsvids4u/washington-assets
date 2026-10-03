@@ -35,6 +35,7 @@ def parse_args():
     p.add_argument("--samples", type=int, default=96)
     p.add_argument("--views", default="")
     p.add_argument("--dress", action="store_true", help="add PREVIEW-ONLY DC-I09 stand-ins at the furniture sockets")
+    p.add_argument("--i09", default="", help="with --dress: folder of real DC-I09 LOD0 GLBs to place instead of stand-ins")
     return p.parse_args(argv)
 
 
@@ -51,7 +52,7 @@ def main():
     if a.dress:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import preview_dressing
-        preview_dressing.dress(list(bpy.context.scene.objects))
+        preview_dressing.dress(list(bpy.context.scene.objects), a.i09 or None)
         meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
     visible = [o for o in meshes if not o.hide_render]
     if a.mode == "clay":
@@ -111,7 +112,7 @@ def main():
         pos, look = VIEWS[name]
         cam.location = Vector(pos)
         cam.rotation_euler = (Vector(look) - Vector(pos)).to_track_quat("-Z", "Y").to_euler()
-        scene.render.filepath = os.path.join(a.out_dir, f"{base}_{a.mode}{'_dressed' if a.dress else ''}_{name}.png")
+        scene.render.filepath = os.path.join(a.out_dir, f"{base}_{a.mode}{('_i09' if a.i09 else '_dressed') if a.dress else ''}_{name}.png")
         bpy.ops.render.render(write_still=True)
         print("wrote", scene.render.filepath)
 

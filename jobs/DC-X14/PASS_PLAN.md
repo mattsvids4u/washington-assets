@@ -116,3 +116,17 @@ procedural oak read as wavy zebra stripes and the lamp shades were faceted. Chan
 Acceptance: QA 24/24 PASS; clean rebuild byte-identical (24 GLBs + 24 textures); every render
 reviewed. Delivered as `deliveries/DC-X14/asset-v003/`.
 
+## Pass 8 — asset-v004: fit test with the real DC-I09 furniture (Matt, 2026-10-03: "find the already completed desk assets and try them")
+
+- Found DC-I09 deliveries v002–v005 in Incoming Deliveries (DC-INT1 set). The v005 ZIP is too large for the
+  Drive connector's transfer; v004 (2.2 MB) and v003 came through and decoded byte-exact.
+- Placed the real I09 desk, filing cabinet, typewriter, rotary phone, desk lamp and wall clock on the X14
+  sockets in both demo rooms (`render_interior.py --dress --i09 <meshes>`); chair, fan, papers and boxes stay
+  as stand-ins because I09 has none.
+- Fixes this exposed in X14 (demo rooms only): cabinet and clock socket orientation and the desk-top socket
+  positions now follow the I09 INTERFACE_CONTRACT; the 1953 room's 156 ".001"-suffixed node names are gone.
+- Findings for the I09 owner (not changed here): I09 GLBs lie on their backs in any glTF importer (Z-up data
+  in a Y-up format), and the desk floats 2 cm.
+- Acceptance: QA 24/24 PASS; clean rebuild byte-identical; 22 modules + textures byte-identical to v003;
+  12 new furnished interior views reviewed. Delivered as `deliveries/DC-X14/asset-v004/`.
+

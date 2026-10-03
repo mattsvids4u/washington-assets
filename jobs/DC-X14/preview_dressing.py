@@ -6,6 +6,10 @@ armchair, 4-drawer steel file, typewriter, desk telephone, desk lamp, pedestal f
 paper stacks and document boxes per the Sept 1953 LRS photo, EVIDENCE.md E19) onto the
 SOCKET_I09_* empties so the rooms can be judged dressed and the socket layout checked at scale.
 
+With `--i09 <meshes dir>` the real DC-I09 LOD0 meshes (desk, filing cabinet, typewriter, rotary
+phone, desk lamp, wall clock) are used instead of stand-ins; only the chair, pedestal fan, papers
+and document boxes remain stand-ins (DC-I09 has no chair or fan).
+
 None of this geometry is exported in any X14 GLB. It exists only inside render_interior.py
 (--dress). Replace with the real DC-I09 meshes in Unreal. No brand marks anywhere.
 
@@ -245,15 +249,65 @@ def _spawn(fn, mat_keys, M, name, mw, local=(0, 0, 0)):
     return ob
 
 
-def dress(scene_objects):
-    """Spawn stand-ins at every SOCKET_I09_* empty. Returns the created objects."""
+# ----------------------------------------------------------------------------- real DC-I09 meshes
+I09_FILES = {
+    "Desk": "I09_desk_LOD0.glb",
+    "FileCabinet": "I09_filing_cabinet_LOD0.glb",
+    "Typewriter": "I09_typewriter_LOD0.glb",
+    "Telephone": "I09_rotary_phone_LOD0.glb",
+    "DeskLamp": "I09_desk_lamp_LOD0.glb",
+    "WallClock": "I09_wall_clock_LOD0.glb",
+}
+# DC-I09 v004 GLBs store their authored Z-up coordinates without the glTF Y-up conversion, so a
+# standard importer lays every piece on its back. Preview-only correction: rotate -90° about X.
+# (Reported to the I09 owner in HANDOFF.md; the I09 files themselves are not modified.)
+I09_AXIS_FIX = Matrix.Rotation(-math.pi / 2, 4, "X")
+# Paper stacks placed clear of the real I09 typewriter / phone / lamp footprints (desk-local).
+EXTRAS_I09 = {
+    "Desk": [(lambda bm, M: paper_stack(bm, M, 0.21, 0.18, 0.025), ("paper",), (-0.42, -0.27, 0.763)),
+             (lambda bm, M: paper_stack(bm, M, 0.20, 0.26, 0.035), ("paper",), (0.62, -0.20, 0.763))],
+    "FileCabinet": [(doc_box, ("card",), (0.0, 0.0, 1.334))],
+}
+
+
+def _load_i09(path):
+    """Import one I09 GLB; return [(mesh_data, local_matrix)] with the axis fix baked in. The
+    imported originals are hidden and kept only as data holders."""
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=path)
+    new = [o for o in bpy.data.objects if o not in before]
+    bpy.context.view_layer.update()
+    parts = [(o.data, I09_AXIS_FIX @ o.matrix_world.copy()) for o in new if o.type == "MESH"]
+    for o in new:
+        o.hide_render = True
+        o.hide_viewport = True
+        o.location.z -= 1000.0 if o.parent is None else 0.0
+    return parts
+
+
+def dress(scene_objects, i09_dir=None):
+    """Dress every SOCKET_I09_* empty. With i09_dir, real DC-I09 LOD0 meshes are instanced where
+    I09 provides the piece; chair, pedestal fan, papers and boxes stay as stand-ins either way."""
     M = materials()
     out = []
-    for e in [o for o in scene_objects if o.type == "EMPTY" and o.name.startswith("SOCKET_I09_")]:
+    sockets = [o for o in scene_objects if o.type == "EMPTY" and o.name.startswith("SOCKET_I09_")]
+    real = {}
+    if i09_dir:
+        for kind, fn in I09_FILES.items():
+            real[kind] = _load_i09(os.path.join(i09_dir, fn))
+    extras = EXTRAS_I09 if i09_dir else EXTRAS
+    for e in sockets:
         kind = e.name.split("_")[2]
         mw = e.matrix_world.copy()
-        for i, (fn, keys) in enumerate(PIECES.get(kind, [])):
-            out.append(_spawn(fn, keys, M, f"PREVIEW_{kind}_{e.name[-2:]}_{i}", mw))
-        for j, (fn, keys, off) in enumerate(EXTRAS.get(kind, [])):
+        if kind in real:
+            for i, (data, local) in enumerate(real[kind]):
+                ob = bpy.data.objects.new(f"I09_{kind}_{e.name[-2:]}_{i}", data)
+                bpy.context.scene.collection.objects.link(ob)
+                ob.matrix_world = mw @ local
+                out.append(ob)
+        else:
+            for i, (fn, keys) in enumerate(PIECES.get(kind, [])):
+                out.append(_spawn(fn, keys, M, f"PREVIEW_{kind}_{e.name[-2:]}_{i}", mw))
+        for j, (fn, keys, off) in enumerate(extras.get(kind, [])):
             out.append(_spawn(fn, keys, M, f"PREVIEW_{kind}_{e.name[-2:]}_x{j}", mw, off))
     return out

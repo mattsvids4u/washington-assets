@@ -123,14 +123,13 @@
       }
     },
     "FURNITURE sockets (consumed by DC-I09)": [
-      "SOCKET_I09_Desk_NN (desk centre on the floor; the sitter faces local +Y, drawers face local -Y)",
-      "SOCKET_I09_Chair_NN (seat centre; sitter faces local +Y)",
-      "SOCKET_I09_FileCabinet_NN (front faces local +Y; v003: back to the north wall, rotated 180°, beside the desk)",
-      "SOCKET_I09_Typewriter_NN (z 0.75, on the sitter's edge of the desk; keyboard toward the sitter)",
-      "SOCKET_I09_DeskLamp_NN (z 0.75, back-left of the desk)",
-      "SOCKET_I09_Telephone_NN (z 0.75, back-right of the desk)",
-      "SOCKET_I09_PedestalFan_NN (1953 room only; v003: faces into the cubicle)",
-      "SOCKET_I09_WallClock_01 (v003: south wall at x 7.2, z 2.3, facing +Y; was on the door leaf)"
+      "Frame matches the DC-I09 v004 INTERFACE_CONTRACT: metres, Z up, the user stands on local -Y looking +Y; every I09 front (drawers, keys, dial, clock face) faces local -Y.",
+      "SOCKET_I09_Desk_NN (desk centre on the floor; rotated 180° so the sitter is on the cubicle side)",
+      "SOCKET_I09_Chair_NN (seat centre; sitter faces local +Y) — no I09 chair exists; stand-in in previews",
+      "SOCKET_I09_FileCabinet_NN (v004: unrotated, back to the north wall, drawers face into the cubicle)",
+      "SOCKET_I09_Typewriter_NN / _Telephone_NN / _DeskLamp_NN (v004: exactly the I09 desk's own SOCKET_TYPEWRITER / SOCKET_PHONE / SOCKET_LAMP carried through the desk socket; z 0.7405 / 0.74942 / 0.7605)",
+      "SOCKET_I09_PedestalFan_NN (1953 room only; no I09 fan exists; stand-in in previews)",
+      "SOCKET_I09_WallClock_01 (v004: south wall x 7.2, z 2.2 at the clock's bottom, rotated 180° so the I09 face looks into the room)"
     ],
     "INTEGRATION sockets": [
       "SOCKET_X15_StaffAccess_Door — the room's corridor door for X15 staff/back-of-house routing"
@@ -205,5 +204,10 @@
     "shading": "Lathed opal shades (pendant, torchère, sconce) and every round cylinder side are smooth-shaded with hard cap edges; LOD0/1/2 segments 48/24/12 (sconce 40/20/10).",
     "sockets": "Furniture socket fixes listed above; names and counts unchanged. Material slot names unchanged.",
     "preview_dressing": "render_interior.py --dress adds PREVIEW-ONLY stand-ins at SOCKET_I09_* for renders; nothing is exported."
+  },
+  "v004_changes": {
+    "sockets": "Furniture sockets aligned to the DC-I09 v004 contract (see list above). Names unchanged.",
+    "node_names": "The 1953 demo room no longer exports Blender '.001' suffixes: 156 of its 417 node names (all SOCKET_I09_*, UCX_ and part nodes) were suffixed in v002-v003 because both rooms were built in one scene.",
+    "modules": "All 22 kit modules and all textures are byte-identical to asset-v003."
   }
 }

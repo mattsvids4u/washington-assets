@@ -1356,14 +1356,16 @@ def build_demo_1953(M, built):
     for c, cx in enumerate(cub_x):
         objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_Chair_{c+1:02d}", (cx, 4.4, 0), (0, 0, math.pi)))
-        # v003: cabinet back to the north wall facing into the cubicle (was facing the wall and, in the
-        # 1953 room, colliding with the torchère); typewriter on the sitter's edge, lamp/phone at the back.
-        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.62, 0), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.2, 3.80, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.38, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.55, 3.38, 0.75), (0, 0, math.pi)))
+        # v004: aligned to the DC-I09 v004 INTERFACE_CONTRACT. I09 fronts face local -Y (user at -Y
+        # looking +Y), so the cabinet socket is unrotated with its back to the north wall; desk-top
+        # sockets are the I09 desk's own SOCKET_TYPEWRITER / _PHONE / _LAMP carried through this
+        # desk socket (desk at (cx, 3.6), rotated 180°): local (x, y, z) -> world (cx - x, 3.6 - y, z).
+        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.58, 0), (0, 0, 0)))
+        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx - 0.18, 3.6 - 0.03, 0.7405), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.6 - 0.18, 0.7605), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.45, 3.6 + 0.05, 0.74942), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_PedestalFan_{c+1:02d}", (cx + 1.0, 5.45, 0), (0, 0, math.pi)))
-    objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.3), (0, 0, 0)))   # v003: was on the door leaf at x 4.5
+    objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.2), (0, 0, math.pi)))   # v004: I09 clock face is local -Y, origin at its bottom; was on the door leaf in v001-v002
     objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
     return "X14_DEMO_LRS_Room_1953", objs
 
@@ -1499,13 +1501,15 @@ def build_demo(M, built):
     for c, cx in enumerate(cub_x):
         objs.append(empty(f"SOCKET_I09_Desk_{c+1:02d}", (cx, 3.6, 0), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_Chair_{c+1:02d}", (cx, 4.4, 0), (0, 0, math.pi)))
-        # v003: cabinet back to the north wall facing into the cubicle (was facing the wall and, in the
-        # 1953 room, colliding with the torchère); typewriter on the sitter's edge, lamp/phone at the back.
-        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.62, 0), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx + 0.2, 3.80, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.38, 0.75), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.55, 3.38, 0.75), (0, 0, math.pi)))
-    objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.3), (0, 0, 0)))   # v003: was on the door leaf at x 4.5
+        # v004: aligned to the DC-I09 v004 INTERFACE_CONTRACT. I09 fronts face local -Y (user at -Y
+        # looking +Y), so the cabinet socket is unrotated with its back to the north wall; desk-top
+        # sockets are the I09 desk's own SOCKET_TYPEWRITER / _PHONE / _LAMP carried through this
+        # desk socket (desk at (cx, 3.6), rotated 180°): local (x, y, z) -> world (cx - x, 3.6 - y, z).
+        objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.58, 0), (0, 0, 0)))
+        objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx - 0.18, 3.6 - 0.03, 0.7405), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.6 - 0.18, 0.7605), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.45, 3.6 + 0.05, 0.74942), (0, 0, math.pi)))
+    objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.2), (0, 0, math.pi)))   # v004: I09 clock face is local -Y, origin at its bottom; was on the door leaf in v001-v002
     objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
     return "X14_DEMO_LRS_Room", objs
 
@@ -1541,6 +1545,10 @@ def main():
         export_glb(n, objs, path)
         manifest["modules"][n] = {"file": os.path.basename(path), "objects": len(objs), "note": "assembly of kit instances + I09 sockets"}
         print("exported", path)
+        # v004: free this room's object names so the next room exports without Blender ".001"
+        # suffixes (v002-v003 shipped the 1953 room with 156 suffixed node names, sockets included).
+        for o in objs:
+            o.name = f"{o.name}@{n}"
     with open(os.path.join(OUT, "BUILD_MANIFEST.json"), "w") as f:
         json.dump(manifest, f, indent=2)
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "DC-X14_kit.blend"))
