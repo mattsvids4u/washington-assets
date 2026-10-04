@@ -1,0 +1,72 @@
+{
+  "job_id": "DC-V01",
+  "version": "asset-v004",
+  "claimant": "claude-cloud-agent",
+  "context": {
+    "brief": {
+      "id": "1zoa4x5unkZdU01SxY8sXFnT9W4G12mFEeiScrgK39P4",
+      "revision": "WASHINGTON-2026-09-22-v001"
+    },
+    "stage_standard": {
+      "id": "1czqr-kWYX_AFdcbH7T-I-NgoQJV4e0nuqFq9oEGUcLA",
+      "revision": "WASHINGTON-2026-09-22-v001"
+    },
+    "road_plans_canon": {
+      "id": "1ia8TnxZefKOT4H6PdnNB9BIKIdf5E-Y-muyGJ_j4vQY",
+      "revision": "WASHINGTON-ROADPLANS-v002"
+    },
+    "request_doc": {
+      "id": "1CGp5evRrPST1P3r5soqPHBGuvm9VatvnqqleL0stpU8",
+      "modified": "2026-09-29T22:27:12Z"
+    },
+    "moodbook": {
+      "id": "11YkCsfarp_oZ-ylqn0sN3ahHHr-G5QNr",
+      "file": "SAVE_JFK_Visual_Benchmark_Moodbook.pdf",
+      "pages_used": [
+        10,
+        11,
+        12
+      ]
+    }
+  },
+  "dallas_relation": {
+    "relation": "SHARED",
+    "dallas_ids": [
+      "V07"
+    ],
+    "dallas_asset_used": null,
+    "dallas_state_as_known": "V07 Dallas pilot/police sedan: FUTURE_UNASSIGNED / BACKLOG_UNPUBLISHED (no parent mesh); DALLAS registers not edited",
+    "proposal": "SM_V01_Sedan_Base_Neutral.glb (this delivery) as the shared base; see HANDOFF.md UNIFICATION PROPOSALS"
+  },
+  "washington_dependencies": [],
+  "consumers": [
+    "DC-V02 (taxi rebuild: suitable production sedan base)",
+    "DC-V05 (silhouette variants)",
+    "DC-B02 (hero drive integration)"
+  ],
+  "toolchain": {
+    "bpy": "4.5.14 LTS",
+    "python": "3.11.15",
+    "pillow": "12.3.0",
+    "numpy": "1.26.4",
+    "font": "FreeSansBold.ttf (roof letters, seal, trunk, plate; fallback DejaVuSans-Bold.ttf if absent — changes texture bytes)",
+    "generator": "jobs/DC-V01/build.py",
+    "qa": "tools/qa_check.py",
+    "renders": "tools/render_views.py, tools/render_top.py, tools/render_pose.py, tools/render_detail.py",
+    "export": "glTF 2.0 binary, metres, +Y up; Unreal 5.8 import converts to centimetres (1 m = 100 cm)",
+    "report": "jobs/DC-V01/report.py (HIERARCHY.txt, MESH_STATS.txt from the exported GLB)"
+  },
+  "unreal": {
+    "target_version": "5.8",
+    "import_path_proposed": "/Game/WhiteHouse1963/WashingtonContext/Vehicles/V01/",
+    "import_readback": "NOT_RUN — needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN — needs local Unreal (UE 5.8)"
+  },
+  "reference_photos": {
+    "E1": {
+      "file": "01_MPD_patrol_sedan_rooftop_lettering_and_light_mpd32.jpg",
+      "drive_id": "187K3pBe5Zb0_SwURGfgHk-SJhLdlnsmv",
+      "rights": "not stated — inspected only, not redistributed"
+    }
+  }
+}

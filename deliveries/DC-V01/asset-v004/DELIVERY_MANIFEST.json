@@ -1,0 +1,186 @@
+{
+  "job_id": "DC-V01",
+  "version": "asset-v004",
+  "claimant": "claude-cloud-agent",
+  "created_utc": "2026-10-04T01:22:45+00:00",
+  "source_commit": "cabcf39a55936f930afdd780a42ad8a984c590ec",
+  "gates": {
+    "clean_rebuild": "see HANDOFF.md",
+    "glb_reopen_qa": "see HANDOFF.md",
+    "unreal_import_readback": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "matt_approval": "PENDING"
+  },
+  "files": [
+    {
+      "path": "CONTEXT_ACK.json",
+      "bytes": 4583,
+      "sha256": "b5371d4a64147dd3161704eae2d91e02c6371b714bd3fc530b30fdebfa03be85"
+    },
+    {
+      "path": "DEPENDENCY_LOCK.json",
+      "bytes": 2554,
+      "sha256": "d6b72b2533dccb1fd196bdc124a2aeeac42ae8014df2ef66eab683aa69e34b38"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 10538,
+      "sha256": "fc183078156fd1a8ca8eca3fff8640ba4405ed63a7c6b280ca93cc507f48d37b"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 15475,
+      "sha256": "ca3850fd305799b9a9e121c5717eee27e2030c2c014875d53701ef4d70a21ba6"
+    },
+    {
+      "path": "HIERARCHY.txt",
+      "bytes": 8765,
+      "sha256": "8564f27b2c0e5ef34cd541793bcef4800092aaecb27afc34980df3eecd69aa60"
+    },
+    {
+      "path": "MESH_STATS.txt",
+      "bytes": 14076,
+      "sha256": "74f5377b87cd4da4fcbef778c6e9f77b5177439013841cc6804fc701ec1a76e1"
+    },
+    {
+      "path": "PASS_PLAN.md",
+      "bytes": 11329,
+      "sha256": "e9c231543e86462f1b7d1301993aee40f6c7c8b2db96f58e1227076fcf7d7694"
+    },
+    {
+      "path": "PCG_INTERFACE.json",
+      "bytes": 5742,
+      "sha256": "fc1db590154a9de064c764c4f0071bcfd8ce0b6c3d547fb1f66e137bd99e9b3a"
+    },
+    {
+      "path": "REUSABLE_COMPONENTS.json",
+      "bytes": 5182,
+      "sha256": "ce9a9fbab347e44741529886180df4d5db93d211187a7c9a2a6f6ed973bec02f"
+    },
+    {
+      "path": "meshes/SM_V01_PatrolSedan_MPDC.glb",
+      "bytes": 6957744,
+      "sha256": "e3ec78e8650e51a3532ba4986df41e8fd86aece647f41d2d7afd051795d58a96"
+    },
+    {
+      "path": "meshes/SM_V01_Sedan_Base_Neutral.glb",
+      "bytes": 6543968,
+      "sha256": "46ca26635df71a34ffaeaf0229c1f4cb92447ab4d3df42e326529f184610743c"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_front.png",
+      "bytes": 1008516,
+      "sha256": "9a4b61ae0683ea881d4459009f7c590b6cb1f83905f763ad529d3ff716f96bd9"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_profile.png",
+      "bytes": 1012333,
+      "sha256": "f223b0a57a7478183b74784eba096e918186fa011908c151b88bf03c55057a47"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_rear.png",
+      "bytes": 990305,
+      "sha256": "737aace7677338a3db3a624b4df14ddce2fe5c504a03be57ff7a7228f7740a74"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_clay_three_quarter.png",
+      "bytes": 1059636,
+      "sha256": "f9a1e5ea8d04732a0ab32eb1830eebb28a48cdc1c9e8f43474a6a854da25cc1f"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_door_belt.png",
+      "bytes": 940263,
+      "sha256": "4fb63721742664d6823d1fe81fe7e36d01b27d1188c2937f9d09c9aa684a07b7"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_front_fender.png",
+      "bytes": 957079,
+      "sha256": "a8e92b9d495ff456087f91dcc169444fa2a1d5df296f0e794122dbbe532d40a4"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_grille_low.png",
+      "bytes": 874340,
+      "sha256": "368763927ce03a592480d90c9ec402f99bfc5399c473ac941c9026aa82cd216f"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_rear_wheel_kerb.png",
+      "bytes": 869590,
+      "sha256": "f473ad3fb4ea56dd6066b3e86bfb33768f2f2003f9235523229fe5bb8f1b6b41"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_spotlight.png",
+      "bytes": 930203,
+      "sha256": "1493460d423b1528d6090078dedefc8300b1d6882dd16b8b3a3fbea61cded3a8"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_detail_tail_lamp.png",
+      "bytes": 885248,
+      "sha256": "25a6c4a9bdf77def9d409f095a90aa8cc712dc775a7e81f42ad399131f07d2cc"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_posed_open.png",
+      "bytes": 1115162,
+      "sha256": "64f1fc17b5e5acc0b5ced8a309b3787d147370171d9dc1cdd1543f5360838503"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_front.png",
+      "bytes": 1025716,
+      "sha256": "ca25607b4ddb7946bd5e57c01179c562b0aa52219ebf096f7d9be013bbcec1aa"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_profile.png",
+      "bytes": 1034256,
+      "sha256": "86a4ea5be10b0ae03f26f83bd4129d4b5318dee5440849b6f4f9c467be985931"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_rear.png",
+      "bytes": 1014249,
+      "sha256": "35fce4ed9dad2fc03fe8920c29ba336a02fe6f8e0bfcd82155333c9d8d15ba19"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_textured_three_quarter.png",
+      "bytes": 1090842,
+      "sha256": "a5bfd7a556eae2a8e973b4f6239c3f53e25c4496dbc81e3045d96f6a47c9cb02"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_top.png",
+      "bytes": 838673,
+      "sha256": "dbada57b6f2ea89db01b27fc221e9765fc5fabd2262db952b7fb76b2ab9c468d"
+    },
+    {
+      "path": "renders/SM_V01_PatrolSedan_MPDC_underside.png",
+      "bytes": 860162,
+      "sha256": "13503273fb92a6a57a53d72a25c8f866f7535923fd2080a136f8b9d19b3f9139"
+    },
+    {
+      "path": "source/build.py",
+      "bytes": 90047,
+      "sha256": "512b505092665a3500e81c781f528abdb9615ca82b2bdb75f562070483340932"
+    },
+    {
+      "path": "source/report.py",
+      "bytes": 1628,
+      "sha256": "209e3e66669d4292b2204652266b195165fd0993bc2b7a50bbc4e30eed8d34a8"
+    },
+    {
+      "path": "textures/T_V01_Decal_DoorSeal.png",
+      "bytes": 130457,
+      "sha256": "2d558eb7fdb1cc4b9c459bf9791d0f41486081c2cd3b711ecc7785d9c673b519"
+    },
+    {
+      "path": "textures/T_V01_Decal_RoofID.png",
+      "bytes": 45705,
+      "sha256": "b590ed1b412eebd03db927801abdab2ed5cb1f639d3062bf2f59204cb1237ada"
+    },
+    {
+      "path": "textures/T_V01_Decal_Trunk.png",
+      "bytes": 8104,
+      "sha256": "6f5df31e0364c638c0c821f0cc048de5b64cda7fe9c981f444c405258f90b278"
+    },
+    {
+      "path": "textures/T_V01_Plate.png",
+      "bytes": 16087,
+      "sha256": "d2e4d01c6d2fa22a882207aae7188bf07a79c76d224be2f5d65333e8c3fecd64"
+    }
+  ]
+}
