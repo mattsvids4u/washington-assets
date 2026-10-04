@@ -32,6 +32,8 @@ shots = {
     "detail_door_belt": ((3.0, -0.4, 1.25), (1.0, 0.1, 0.85)),
     "detail_rear_wheel_kerb": ((3.2, 2.9, 0.35), (0.9, 1.5, 0.4)),
     "detail_grille_low": ((1.6, -4.6, 0.55), (0.0, -2.4, 0.6)),
+    "detail_spotlight": ((2.3, -1.6, 1.35), (1.0, -0.45, 1.02)),
+    "detail_tail_lamp": ((1.9, 4.6, 0.95), (0.55, 2.75, 0.62)),
 }
 base = os.path.splitext(os.path.basename(glb))[0]
 for name, (pos, look) in shots.items():
