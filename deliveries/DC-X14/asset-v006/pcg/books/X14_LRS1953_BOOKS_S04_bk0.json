@@ -1,0 +1,19 @@
+{
+ "shelf_id": "X14_LRS1953_BOOKS_S04_bk0",
+ "socket_node": "SOCKET_X14_Books_S04.bk0",
+ "room": "LRS1953",
+ "book_seed": 168326740,
+ "personality": "S08_GOV_PERIODICALS",
+ "run_shift_m": 0.0602,
+ "usable_width_m": 0.842,
+ "clearance_m": 0.255,
+ "books_kept": [
+  6,
+  11,
+  15,
+  18
+ ],
+ "books_cropped": 2,
+ "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+ "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+}

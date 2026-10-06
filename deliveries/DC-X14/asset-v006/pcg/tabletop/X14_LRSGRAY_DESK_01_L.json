@@ -1,0 +1,91 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRSGRAY_DESK_01_L",
+  "width_m": 0.59,
+  "depth_m": 0.445,
+  "edge_margin_m": 0.022,
+  "blocked_regions": null
+ },
+ "master_seed": 199457726,
+ "seeds": {
+  "layout": 2530474,
+  "population": 515741603,
+  "state": 1184651840,
+  "appearance": 1305745151,
+  "weathering": 631099468
+ },
+ "archetype": "neat_clerk",
+ "controls": {
+  "organization": 0.84,
+  "paper_density": 0.38,
+  "surface_coverage": 0.38,
+  "activity": 0.4,
+  "stack_bias": 0.68,
+  "smoking_intensity": 0.0,
+  "cluster_bias": 0.7
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "document_folder": 1,
+  "document_stack": 1,
+  "loose_sheet": 1
+ },
+ "placement_count": 3,
+ "occupied_area_m2": 0.13731,
+ "target_area_m2": 0.08574,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "document_folder",
+   "variant": 0,
+   "variant_label": "right_tab_medium_fill",
+   "x_m": -0.12708055514235717,
+   "y_m": 0.0018666363485642934,
+   "z_m": 0.0,
+   "yaw_deg": -1.8772304274500917,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 2,
+   "variant_label": "thick_stack",
+   "x_m": -0.12742421497800985,
+   "y_m": -0.0004098643678033852,
+   "z_m": 0.00228,
+   "yaw_deg": -2.2339494505086672,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "loose_sheet",
+   "variant": 0,
+   "variant_label": "blank",
+   "x_m": 0.11253346515187215,
+   "y_m": -0.031240597146353424,
+   "z_m": 0.00018,
+   "yaw_deg": -0.5261748752939948,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_Desk_01L",
+ "x14_room": "LRSGRAY"
+}

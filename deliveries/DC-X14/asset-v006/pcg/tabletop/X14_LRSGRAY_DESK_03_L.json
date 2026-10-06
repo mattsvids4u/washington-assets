@@ -1,0 +1,117 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRSGRAY_DESK_03_L",
+  "width_m": 0.59,
+  "depth_m": 0.445,
+  "edge_margin_m": 0.022,
+  "blocked_regions": null
+ },
+ "master_seed": 226687297,
+ "seeds": {
+  "layout": 1213239168,
+  "population": 1399144820,
+  "state": 604109784,
+  "appearance": 1679431908,
+  "weathering": 29722292
+ },
+ "archetype": "mixed_piles_open_folders",
+ "controls": {
+  "organization": 0.42,
+  "paper_density": 0.74,
+  "surface_coverage": 0.73,
+  "activity": 0.84,
+  "stack_bias": 0.5,
+  "smoking_intensity": 0.0,
+  "cluster_bias": 0.58
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "document_folder": 2,
+  "document_stack": 2,
+  "loose_sheet_mini": 1
+ },
+ "placement_count": 5,
+ "occupied_area_m2": 0.12183,
+ "target_area_m2": 0.14858,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "document_folder",
+   "variant": 2,
+   "variant_label": "left_tab_full",
+   "x_m": -0.06419637898557048,
+   "y_m": 0.022702811300261153,
+   "z_m": 0.0,
+   "yaw_deg": -0.9374417235590276,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_folder",
+   "variant": 2,
+   "variant_label": "left_tab_full",
+   "x_m": -0.06419637898557048,
+   "y_m": 0.022702811300261153,
+   "z_m": 0.0025344,
+   "yaw_deg": -0.9374417235590276,
+   "orientation": "flat",
+   "relation": "stacked_folder_pile",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 0,
+   "variant_label": "thin_stack",
+   "x_m": -0.06163312598604502,
+   "y_m": 0.031183212248388346,
+   "z_m": 0.0050688,
+   "yaw_deg": -1.8593451466363908,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 1,
+   "variant_label": "medium_stack",
+   "x_m": -0.06900088301663461,
+   "y_m": 0.02482735278407286,
+   "z_m": 0.0095988,
+   "yaw_deg": -0.3629218843654707,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "loose_sheet_mini",
+   "variant": 4,
+   "variant_label": "annotated",
+   "x_m": -0.09394470661864393,
+   "y_m": 0.07548908840541867,
+   "z_m": 0.0141288,
+   "yaw_deg": 0.653976868745147,
+   "orientation": "flat",
+   "relation": "work_slip",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_Desk_03L",
+ "x14_room": "LRSGRAY"
+}

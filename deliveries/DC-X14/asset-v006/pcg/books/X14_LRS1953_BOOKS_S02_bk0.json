@@ -1,0 +1,23 @@
+{
+ "shelf_id": "X14_LRS1953_BOOKS_S02_bk0",
+ "socket_node": "SOCKET_X14_Books_S02.bk0",
+ "room": "LRS1953",
+ "book_seed": 140505505,
+ "personality": "S05_HUMANITIES",
+ "run_shift_m": -0.0378,
+ "usable_width_m": 0.842,
+ "clearance_m": 0.338,
+ "books_kept": [
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  12,
+  15
+ ],
+ "books_cropped": 0,
+ "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+ "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+}

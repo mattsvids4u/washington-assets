@@ -1,0 +1,168 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRSGRAY_FILE_02",
+  "width_m": 0.47,
+  "depth_m": 0.71,
+  "edge_margin_m": 0.022,
+  "blocked_regions": null
+ },
+ "master_seed": 6087860,
+ "seeds": {
+  "layout": 1562636263,
+  "population": 2036620565,
+  "state": 2142716479,
+  "appearance": 258438782,
+  "weathering": 1219270765
+ },
+ "archetype": "organized_filing",
+ "controls": {
+  "organization": 0.96,
+  "paper_density": 0.72,
+  "surface_coverage": 0.58,
+  "activity": 0.26,
+  "stack_bias": 0.96,
+  "smoking_intensity": 0.0,
+  "cluster_bias": 0.9
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "document_folder": 2,
+  "document_stack": 7
+ },
+ "placement_count": 9,
+ "occupied_area_m2": 0.07626,
+ "target_area_m2": 0.15763,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "document_folder",
+   "variant": 0,
+   "variant_label": "right_tab_medium_fill",
+   "x_m": -0.03597782986047057,
+   "y_m": -0.10607317035957732,
+   "z_m": 0.0,
+   "yaw_deg": 0,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_folder",
+   "variant": 1,
+   "variant_label": "center_tab_sparse",
+   "x_m": -0.03597782986047057,
+   "y_m": -0.10607317035957732,
+   "z_m": 0.00228,
+   "yaw_deg": 0,
+   "orientation": "flat",
+   "relation": "stacked_folder_pile",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.03644591801984079,
+   "y_m": -0.1034376858640163,
+   "z_m": 0.0039664,
+   "yaw_deg": 0.021969408186889416,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 2,
+   "variant_label": "thick_stack",
+   "x_m": -0.032673524783744724,
+   "y_m": -0.1033879594999057,
+   "z_m": 0.0077098,
+   "yaw_deg": -0.43004290936399603,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 1,
+   "variant_label": "medium_stack",
+   "x_m": -0.037240963130320166,
+   "y_m": -0.10373812775617781,
+   "z_m": 0.0152988,
+   "yaw_deg": -0.20310097511126196,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.032673524783744724,
+   "y_m": -0.1033879594999057,
+   "z_m": 0.0198287,
+   "yaw_deg": -0.43004290936399603,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 2,
+   "variant_label": "thick_stack",
+   "x_m": -0.0353785816110323,
+   "y_m": -0.10806619340607496,
+   "z_m": 0.0235721,
+   "yaw_deg": 0.3215200347398785,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 2,
+   "variant_label": "thick_stack",
+   "x_m": -0.032673524783744724,
+   "y_m": -0.1033879594999057,
+   "z_m": 0.0311611,
+   "yaw_deg": -0.43004290936399603,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.0353785816110323,
+   "y_m": -0.10806619340607496,
+   "z_m": 0.0387501,
+   "yaw_deg": 0.3215200347398785,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_File_02",
+ "x14_room": "LRSGRAY"
+}

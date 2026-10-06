@@ -1,0 +1,20 @@
+{
+ "shelf_id": "X14_LRSGRAY_BOOKS_S00_bk2",
+ "socket_node": "SOCKET_X14_Books_S00.bk2",
+ "room": "LRSGRAY",
+ "book_seed": 213077999,
+ "personality": "S06_SPARSE_USED",
+ "run_shift_m": 0.1122,
+ "usable_width_m": 0.842,
+ "clearance_m": 0.338,
+ "books_kept": [
+  1,
+  2,
+  3,
+  5,
+  6
+ ],
+ "books_cropped": 0,
+ "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+ "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+}
