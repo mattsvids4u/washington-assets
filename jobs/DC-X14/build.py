@@ -1365,8 +1365,9 @@ def build_demo_1953(M, built):
         objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.58, 0), (0, 0, 0)))
         objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx - 0.18, 3.6 - 0.03, 0.7405), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.6 - 0.18, 0.7605), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.45, 3.6 + 0.05, 0.74942), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.58, 3.6 - 0.21, 0.74942), (0, 0, math.pi)))   # v006: back-left corner (desk-local (-0.58, 0.21)) so the left work zone can take letter-size paperwork
         objs.append(empty(f"SOCKET_I09_PedestalFan_{c+1:02d}", (cx + 1.0, 5.45, 0), (0, 0, math.pi)))
+    objs += tabletop_surfaces("LRS1953", cub_x)   # v006: WASHINGTON tabletop PCG surfaces (desk + file tops)
     objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.2), (0, 0, math.pi)))   # v004: I09 clock face is local -Y, origin at its bottom; was on the door leaf in v001-v002
     objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
     return "X14_DEMO_LRS_Room_1953", objs
@@ -1728,16 +1729,22 @@ def build_dress_bulletin(M):
     return name, objs
 
 
+BOOKCASE_SHELVES = [0.08, 0.44, 0.80, 1.16, 1.52]   # shelf-board top z (m)
+BOOKCASE_W, BOOKCASE_D, BOOKCASE_H, BOOKCASE_T = 0.90, 0.30, 1.80, 0.025
+
+
 def build_dress_bookcase(M):
-    """Open oak bookcase, 0.90 × 0.30 × 1.80 m, five shelves of cloth-bound books (1953 photo, E19:
-    bookcases used between desk groups). Pivot: bottom centre of the back, back on y = 0."""
-    import random
+    """Open oak bookcase, 0.90 × 0.30 × 1.80 m, five shelves (1953 photo, E19: bookcases between desk
+    groups). Pivot: bottom centre of the back, back on y = 0, opens to +Y.
+    v006: the bookcase is a CARRIER. Books are DC-I05's (cross-city book system): each shelf has a
+    SOCKET_X14_Books_Snn following the DC-I05 / DC-I06 SOCKET_Books contract (socket on the shelf top,
+    run along local X, spines facing the socket's -Y = the room). DC-I05 shelf personalities are
+    cropped to the usable width/clearance carried on the socket, never scaled (I05 v015 rule)."""
     name = "X14_DRESS_Bookcase_Oak_090"
-    W, Dp, H, t = 0.90, 0.30, 1.80, 0.025
-    shelves = [0.08, 0.44, 0.80, 1.16, 1.52]
+    W, Dp, H, t = BOOKCASE_W, BOOKCASE_D, BOOKCASE_H, BOOKCASE_T
+    shelves = BOOKCASE_SHELVES
     objs = []
     for lod in range(3):
-        rnd = random.Random(SEED + 9)
         bm = new_bm()
         box(bm, -W / 2, 0, 0, -W / 2 + t, Dp, H, 0)                                 # sides
         box(bm, W / 2 - t, 0, 0, W / 2, Dp, H, 0)
@@ -1746,34 +1753,17 @@ def build_dress_bookcase(M):
         box(bm, -W / 2 + t, Dp - 0.04, 0.0, W / 2 - t, Dp - 0.02, 0.08 - 0.022, 0)  # recessed plinth
         for z in shelves:
             box(bm, -W / 2 + t, 0.008, z - 0.022, W / 2 - t, Dp, z, 0)              # shelf boards
-        for si, z in enumerate(shelves):
-            clear = (shelves[si + 1] - 0.022 if si + 1 < len(shelves) else H - t) - z - 0.025
-            x = -W / 2 + t + 0.004
-            xend = W / 2 - t - 0.004
-            if lod == 2:
-                box(bm, x, 0.012, z, xend - 0.06, 0.20, z + min(0.24, clear), 1 + si % 4)
-                continue
-            if si == 4:
-                xend -= 0.20          # top shelf: leave room for a lying stack
-            while x < xend - 0.02:
-                bw = rnd.uniform(0.022, 0.048) if lod == 0 else rnd.uniform(0.08, 0.14)
-                bh = min(rnd.uniform(0.20, 0.30), clear - rnd.uniform(0.0, 0.03))
-                bd = rnd.uniform(0.16, 0.22)
-                if x + bw > xend:
-                    break
-                if rnd.random() < 0.06:
-                    x += 0.03          # occasional gap
-                    continue
-                box(bm, x, 0.012, z, x + bw, 0.012 + bd, z + bh, 1 + rnd.randrange(4))
-                x += bw + 0.001
-            if si == 4:
-                zz = z
-                for k in range(3 if lod == 0 else 1):
-                    th = rnd.uniform(0.03, 0.045)
-                    box(bm, W / 2 - t - 0.20, 0.02, zz, W / 2 - t - 0.01, 0.02 + rnd.uniform(0.15, 0.2), zz + th, 1 + k % 4)
-                    zz += th
-        objs.append(finish(bm, f"{name}_LOD{lod}", [M["door"], M["book_a"], M["book_b"], M["book_c"], M["book_d"]]))
+        objs.append(finish(bm, f"{name}_LOD{lod}", [M["door"]]))
     objs += ucx_boxes(name, [(-W / 2, 0, 0, W / 2, Dp, H)], M)
+    for si, z in enumerate(shelves):
+        clear = (shelves[si + 1] - 0.022 if si + 1 < len(shelves) else H - t) - z
+        e = empty(f"SOCKET_X14_Books_S{si:02d}", (0.0, 0.19, z), rot=(0, 0, math.pi))
+        e["contract"] = "DC-I05 SOCKET_Books (DC-I06 pattern): +X run, spines face socket -Y"
+        e["usable_width_m"] = round(W - 2 * t - 0.008, 4)
+        e["clearance_m"] = round(clear, 4)
+        e["usable_depth_m"] = round(Dp - 0.008, 4)
+        e["book_seed_slot"] = si
+        objs.append(e)
     return name, objs
 
 
@@ -1961,6 +1951,71 @@ DRESS_MODULES = [
 ]
 
 
+# v006: surfaces for the WASHINGTON Tabletop PCG system (DC-I18 family bank). One record per surface,
+# carried as glTF extras on a SURFACE_X14_Tabletop_* empty whose local frame is the surface frame
+# (origin on the top, +X width, +Y depth). Desk geometry is DC-I09 v004's (top z 0.763, 1.52 x 0.77 m;
+# typewriter / phone / lamp footprints blocked at the I09 desk-top sockets); file-cabinet top is the
+# I09 v004 four-drawer file (0.47 x 0.71 m at z 1.334). Archetypes are art direction (FICTIONALISED).
+TABLETOP_ARCHETYPES = {
+    "LRS1953": (["busy_working", "paper_heavy_admin", "smokers_paperwork"], ["organized_filing", "near_cleared", "archive_sorting"]),
+    "LRSGRAY": (["neat_clerk", "active_review", "mixed_piles_open_folders"], ["near_cleared", "organized_filing", "archive_sorting"]),
+}
+# Desk-top work zones in I09 desk-local coordinates (top z 0.763): left zone in front of the phone
+# (moved to the back-left corner in v006), right zone in front of the lamp. Each zone is its own
+# tabletop surface: the generator places letter-size paper and folders unscaled, and the full desk
+# with the typewriter blocked leaves no other patch deep enough for them.
+I09_DESK_ZONES = {"L": dict(x0=-0.76, x1=-0.17, y0=-0.385, y1=0.06),
+                  "R": dict(x0=0.47, x1=0.76, y0=-0.385, y1=0.06),
+                  # back strip behind the typewriter, between phone and lamp: too shallow for letter
+                  # paper (0.28 m), so it only ever resolves the generator's smoking cluster
+                  "B": dict(x0=-0.42, x1=0.44, y0=0.205, y1=0.381, margin=0.01)}
+I09_DESK_Z = 0.763
+I09_FILE_TOP = dict(z=1.334, width=0.47, depth=0.71, cy=-0.04)
+
+
+def _stable_seed(text):
+    import hashlib
+    return int(hashlib.sha256(text.encode()).hexdigest()[:7], 16)   # < 2**31 (Blender ID properties are C int)
+
+
+def _surface_empty(name, sid, loc, rot, w, d, arch, smoking, controls=None, margin=0.022):
+    e = empty(name, loc, (0, 0, rot))
+    e["surface_id"] = sid
+    e["system"] = "WASHINGTON Tabletop PCG v003 (support-aware); family bank DC-I18"
+    e["width_m"], e["depth_m"], e["edge_margin_m"] = round(w, 4), round(d, 4), margin
+    e["blocked_regions_json"] = "[]"
+    e["archetype"] = arch
+    e["master_seed"] = _stable_seed(sid)
+    e["smoking_allowed"] = smoking
+    e["controls_json"] = json.dumps(controls or {})   # semantic-control overrides on top of the archetype
+    return e
+
+
+def tabletop_surfaces(room, cub_x):
+    out = []
+    desks, files = TABLETOP_ARCHETYPES[room]
+    for c, cx in enumerate(cub_x):
+        for zone, z in I09_DESK_ZONES.items():
+            mx, my = (z["x0"] + z["x1"]) / 2, (z["y0"] + z["y1"]) / 2
+            # desk socket (cx, 3.6) rotated 180°: desk-local (x, y) -> room (cx - x, 3.6 - y)
+            controls = None
+            if zone == "L":
+                arch = desks[c]
+            elif zone == "B":
+                arch = "smokers_paperwork" if desks[c] in ("smokers_paperwork", "busy_working", "paper_heavy_admin", "mixed_piles_open_folders") else "near_cleared"
+                if arch == "smokers_paperwork" and desks[c] != "smokers_paperwork":
+                    controls = {"smoking_intensity": 0.55}         # 1963 office: an ashtray is likely (APPROXIMATE)
+            else:
+                arch = "near_cleared" if desks[c] == "neat_clerk" else "active_review"
+            out.append(_surface_empty(f"SURFACE_X14_Tabletop_Desk_{c + 1:02d}{zone}", f"X14_{room}_DESK_{c + 1:02d}_{zone}",
+                                      (cx - mx, 3.6 - my, I09_DESK_Z), math.pi, z["x1"] - z["x0"], z["y1"] - z["y0"],
+                                      arch, 1 if zone == "B" or desks[c] == "smokers_paperwork" else 0, controls, z.get("margin", 0.022)))
+        out.append(_surface_empty(f"SURFACE_X14_Tabletop_File_{c + 1:02d}", f"X14_{room}_FILE_{c + 1:02d}",
+                                  (cx + 0.35, 5.58 + I09_FILE_TOP["cy"], I09_FILE_TOP["z"]), 0.0,
+                                  I09_FILE_TOP["width"], I09_FILE_TOP["depth"], files[c], 0))
+    return out
+
+
 def place_dressing(B, objs, room_tag, room_1953=True):
     """Set dressing shared by both demo rooms (layout FICTIONALISED, objects period-typical)."""
     D = 6.0
@@ -2022,6 +2077,8 @@ def place(objs, loc, rot_z=0.0, tag=""):
         n = o.data.copy() if False else o.data  # shared data
         c = bpy.data.objects.new(o.name + tag, n)
         c.empty_display_type = o.empty_display_type if o.type == "EMPTY" else "PLAIN_AXES"
+        for k in o.keys():          # v006: carry socket metadata (glTF extras) onto instances
+            c[k] = o[k]
         bpy.context.scene.collection.objects.link(c)
         mapping[o] = c
         out.append(c)
@@ -2111,7 +2168,8 @@ def build_demo(M, built):
         objs.append(empty(f"SOCKET_I09_FileCabinet_{c+1:02d}", (cx + 0.35, 5.58, 0), (0, 0, 0)))
         objs.append(empty(f"SOCKET_I09_Typewriter_{c+1:02d}", (cx - 0.18, 3.6 - 0.03, 0.7405), (0, 0, math.pi)))
         objs.append(empty(f"SOCKET_I09_DeskLamp_{c+1:02d}", (cx - 0.55, 3.6 - 0.18, 0.7605), (0, 0, math.pi)))
-        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.45, 3.6 + 0.05, 0.74942), (0, 0, math.pi)))
+        objs.append(empty(f"SOCKET_I09_Telephone_{c+1:02d}", (cx + 0.58, 3.6 - 0.21, 0.74942), (0, 0, math.pi)))   # v006: back-left corner (desk-local (-0.58, 0.21)) so the left work zone can take letter-size paperwork
+    objs += tabletop_surfaces("LRSGRAY", cub_x)   # v006: WASHINGTON tabletop PCG surfaces (desk + file tops)
     objs.append(empty("SOCKET_I09_WallClock_01", (7.2, 0.0, 2.2), (0, 0, math.pi)))   # v004: I09 clock face is local -Y, origin at its bottom; was on the door leaf in v001-v002
     objs.append(empty("SOCKET_X15_StaffAccess_Door", (4.5, 0.0, 0), (0, 0, math.pi / 2)))
     return "X14_DEMO_LRS_Room", objs

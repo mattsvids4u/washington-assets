@@ -22,6 +22,8 @@ VIEWS = {
     "int_cubicle_ceiling": ((4.5, 2.2, 1.0), (4.5, 5.5, 2.9)),
     "int_south_wall": ((8.6, 1.55, 1.6), (2.6, 0.0, 1.3)),     # v005: corridor wall dressing, plants, flag
     "int_cubicle_dress": ((5.6, 2.3, 1.6), (3.2, 5.4, 1.1)),    # v005: bookcase, pothos, picture, wastebasket
+    "int_desk_closeup": ((7.45, 4.65, 1.55), (7.1, 3.55, 0.76)),  # v006: tabletop PCG on desk 3 from the sitter's side
+    "int_bookcase": ((4.35, 4.85, 1.25), (3.2, 4.85, 0.92)),      # v006: DC-I05 shelf runs in the cubicle-2 bookcase
 }
 
 
@@ -38,6 +40,7 @@ def parse_args():
     p.add_argument("--views", default="")
     p.add_argument("--dress", action="store_true", help="add PREVIEW-ONLY DC-I09 stand-ins at the furniture sockets")
     p.add_argument("--i09", default="", help="with --dress: folder of real DC-I09 LOD0 GLBs to place instead of stand-ins")
+    p.add_argument("--pcg", default="", help="with --dress: dress_pcg.py output folder (tabletop PCG + DC-I05 shelves)")
     return p.parse_args(argv)
 
 
@@ -54,7 +57,8 @@ def main():
     if a.dress:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import preview_dressing
-        preview_dressing.dress(list(bpy.context.scene.objects), a.i09 or None)
+        room_id = "LRS1953" if os.path.basename(a.glb).startswith("X14_DEMO_LRS_Room_1953") else "LRSGRAY"
+        preview_dressing.dress(list(bpy.context.scene.objects), a.i09 or None, a.pcg or None, room_id)
         meshes = [o for o in bpy.context.scene.objects if o.type == "MESH"]
     visible = [o for o in meshes if not o.hide_render]
     if a.mode == "clay":
@@ -114,7 +118,7 @@ def main():
         pos, look = VIEWS[name]
         cam.location = Vector(pos)
         cam.rotation_euler = (Vector(look) - Vector(pos)).to_track_quat("-Z", "Y").to_euler()
-        scene.render.filepath = os.path.join(a.out_dir, f"{base}_{a.mode}{('_i09' if a.i09 else '_dressed') if a.dress else ''}_{name}.png")
+        scene.render.filepath = os.path.join(a.out_dir, f"{base}_{a.mode}{(('_pcg' if a.pcg else '_i09') if a.i09 else '_dressed') if a.dress else ''}_{name}.png")
         bpy.ops.render.render(write_still=True)
         print("wrote", scene.render.filepath)
 

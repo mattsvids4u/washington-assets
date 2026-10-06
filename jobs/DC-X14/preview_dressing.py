@@ -285,9 +285,39 @@ def _load_i09(path):
     return parts
 
 
-def dress(scene_objects, i09_dir=None):
+def _import_glb(path):
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=path)
+    return [o for o in bpy.data.objects if o not in before]
+
+
+def dress_pcg(scene_objects, pcg_dir, room_id):
+    """v006: place the outputs of jobs/DC-X14/dress_pcg.py (WASHINGTON tabletop PCG on the
+    SURFACE_X14_Tabletop_* empties; DC-I05 shelf runs on the bookcase SOCKET_X14_Books_* empties).
+    Each payload GLB is in its surface/socket local frame (glTF Y-up), so it is parented in place."""
+    out = []
+    for e in [o for o in scene_objects if o.type == "EMPTY"]:
+        if e.name.startswith("SURFACE_X14_Tabletop_") and "surface_id" in e.keys():
+            path = os.path.join(pcg_dir, "tabletop", f"{e['surface_id']}.glb")
+        elif e.name.startswith("SOCKET_X14_Books_"):
+            sid = f"X14_{room_id}_" + e.name.replace("SOCKET_X14_Books_", "BOOKS_").replace(".", "_")
+            path = os.path.join(pcg_dir, "books", f"{sid}.glb")
+        else:
+            continue
+        if not os.path.isfile(path):
+            continue
+        mw = e.matrix_world.copy()
+        for o in _import_glb(path):
+            if o.parent is None:
+                o.matrix_world = mw @ o.matrix_world
+            out.append(o)
+    return out
+
+
+def dress(scene_objects, i09_dir=None, pcg_dir=None, room_id=None):
     """Dress every SOCKET_I09_* empty. With i09_dir, real DC-I09 LOD0 meshes are instanced where
-    I09 provides the piece; chair, pedestal fan, papers and boxes stay as stand-ins either way."""
+    I09 provides the piece; chair and pedestal fan stay as stand-ins either way. With pcg_dir the
+    stand-in papers/boxes are replaced by the WASHINGTON tabletop PCG and DC-I05 shelf payloads."""
     M = materials()
     out = []
     sockets = [o for o in scene_objects if o.type == "EMPTY" and o.name.startswith("SOCKET_I09_")]
@@ -295,7 +325,7 @@ def dress(scene_objects, i09_dir=None):
     if i09_dir:
         for kind, fn in I09_FILES.items():
             real[kind] = _load_i09(os.path.join(i09_dir, fn))
-    extras = EXTRAS_I09 if i09_dir else EXTRAS
+    extras = {} if pcg_dir else (EXTRAS_I09 if i09_dir else EXTRAS)
     for e in sockets:
         kind = e.name.split("_")[2]
         mw = e.matrix_world.copy()
@@ -310,4 +340,6 @@ def dress(scene_objects, i09_dir=None):
                 out.append(_spawn(fn, keys, M, f"PREVIEW_{kind}_{e.name[-2:]}_{i}", mw))
         for j, (fn, keys, off) in enumerate(extras.get(kind, [])):
             out.append(_spawn(fn, keys, M, f"PREVIEW_{kind}_{e.name[-2:]}_x{j}", mw, off))
+    if pcg_dir:
+        out += dress_pcg(scene_objects, pcg_dir, room_id)
     return out

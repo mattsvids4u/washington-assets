@@ -27,7 +27,7 @@ case "$($PY -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.m
     ;;
 esac
 
-$PY -m pip install -q "$SPEC" numpy pillow trimesh pygltflib
+$PY -m pip install -q "$SPEC" numpy pillow trimesh pygltflib shapely   # shapely: WASHINGTON tabletop PCG
 # Headless Blender needs a few X/GL libs even with no display.
 if command -v apt-get >/dev/null; then
   (sudo apt-get install -y -q libxi6 libxxf86vm1 libxfixes3 libxrender1 libgl1 libxkbcommon0 libsm6 2>/dev/null \
