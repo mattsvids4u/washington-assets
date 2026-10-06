@@ -197,7 +197,11 @@
       "X14_DRESS_Bookcase_Oak_090": {
         "size": "0.90 w x 0.30 d x 1.80 h",
         "pivot": "bottom centre of the back, back on y = 0, opens to +Y",
-        "top_surface_z": 1.8
+        "top_surface_z": 1.8,
+        "role": "v006: carrier only - books come from DC-I05",
+        "sockets": [
+          "SOCKET_X14_Books_S00..S04 at (0, 0.19, shelf top z 0.08/0.44/0.80/1.16/1.52), rotated 180 deg about Z so the socket -Y faces the room; extras: usable_width_m 0.842, clearance_m 0.338 (S04: 0.255), usable_depth_m 0.292, book_seed_slot"
+        ]
       },
       "X14_DRESS_Plant_Rubber": {
         "footprint": "pot r 0.17, canopy ~0.75 m",
@@ -268,5 +272,35 @@
     "modules": "10 new X14_DRESS_* modules (frames, calendar, bulletin board, bookcase, two plants, coat tree, flag, wastebasket). The 22 v004 modules and 24 v004 textures are byte-identical.",
     "textures": "6 new: T_X14_Print_Engraving_BC, T_X14_Print_Photo_BC, T_X14_Calendar_1963-11_BC, T_X14_Flag_US_50Star_BC, T_X14_Cork_BC, T_X14_Memo_BC",
     "demo_rooms": "Both rooms place: rubber plants in the two south corners, flag stand, coat tree, bulletin board, large print and calendar on the south wall; per cubicle a framed picture on the north wall, a bookcase against the west divider with a pothos on top, and a wastebasket."
+  },
+  "tabletop_surfaces": {
+    "nodes": "SURFACE_X14_Tabletop_Desk_NN{L,R,B} and SURFACE_X14_Tabletop_File_NN in both demo rooms",
+    "frame": "empty local frame = surface frame: origin on the top surface centre, +X width, +Y depth, Z up",
+    "extras": [
+      "surface_id (persistent SurfaceID)",
+      "system",
+      "width_m",
+      "depth_m",
+      "edge_margin_m",
+      "blocked_regions_json [[cx,cy,w,d],...]",
+      "archetype",
+      "master_seed (derived from surface_id)",
+      "smoking_allowed",
+      "controls_json (semantic-control overrides)"
+    ],
+    "desk_zones_I09_desk_local": {
+      "L": "x -0.76..-0.17, y -0.385..0.06 (work zone in front of the phone)",
+      "R": "x 0.47..0.76, y -0.385..0.06 (in front of the lamp)",
+      "B": "x -0.42..0.44, y 0.205..0.381, margin 0.01 (behind the typewriter: only the smoking cluster fits)"
+    },
+    "file_top": "0.47 x 0.71 at z 1.334 (DC-I09 v004 four-drawer file)",
+    "consumer": "WASHINGTON Tabletop PCG (Unreal: the system's documented graph stages read the same record)"
+  },
+  "v006_changes": {
+    "bookcase": "procedural books removed; five SOCKET_X14_Books_* added (DC-I05 contract). Material slots MI_X14_BookCloth_* no longer exported by any module.",
+    "telephone_socket": "SOCKET_I09_Telephone_NN moved from the I09 desk's SOCKET_PHONE (desk-local (-0.45,-0.05)) to the back-left corner (desk-local (-0.58, 0.21)) so the left work zone fits letter-size paperwork. Typewriter and lamp sockets unchanged.",
+    "tabletop_surfaces": "new SURFACE_X14_Tabletop_* records (above)",
+    "instancing": "module socket custom properties are now carried onto room instances (glTF extras)",
+    "unchanged": "all other 31 modules and all 30 textures byte-identical to asset-v005"
   }
 }

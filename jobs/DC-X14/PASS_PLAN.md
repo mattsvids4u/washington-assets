@@ -163,3 +163,32 @@ Result: QA 34/34 GLBs PASS; clean rebuild in an isolated copy byte-identical (34
 22 v004 modules + 24 v004 textures byte-identical; 80 module orbits, 16 `_i09_` interiors, 6 kit-only
 and 6 clay interiors reviewed. Unreal import NOT_RUN — needs local Unreal (UE 5.8). Delivered as
 `deliveries/DC-X14/asset-v005/`. Approval PENDING.
+
+## Pass 10 — asset-v006: books and clutter from the existing WASHINGTON PCG systems (Matt, 2026-10-06: "use the book and clutter PCG stuff we already have done in washington")
+
+Problem: v005 filled the bookcases with X14-made box books and put stand-in paper stacks on the desks,
+while the project already has a book system (DC-I05, with an approved DC-I06 shelf integration) and a
+tabletop clutter system (WASHINGTON Tabletop PCG v003, piloted on the approved DC-I18 kit).
+Deliverable:
+1. `X14_DRESS_Bookcase_Oak_090` becomes a carrier: procedural books removed, five
+   `SOCKET_X14_Books_S00..S04` following the DC-I05 / DC-I06 SOCKET_Books contract (usable width,
+   clearance and depth carried as extras).
+2. Both demo rooms carry `SURFACE_X14_Tabletop_*` records (persistent SurfaceID, size, margins,
+   blocked regions, archetype, seed, control overrides) for every desk work zone and file-cabinet top.
+3. `jobs/DC-X14/dress_pcg.py` runs the real systems from the Drive packages: the tabletop generator and
+   its support-aware solver unmodified, on the X14 surfaces; DC-I05 shelf personalities cropped to the
+   X14 shelves exactly as I05 v015 does for I06 (no scaling, BookSeed per socket).
+4. Preview renders place those payloads (`render_interior.py --dress --i09 … --pcg …`, `_pcg_` images).
+Findings and fixes during the pass:
+- The tabletop generator returned nothing on the full I09 desk: its cluster centres fall inside the
+  centred typewriter, and no free patch was deep enough for letter-size paper (0.28 m) or a folder
+  (0.31 m) with the I09 phone mid-left. Fix: phone socket moved to the desk's back-left corner and the
+  top split into three surfaces (left work zone, right zone, back strip). Scale stays locked (contract).
+- No smoking props resolved at first: the generator places the ashtray after the papers, and the papers
+  filled the narrow zones. The back strip behind the typewriter (too shallow for paper) now takes the
+  smoking cluster on the smokers' and busy desks.
+- Four DC-I18 states (closed pack, closed matchbook, fresh cigarette, round ashtray V00) cannot be
+  recovered through the connector; substituted by V01 and flagged.
+Acceptance: QA 34/34 PASS; clean rebuild byte-identical; only the bookcase and the two rooms changed vs
+v005; dress_pcg.py deterministic (two runs byte-identical); zero unintended 3D overlaps reported by the
+tabletop support solver on every surface; renders reviewed.

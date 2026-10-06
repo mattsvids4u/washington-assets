@@ -78,5 +78,17 @@
     "stage_standard_modified": "2026-09-23T01:42:32Z",
     "request_doc_modified": "2026-09-25T10:31:15Z",
     "result": "no changes since the claim; claim folder intact; no DC-X14 review in DC-INT1 Reviews (direction taken from Matt's chat: 'anything on the walls? plants in the corners? nothin???')"
+  },
+  "v006_recheck": {
+    "checked_utc": "2026-10-06",
+    "method": "Drive register CSV export + PCG system docs",
+    "read": [
+      "WASHINGTON — PCG SYSTEMS DEBRIEF v001 (17IkKhH7FgN5amJ4H5s3DlzXQnEt23c4dP72a0cAAOwc)",
+      "WASHINGTON — TABLETOP PCG SYSTEM v001 — IMPLEMENTATION & CONTRACT (1OPT8rlmQAanXwzId7JhluYFW14u4TuelQJsieefWlZA)",
+      "DC-I05 v015 docs (HANDOFF, PCG_INTERFACE, I05_I06_INTEGRATION)",
+      "register rows DC-I05 (CLAIMED, approval PENDING), DC-I06 (APPROVED), DC-I09 (DELIVERED, approval PENDING), DC-I18 (APPROVED), DC-S16 Flagpole and US flag (APPROVED)"
+    ],
+    "direction": "Matt in chat 2026-10-06: 'use the book and clutter PCG stuff we already have done in washington'",
+    "note": "register still lists DC-X14 as UNCLAIMED; the head agent has not applied the claim/delivery updates (not edited by this agent)"
   }
 }

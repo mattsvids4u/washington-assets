@@ -1,4 +1,4 @@
-# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v005 current; earlier sections kept as history, newest at the end)
+# DC-X14 — Staff offices and Legislative Reference Service room — HANDOFF (asset-v006 current; earlier sections kept as history, newest at the end)
 
 Claimant claude-cloud-agent · DC-INT1 Interior Standard · P2 · AGENTS lane · stage A (asset)
 Request revision WASHINGTON-2026-09-22-v001 + Road Plan 04 addendum · built 2026-10-02 in the cloud sandbox (bpy 4.5.14, no GPU, no Unreal)
@@ -369,3 +369,99 @@ What Matt should look at:
 - Weak points, not fixed: in `int_door_and_sign` the flag fills the right foreground (the camera
   stands close to it); the engraving is a stylised hatch, convincing at wall distance but not in
   close-up; the plants are low-poly cards with no leaf texture.
+
+## asset-v006 (2026-10-06) — books and clutter from the existing WASHINGTON PCG systems
+
+Matt: "definitely the brown wood looking good! did you make that flag yourself?? anyways yeah use the book
+and clutter PCG stuff we already have done in washington."
+
+**Flag:** yes, made here. `T_X14_Flag_US_50Star_BC` is drawn in `build.py` to the Executive Order 10834
+proportions (E23), and the cloth is a procedural drape on the X14 pole. Washington already has an approved
+**DC-S16 "Flagpole and US flag (cross-city)"**: see UNIFICATION PROPOSAL 1 below.
+
+What changed:
+- **Books are DC-I05's.** `X14_DRESS_Bookcase_Oak_090` is now a carrier with five `SOCKET_X14_Books_S00..S04`
+  that follow the DC-I05 / DC-I06 SOCKET_Books contract. `dress_pcg.py` fills them with the DC-I05 v015
+  shelf personalities (S01 dense archival, S02 orderly reference, S03 legislative active, S04 law series,
+  S05 humanities, S06 sparse used, S07 overflow mixed, S08 government periodicals), using the canonical
+  I05 book geometry and bindings. Each run is cropped to the X14 shelf exactly as I05 v015 crops for the
+  approved I06 stack: books are never scaled, a per-socket BookSeed picks the personality and a run
+  offset, and no personality repeats within one bookcase. About 115 books per room. The X14 box books and
+  the `MI_X14_BookCloth_*` slots are gone.
+- **Desk and file-top clutter is the WASHINGTON Tabletop PCG v003 (support-aware) with the DC-I18 bank.**
+  Every desk work zone and file-cabinet top has a `SURFACE_X14_Tabletop_*` record (persistent SurfaceID,
+  size, margins, blocked regions, archetype, seed, control overrides) exported as glTF extras. The system
+  resolves archetypes into folders, paper stacks and towers, loose and routing slips, and smoking clusters
+  (ashtray, pack, matchbook, cigarettes in the saddle). Its support solver reports zero unintended 3D
+  overlaps on every surface. Archetypes:
+  - 1953 room: desks busy_working / paper_heavy_admin / smokers_paperwork; files organized_filing /
+    near_cleared / archive_sorting.
+  - Gray room: neat_clerk / active_review / mixed_piles_open_folders; files near_cleared /
+    organized_filing / archive_sorting.
+- **Phone socket moved to the desk's back-left corner.** With the I09 phone mid-left and the typewriter
+  centred, no free patch on the I09 desk was deep enough for letter-size paper (0.28 m) or a folder
+  (0.31 m), and the generator returned nothing. The I09 desk-top socket for the phone is therefore not
+  used verbatim any more (typewriter and lamp still are).
+  - The top is split into a left work zone, a right zone and a back strip behind the typewriter.
+  - The back strip is too shallow for paper, so it only ever resolves the smoking cluster.
+- The stand-in paper stacks and document boxes from `preview_dressing.py` are retired when `--pcg` is
+  given.
+
+Nothing from DC-I05, DC-I18 or the tabletop system is exported in an X14 kit GLB: X14 ships sockets and
+surface records, and the payloads are review/preview data, as with DC-I09.
+
+Re-run the dressing:
+```
+python3 jobs/DC-X14/dress_pcg.py --rooms jobs/DC-X14/out/X14_DEMO_LRS_Room.glb jobs/DC-X14/out/X14_DEMO_LRS_Room_1953.glb \
+    --tabletop-code <WASHINGTON_TABLETOP_PCG_v003 extracted> \
+    --tabletop-proofs <WASHINGTON_TABLETOP_PCG_v001 extracted>/WASHINGTON_TABLETOP_PCG_v001_BUNDLE/generated_proofs \
+    --i05 <DC-I05_asset_v015 extracted>/DC-I05_asset_v015 --out <dir>
+python3.11 jobs/DC-X14/render_interior.py jobs/DC-X14/out/X14_DEMO_LRS_Room_1953.glb <renders> --dress --i09 <I09 meshes> --pcg <dir>
+```
+Deterministic: two runs are byte-identical (101 files). Drive IDs and SHA-256 of the inputs are in
+DEPENDENCY_LOCK.json; the resolved records ship in `pcg/` (one JSON per surface and shelf, plus
+DRESS_PCG_MANIFEST.json).
+
+Gaps (stated plainly):
+1. **No spine titles.** The DC-I05 title atlases and the v014 shelf-composition code are only in DC-I05
+   v014 (28 MB), which the Drive connector cannot transfer. The books show their canonical bindings with
+   blank title carriers; titles bind at runtime from the I05 atlas. Composition comes from the eight
+   resolved v014 personalities, not from re-running the v014 composer.
+2. **Four DC-I18 states substituted.** The approved I18 package (14.4 MB) is also too large, so the bank
+   was recovered from the tabletop proof GLBs. Four states never placed in any proof are substituted by
+   their V01 neighbours and flagged in the manifest:
+   - round ashtray V00
+   - closed cigarette pack
+   - closed matchbook
+   - fresh cigarette
+   A local re-run with the real bank removes this.
+3. **Approval status of what is reused:**
+   - The tabletop PCG system is a WORKING prototype (not approved).
+   - DC-I05 is CLAIMED with approval PENDING.
+   - DC-I18 and DC-I06 are APPROVED.
+
+Gates: QA 34/34 GLBs PASS; clean rebuild in an isolated copy byte-identical (34 GLBs + 30 textures); vs
+v005 only `X14_DRESS_Bookcase_Oak_090` and the two demo rooms changed; Unreal import / motion
+**NOT_RUN — needs local Unreal (UE 5.8)**. Approval PENDING.
+
+Expected register change (head agent applies; the register still shows DC-X14 UNCLAIMED):
+- **DC-X14:** delivery_integrity → "v006: books via DC-I05 sockets, clutter via WASHINGTON tabletop PCG
+  surfaces; QA PASS 34/34; clean rebuild identical; UE import NOT_RUN". asset_user_approval stays
+  PENDING.
+- **DC-I05 row:** note the X14 bookcase as a second SOCKET_Books carrier.
+
+UNIFICATION PROPOSALS (v006):
+1. **Flag.** Swap the X14 flag cloth and texture for DC-S16's approved flag, so there is one US flag
+   across the city. Keep the X14 indoor stand (oak pole, weighted base) as the indoor variant.
+2. **I09 desk tabletop contract.** DC-I09 should publish its desk-top usable zones (or move SOCKET_PHONE
+   to a back corner). Every consumer of the desk will hit the same "no room for letter paper" problem
+   with the tabletop PCG.
+3. **SOCKET_Books as the shared bookshelf contract.** Any bookcase in any room exposes SOCKET_Books with
+   usable width, clearance and depth, and DC-I05 fills it. X14 is the second carrier after DC-I06.
+
+What Matt should look at:
+1. `renders/*_pcg_int_desk_closeup.png`: tabletop PCG on the smoker's desk.
+2. `renders/*_pcg_int_bookcase.png`: DC-I05 shelf runs in the X14 bookcase.
+3. `renders/*_pcg_int_cubicle_dress.png` and `*_pcg_int_high_overview.png`: how it reads at room scale.
+4. Whether the desks should be busier. Raise paper_density / surface_coverage in each SURFACE record, or
+   pick heavier archetypes; it is data, not code.

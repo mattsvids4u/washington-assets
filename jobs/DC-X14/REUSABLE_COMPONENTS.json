@@ -132,12 +132,12 @@
     },
     {
       "name": "X14_DRESS_Bookcase_Oak_090",
-      "family": "oak + cloth books",
+      "family": "oak carrier + DC-I05 SOCKET_Books",
       "reusable_for": [
         "LoC reading/office rooms",
         "any 1960s government office"
       ],
-      "notes": "E19 shows bookcases between desk groups"
+      "notes": "E19 shows bookcases between desk groups; v006: books are DC-I05 shelf personalities placed at SOCKET_X14_Books_S00..S04"
     },
     {
       "name": "X14_DRESS_Plant_Rubber / _Plant_Pothos_Small",
@@ -220,12 +220,9 @@
     "MI_X14_Leaf_Light",
     "MI_X14_Terracotta",
     "MI_X14_Soil",
-    "MI_X14_BookCloth_Maroon",
-    "MI_X14_BookCloth_Navy",
-    "MI_X14_BookCloth_Green",
-    "MI_X14_BookCloth_Tan",
     "MI_X14_Felt_Hat",
     "MI_X14_Metal_Olive",
     "MI_X14_Pin_Red"
-  ]
+  ],
+  "v006_note": "MI_X14_BookCloth_* retired with the X14 procedural books (books are DC-I05's canonical bindings)."
 }

@@ -45,5 +45,51 @@
     "renders": "tools/render_views.py (modules), jobs/DC-X14/render_interior.py (demo rooms; --dress adds preview stand-ins)"
   },
   "dallas_assets_touched": "none",
-  "v005_note": "Set-dressing layer added (10 X14_DRESS_* modules). No new external dependency: the furniture fit test still uses DC-I09 v004 (preview only). No DALLAS assets touched."
+  "v005_note": "Set-dressing layer added (10 X14_DRESS_* modules). No new external dependency: the furniture fit test still uses DC-I09 v004 (preview only). No DALLAS assets touched.",
+  "v006_pcg_dependencies": {
+    "note": "v006 dresses the demo rooms with existing WASHINGTON PCG systems instead of X14-made books/papers (Matt, 2026-10-06: 'use the book and clutter PCG stuff we already have done in washington'). Consumed through sockets/surface records only; no dependency geometry is exported in any X14 kit GLB.",
+    "packages": [
+      {
+        "id": "DC-I05",
+        "name": "Books, bound volumes and newspapers (cross-city)",
+        "version": "asset-v015",
+        "register": "CLAIMED (Lu / ChatGPT), asset_user_approval PENDING",
+        "drive_file": "1PL4BtxQQUWCBANyvn4Mv15eqM7EfBB1_",
+        "file": "DC-I05_asset_v015.zip",
+        "bytes": 4412784,
+        "sha256": "df121f7ab9523e331e109a16643eebc4be65b463eecd809aac47d38293fc28bd",
+        "used": "meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb: the 8 v014 shelf personalities (S01 dense archival .. S08 gov periodicals) with canonical book geometry/materials, cropped to the X14 shelf per the I05 v015 rule"
+      },
+      {
+        "id": "WASHINGTON Tabletop PCG",
+        "version": "v003 support-aware (generator WASHINGTON-TABLETOP-PCG-v004-pass6f)",
+        "status": "WORKING_NOT_APPROVED_NOT_DELIVERED (system prototype; DC-I18 geometry is APPROVED)",
+        "drive_file": "1g3aUpJ-NU6aYjr1muZbecO1fopXl7pEt",
+        "file": "WASHINGTON_TABLETOP_PCG_v003_SUPPORT_AWARE.zip",
+        "bytes": 1184706,
+        "sha256": "c6b3435f961a57862bbaf9a25876db20a77649b0105001abe61082937e46df21",
+        "used": "tabletop_pcg_v001.py (generate) + pass6f_support_max_smoker.py (resolve_scene support solver, qa_overlaps), run unmodified"
+      },
+      {
+        "id": "DC-I18 family bank (via tabletop proofs)",
+        "version": "WASHINGTON_TABLETOP_PCG_v001 generated_proofs",
+        "register": "DC-I18 DELIVERED / VERIFIED / APPROVED",
+        "drive_file": "1Hye8xqhPO52WK8XgFtYCG1IloALtCZ-V",
+        "file": "WASHINGTON_TABLETOP_PCG_v001_DELIVERABLE.zip",
+        "bytes": 4587760,
+        "sha256": "a2424a82825fe9740c5031295a5ee0c0dbd062c9e9b61205bd8d6c9c106d4633",
+        "used": "the DC-I18 variation bank recovered from the proof GLBs (geometry is stored in source frame); also checked v002 (1XdyxFBmGlsIeb7Kx-CDD-Nx57ddDJNNk, sha256 92d347b6...) - same proofs",
+        "gap": "the approved DC-I18 package (DC-I18_ASSET_v001_APPROVED.zip, 14.4 MB, Drive 1aYYe2KnydWSo_DY0DwERmqh1MD24o_oK) is too large for the sandbox Drive connector, so 4 variants never placed in any proof could not be recovered: ashtray_round V00, cigarette V00, cigarette_pack V00, matchbook V00 (the closed/fresh states). They are substituted by V01 and flagged SUBSTITUTE in DRESS_PCG_MANIFEST.json. Re-run dress_pcg.py locally against the real bank to remove the substitutes."
+      },
+      {
+        "id": "DC-I06",
+        "name": "Cast-iron book stack module",
+        "version": "v001",
+        "register": "APPROVED",
+        "used": "socket pattern only (SOCKET_Books_A/B, +X run, spines facing socket -Y, BookSeed per socket)"
+      }
+    ],
+    "not_available": "DC-I05 title atlases (textures/DC-I05_TitleAtlas_16x12.png etc.) and the v014 shelf-composition code/contract (PCG_SHELF_VARIATIONS.json) are only in DC-I05 v014 (28 MB) - not transferable. Spines therefore render as blank canonical bindings; titles bind at runtime from the I05 atlas.",
+    "tooling": "jobs/DC-X14/dress_pcg.py (python3 + trimesh + shapely; deterministic: two runs byte-identical, 101 files)"
+  }
 }
