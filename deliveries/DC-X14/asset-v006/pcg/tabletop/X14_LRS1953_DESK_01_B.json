@@ -1,0 +1,118 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRS1953_DESK_01_B",
+  "width_m": 0.86,
+  "depth_m": 0.176,
+  "edge_margin_m": 0.01,
+  "blocked_regions": null
+ },
+ "master_seed": 38556783,
+ "seeds": {
+  "layout": 2108004493,
+  "population": 1374392633,
+  "state": 904360198,
+  "appearance": 1354043351,
+  "weathering": 1811227531
+ },
+ "archetype": "smokers_paperwork",
+ "controls": {
+  "organization": 0.43,
+  "paper_density": 0.62,
+  "surface_coverage": 0.68,
+  "activity": 0.8,
+  "stack_bias": 0.48,
+  "smoking_intensity": 0.55,
+  "cluster_bias": 0.76
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "ashtray_round": 1,
+  "cigarette_pack": 1,
+  "matchbook": 1,
+  "cigarette": 2
+ },
+ "placement_count": 5,
+ "occupied_area_m2": 0.02632,
+ "target_area_m2": 0.08355,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "ashtray_round",
+   "variant": 1,
+   "variant_label": "slimmer_deeper_profile",
+   "x_m": -0.13239090911182225,
+   "y_m": 0.001244672320423329,
+   "z_m": 0.0,
+   "yaw_deg": -4.270141677414292,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "cigarette_pack",
+   "variant": 0,
+   "variant_label": "SUBSTITUTE_V00_uses_lid_ajar",
+   "x_m": -0.2665379417486141,
+   "y_m": -0.00769362479657601,
+   "z_m": 0.0115107,
+   "yaw_deg": 13.50847164391951,
+   "orientation": "flat",
+   "relation": "smoking_cluster",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "matchbook",
+   "variant": 1,
+   "variant_label": "slightly_bowed",
+   "x_m": -0.013300795348108907,
+   "y_m": 0.03157038172607205,
+   "z_m": 0.0034843,
+   "yaw_deg": 11.274498417834113,
+   "orientation": "flat",
+   "relation": "smoking_cluster",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "cigarette",
+   "variant": 2,
+   "variant_label": "short_used_remainder",
+   "x_m": -0.28056212913207135,
+   "y_m": 0.05979848296601816,
+   "z_m": 0.0,
+   "yaw_deg": -2.7180585784644684,
+   "orientation": "flat",
+   "relation": "smoking_cluster",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "cigarette",
+   "variant": 1,
+   "variant_label": "full_slight_bend",
+   "x_m": -0.024670613840495348,
+   "y_m": -0.02248948069172812,
+   "z_m": 0.0,
+   "yaw_deg": 8.571382220580077,
+   "orientation": "flat",
+   "relation": "smoking_cluster",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_Desk_01B",
+ "x14_room": "LRS1953"
+}

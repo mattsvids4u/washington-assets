@@ -1,0 +1,1036 @@
+{
+ "generator": "jobs/DC-X14/dress_pcg.py",
+ "tabletop_generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "i18_bank_variants": {
+  "ashtray_round": [
+   "SUBSTITUTE_V00_uses_slimmer_deeper_profile",
+   "slimmer_deeper_profile",
+   "heavy_base_shallow_profile"
+  ],
+  "ashtray_square": [
+   "balanced_ceramic"
+  ],
+  "cigarette": [
+   "SUBSTITUTE_V00_uses_full_slight_bend",
+   "full_slight_bend",
+   "short_used_remainder"
+  ],
+  "cigarette_pack": [
+   "SUBSTITUTE_V00_uses_lid_ajar",
+   "lid_ajar",
+   "handled_corner"
+  ],
+  "document_folder": [
+   "right_tab_medium_fill",
+   "center_tab_sparse",
+   "left_tab_full",
+   "center_tab_protruding_inserts"
+  ],
+  "document_stack": [
+   "thin_stack",
+   "medium_stack",
+   "thick_stack",
+   "messy_spread_stack",
+   "organized_clipped_stack"
+  ],
+  "matchbook": [
+   "SUBSTITUTE_V00_uses_slightly_bowed",
+   "slightly_bowed",
+   "partially_used_top_edge"
+  ]
+ },
+ "i18_bank_substitutes": [
+  "ashtray_round V00 -> V01 (slimmer_deeper_profile)",
+  "cigarette V00 -> V01 (full_slight_bend)",
+  "cigarette_pack V00 -> V01 (lid_ajar)",
+  "matchbook V00 -> V01 (slightly_bowed)"
+ ],
+ "i05_personalities": {
+  "S08_GOV_PERIODICALS": 6,
+  "S07_OVERFLOW_MIXED": 5,
+  "S06_SPARSE_USED": 5,
+  "S05_HUMANITIES": 8,
+  "S04_LAW_SERIES": 11,
+  "S03_LEGISLATIVE_ACTIVE": 8,
+  "S02_ORDERLY_REFERENCE": 9,
+  "S01_DENSE_ARCHIVAL": 11
+ },
+ "rooms": {
+  "LRSGRAY": {
+   "tabletops": [
+    {
+     "surface_id": "X14_LRSGRAY_DESK_01_B",
+     "node": "SURFACE_X14_Tabletop_Desk_01B",
+     "archetype": "near_cleared",
+     "seed": 28119794,
+     "placements": 0,
+     "counts": {},
+     "unintended_3d_overlaps": 0,
+     "note": "EMPTY: Can't export empty scenes!"
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_01_L",
+     "node": "SURFACE_X14_Tabletop_Desk_01L",
+     "archetype": "neat_clerk",
+     "seed": 199457726,
+     "placements": 3,
+     "counts": {
+      "document_folder": 1,
+      "document_stack": 1,
+      "loose_sheet": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_01_R",
+     "node": "SURFACE_X14_Tabletop_Desk_01R",
+     "archetype": "near_cleared",
+     "seed": 242108400,
+     "placements": 0,
+     "counts": {},
+     "unintended_3d_overlaps": 0,
+     "note": "EMPTY: Can't export empty scenes!"
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_02_B",
+     "node": "SURFACE_X14_Tabletop_Desk_02B",
+     "archetype": "near_cleared",
+     "seed": 126581172,
+     "placements": 0,
+     "counts": {},
+     "unintended_3d_overlaps": 0,
+     "note": "EMPTY: Can't export empty scenes!"
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_02_L",
+     "node": "SURFACE_X14_Tabletop_Desk_02L",
+     "archetype": "active_review",
+     "seed": 95130245,
+     "placements": 4,
+     "counts": {
+      "document_folder": 2,
+      "document_stack": 2
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_02_R",
+     "node": "SURFACE_X14_Tabletop_Desk_02R",
+     "archetype": "active_review",
+     "seed": 229633262,
+     "placements": 1,
+     "counts": {
+      "document_stack": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_03_B",
+     "node": "SURFACE_X14_Tabletop_Desk_03B",
+     "archetype": "smokers_paperwork",
+     "seed": 251069322,
+     "placements": 3,
+     "counts": {
+      "ashtray_round": 1,
+      "cigarette_pack": 1,
+      "matchbook": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_03_L",
+     "node": "SURFACE_X14_Tabletop_Desk_03L",
+     "archetype": "mixed_piles_open_folders",
+     "seed": 226687297,
+     "placements": 5,
+     "counts": {
+      "document_folder": 2,
+      "document_stack": 2,
+      "loose_sheet_mini": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_DESK_03_R",
+     "node": "SURFACE_X14_Tabletop_Desk_03R",
+     "archetype": "active_review",
+     "seed": 119302514,
+     "placements": 2,
+     "counts": {
+      "document_stack": 2
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_FILE_01",
+     "node": "SURFACE_X14_Tabletop_File_01",
+     "archetype": "near_cleared",
+     "seed": 252742601,
+     "placements": 1,
+     "counts": {
+      "document_stack": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_FILE_02",
+     "node": "SURFACE_X14_Tabletop_File_02",
+     "archetype": "organized_filing",
+     "seed": 6087860,
+     "placements": 9,
+     "counts": {
+      "document_folder": 2,
+      "document_stack": 7
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRSGRAY_FILE_03",
+     "node": "SURFACE_X14_Tabletop_File_03",
+     "archetype": "archive_sorting",
+     "seed": 56941393,
+     "placements": 14,
+     "counts": {
+      "document_folder": 2,
+      "document_stack": 12
+     },
+     "unintended_3d_overlaps": 0
+    }
+   ],
+   "shelves": [
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S00_bk0",
+     "socket_node": "SOCKET_X14_Books_S00.bk0",
+     "room": "LRSGRAY",
+     "book_seed": 423737,
+     "personality": "S01_DENSE_ARCHIVAL",
+     "run_shift_m": 0.0329,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      6,
+      7,
+      9,
+      12,
+      13,
+      15,
+      17,
+      19,
+      22
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S01_bk0",
+     "socket_node": "SOCKET_X14_Books_S01.bk0",
+     "room": "LRSGRAY",
+     "book_seed": 126776854,
+     "personality": "S07_OVERFLOW_MIXED",
+     "run_shift_m": 0.0224,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      5,
+      8,
+      9,
+      11,
+      17
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S02_bk0",
+     "socket_node": "SOCKET_X14_Books_S02.bk0",
+     "room": "LRSGRAY",
+     "book_seed": 149037183,
+     "personality": "S02_ORDERLY_REFERENCE",
+     "run_shift_m": -0.1127,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      4,
+      5,
+      6,
+      11,
+      12,
+      15,
+      17,
+      18
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S03_bk0",
+     "socket_node": "SOCKET_X14_Books_S03.bk0",
+     "room": "LRSGRAY",
+     "book_seed": 58351526,
+     "personality": "S05_HUMANITIES",
+     "run_shift_m": 0.0133,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S04_bk0",
+     "socket_node": "SOCKET_X14_Books_S04.bk0",
+     "room": "LRSGRAY",
+     "book_seed": 31870616,
+     "personality": "S06_SPARSE_USED",
+     "run_shift_m": 0.0636,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.255,
+     "books_kept": [
+      1,
+      2,
+      3,
+      5,
+      6
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S00_bk1",
+     "socket_node": "SOCKET_X14_Books_S00.bk1",
+     "room": "LRSGRAY",
+     "book_seed": 99966061,
+     "personality": "S01_DENSE_ARCHIVAL",
+     "run_shift_m": 0.0776,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      6,
+      7,
+      9,
+      12,
+      13,
+      15,
+      17,
+      19,
+      22
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S01_bk1",
+     "socket_node": "SOCKET_X14_Books_S01.bk1",
+     "room": "LRSGRAY",
+     "book_seed": 262122259,
+     "personality": "S04_LAW_SERIES",
+     "run_shift_m": 0.0369,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      5,
+      7,
+      8,
+      10,
+      12,
+      14,
+      15,
+      16
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S02_bk1",
+     "socket_node": "SOCKET_X14_Books_S02.bk1",
+     "room": "LRSGRAY",
+     "book_seed": 160961303,
+     "personality": "S07_OVERFLOW_MIXED",
+     "run_shift_m": 0.0966,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      5,
+      8,
+      9,
+      11,
+      17
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S03_bk1",
+     "socket_node": "SOCKET_X14_Books_S03.bk1",
+     "room": "LRSGRAY",
+     "book_seed": 114509960,
+     "personality": "S05_HUMANITIES",
+     "run_shift_m": -0.0569,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S04_bk1",
+     "socket_node": "SOCKET_X14_Books_S04.bk1",
+     "room": "LRSGRAY",
+     "book_seed": 207017879,
+     "personality": "S02_ORDERLY_REFERENCE",
+     "run_shift_m": 0.0386,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.255,
+     "books_kept": [
+      3,
+      4,
+      5,
+      6,
+      11,
+      12,
+      15,
+      17
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S00_bk2",
+     "socket_node": "SOCKET_X14_Books_S00.bk2",
+     "room": "LRSGRAY",
+     "book_seed": 213077999,
+     "personality": "S06_SPARSE_USED",
+     "run_shift_m": 0.1122,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      1,
+      2,
+      3,
+      5,
+      6
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S01_bk2",
+     "socket_node": "SOCKET_X14_Books_S01.bk2",
+     "room": "LRSGRAY",
+     "book_seed": 203509727,
+     "personality": "S07_OVERFLOW_MIXED",
+     "run_shift_m": 0.0644,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      5,
+      8,
+      9,
+      11,
+      17
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S02_bk2",
+     "socket_node": "SOCKET_X14_Books_S02.bk2",
+     "room": "LRSGRAY",
+     "book_seed": 40851191,
+     "personality": "S04_LAW_SERIES",
+     "run_shift_m": 0.0665,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      5,
+      7,
+      8,
+      10,
+      12,
+      14,
+      15,
+      16
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S03_bk2",
+     "socket_node": "SOCKET_X14_Books_S03.bk2",
+     "room": "LRSGRAY",
+     "book_seed": 8215531,
+     "personality": "S05_HUMANITIES",
+     "run_shift_m": -0.0193,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRSGRAY_BOOKS_S04_bk2",
+     "socket_node": "SOCKET_X14_Books_S04.bk2",
+     "room": "LRSGRAY",
+     "book_seed": 237182300,
+     "personality": "S01_DENSE_ARCHIVAL",
+     "run_shift_m": 0.0041,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.255,
+     "books_kept": [
+      3,
+      4,
+      6,
+      7,
+      9,
+      12,
+      13,
+      15,
+      17,
+      19,
+      22
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    }
+   ]
+  },
+  "LRS1953": {
+   "tabletops": [
+    {
+     "surface_id": "X14_LRS1953_DESK_01_B",
+     "node": "SURFACE_X14_Tabletop_Desk_01B",
+     "archetype": "smokers_paperwork",
+     "seed": 38556783,
+     "placements": 5,
+     "counts": {
+      "ashtray_round": 1,
+      "cigarette_pack": 1,
+      "matchbook": 1,
+      "cigarette": 2
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_01_L",
+     "node": "SURFACE_X14_Tabletop_Desk_01L",
+     "archetype": "busy_working",
+     "seed": 195465454,
+     "placements": 3,
+     "counts": {
+      "document_folder": 1,
+      "document_stack": 1,
+      "loose_sheet_mini": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_01_R",
+     "node": "SURFACE_X14_Tabletop_Desk_01R",
+     "archetype": "active_review",
+     "seed": 50180101,
+     "placements": 2,
+     "counts": {
+      "document_stack": 1,
+      "loose_sheet_mini": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_02_B",
+     "node": "SURFACE_X14_Tabletop_Desk_02B",
+     "archetype": "smokers_paperwork",
+     "seed": 66173166,
+     "placements": 0,
+     "counts": {},
+     "unintended_3d_overlaps": 0,
+     "note": "EMPTY: Can't export empty scenes!"
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_02_L",
+     "node": "SURFACE_X14_Tabletop_Desk_02L",
+     "archetype": "paper_heavy_admin",
+     "seed": 254012572,
+     "placements": 11,
+     "counts": {
+      "document_folder": 1,
+      "document_stack": 9,
+      "loose_sheet_mini": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_02_R",
+     "node": "SURFACE_X14_Tabletop_Desk_02R",
+     "archetype": "active_review",
+     "seed": 4396807,
+     "placements": 1,
+     "counts": {
+      "document_stack": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_03_B",
+     "node": "SURFACE_X14_Tabletop_Desk_03B",
+     "archetype": "smokers_paperwork",
+     "seed": 54964425,
+     "placements": 7,
+     "counts": {
+      "ashtray_round": 1,
+      "cigarette_pack": 1,
+      "matchbook": 1,
+      "cigarette": 4
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_03_L",
+     "node": "SURFACE_X14_Tabletop_Desk_03L",
+     "archetype": "smokers_paperwork",
+     "seed": 262171917,
+     "placements": 5,
+     "counts": {
+      "document_folder": 1,
+      "document_stack": 3,
+      "loose_sheet_mini": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_DESK_03_R",
+     "node": "SURFACE_X14_Tabletop_Desk_03R",
+     "archetype": "active_review",
+     "seed": 129176758,
+     "placements": 2,
+     "counts": {
+      "document_stack": 2
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_FILE_01",
+     "node": "SURFACE_X14_Tabletop_File_01",
+     "archetype": "organized_filing",
+     "seed": 140401875,
+     "placements": 10,
+     "counts": {
+      "document_folder": 3,
+      "document_stack": 7
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_FILE_02",
+     "node": "SURFACE_X14_Tabletop_File_02",
+     "archetype": "near_cleared",
+     "seed": 29433464,
+     "placements": 1,
+     "counts": {
+      "document_folder": 1
+     },
+     "unintended_3d_overlaps": 0
+    },
+    {
+     "surface_id": "X14_LRS1953_FILE_03",
+     "node": "SURFACE_X14_Tabletop_File_03",
+     "archetype": "archive_sorting",
+     "seed": 80327503,
+     "placements": 17,
+     "counts": {
+      "document_folder": 6,
+      "document_stack": 10,
+      "loose_sheet_mini": 1
+     },
+     "unintended_3d_overlaps": 0
+    }
+   ],
+   "shelves": [
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S00_bk0",
+     "socket_node": "SOCKET_X14_Books_S00.bk0",
+     "room": "LRS1953",
+     "book_seed": 111400107,
+     "personality": "S04_LAW_SERIES",
+     "run_shift_m": 0.0303,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      5,
+      7,
+      8,
+      10,
+      12,
+      14,
+      15,
+      16
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S01_bk0",
+     "socket_node": "SOCKET_X14_Books_S01.bk0",
+     "room": "LRS1953",
+     "book_seed": 106751212,
+     "personality": "S02_ORDERLY_REFERENCE",
+     "run_shift_m": 0.0276,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      5,
+      6,
+      11,
+      12,
+      15,
+      17
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S02_bk0",
+     "socket_node": "SOCKET_X14_Books_S02.bk0",
+     "room": "LRS1953",
+     "book_seed": 140505505,
+     "personality": "S05_HUMANITIES",
+     "run_shift_m": -0.0378,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S03_bk0",
+     "socket_node": "SOCKET_X14_Books_S03.bk0",
+     "room": "LRS1953",
+     "book_seed": 103529960,
+     "personality": "S06_SPARSE_USED",
+     "run_shift_m": -0.0936,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      2,
+      3,
+      5,
+      6
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S04_bk0",
+     "socket_node": "SOCKET_X14_Books_S04.bk0",
+     "room": "LRS1953",
+     "book_seed": 168326740,
+     "personality": "S08_GOV_PERIODICALS",
+     "run_shift_m": 0.0602,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.255,
+     "books_kept": [
+      6,
+      11,
+      15,
+      18
+     ],
+     "books_cropped": 2,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S00_bk1",
+     "socket_node": "SOCKET_X14_Books_S00.bk1",
+     "room": "LRS1953",
+     "book_seed": 106843389,
+     "personality": "S07_OVERFLOW_MIXED",
+     "run_shift_m": 0.0228,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      5,
+      8,
+      9,
+      11,
+      17
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S01_bk1",
+     "socket_node": "SOCKET_X14_Books_S01.bk1",
+     "room": "LRS1953",
+     "book_seed": 235908217,
+     "personality": "S05_HUMANITIES",
+     "run_shift_m": -0.0284,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S02_bk1",
+     "socket_node": "SOCKET_X14_Books_S02.bk1",
+     "room": "LRS1953",
+     "book_seed": 111272720,
+     "personality": "S01_DENSE_ARCHIVAL",
+     "run_shift_m": -0.0115,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      6,
+      7,
+      9,
+      12,
+      13,
+      15,
+      17,
+      19,
+      22
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S03_bk1",
+     "socket_node": "SOCKET_X14_Books_S03.bk1",
+     "room": "LRS1953",
+     "book_seed": 142908614,
+     "personality": "S08_GOV_PERIODICALS",
+     "run_shift_m": -0.0061,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      6,
+      11,
+      15,
+      18,
+      23,
+      24
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S04_bk1",
+     "socket_node": "SOCKET_X14_Books_S04.bk1",
+     "room": "LRS1953",
+     "book_seed": 94217701,
+     "personality": "S04_LAW_SERIES",
+     "run_shift_m": 0.0357,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.255,
+     "books_kept": [
+      3,
+      4,
+      5,
+      7,
+      8,
+      10,
+      12,
+      14,
+      15,
+      16
+     ],
+     "books_cropped": 1,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S00_bk2",
+     "socket_node": "SOCKET_X14_Books_S00.bk2",
+     "room": "LRS1953",
+     "book_seed": 166028553,
+     "personality": "S03_LEGISLATIVE_ACTIVE",
+     "run_shift_m": 0.0387,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S01_bk2",
+     "socket_node": "SOCKET_X14_Books_S01.bk2",
+     "room": "LRS1953",
+     "book_seed": 250025737,
+     "personality": "S05_HUMANITIES",
+     "run_shift_m": 0.013,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S02_bk2",
+     "socket_node": "SOCKET_X14_Books_S02.bk2",
+     "room": "LRS1953",
+     "book_seed": 144676327,
+     "personality": "S02_ORDERLY_REFERENCE",
+     "run_shift_m": 0.0707,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      5,
+      6,
+      11,
+      12,
+      15
+     ],
+     "books_cropped": 2,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S03_bk2",
+     "socket_node": "SOCKET_X14_Books_S03.bk2",
+     "room": "LRS1953",
+     "book_seed": 164269009,
+     "personality": "S01_DENSE_ARCHIVAL",
+     "run_shift_m": 0.0571,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.338,
+     "books_kept": [
+      3,
+      4,
+      6,
+      7,
+      9,
+      12,
+      13,
+      15,
+      17,
+      19,
+      22
+     ],
+     "books_cropped": 0,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    },
+    {
+     "shelf_id": "X14_LRS1953_BOOKS_S04_bk2",
+     "socket_node": "SOCKET_X14_Books_S04.bk2",
+     "room": "LRS1953",
+     "book_seed": 29270083,
+     "personality": "S08_GOV_PERIODICALS",
+     "run_shift_m": 0.0712,
+     "usable_width_m": 0.842,
+     "clearance_m": 0.255,
+     "books_kept": [
+      6,
+      11,
+      15,
+      18
+     ],
+     "books_cropped": 2,
+     "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+     "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+    }
+   ]
+  }
+ }
+}

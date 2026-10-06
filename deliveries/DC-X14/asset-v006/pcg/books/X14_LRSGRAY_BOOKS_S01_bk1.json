@@ -1,0 +1,25 @@
+{
+ "shelf_id": "X14_LRSGRAY_BOOKS_S01_bk1",
+ "socket_node": "SOCKET_X14_Books_S01.bk1",
+ "room": "LRSGRAY",
+ "book_seed": 262122259,
+ "personality": "S04_LAW_SERIES",
+ "run_shift_m": 0.0369,
+ "usable_width_m": 0.842,
+ "clearance_m": 0.338,
+ "books_kept": [
+  3,
+  4,
+  5,
+  7,
+  8,
+  10,
+  12,
+  14,
+  15,
+  16
+ ],
+ "books_cropped": 1,
+ "rule": "DC-I05 v015: v014 personality cropped to carrier width/clearance; canonical books never scaled",
+ "source": "DC-I05 v015 meshes/DC-I05_I06_APPROVED_STACK_INTEGRATION.glb"
+}

@@ -1,0 +1,91 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRSGRAY_DESK_03_B",
+  "width_m": 0.86,
+  "depth_m": 0.176,
+  "edge_margin_m": 0.01,
+  "blocked_regions": null
+ },
+ "master_seed": 251069322,
+ "seeds": {
+  "layout": 1181996268,
+  "population": 245638587,
+  "state": 1939332054,
+  "appearance": 1357031115,
+  "weathering": 1013314273
+ },
+ "archetype": "smokers_paperwork",
+ "controls": {
+  "organization": 0.43,
+  "paper_density": 0.62,
+  "surface_coverage": 0.68,
+  "activity": 0.8,
+  "stack_bias": 0.48,
+  "smoking_intensity": 0.55,
+  "cluster_bias": 0.76
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "ashtray_round": 1,
+  "cigarette_pack": 1,
+  "matchbook": 1
+ },
+ "placement_count": 3,
+ "occupied_area_m2": 0.0216,
+ "target_area_m2": 0.08355,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "ashtray_round",
+   "variant": 2,
+   "variant_label": "heavy_base_shallow_profile",
+   "x_m": -0.16247790096107823,
+   "y_m": 0.008969257152064113,
+   "z_m": 0.0,
+   "yaw_deg": 0.5973056374694181,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "cigarette_pack",
+   "variant": 1,
+   "variant_label": "lid_ajar",
+   "x_m": -0.05188256071806524,
+   "y_m": 0.018224495846472698,
+   "z_m": 0.0,
+   "yaw_deg": -7.806588089958698,
+   "orientation": "stand",
+   "relation": "smoking_cluster",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "matchbook",
+   "variant": 1,
+   "variant_label": "slightly_bowed",
+   "x_m": -0.2718558496138949,
+   "y_m": -0.0014581452976002232,
+   "z_m": 0.0034843,
+   "yaw_deg": -17.05529058423842,
+   "orientation": "flat",
+   "relation": "smoking_cluster",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_Desk_03B",
+ "x14_room": "LRSGRAY"
+}

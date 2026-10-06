@@ -1,0 +1,63 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRS1953_FILE_02",
+  "width_m": 0.47,
+  "depth_m": 0.71,
+  "edge_margin_m": 0.022,
+  "blocked_regions": null
+ },
+ "master_seed": 29433464,
+ "seeds": {
+  "layout": 1154948383,
+  "population": 1411043969,
+  "state": 1210341986,
+  "appearance": 1982904438,
+  "weathering": 1814309195
+ },
+ "archetype": "near_cleared",
+ "controls": {
+  "organization": 0.8,
+  "paper_density": 0.12,
+  "surface_coverage": 0.15,
+  "activity": 0.18,
+  "stack_bias": 0.45,
+  "smoking_intensity": 0.0,
+  "cluster_bias": 0.62
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "document_folder": 1
+ },
+ "placement_count": 1,
+ "occupied_area_m2": 0.07626,
+ "target_area_m2": 0.05759,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "document_folder",
+   "variant": 0,
+   "variant_label": "right_tab_medium_fill",
+   "x_m": -0.06557876814547561,
+   "y_m": 0.04016865701250491,
+   "z_m": 0.0,
+   "yaw_deg": -3.5429711225641114,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_File_02",
+ "x14_room": "LRS1953"
+}

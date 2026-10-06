@@ -1,0 +1,2391 @@
+{
+  "job_id": "DC-X14",
+  "version": "asset-v006",
+  "claimant": "claude-cloud-agent",
+  "created_utc": "2026-10-06T06:24:17+00:00",
+  "source_commit": "572ff2530b3e00e48ab67378d7536af73c69cc52",
+  "gates": {
+    "clean_rebuild": "see HANDOFF.md",
+    "glb_reopen_qa": "see HANDOFF.md",
+    "unreal_import_readback": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "motion_tests": "NOT_RUN \u2014 needs local Unreal (UE 5.8)",
+    "matt_approval": "PENDING"
+  },
+  "files": [
+    {
+      "path": "CONTEXT_ACK.json",
+      "bytes": 4683,
+      "sha256": "e1c1873fcc29274f9a768b0e1057bfd60ee6fea0c8d031c360531b7cc18b4543"
+    },
+    {
+      "path": "DEPENDENCY_LOCK.json",
+      "bytes": 6806,
+      "sha256": "4d77aed86aa5c3067116d2296d48de525b811a0523b1e717857a17fb74c3a0ae"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 18960,
+      "sha256": "e8268ca6637dd6df4c37a421b080f7775059c611ad56657382e0a49ccdd34e5c"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 39391,
+      "sha256": "e0f7168399ca1abdb1b011fa7400a0fbd0ed875f1a186a26403942e7678f3417"
+    },
+    {
+      "path": "PASS_PLAN.md",
+      "bytes": 15108,
+      "sha256": "a7f9232aab648b055426a78a2e0ab9a4518cb84aa1b68aec179cf0de689c8b5a"
+    },
+    {
+      "path": "PAYLOAD_LINK.txt",
+      "bytes": 1011,
+      "sha256": "8f2322abb454a31a99df51cdf3587f6892afe983004adc91be7f6985434d21aa"
+    },
+    {
+      "path": "PCG_INTERFACE.json",
+      "bytes": 14579,
+      "sha256": "83d4360e78f68b2cda042fe2450a3fa100af133d71e1a26018cee8d4e00704a5"
+    },
+    {
+      "path": "RENDER_INDEX.md",
+      "bytes": 10034,
+      "sha256": "904e9ac1249902b8c9ddaeb6510a0e41c89dee04da88a2d8755ebf8c4ccaefe7"
+    },
+    {
+      "path": "REUSABLE_COMPONENTS.json",
+      "bytes": 7385,
+      "sha256": "3c884b2e740dbe27b8de08e820e948ecae99486d484ae3c7bbabcd9419704b52"
+    },
+    {
+      "path": "meshes/BUILD_MANIFEST.json",
+      "bytes": 17041,
+      "sha256": "d5818229497d3d97564ca0b55a467e06fbfd2cf6d1afdae10525c967f6faa529"
+    },
+    {
+      "path": "meshes/X14_ARCH_Ceiling_300.glb",
+      "bytes": 3027244,
+      "sha256": "476e9d0606338e1064591fc144cc6f8da72611b935334dc5a0423bd9a22c4eac"
+    },
+    {
+      "path": "meshes/X14_ARCH_Ceiling_Coffered_300.glb",
+      "bytes": 3163872,
+      "sha256": "8a69e047a63241b3a8027f36310670c6a2712e9cde0648afdac5043f05c8ebbf"
+    },
+    {
+      "path": "meshes/X14_ARCH_Corner.glb",
+      "bytes": 3090944,
+      "sha256": "7d178321bd48bbb68eb8a99fb2e2d43cc346ac588b28653aebd813d499ac5e90"
+    },
+    {
+      "path": "meshes/X14_ARCH_Floor_300.glb",
+      "bytes": 1142120,
+      "sha256": "a62adc22c318f7fc43b101fbd7b49b357111055b268604e53ac76dd5b863bea3"
+    },
+    {
+      "path": "meshes/X14_ARCH_Floor_300_Linoleum.glb",
+      "bytes": 2235532,
+      "sha256": "c90a35ccdcdfca27aee10b509ee4e10f2159860e611e70b25c58c4a2420383ae"
+    },
+    {
+      "path": "meshes/X14_ARCH_Pendant_Lamp.glb",
+      "bytes": 864932,
+      "sha256": "46a93ddadc0dd02a16fb5b13c728d9005afd0e2ba92fbb18a0bff0c87652e4b1"
+    },
+    {
+      "path": "meshes/X14_ARCH_Torchere_Lamp.glb",
+      "bytes": 925640,
+      "sha256": "107c1c8969428c276cb2449c5d1b1645d6122f28f2fe3f0cc4ade9c8845aa57e"
+    },
+    {
+      "path": "meshes/X14_ARCH_Wall_Door_300.glb",
+      "bytes": 3818068,
+      "sha256": "f88ff02093279fba4b3e319f70b641f9480219e2bf0ad52235de02e3a93925d9"
+    },
+    {
+      "path": "meshes/X14_ARCH_Wall_Plain_300.glb",
+      "bytes": 3582980,
+      "sha256": "75941bd4b0f540955eebe66c2d1da1d6df732c9e39c5d8e51795258265973c96"
+    },
+    {
+      "path": "meshes/X14_ARCH_Wall_Sconce.glb",
+      "bytes": 880352,
+      "sha256": "c6e00ba4b4b6c0e6265badb937e50b5ef30a79c154aa2bfa9f1e0826d310a73f"
+    },
+    {
+      "path": "meshes/X14_ARCH_Wall_Window_300.glb",
+      "bytes": 4394180,
+      "sha256": "515aeca8de11941b670177e9ef3c71af57b3dc586f1f135924df9eebd7209979"
+    },
+    {
+      "path": "meshes/X14_DEMO_LRS_Room.glb",
+      "bytes": 9234984,
+      "sha256": "f002be9a3dc58f3fd482a3f221be160df02f539a7f38adab597ac36336c1c30e"
+    },
+    {
+      "path": "meshes/X14_DEMO_LRS_Room_1953.glb",
+      "bytes": 9562340,
+      "sha256": "b63ee52c26a8058b8ab367232eaba3d14074da6b4f8e13a63b676f690e93c15a"
+    },
+    {
+      "path": "meshes/X14_DRESS_Bookcase_Oak_090.glb",
+      "bytes": 1246308,
+      "sha256": "7718de97b74f9dd28d076bdd24fa1466f22766b11b27af0207a05d6d590c9d69"
+    },
+    {
+      "path": "meshes/X14_DRESS_Bulletin_Board_090.glb",
+      "bytes": 1520680,
+      "sha256": "1eb9d689e4c8464c0baaecccce6b3f77877142b76880258d2430974f401cf82b"
+    },
+    {
+      "path": "meshes/X14_DRESS_Coat_Tree.glb",
+      "bytes": 1367232,
+      "sha256": "fc8a11033174e0de74524e31d06488b0b803ca3cc8c9d853f49ef23d0cc690ff"
+    },
+    {
+      "path": "meshes/X14_DRESS_Flag_Stand_US.glb",
+      "bytes": 1354568,
+      "sha256": "8fbf4b7d89e1cdf5abcee0b4a54c6d8efe69b30238776f7c50ccffc4bd5170a1"
+    },
+    {
+      "path": "meshes/X14_DRESS_Frame_Photo_Small.glb",
+      "bytes": 1699276,
+      "sha256": "87af8ef3cf30e0c5fac744b234a22d23acf78fd97b2566017456ecf491bad301"
+    },
+    {
+      "path": "meshes/X14_DRESS_Frame_Print_Large.glb",
+      "bytes": 1295852,
+      "sha256": "839f3f6e566a909ac8da1c315b93bf61eef0d99bc0cd085741c1b687aa3c3a68"
+    },
+    {
+      "path": "meshes/X14_DRESS_Plant_Pothos_Small.glb",
+      "bytes": 828184,
+      "sha256": "0dbab7c1cbbf29456f70f358819247ba997f59bcf3da48078e0ef797e53c6d1c"
+    },
+    {
+      "path": "meshes/X14_DRESS_Plant_Rubber.glb",
+      "bytes": 1433208,
+      "sha256": "78d4bbad17cfdbbaa8fb2b7d70857a464bbb9365188c2e76d792d7b090fda7eb"
+    },
+    {
+      "path": "meshes/X14_DRESS_Wall_Calendar_1963_11.glb",
+      "bytes": 850708,
+      "sha256": "41e11fdef64ae532082abc294a11886def19170c3d349503a4cfba1e5213566e"
+    },
+    {
+      "path": "meshes/X14_DRESS_Wastebasket.glb",
+      "bytes": 822956,
+      "sha256": "7f42e1bf3ae90df463e22604de994b87adb87dffc224cb7e3aa6303593242da1"
+    },
+    {
+      "path": "meshes/X14_PART_Door_090.glb",
+      "bytes": 1666200,
+      "sha256": "e7030ce87c74d957e8563eaa1cc1d627186d3188baf87b6dae03957ccba72ca1"
+    },
+    {
+      "path": "meshes/X14_PART_Door_Wood_090.glb",
+      "bytes": 1246012,
+      "sha256": "32ab30e5a1597ca0e3a0df4eae05e3d3feda63e7b76bf1ffc19914def2a081e0"
+    },
+    {
+      "path": "meshes/X14_PART_DropCeiling_120.glb",
+      "bytes": 1163932,
+      "sha256": "959046631be8255a5082d891b524eb2954c5eb894ad66bb5e29793a9ee607972"
+    },
+    {
+      "path": "meshes/X14_PART_Fluorescent_120.glb",
+      "bytes": 792548,
+      "sha256": "1752a1f3a12ebb57f6cd798dee1f76f42765554d1ac090d57e5abf15de94fd55"
+    },
+    {
+      "path": "meshes/X14_PART_Panel_Glazed_120.glb",
+      "bytes": 1662924,
+      "sha256": "2b2b63eaac9f1b8437cf593ea9b61b01c348b549187c63860b95506186ae31e2"
+    },
+    {
+      "path": "meshes/X14_PART_Panel_Solid_060.glb",
+      "bytes": 1650752,
+      "sha256": "7b6a76a35877b91624f979c5222eff3973bfead18308766e606753f2fcf4c4a5"
+    },
+    {
+      "path": "meshes/X14_PART_Panel_Solid_120.glb",
+      "bytes": 1650744,
+      "sha256": "daed88f3c4c155d6df9ce07895eb74c396442d5e2b498a595c7a0f438d7542d7"
+    },
+    {
+      "path": "meshes/X14_PART_Panel_Wood_060.glb",
+      "bytes": 1230668,
+      "sha256": "e0b5c168509c2d92c3f32888796c9a07c93e9ca305a4c756724021b7e588cde7"
+    },
+    {
+      "path": "meshes/X14_PART_Panel_Wood_090.glb",
+      "bytes": 1230668,
+      "sha256": "62a41625495ff0103f8a662a6cb3f48c34c29e5cc27d4fe8c99ea7c4a14a0950"
+    },
+    {
+      "path": "meshes/X14_PART_Post.glb",
+      "bytes": 1644528,
+      "sha256": "802502b793ca6bfaba662cecae1d2f340da58dc52b48e60e7cbacdcde7d65632"
+    },
+    {
+      "path": "meshes/X14_PART_Sign_Door.glb",
+      "bytes": 1011008,
+      "sha256": "7a15bdc6e6b9493b49c68bd689a5a4e87c61d3df01dd39a05c291a5c5c74d134"
+    },
+    {
+      "path": "pcg/DRESS_PCG_MANIFEST.json",
+      "bytes": 26697,
+      "sha256": "25e3f622823d1c1092099d5f05b9dbf92b32eb5efbcc24aa0860b3d1d1b1af4d"
+    },
+    {
+      "path": "pcg/README.md",
+      "bytes": 1019,
+      "sha256": "6c712d132b967629ebf125e87ccf35c359f6cb236325e032db4a0948b8ccb2f5"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S00_bk0.glb",
+      "bytes": 279184,
+      "sha256": "f7508907bc3946dda89ea8b3a8cb8c18755f7924cd5dda833ec3e7139239f5ca"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S00_bk0.json",
+      "bytes": 518,
+      "sha256": "c1acd991dad76811f3e03f90c3cb2ec150e8544306a70ab21781f92fe54ef5be"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S00_bk1.glb",
+      "bytes": 151772,
+      "sha256": "19e99da9c547d7599316c762ccef748e11f03623e1a99f402c22e645e052bb38"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S00_bk1.json",
+      "bytes": 494,
+      "sha256": "27bbde6c34ca7d67de2ad7b5e93c0bf9b007086d3353ac60bc3be21199d830b2"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S00_bk2.glb",
+      "bytes": 244976,
+      "sha256": "2f652aa724f362647934a095663ccb24d7b08cd6b5c65fe022f384826bb6ae9a"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S00_bk2.json",
+      "bytes": 513,
+      "sha256": "cf1d15aa0df45fc0da6a70a447fc55a16d155e2081341fba72ae1a73b5cc0368"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S01_bk0.glb",
+      "bytes": 245684,
+      "sha256": "f43b4257befd296b90b48bc20113a51701045567daf38baf4a3477815426fbfb"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S01_bk0.json",
+      "bytes": 514,
+      "sha256": "9e00e216cc1401d382a1ce1c39316b18a66c68495de1e25da4ced748609a28d8"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S01_bk1.glb",
+      "bytes": 228440,
+      "sha256": "fad10cb020cb41b9a857840a3f4bbb21202eaf725f923876955b476b8be37918"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S01_bk1.json",
+      "bytes": 506,
+      "sha256": "827df95db55e839cc42970e3b9530ff51bdfab81af57d6f0049f5d1d9bccee74"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S01_bk2.glb",
+      "bytes": 228364,
+      "sha256": "c9336fe7ff72cfae9d089b8ba6a766de16a0f530244ad0332d9433f1f37dd3a5"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S01_bk2.json",
+      "bytes": 504,
+      "sha256": "636d9e4ed71baab63aa34552e82a4dc99978150eaada84ffe31ce8f54b8005d0"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S02_bk0.glb",
+      "bytes": 228456,
+      "sha256": "25207bbccc6af87c73d32304e5b25907ff71f21dd7afce80f6e7bf9b8f178f11"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S02_bk0.json",
+      "bytes": 506,
+      "sha256": "601bb4427236be3baa98f9f4bf009200359374e7f390c6059b7e494c23a2175b"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S02_bk1.glb",
+      "bytes": 274984,
+      "sha256": "169bf5195bedfbc536d8efe44aae4d36732dfd906f565e76637898619af3b7c3"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S02_bk1.json",
+      "bytes": 529,
+      "sha256": "08f338bf4e2f5770ac026126f81bfc21997e797660375f65b53a95e70c69bb44"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S02_bk2.glb",
+      "bytes": 214304,
+      "sha256": "a7a1268cfe3dffeb49b9d6edc878506fb48f555788cfe7251169d0740cc2819b"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S02_bk2.json",
+      "bytes": 508,
+      "sha256": "0f246fcdd51e3682ab85940e85efb058cf5e36d31cec2030ab04313bb6071e3a"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S03_bk0.glb",
+      "bytes": 138312,
+      "sha256": "f7a2519638d8344823e392a511f82c6b71e388052dbadc2f1932da0d48d3c041"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S03_bk0.json",
+      "bytes": 485,
+      "sha256": "3e1e1069ba6d49b2e25a6fbcd39e9207e39f3597c5cd1d6aa66ff82363505617"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S03_bk1.glb",
+      "bytes": 168144,
+      "sha256": "d1d72c63ab3ee53e3c7fcb8fd5ae441ca3f1e371b1a11686b1aca794e58c1dd0"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S03_bk1.json",
+      "bytes": 504,
+      "sha256": "81d9433dc6d3bfa073c06336cde3605e9171f5e11e0b7cef7874e1c1ff3ecec2"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S03_bk2.glb",
+      "bytes": 274984,
+      "sha256": "522fca90671083c8309e8f67cd81ea20fdc961f456f8c5aceb0d38c8b512ad74"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S03_bk2.json",
+      "bytes": 528,
+      "sha256": "03545d8a198f5ea453c78e29074d7b6f15f6b577dfd2f08e37c9ac7d1e5bd956"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S04_bk0.glb",
+      "bytes": 120176,
+      "sha256": "55ca6b38e296a1cb375f719000f7af53ed9d940a798aa365ccfeb08468af5ff8"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S04_bk0.json",
+      "bytes": 491,
+      "sha256": "cbd20fe48a67330ce97098963db777c79321eb38e0929bbdf1a737bc963fef50"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S04_bk1.glb",
+      "bytes": 279196,
+      "sha256": "33f046c750646c0bed6559a1b812443fade5b64147c872305064b10ef758726f"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S04_bk1.json",
+      "bytes": 517,
+      "sha256": "df5ee1b5209d4c08d7c1732884cfb23743594436df32378794d09c07182b070f"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S04_bk2.glb",
+      "bytes": 120152,
+      "sha256": "6398a5f76790cd72249ab2610bdc1e53796170f221e2d27d40e7a6d196765ae2"
+    },
+    {
+      "path": "pcg/books/X14_LRS1953_BOOKS_S04_bk2.json",
+      "bytes": 490,
+      "sha256": "ff3b77f231a7259317eab7a23254d036f68ee48e61e22174b2180842d7604371"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S00_bk0.glb",
+      "bytes": 274960,
+      "sha256": "9785fd9b17b9d1207163a6e01d9f19f09869f9801bbd00b05a8d4b42d34b96c1"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S00_bk0.json",
+      "bytes": 525,
+      "sha256": "16b862c621f533ca1c436c58567b37e128a01e12b3df02a4dce360bcea751d3a"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S00_bk1.glb",
+      "bytes": 274948,
+      "sha256": "3c336f089dff35b5b44fc4cd160c816dd2320d0d80fa4d81c39803d0bb39c761"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S00_bk1.json",
+      "bytes": 527,
+      "sha256": "d9a225294a4a7f225a171df49eb7418b11280e6a1474c3ed13f6c1afdeb2fd95"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S00_bk2.glb",
+      "bytes": 158344,
+      "sha256": "264fdb9c3fe160a90021ea1af0ed2c5ba59b883af25bd7fdfe3d8e62cad26fa2"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S00_bk2.json",
+      "bytes": 489,
+      "sha256": "f57907058b201c13cf0c8634e868c6772078268c972efd7ea1becd01bc8f674d"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S01_bk0.glb",
+      "bytes": 151816,
+      "sha256": "3bd1e8bbcaf2c861d6bb1e41ad06bc7e0c90b85c07975503e0f999c82c9cae2e"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S01_bk0.json",
+      "bytes": 494,
+      "sha256": "c5ab4fb850fdc3a47a693cce26d4990e2f99c02403a22598d000f9ed941b04ff"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S01_bk1.glb",
+      "bytes": 279136,
+      "sha256": "85efedb627eb2fe0b3313beb95e57161739e6045948613c86878444644bd1f30"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S01_bk1.json",
+      "bytes": 518,
+      "sha256": "3660b0d39093c8ea0d4de2a18ccd8d2b8fbb5da9f87e2e2b9dce12593a98f8cc"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S01_bk2.glb",
+      "bytes": 151768,
+      "sha256": "11866101bcfa480e925a0af22e8f88fe8a746cd7e4c4b86ee7ffa5cc190560c5"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S01_bk2.json",
+      "bytes": 494,
+      "sha256": "86759d21d6939701a01fe1fe0250969d52ec50b56c5f0ac23632d1a903943db3"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S02_bk0.glb",
+      "bytes": 245704,
+      "sha256": "3a36e18d737feea59d288eb2cef7b476287ba45af8641f64a2946508ff1a2d15"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S02_bk0.json",
+      "bytes": 516,
+      "sha256": "9a2f25cb4db7e1805dade8e82609878c497ecd68038276ef3514bc179c8dd738"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S02_bk1.glb",
+      "bytes": 151800,
+      "sha256": "2476f044f4266ff3f2a397fad899292a1ae12aad4a24fd02731ea873e319f9e5"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S02_bk1.json",
+      "bytes": 494,
+      "sha256": "3c09fcf7e09f5eabe5197172d4fbdebdd6da0ca742fc8fcf196ebeb58c34e891"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S02_bk2.glb",
+      "bytes": 279112,
+      "sha256": "cf28d0710ae6149c96a3be545b940b4669bafaaeee88cd66f9e5717e131095a2"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S02_bk2.json",
+      "bytes": 517,
+      "sha256": "6f89c20d403de95068f213915bfc71e4a935b0f030ec558e9858585621cae36f"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S03_bk0.glb",
+      "bytes": 228424,
+      "sha256": "ab0ae98c8870683db764c630eb3ccfa95e4ccc61741cc872131366936f7498de"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S03_bk0.json",
+      "bytes": 504,
+      "sha256": "9f1c1afc62b8649feb53e1f40e7cc1ca1f88f3894bc1955fbf3fd61442eaf270"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S03_bk1.glb",
+      "bytes": 194452,
+      "sha256": "a77c245e3965dcbe37123bd7b398f447c3d41836304d5c33fdefb1cd5cbf35bb"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S03_bk1.json",
+      "bytes": 501,
+      "sha256": "94eb24386be5da59cdffe951686a7a4b79f5d11e6f21d09ba65cac12e81a97b6"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S03_bk2.glb",
+      "bytes": 228448,
+      "sha256": "d3d366b90c95bd98cb6ea6dedfd40c323621ee0bff822ca3b41ac49ad9bfd3cc"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S03_bk2.json",
+      "bytes": 504,
+      "sha256": "f360db2403028c38780f2cfe9166239a38e75c14213e9e70f3de2a53a50b3644"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S04_bk0.glb",
+      "bytes": 158368,
+      "sha256": "d891b198277d65284321b519d159eaa8a795dbb296fc6f26afd19f0e9b834533"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S04_bk0.json",
+      "bytes": 488,
+      "sha256": "a615e66bdede20181e24f6e88833bbdf2916a115890efe1a831f90152f1765e3"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S04_bk1.glb",
+      "bytes": 245692,
+      "sha256": "903c644dd2940b7c781c60fb5f260d48cb5749405d0c5e246405cdf6efb6c1cd"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S04_bk1.json",
+      "bytes": 514,
+      "sha256": "345bc70e5735a8477d73b8c3588c6db249bb65f5dbac97bbb6266396602e810c"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S04_bk2.glb",
+      "bytes": 274980,
+      "sha256": "bd04bcca837259f7679de9939572610357e7d3047012c202ee41ecc77320a585"
+    },
+    {
+      "path": "pcg/books/X14_LRSGRAY_BOOKS_S04_bk2.json",
+      "bytes": 528,
+      "sha256": "8ad7ba7734359218c3fbe026053314a8fb182d6bee72afcf59176d0ba209ad0f"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_01_B.glb",
+      "bytes": 2194260,
+      "sha256": "f68ca51b35d0c903302247332282ef22b51e4a2ccc85f75b605988017eb48ec5"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_01_B.json",
+      "bytes": 2877,
+      "sha256": "49fc7f794c7a31ea91c963296dfc780907cfff82b0fb23428eca99d141e8804a"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_01_L.glb",
+      "bytes": 217000,
+      "sha256": "76556bd0d7a9113bd6fee58bdbd52ef1352e22e36de30d62afc6f1400c3860a5"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_01_L.json",
+      "bytes": 2229,
+      "sha256": "d514da9eb4ecde0eae2b8931dff0fe65756606edcd845c8a11dbecbcfd314313"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_01_R.glb",
+      "bytes": 151628,
+      "sha256": "b795bc7d06c86d7797e2ba114795e9576c01638c5cc4b777e18840c7ae644b2d"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_01_R.json",
+      "bytes": 1877,
+      "sha256": "6788b0a9ba17a86b6d6a8ef483cdcb2baffe8292bb3ba58831f37d42c2b93ea6"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_02_L.glb",
+      "bytes": 470288,
+      "sha256": "4bf782749e5bc7f9d91ec9c0c3b02d6545202438d8a8bbf547b9db31b10817d4"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_02_L.json",
+      "bytes": 4851,
+      "sha256": "acfa610e045eab27b4f8a56c3dd9562c766c193605c14983c8ec41d15089aec8"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_02_R.glb",
+      "bytes": 143904,
+      "sha256": "03b38f6051d4ddee3faede3eb154f0b27d3b27ee34012f24c37e3b18fd34f39e"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_02_R.json",
+      "bytes": 1539,
+      "sha256": "3fe1ae595402c5f761a6ac6dae64ecf726d6e1abe0f65e52c06040f3dedd40fa"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_03_B.glb",
+      "bytes": 2196912,
+      "sha256": "cdf0d5c85464e935bc5d56b18eeab00f7c5a0bb420f9cfd7baee379c19b5d440"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_03_B.json",
+      "bytes": 3537,
+      "sha256": "6fb74134d81f058c3e4335f2a67685159816a8bb00de69085df9f84d217c6c4a"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_03_L.glb",
+      "bytes": 299320,
+      "sha256": "55ef6271baaf6e79c2b100db7a73e43ca3f8fc35c3f31f4afe86f3a90fb14d14"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_03_L.json",
+      "bytes": 2856,
+      "sha256": "fc129dc11d9437c87a8cf84885ed197ca66a4b955c9c5af53276bff929043d0c"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_03_R.glb",
+      "bytes": 218852,
+      "sha256": "122d174a20835864be695098282fad21cda4b25e59bb96f53053427830d230c5"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_DESK_03_R.json",
+      "bytes": 1871,
+      "sha256": "db003d231bd23d093b7e86c1aaa22a28a451c9decf904cf9f5ea061d7bdaa2d4"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_FILE_01.glb",
+      "bytes": 525084,
+      "sha256": "596d39ac3f239ae4156bdadc41625c60bb1c864c104862dc5afeeeb479c3d623"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_FILE_01.json",
+      "bytes": 4522,
+      "sha256": "f920ce84e484eeb7bf83b2f9de43593554d01d9e55175ae0ef9bc2ba66afdf44"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_FILE_02.glb",
+      "bytes": 64228,
+      "sha256": "8c84f8d5bc4c320b14aa3a25f9ccc2c0ae0b2e09d815bbea4e8070f6690d033c"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_FILE_02.json",
+      "bytes": 1548,
+      "sha256": "180789a1c9ba9e97bd76a7f265b2dbed07e1ff09ca330e7bcfd4f34a7740dc32"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_FILE_03.glb",
+      "bytes": 561144,
+      "sha256": "b7124c0b95febbcf9288a45ce49c67672b135a7f711fd2c79f8b4550c571213e"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRS1953_FILE_03.json",
+      "bytes": 6805,
+      "sha256": "3e6452b8164bd129864a80fcc46f4516a009ed484fabef5ae177ca07235f2a36"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_01_L.glb",
+      "bytes": 211064,
+      "sha256": "304cf798af365d53a34fe5e0461a67dbb691771e015d78576129bb113a698754"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_01_L.json",
+      "bytes": 2205,
+      "sha256": "a840ff85424582acfbb6d39166869df92404022e748713725c84b4382be79d73"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_02_L.glb",
+      "bytes": 257056,
+      "sha256": "31a7f504c7f8fe43e68c5d758442aefce79531618075b7473a86af4f7f299752"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_02_L.json",
+      "bytes": 2535,
+      "sha256": "1364a54c37c4790e9d51d65c0a758a3a19a2750788279de8bbee1a78433fba44"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_02_R.glb",
+      "bytes": 143968,
+      "sha256": "bce049aefdd78ef1780ef61625796079783823bf90b3d3e94b6008d7cfe7f3df"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_02_R.json",
+      "bytes": 1545,
+      "sha256": "5fb6bdce6b05f6196d2fb01635cf78d1df07cd838e6732837eae4203feb5dc2e"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_03_B.glb",
+      "bytes": 2131672,
+      "sha256": "1bea64b43fdbdf00186a663399cdce180ca234e137367b1d7e03f50e8ccc91b4"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_03_B.json",
+      "bytes": 2219,
+      "sha256": "24e370a0acbb87e22b1b340175188e91dc54584e32881abe5271ae17ea5d03b8"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_03_L.glb",
+      "bytes": 232332,
+      "sha256": "5f65fed2064f2e16507e86f3d24fdf4b86ffa2cceb11156aa571af6bb2cd96b1"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_03_L.json",
+      "bytes": 2868,
+      "sha256": "91000c8dc406de6a9c44a5cf378fe25222fc04394b5c20efa7757777a523683b"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_03_R.glb",
+      "bytes": 223004,
+      "sha256": "0e5da3e072fe362be01d4562fe284a85aa0e18284df87536644b8c0dcc5123c0"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_DESK_03_R.json",
+      "bytes": 1868,
+      "sha256": "487fea99982b41c30c1a66f2d77e7f87676f6aede054f7e6fd8907dd7375a90d"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_FILE_01.glb",
+      "bytes": 137576,
+      "sha256": "a01bfc87094a4296d9b6c5cff7221f9b06906fbcf61be0db6eed2cb2cd77e72c"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_FILE_01.json",
+      "bytes": 1533,
+      "sha256": "16e6830c01a0bd446db5e7f36148d722f5e9fa8dac63cb40da76937260e3ef3b"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_FILE_02.glb",
+      "bytes": 423056,
+      "sha256": "af3a99b51780f099c827d58e365da32870386442b363296eb867f2f702c88582"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_FILE_02.json",
+      "bytes": 4142,
+      "sha256": "56487c6876dec3f8ba9cea6428f9d5ee737725cce7c0556d19d69c70deb43eea"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_FILE_03.glb",
+      "bytes": 527804,
+      "sha256": "f05bc3f12c8753136c2ee8d6f1b48c4c21b0f6fb9fc1693582c42f68945c9baa"
+    },
+    {
+      "path": "pcg/tabletop/X14_LRSGRAY_FILE_03.json",
+      "bytes": 5782,
+      "sha256": "26dd3baed1a7e9f68149c7634176c7d5270762e7e2e913dd1802a7f7ea701018"
+    },
+    {
+      "path": "references/01_1960_Helen_Sewell_Pacific_Northwest_Forest_and_Range_Experiment_Station_Portland_Oreg_68774425.jpg",
+      "bytes": 147701,
+      "sha256": "a6f0fd2f295d80a1d9aa0c7ecea4f0e6309223440c8b0a683f9c8af6b0aad98e"
+    },
+    {
+      "path": "references/HABS_DC-351-23_Interior_office_and_conference_room_1974-75_Boucher.png",
+      "bytes": 386637,
+      "sha256": "446c9dc72b094f8bb09340e8158827523b9e991bbd9b240340ab6c142f1b1dd1"
+    },
+    {
+      "path": "references/LoC_LRS_employees_at_their_desks_Sept1953_ppmsca19570_fullsize.jpg",
+      "bytes": 139987,
+      "sha256": "af2422bbf35df9767d83d864809887ce186d3c002d7e628853162cacefd6ec23"
+    },
+    {
+      "path": "references/LoC_Main_Building_FIRST_FLOOR_PLAN_undated_from_Matt_2026-10-02.png",
+      "bytes": 437402,
+      "sha256": "7e696fe4a49766e2ffbbb4954d78ec3e4bc13614e65498db63150d8b95b63193"
+    },
+    {
+      "path": "references/README.md",
+      "bytes": 1125,
+      "sha256": "e5e0d36f50b96e95e1282c7a68f24b9185449837d56c3606333807575c792806"
+    },
+    {
+      "path": "references/REF_LCIB_1997-05_Main_Building_memoirs.md",
+      "bytes": 19986,
+      "sha256": "a6f867d2849bd897ad992bc0311f356e9499d71bd75d3b08b45a7551d0c81401"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_clay_int_corridor_east.png",
+      "bytes": 1216980,
+      "sha256": "9471c44d248015533ba0c48563310fdfd5dfc23543795be3a608902f44c72d75"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_clay_int_cubicle_dress.png",
+      "bytes": 1121357,
+      "sha256": "036bdafe98fe7c8cbf652ee1f887a4c324497ce8c36391def244bd093afdf271"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_clay_int_high_overview.png",
+      "bytes": 1245989,
+      "sha256": "2ab5fb4151d41bbfe32b8e764b16fb7e8c370b99c95552ad2783f44a3215abd9"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_int_bookcase.png",
+      "bytes": 1124105,
+      "sha256": "a63d2fbe49106226072475cdb877fe22c3e54ddfe17bb52d90671618f563e8bf"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_int_cubicle_dress.png",
+      "bytes": 1300124,
+      "sha256": "5820f492dd83efde918daa34aeb4a2e50ecc0f0b6fdd22a03e51d9b8297b47c3"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_int_high_overview.png",
+      "bytes": 1431226,
+      "sha256": "f3b6c35f73ba7492df33171480e80105ac70acc1a76318533461888cd6f15ad4"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_bookcase.png",
+      "bytes": 1187157,
+      "sha256": "466af8c9bce018dba000432dc45c959c5ee2ecaadf418c4398e891d2490a5db5"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_corridor_east.png",
+      "bytes": 1398602,
+      "sha256": "11d2efdd609aa0f92cb97b47ee90490fb2133339970ed1a0593dcb0df5cdf736"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_corridor_west.png",
+      "bytes": 1396300,
+      "sha256": "ce2bb70c0c01ac6e36574a92a09a1de801e3a1e9fe84248a14a3da43ae8a164d"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_cubicle_ceiling.png",
+      "bytes": 1299170,
+      "sha256": "e562ca8934e7856e70ed1ea005eb57a628da7b11d1c8b58293e74366faa8455a"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_cubicle_dress.png",
+      "bytes": 1365553,
+      "sha256": "051d77bacc3ebc484ba8b3b9e1ca3d2f5cfb554956baca43d4f51c7cea18be0d"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_cubicle_window.png",
+      "bytes": 1365196,
+      "sha256": "4b327425e48be92046dd386781195180ed161dcb2a8ed83dc886cbf0962239b5"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_desk_closeup.png",
+      "bytes": 1315787,
+      "sha256": "6762a8c525ab2b0d1114057e94ac6e43b80e8b4be9693221a4345963ef997718"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_door_and_sign.png",
+      "bytes": 1420923,
+      "sha256": "6e8837c18b999268d889cacfbde6b7f98af83a0a34bcd02ab073e65c76f498c3"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_high_overview.png",
+      "bytes": 1468231,
+      "sha256": "a30741e9a4855a94d3fbb95f301cf0e04536b2dadcfea0879bcb1722c65c8d40"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_1953_textured_pcg_int_south_wall.png",
+      "bytes": 1389063,
+      "sha256": "5ec8ea9524f20c7916a0f53ca7324b444a35ca12eed4ddc4f4fbffa09e761ee3"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_clay_int_corridor_east.png",
+      "bytes": 1192727,
+      "sha256": "3a099a14d7300c3486f669c4c370d0ce691a11c5a63a46e72bf81423139450c1"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_clay_int_cubicle_dress.png",
+      "bytes": 1187874,
+      "sha256": "5d0590d7a41d9f894a7a44ce224a81fec21f4bbff3c349eabb6bfbded76ac2ef"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_clay_int_high_overview.png",
+      "bytes": 1273582,
+      "sha256": "2d58afbc91f4715108f5bd770557e6c1c196190409efd0e013192b0410db9119"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_int_bookcase.png",
+      "bytes": 1110227,
+      "sha256": "cf3bd29ea28281ef2c468c499fcb6108f5f0096329e1a48b203fef0112170212"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_int_cubicle_dress.png",
+      "bytes": 1342768,
+      "sha256": "e4a4798fd793a74ef469d8c686c9f753110f9f1e751aa90e141538b3e1178979"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_int_high_overview.png",
+      "bytes": 1576511,
+      "sha256": "3d093e6a4cbabb02bb13867352d8e5cb40ff045eeac8ef7447af1a940181e6ce"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_bookcase.png",
+      "bytes": 1144947,
+      "sha256": "bfa445823d7102142807ecedf83892115c0a3bd19d4e8ef1d899b5170964378c"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_corridor_east.png",
+      "bytes": 1431232,
+      "sha256": "46804e9cc53b8db946af060866de7c32b9336d076b0e23e68baae718d28d2b96"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_corridor_west.png",
+      "bytes": 1449547,
+      "sha256": "930d4b0565b813d8c0c31d58cbff46b7b2f43a198ca2580fefdaa1b3ccde71d7"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_cubicle_ceiling.png",
+      "bytes": 1341035,
+      "sha256": "72dd3faddf5e4213e6049e59f0580b07f9701ce1300f1ca67c09769a43a8e5e6"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_cubicle_dress.png",
+      "bytes": 1365451,
+      "sha256": "492b0da6d82507ec23fda423135230d2f2c329cfb550e6375635f90c0e726a20"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_cubicle_window.png",
+      "bytes": 1391389,
+      "sha256": "661740f802e76d1678a539bc823f6c7846b11613c205f4a7d057e18bdab7300e"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_desk_closeup.png",
+      "bytes": 1304705,
+      "sha256": "0b3aa0b401937dbd4b9e3d00c5c9f1432ff64cea90740a6eb132fd81ff969d3c"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_door_and_sign.png",
+      "bytes": 1471720,
+      "sha256": "7d8b36415122d07d71c5633d822cad9cb94f71de55489d6891219eaff1cc0493"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_high_overview.png",
+      "bytes": 1581104,
+      "sha256": "0d1d40daef2b1a523b11bc9542d8f82204afb7b537dc0f35649467dcaa9b0583"
+    },
+    {
+      "path": "renders/X14_DEMO_LRS_Room_textured_pcg_int_south_wall.png",
+      "bytes": 1425886,
+      "sha256": "e577d8047a3da36bd74c22e10fec6fe8a22b07030372874aef167a7e73b47cdb"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_clay_front.png",
+      "bytes": 564919,
+      "sha256": "19759ce7f1bdde4b78f84a300c61cd7fbe303932f0ae82935394328c4ee322a0"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_clay_profile.png",
+      "bytes": 566096,
+      "sha256": "76b84d621993fd58798f6af2da59cd58209ebd475dc5d5bdd1e87086d2923ab9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_clay_rear.png",
+      "bytes": 545872,
+      "sha256": "125afb2bc390cc6f6fd25a21357ca70b0a170bdbb6184c5c52a87acba90ca11c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_clay_three_quarter.png",
+      "bytes": 589457,
+      "sha256": "9861d0813c438a0bc78fe29eae10865a93e17094c2a981b7547fec502860f2ba"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_textured_front.png",
+      "bytes": 570473,
+      "sha256": "fa955ce020e362920ff9940d49ba92941bdf3f4c115e6e2aad9b02899c1d703f"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_textured_profile.png",
+      "bytes": 570629,
+      "sha256": "ba6a9781f20e1b8191251eb8df9f2ebe7712a2f99e942908dea6bc2ec3941423"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_textured_rear.png",
+      "bytes": 551938,
+      "sha256": "ca00a38be0bdd8776e1c244dd5d8ae27451b8fd5e572464cbdc5a605ecaf211c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_300_textured_three_quarter.png",
+      "bytes": 603683,
+      "sha256": "0ce7027304565ed3e384ddfb464fc8d71351a85d486d017dcc97aa1ad3ccc24c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_clay_front.png",
+      "bytes": 559910,
+      "sha256": "3a18d9f5f62e03eb77ec428eb171a3e81847f213a10bfddb334f1a1202e04e3c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_clay_profile.png",
+      "bytes": 560206,
+      "sha256": "af3d9a10a13ce4c8f21f6260f710439f055e599685ad72c5afb6178fae32d789"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_clay_rear.png",
+      "bytes": 551001,
+      "sha256": "a71be2cb04b971434edb893e70f9f468459f64345df1f0b4da7f1dd65bf6eb3c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_clay_three_quarter.png",
+      "bytes": 593086,
+      "sha256": "7926be0ff5a5d613fbc8edd86cca72782b6c5d5e20c32409eaa314e520916907"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_textured_front.png",
+      "bytes": 572237,
+      "sha256": "3bd36647929561f190d22f5526acd2ff42e1e5cade5fc4f0ae3724c096e0d9a9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_textured_profile.png",
+      "bytes": 567454,
+      "sha256": "ee8f86c0626de805823ee9121b39dc94b43e9ea154afb583abb15577a1867894"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_textured_rear.png",
+      "bytes": 561106,
+      "sha256": "49372924a81c7d09bd50279419e713fbcea75ce81e581923f025583329173d9c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Ceiling_Coffered_300_textured_three_quarter.png",
+      "bytes": 614459,
+      "sha256": "786089bc8defd4f6e533124fc0b1af28b96e6a80fb4c8e45820153f80a09f6fd"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_clay_front.png",
+      "bytes": 562070,
+      "sha256": "2ce587a8d010633b73ad2a53f7e195bff3d151ce9310c637a387123568b1738e"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_clay_profile.png",
+      "bytes": 563260,
+      "sha256": "f1e88e350e45d65566b64cb5f8fb56ec4db64c6cfad258073f0c57c95c99eda2"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_clay_rear.png",
+      "bytes": 538589,
+      "sha256": "df8894d23084269d16af80dc1aa638a811fbf57926e60b673fc2ebacac499746"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_clay_three_quarter.png",
+      "bytes": 561249,
+      "sha256": "2cae148545f5bb37cb4651164c893b188768afb06079a52efb3d831b0590a6c6"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_textured_front.png",
+      "bytes": 568612,
+      "sha256": "4e705559ffc5473699733718139adee18759fc1125c4ee701e7dcb700f7dbb4b"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_textured_profile.png",
+      "bytes": 569245,
+      "sha256": "cffdb10ce9ae781f7a1e2ab18ed7f668989d137e0f2dd6508d6697e129215ad9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_textured_rear.png",
+      "bytes": 546482,
+      "sha256": "45f584832970d43a3bf35bf8f0e2dc398049ad9595effe0a9f722d22fe88c0c9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Corner_textured_three_quarter.png",
+      "bytes": 570159,
+      "sha256": "4981e7dc78ea3d5d2a8918c5dce46ee686866c1c5d57c04eb3e003c0a66c636e"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_clay_front.png",
+      "bytes": 564517,
+      "sha256": "593f936cb4970b4452c33b56229de80d57a3164c818e5366b6c9c33a99338559"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_clay_profile.png",
+      "bytes": 565549,
+      "sha256": "f59de12d4bd8ee2c6aad6978a5666eead461acc49a5d4a16577ab4b14989ef9e"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_clay_rear.png",
+      "bytes": 544901,
+      "sha256": "01dc193bdfe616e30223df5dcd39ee697028f8edf74e7c5c8b457aa738b6b112"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_clay_three_quarter.png",
+      "bytes": 589138,
+      "sha256": "ee762426efea5ff5c94c99ef1f3ca284064067c6441a8dc9093bcc241a4ee5dd"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_textured_front.png",
+      "bytes": 571755,
+      "sha256": "02295d174d93a558e02f3ff9a9f959e33db689d3ee36778be0ab0af9010d0cf5"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_textured_profile.png",
+      "bytes": 570419,
+      "sha256": "5524aff58df3d5fbbecbeca52b0437eeae23b32b8e4321d04f4f5431be5b0e4b"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_textured_rear.png",
+      "bytes": 549264,
+      "sha256": "47fcb49fdfef807a605542c8d98b084327259b7999a01eb3047bbc1b559b4f69"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_Linoleum_textured_three_quarter.png",
+      "bytes": 593016,
+      "sha256": "2ce84f357770a5c5a9e0d73984c4c719e1f637130c04f3675b5d133508364b41"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_clay_front.png",
+      "bytes": 564517,
+      "sha256": "69212f38ad8d5aec195b618e556c3ce3b5d35081731a59cc8d74e2c543f885ad"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_clay_profile.png",
+      "bytes": 565549,
+      "sha256": "8ec64ef8b74d9b605ddee944c42a90b7e33944e3293c8fcf0c18cc438591835f"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_clay_rear.png",
+      "bytes": 544901,
+      "sha256": "ee886769b97d37686634c6b3bd2a2e15e6fe1db62b68acfbe0febe6b11ce01f0"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_clay_three_quarter.png",
+      "bytes": 589138,
+      "sha256": "fb43438cde2d6b6236c92bb7b09563426f5521d91b00533cb280e0df7755e444"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_textured_front.png",
+      "bytes": 584168,
+      "sha256": "cdf3a53f1922d4800be8f7e413c6fc7d0849299a701cb3935f1be1ce35821f70"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_textured_profile.png",
+      "bytes": 589720,
+      "sha256": "a1fbf64d186ce95f3a05b4a4a965c7e870745e93e7c1dc01f0aa7e951078ca96"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_textured_rear.png",
+      "bytes": 562266,
+      "sha256": "888e7929004aa3fc40af29aaa6a404301a593c82634e50343414628653315dc8"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Floor_300_textured_three_quarter.png",
+      "bytes": 618896,
+      "sha256": "3d7d8a0f6c219803019990e4be9379a594174e0cce5f9ff3bf93095bb1945233"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_clay_front.png",
+      "bytes": 574415,
+      "sha256": "cdb3648d4b32342573668e30ecc689cec55dd8d4644c27eb7e598881800903f0"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_clay_profile.png",
+      "bytes": 575422,
+      "sha256": "78c58fcc6c23a4e5f35a3b8af114bbdc2e69781e17e6cc303fdcb4b4f4f6635c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_clay_rear.png",
+      "bytes": 557228,
+      "sha256": "352baf3bc67f856033ecc580a09ba72dcb12bd06f0ce784746897edb29162faf"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_clay_three_quarter.png",
+      "bytes": 575108,
+      "sha256": "05dab85a45e5d035bb0316b8ba524c13e3212469969df593748a80b6c5d70b47"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_textured_front.png",
+      "bytes": 574788,
+      "sha256": "8a952c6242d715caa6eee836feaea3fc2b67fa7c695a4b1cf07d4ef8f3b4b5d9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_textured_profile.png",
+      "bytes": 575131,
+      "sha256": "e9b94a6a5a1bfd5bfb374fd0b3978f3203ae8ebcd463a0b4582e389750695b20"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_textured_rear.png",
+      "bytes": 560527,
+      "sha256": "0736f669eb5538d9c361d351e216b15a0b289555078e8e8b937b824cf6aa01ac"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Pendant_Lamp_textured_three_quarter.png",
+      "bytes": 579076,
+      "sha256": "56e0c376bf53ee5c987dadd5dc881b59fc840b645897c0d6c6dbe6082cefd2b8"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_clay_front.png",
+      "bytes": 567859,
+      "sha256": "d01cad7382018c0fcc34c236f3527bf0bbc2867d7fad42decc6d82878a94e34e"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_clay_profile.png",
+      "bytes": 569518,
+      "sha256": "f454549865332d1661fc44b213de588a08e610a2d5ba59f957ac1ad2bc469202"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_clay_rear.png",
+      "bytes": 543157,
+      "sha256": "d56ffdad888e5da9fa224c129576feeda2b21bbb7d48f91e44fb791cfc11ddc0"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_clay_three_quarter.png",
+      "bytes": 566899,
+      "sha256": "f2926dc09bfb8e979e968055891ade150751ff25ab26a2f6b08635246bbe44f0"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_textured_front.png",
+      "bytes": 566517,
+      "sha256": "bd7386943a14828ed2760300a36f578ed40af4ca4fb236209868d80c5738e446"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_textured_profile.png",
+      "bytes": 565312,
+      "sha256": "8acb63da803b31649717cf40a10f44d34d4c03a5ba1dcaaa70270cdcce86affb"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_textured_rear.png",
+      "bytes": 547604,
+      "sha256": "5a486fddd83753ce3b349eea211192682aec96fe3b92bc1304b298d72d2a984d"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Torchere_Lamp_textured_three_quarter.png",
+      "bytes": 568957,
+      "sha256": "92fe6e1df4c770a0adac3d71d6b849c0cbc1df43ed79cf9df3801e51b036d920"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_clay_front.png",
+      "bytes": 572124,
+      "sha256": "e6c05732aee414be5a376d631f11141e1c359462e8f4e31c45c21cb1a6dde208"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_clay_profile.png",
+      "bytes": 561651,
+      "sha256": "2fae894fef2557d6acd01df3569d1bc9cca4a4410f5049449161ab9a4328fadf"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_clay_rear.png",
+      "bytes": 562842,
+      "sha256": "5c352f0a9a2cdf88fff14bfee887d5d677a846e0f11ddfc4da47a224ee396557"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_clay_three_quarter.png",
+      "bytes": 583876,
+      "sha256": "223bf6ebdda8c6e4d7231611163c934aecad28e0fdd246f452644ebbfe044502"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_textured_front.png",
+      "bytes": 601285,
+      "sha256": "85f9a3d49a6d94a58ed6e92cd018bdfecb1261720d656e216371bac40d2944e8"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_textured_profile.png",
+      "bytes": 572458,
+      "sha256": "6674fc867ce3ec783fd52ab1a79473cdda3087ded8d6cd38cc3d40765d01a5c9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_textured_rear.png",
+      "bytes": 599202,
+      "sha256": "7770464daaef2cd22bb2822200322681aa02d80968a59815ba24a79bb536c47c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Door_300_textured_three_quarter.png",
+      "bytes": 601847,
+      "sha256": "07ea036719351a02694e54c995dfa5adff5f469ee560f416c9f8898631296bca"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_clay_front.png",
+      "bytes": 562074,
+      "sha256": "ef69b1bae9a83b636e62d47aab6ea84f619486bff303f442047a96cbe707f205"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_clay_profile.png",
+      "bytes": 561456,
+      "sha256": "c884b9d09b3c778dab42e0d9dbf52e38361e282d86b4a1485512d73f7bd7c1ce"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_clay_rear.png",
+      "bytes": 555679,
+      "sha256": "49c7a6a7d33ac4254d8654e64aa5fb4f4ef05ab98e7862a8dc0c62f531621c00"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_clay_three_quarter.png",
+      "bytes": 572849,
+      "sha256": "409b8aba90f69711d260870c57809b9903e82535e6f9209bcd2a3963a7e5d433"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_textured_front.png",
+      "bytes": 591599,
+      "sha256": "70d9fe78b8dd991d59391c794e40af7f37749b1c6fb7a6df1772ffbfb6e09530"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_textured_profile.png",
+      "bytes": 569460,
+      "sha256": "4c710ac27fa3c5eddaa3c49db4c7971ec7a5f64f6bddf8a89f17cbe660bb02b6"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_textured_rear.png",
+      "bytes": 593360,
+      "sha256": "b5e5ce4d5235a410b5ea738f8103ec696ffe1174cfb8d6c75d231735aa7eef6c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Plain_300_textured_three_quarter.png",
+      "bytes": 584678,
+      "sha256": "714349caa40e6c6af03bdfc8c153e515d3fabc9960985dfd19ea5ec091984f80"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_clay_front.png",
+      "bytes": 569608,
+      "sha256": "12237c97ee2b2a4abf53e7257b8f144f9c98c2122b1247704a5c94e97802b777"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_clay_profile.png",
+      "bytes": 569568,
+      "sha256": "c87ee32a51353c36af5fb3ebb4f6c64e4f7a541214bf3255c0af8a31591b8994"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_clay_rear.png",
+      "bytes": 568715,
+      "sha256": "1bf0eb4635f575c97cccd7d38b54466932184c0f3c7da49d2d0641c6494bef64"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_clay_three_quarter.png",
+      "bytes": 594568,
+      "sha256": "9c0853282663922e947832f417afb10a9cb6fa1cdb7c814290426c37e3e1a9cd"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_textured_front.png",
+      "bytes": 579358,
+      "sha256": "f2fd1fd6bd48b33e18d2e10bceee9ece1e0bf9094fc534830ab63dde0497386c"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_textured_profile.png",
+      "bytes": 584821,
+      "sha256": "0493c36c67cae8d92be3f2278271e667cbcff1dd8f96f835ba0856f539d83872"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_textured_rear.png",
+      "bytes": 584223,
+      "sha256": "2662eeacc85244f821d3f5db4cb57737b772afbbf075103f635a00bb75791d18"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Sconce_textured_three_quarter.png",
+      "bytes": 602135,
+      "sha256": "9ebd265081ab9eafb7d9560b014d65118b90148f356231476b5b8d6e61df18e8"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_clay_front.png",
+      "bytes": 576007,
+      "sha256": "e296c7da1943c297ff5091d15b29ec6ad2f57e1f77a29863ae05853fef73346a"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_clay_profile.png",
+      "bytes": 564536,
+      "sha256": "cc02fabfbae090af6f6f4f537a3d69a5f1504f5033f3a5f24fda15c6cce05784"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_clay_rear.png",
+      "bytes": 572658,
+      "sha256": "656e9e4209d484d9bfe6ac21e31a98b8d69c37ee3a2a5188e1564da8484604c9"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_clay_three_quarter.png",
+      "bytes": 587363,
+      "sha256": "e916300d46e13cad4ec564cb4a9d36e3bdcbdb5f270121963acf350642e6d394"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_textured_front.png",
+      "bytes": 606440,
+      "sha256": "d9ef62b0acef42b6c68fbcac498bdb151ba7673d150600cbd35b8094a089c969"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_textured_profile.png",
+      "bytes": 577826,
+      "sha256": "cf83c25d0c4ff5fc021cfa66f7f0b4dc9964923610f3a1c910a07ae66774e3ec"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_textured_rear.png",
+      "bytes": 604971,
+      "sha256": "915aeb88573f0ac15ec2de49d08726d2e8cebb233818b3774471635e3e16afbd"
+    },
+    {
+      "path": "renders/modules/X14_ARCH_Wall_Window_300_textured_three_quarter.png",
+      "bytes": 610057,
+      "sha256": "866f101de62733e96250e74c5ccc75497bf681ab160cc0e7722ff339e159a52a"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_clay_front.png",
+      "bytes": 987378,
+      "sha256": "a70cbe828e35556d660aa33fdb067079ea8a368efc6eab91f8f3693e76e16fec"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_clay_profile.png",
+      "bytes": 984023,
+      "sha256": "0dd3389de0b92affd4117844186744b1671812d6e452c40bef28315730640132"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_clay_rear.png",
+      "bytes": 990084,
+      "sha256": "ca625a5b00934a6b1fa7684943e93565bdba6960e749242d96584e1ac3fff1c9"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_clay_three_quarter.png",
+      "bytes": 1004484,
+      "sha256": "5197ee594aee7b4f77adf84b5a0fc19f45d57be54ff97507bb36dd2adf424ee8"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_textured_front.png",
+      "bytes": 1041039,
+      "sha256": "6a372b4407ee56c92f4730c078b0487b44e938fecafe7ac75d8c0046b51492f6"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_textured_profile.png",
+      "bytes": 1013587,
+      "sha256": "50da693ae76b2aa8463cf081c4f61d0e98f67c2b3e42c62bcb4330bb8ae9dee4"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_textured_rear.png",
+      "bytes": 1023606,
+      "sha256": "e7fff3e179e823ce0e0ad2f844294ad7643402d8bc79392e6b86975a7ef97dd4"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bookcase_Oak_090_textured_three_quarter.png",
+      "bytes": 1060858,
+      "sha256": "dfbc05524f58575cb53034463c3f4a82d88f31b5f225a4ac6243036780d82d38"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_clay_front.png",
+      "bytes": 989183,
+      "sha256": "8286e9e5ab3f65ef33f41d93850ba22d3e6cb54dfc768e20663df6fb3252445b"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_clay_profile.png",
+      "bytes": 975733,
+      "sha256": "b6ec2de47e39b4e2f5738563423f6b9290e05f1f13a4e12df8833237d4c098fe"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_clay_rear.png",
+      "bytes": 975055,
+      "sha256": "beb6d18833e23655c80e68d92d8e44e0ffeef86c993d51faf7be03db11ef0c76"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_clay_three_quarter.png",
+      "bytes": 1013639,
+      "sha256": "f163710693e17810210fe9a7e50ad593c68aaa57202a844d82d090c395d29580"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_textured_front.png",
+      "bytes": 1151575,
+      "sha256": "28c501a4392eeb57e4b6ae307557f236fed8bf98473e1b5a5cab964824ca742c"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_textured_profile.png",
+      "bytes": 995726,
+      "sha256": "73a9919bf20bf9122d070f2ce479a0501a8ec5e45d763ce923e799c2b7225ab6"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_textured_rear.png",
+      "bytes": 1120622,
+      "sha256": "d43604c64f8584b8d08566d6910eddf62f626f8c56ef067aac9be0d20b64cfc4"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Bulletin_Board_090_textured_three_quarter.png",
+      "bytes": 1142101,
+      "sha256": "2f4ed60728b54f09b8346000c41a42734db4fc2858c862317f43c0c4f87c331c"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_clay_front.png",
+      "bytes": 991580,
+      "sha256": "f074e2039995de1a2d4bcf63b50fe152788f82d28fd91635111feb826dda7dee"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_clay_profile.png",
+      "bytes": 997774,
+      "sha256": "e103f1499c9d3f732ae0963f21d14cad51b09399ee8fec7b7ede5d8510005982"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_clay_rear.png",
+      "bytes": 963755,
+      "sha256": "692e90183c342c31bd371e2ec53fd04c48e51e817414c7c89a6943b97da23587"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_clay_three_quarter.png",
+      "bytes": 995633,
+      "sha256": "d0b668d4b1e0519dce9869a31f9506b1fbf0d81511bd960a788b4fe9e7607328"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_textured_front.png",
+      "bytes": 1007164,
+      "sha256": "cb533e4410bf3a44b4288b1f4fe5bcd10bf45c7060649860c0f2c2b226dc6f2c"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_textured_profile.png",
+      "bytes": 1006587,
+      "sha256": "d915039aa36b7672266ee944d4c52c8debd72f62f31d40f42b5fdd6fcfa6f963"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_textured_rear.png",
+      "bytes": 976446,
+      "sha256": "b8d04361d15d00522cdba0721133228ba11bbfaaa0997b8e11b52da7998ef388"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Coat_Tree_textured_three_quarter.png",
+      "bytes": 1010552,
+      "sha256": "6b3df1e728094c1e05da757fe129d7845c4e6926576c13ae2fc3808c7df50b20"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_clay_front.png",
+      "bytes": 983233,
+      "sha256": "91c243ed397655a1ec4cc465a1ec700fd0f78307c1fe2d93fce6e16a4334108b"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_clay_profile.png",
+      "bytes": 987974,
+      "sha256": "d33fcbc8b877efdd861b178d289c12fef15ea920d166a08b9c7afc519f50247f"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_clay_rear.png",
+      "bytes": 952651,
+      "sha256": "0338fca450bc6d56746ae764dd9fa129db336291b77ecc4b507c11eab71c6e83"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_clay_three_quarter.png",
+      "bytes": 990038,
+      "sha256": "3961516a5741a8eca413a4303c4b62c0e84338a54ebceccd374e694cbc399606"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_textured_front.png",
+      "bytes": 1034301,
+      "sha256": "843df0c937dbbd3fea1ce6d42d31fc97bcba24da75c3913962f293ba05f8e014"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_textured_profile.png",
+      "bytes": 1010167,
+      "sha256": "c2f69efdc829455424c0feb3eac71a022e493464d0200ea0683e086cb7b31d22"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_textured_rear.png",
+      "bytes": 1005405,
+      "sha256": "9ce077aa4bfd354f3a7daafda4de4c41c027d352770933b809f9d15c0c2d358e"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Flag_Stand_US_textured_three_quarter.png",
+      "bytes": 1039480,
+      "sha256": "73c07d2373c796cfe2e90187b14a5bd6da96d715db4f18d9fb2714962837ae7f"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_clay_front.png",
+      "bytes": 996243,
+      "sha256": "557552461e42839131a6d1219741aa91f11df8a4d6fa09a68c0b4a784c8267e3"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_clay_profile.png",
+      "bytes": 979992,
+      "sha256": "87ac3d2fde4b3073abeb12a182ec2e1f97c52a46fb47e185abf81d49c66106b5"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_clay_rear.png",
+      "bytes": 980263,
+      "sha256": "ebbdc3fbfb4c0ae29a72f025249accffb0fdebc8db550e58efe2e273626a591b"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_clay_three_quarter.png",
+      "bytes": 1021513,
+      "sha256": "f0d29081cb24c320038e81d340e7a333c8c03714dd71e0b489c2618c9c11ac58"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_textured_front.png",
+      "bytes": 997396,
+      "sha256": "3dff70ad3ecd064e8bd4346623c7ed44b79cb91f85ac4a696699b56ea113d5c0"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_textured_profile.png",
+      "bytes": 986920,
+      "sha256": "6dfe60854f0e8482bd95ba88c593d73af48c83bbefa20ab712b9d4d34149e958"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_textured_rear.png",
+      "bytes": 1027700,
+      "sha256": "cc3c48e3bac72094d055a6e0eca6bf983d91e89f533c0a7043c3b68b8623edfe"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Photo_Small_textured_three_quarter.png",
+      "bytes": 1038640,
+      "sha256": "7d024875bcd0bec0427edc575c22f316f909cbc562f9a2e6be0dfecc8e659a72"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_clay_front.png",
+      "bytes": 995060,
+      "sha256": "7515793915d0ea09e0ec196cdd36aac0ff1a88bbd9d52af4e21ffad16d3320ac"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_clay_profile.png",
+      "bytes": 978682,
+      "sha256": "546070abc437a73f7886d297853594b3da3a06924177748b817221adbb1ac591"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_clay_rear.png",
+      "bytes": 976576,
+      "sha256": "79572642f6db1c8357ce3560bd9f5e65104760f5b9abfed608242cab54feed40"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_clay_three_quarter.png",
+      "bytes": 1019986,
+      "sha256": "d421811e91a0684c00c9811629a843e7945bf9317381a82c92ffa48945dfbdae"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_textured_front.png",
+      "bytes": 1003580,
+      "sha256": "23d763f7621b8df772c5b044dfddce523a6fb3eaeb19e714f47c4e771f5e4ad5"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_textured_profile.png",
+      "bytes": 994282,
+      "sha256": "bd4956abdd2fbbef6aea4ecc91394a389ff569ed9bde032c2570f89e25b8b463"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_textured_rear.png",
+      "bytes": 1105801,
+      "sha256": "b09b90394bbb0191a059fd8292c771d698bbc437f32eb74af30181787380d983"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Frame_Print_Large_textured_three_quarter.png",
+      "bytes": 1060543,
+      "sha256": "cb5e9c5ff65975f6f76151ab3b56643104957ae87be67da1417c0f91dd73ca0e"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_clay_front.png",
+      "bytes": 1025398,
+      "sha256": "d35479fd52e548a1e4a88698f32648ca4bf67dfca623a329b904dbd61cb224f3"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_clay_profile.png",
+      "bytes": 1016801,
+      "sha256": "aec9e19ba073fbb6afe9db6dfc88bdfbf72597b9173a8aeef76b069a5b2ac274"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_clay_rear.png",
+      "bytes": 1022101,
+      "sha256": "fe72e72e0b768909837cf114070ed802484c7e34b308c39b3871395925c07db0"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_clay_three_quarter.png",
+      "bytes": 1047089,
+      "sha256": "f9f74cfb5f711d1d1f203f6fa7d04c03645013bf365ec11f1ca8c83f165ffe8d"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_textured_front.png",
+      "bytes": 1043416,
+      "sha256": "955e2802f39793781ed96e77ffc2db8480d9edb2b9e66802e168d6f47ff0cad9"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_textured_profile.png",
+      "bytes": 1034768,
+      "sha256": "52bd8a64965e08800200954096148cf31807a6ec9c1109365ae859751c949ca8"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_textured_rear.png",
+      "bytes": 1041805,
+      "sha256": "d23e4eee8d593d7833574244a7b8cd8ada7283144419a539f88848ed82f7d62d"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Pothos_Small_textured_three_quarter.png",
+      "bytes": 1066076,
+      "sha256": "36cb58d667b2f061953ec52cd9cd140b5fb7379c61351d949cf4ae1a07c203c6"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_clay_front.png",
+      "bytes": 1050414,
+      "sha256": "a2c0050c458c8bd0791d5947a6f6b914d05787ff5184ac083197a141482d406d"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_clay_profile.png",
+      "bytes": 1044306,
+      "sha256": "c5934bc44ffbfd9aec5ed2d780ab6bca33178e6ddd949de30eb3250838d945c0"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_clay_rear.png",
+      "bytes": 1028249,
+      "sha256": "f1b0846e04f188a03b94808249c822562b1faa2c271bca90439d938bb6c54004"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_clay_three_quarter.png",
+      "bytes": 1064547,
+      "sha256": "f8e088e6738d7d99589b4fef58030314262ef0b637e4316317e268de2840bd57"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_textured_front.png",
+      "bytes": 1105497,
+      "sha256": "5cd06ab4183dbb93c8b59c09944476e2aa9c07843cb42244e7012906d88f8a22"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_textured_profile.png",
+      "bytes": 1085461,
+      "sha256": "c3bc8365e1a302814cb50e2363e77fab8b98ac209dead4b6fd8c74d68105cf02"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_textured_rear.png",
+      "bytes": 1069159,
+      "sha256": "067ea6f0532cf3daa40f22ff82ffb38af5fc2ee0570d220ed1e225f14f26689a"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Plant_Rubber_textured_three_quarter.png",
+      "bytes": 1105270,
+      "sha256": "835806ec373fa6b66e181d7f039c81c357bd20f003a144584e9c0d4183beaf64"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_clay_front.png",
+      "bytes": 988254,
+      "sha256": "e9cec4d98dcbd060b2d42ea4d934bffdb8f27d58deddd072d464e429b1613ac7"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_clay_profile.png",
+      "bytes": 977648,
+      "sha256": "f3b5e9d1fafae065e1cfa04c751560b8957bdbc959f5e8c768f7d2f0d767bbc6"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_clay_rear.png",
+      "bytes": 957512,
+      "sha256": "9e47bc95c5e585a172e11480388944cf0a3209874ca7e1ef835cb7245fe5b56d"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_clay_three_quarter.png",
+      "bytes": 998629,
+      "sha256": "a9d0713bfc47b7d9b8f5018e6780cd967c6154c810104e1bddee10f950edae4a"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_textured_front.png",
+      "bytes": 1076039,
+      "sha256": "7c8d50e4ffa6cbf3a1823cacaa19d7166dd1cd89943934d1db01c2ae9204f638"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_textured_profile.png",
+      "bytes": 981444,
+      "sha256": "7b28a9b9a6389b8cc7dc6c7fe18f48dd732b5ed665254cc4ddc335bab05a3112"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_textured_rear.png",
+      "bytes": 1084152,
+      "sha256": "fe37139a2769bc16defee3472b6ad1b1cacef52874408f1ab50b57e4c1274bee"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wall_Calendar_1963_11_textured_three_quarter.png",
+      "bytes": 1100350,
+      "sha256": "7ca76de1be3a934e235dd2b082bd4ff318515f3f7ed68324b3f63f3961c804bc"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_clay_front.png",
+      "bytes": 998910,
+      "sha256": "147292a9e6f4956b471af808768624dbfc7435acdad53277d4367190656fe8c9"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_clay_profile.png",
+      "bytes": 997366,
+      "sha256": "ef7d223d99d8d9c6bd1d4e4cb44c2728c55d825e81999aa8f65f16f7a9b44405"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_clay_rear.png",
+      "bytes": 991485,
+      "sha256": "ca92051223ae163f0d9768fd8fc15731094bf8ced16ea087f2edda88455d2dd0"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_clay_three_quarter.png",
+      "bytes": 1008635,
+      "sha256": "d24b67d13df7b79e60b1cb50bc5a76e46b6db6401f766b82415b89e6249620c2"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_textured_front.png",
+      "bytes": 986866,
+      "sha256": "c7276df6562f9387f4e7e0c81c0cde3679be951b46caed215d770b34b8084af3"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_textured_profile.png",
+      "bytes": 991887,
+      "sha256": "adc617e457a8ec384f42e30ef6c4d8ecda83ee6a760a6b832151854cb520986c"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_textured_rear.png",
+      "bytes": 979934,
+      "sha256": "9a3198166deeb9a60f68b028ea72995d5ad702b4965b03264047a45efe20249e"
+    },
+    {
+      "path": "renders/modules/X14_DRESS_Wastebasket_textured_three_quarter.png",
+      "bytes": 979206,
+      "sha256": "19166f091bb064dbd608ed15c900a49a28ae10501fdd0fc48eff55884eaa1659"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_clay_front.png",
+      "bytes": 568442,
+      "sha256": "3536165e7ef009aacbe99ae667ac7c12f145ebf5c82fddeec7909d5bbc2aed1c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_clay_profile.png",
+      "bytes": 561991,
+      "sha256": "7f630b1bdc52a6d909ba44010c07d2f8f14db09b72c7f987ebc76aeb426feef1"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_clay_rear.png",
+      "bytes": 552883,
+      "sha256": "69cfe3959cca8afa439e5105d4e09a8626d53b6b5918448fe497ab39c40aca81"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_clay_three_quarter.png",
+      "bytes": 575427,
+      "sha256": "d41978f35df5aa9190f0380ea3f29b7e954bc3535b761a69338d756cb412da10"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_textured_front.png",
+      "bytes": 593907,
+      "sha256": "89ac23fa402f93b635de2a34c1d9b8ec3c12c3ff1aa2aac845a588d588dd4ae5"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_textured_profile.png",
+      "bytes": 564434,
+      "sha256": "5b0b728f5553cf3005d26be1c2ad23b5891d9c7221679f1ecffff2b2cbe70581"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_textured_rear.png",
+      "bytes": 571237,
+      "sha256": "946ebebafae336126eddaa9bf9f51a040d158bd4f4f93edee521b0198e35bd7d"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_090_textured_three_quarter.png",
+      "bytes": 587381,
+      "sha256": "c13e43d9eea498c536f274c272ba82971ed9fb8a27ce8b8508c8a5931c2e8383"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_clay_front.png",
+      "bytes": 572889,
+      "sha256": "6fc5ad0e5d0f1228f2031c89d5e824b5ab74efacd5c7638e2a4c6494c9e9648a"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_clay_profile.png",
+      "bytes": 562837,
+      "sha256": "8fbf156d8f0f6165476a64871c695f74194e21023127f160f0c9ac617fde546f"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_clay_rear.png",
+      "bytes": 556128,
+      "sha256": "5d5685b48f0864f17efdcd6a3fbfa884ebfc3b303bd958b158baf2a3e421d481"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_clay_three_quarter.png",
+      "bytes": 581576,
+      "sha256": "ad7f9067a18010f47dfbf8bba08e08220ecf506219fac862ad2864f8faa1ce4d"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_textured_front.png",
+      "bytes": 614696,
+      "sha256": "439f701dfdd76191133836e9513bafe80ab7295582ac1c23f0cdfbd19db62cc1"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_textured_profile.png",
+      "bytes": 570679,
+      "sha256": "4285133890226dc625a93146a5f8b1aa9f22d88d37411093898c67fc0dcd0385"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_textured_rear.png",
+      "bytes": 586924,
+      "sha256": "59b227e522db2d170d44b76d676540c8f86957a755b871d94e5679299a5db994"
+    },
+    {
+      "path": "renders/modules/X14_PART_Door_Wood_090_textured_three_quarter.png",
+      "bytes": 604439,
+      "sha256": "af0b0f23508e5b68d8554b26a944a54ef8d6fd91cd3e93d83adde9af16c18667"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_clay_front.png",
+      "bytes": 570735,
+      "sha256": "73852b9b7ab3ddc6601906d24bd68b2c4b88ea46e3f853c3f72a54a2f092f698"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_clay_profile.png",
+      "bytes": 570517,
+      "sha256": "00fc9af7c2d09bfe9d63fbcaf9bcf4bd664c20103e51c4e83853783869d37a77"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_clay_rear.png",
+      "bytes": 557857,
+      "sha256": "b6de50a282da810bbfbb684bf2f0fa9ae9d93f425492a7e9e58a4629a496c4b1"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_clay_three_quarter.png",
+      "bytes": 596824,
+      "sha256": "1109460578f78bc8d6d0fa6bc8420c96b8423beef9b07360d7b0da073ca4f3a9"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_textured_front.png",
+      "bytes": 589081,
+      "sha256": "6b66c0381fbf14ddedc76790f2665ed5270ac52e60c78c65707dccf932c2460d"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_textured_profile.png",
+      "bytes": 584149,
+      "sha256": "0103acc64bce597fc4712b86ae2279d5daf9f28928a62715b512a12a9085012e"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_textured_rear.png",
+      "bytes": 571769,
+      "sha256": "dfe5e62ec357dc3fbcf530e82cd50ee8c4a5f2d5a3aeeab03725959158748a25"
+    },
+    {
+      "path": "renders/modules/X14_PART_DropCeiling_120_textured_three_quarter.png",
+      "bytes": 631268,
+      "sha256": "0fc49ff4e2109cee5d55dee58904b1b5990ea4b5ec2f892095eef6c418f7757c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_clay_front.png",
+      "bytes": 564110,
+      "sha256": "997a139fd823b82328001ab7848b8d28cb0aaeb27e01ff81c2e5fb42fb3dcbe8"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_clay_profile.png",
+      "bytes": 572015,
+      "sha256": "677b9d4b523abb8ecab4ec5d83f85947211f11ed3617d033b22546b3689a3c50"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_clay_rear.png",
+      "bytes": 547457,
+      "sha256": "72bd905c9b90440ebd593af0b68e6082c20a83d32b7089b0e20d21c3c8334eb1"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_clay_three_quarter.png",
+      "bytes": 584551,
+      "sha256": "89cb7fbd346f76d203fc18ee3b48642efb7aed5d03c0e6785cd1d515c3521e38"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_textured_front.png",
+      "bytes": 577888,
+      "sha256": "013c1d5b768efd341fd3ef2ca9efed85f78f2965a6a3298342b13095c1beefbb"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_textured_profile.png",
+      "bytes": 580397,
+      "sha256": "f4d1dc70bdc996ba3d6b0889bddba1c66343b5811a09f36dfbd47cc805ba7d5c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_textured_rear.png",
+      "bytes": 556149,
+      "sha256": "b5484eb0151b2f957270ed3280eca93b6311b6d1979b060203ceac2f6732e37c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Fluorescent_120_textured_three_quarter.png",
+      "bytes": 593145,
+      "sha256": "d5b98c987a64ee117e7db10e8a12fae73693ed00603f5bb356601ffde5cafcb6"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_clay_front.png",
+      "bytes": 568656,
+      "sha256": "cff50b8cf644df8abc186e6f34f47cc3d92dfdb5bd06206bfcdc339a9d9ff706"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_clay_profile.png",
+      "bytes": 561110,
+      "sha256": "c0a833bc5129367c09c5b074e9d9a0a0d814a2e84ed7e897ef9eb9e8096b22cd"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_clay_rear.png",
+      "bytes": 556502,
+      "sha256": "6ba04bf6fae8429b5011b2ae13d8da24b43da419c4cb4227766c8c432088b9d3"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_clay_three_quarter.png",
+      "bytes": 583300,
+      "sha256": "3f0f4b0b68dbee66f6ff3cc1904da169d8c2b32ef00e29d7e79338f1b46eb5c2"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_textured_front.png",
+      "bytes": 592043,
+      "sha256": "2557a3a7605229a635b16cd1443b27600586a10ce9b8d167003ccb67526d4f9c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_textured_profile.png",
+      "bytes": 569333,
+      "sha256": "de391fd102de70a6d1367efab6c306d530eeafde214268e6c869531f4bb8bd94"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_textured_rear.png",
+      "bytes": 572783,
+      "sha256": "d09521e8620ff0d1fb43095f5d88109a003a1588081c843b9174afd99cd8fc4b"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Glazed_120_textured_three_quarter.png",
+      "bytes": 590888,
+      "sha256": "7c15dc342c40d4d27e8b8d6d5c65c149e0a6dc1e44b0cfc42a54082168d0c22e"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_clay_front.png",
+      "bytes": 567271,
+      "sha256": "918ddad6dab1f6a2bdc4c725de170e8f080b36fdcdebd1e33a220bb33ee11a5f"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_clay_profile.png",
+      "bytes": 562006,
+      "sha256": "9a53a4f79ee1168d6e153d71f650ddf4ada8367b1e26390aff543c0d5e847756"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_clay_rear.png",
+      "bytes": 548139,
+      "sha256": "9f4192efd9b5359d60794cdf4e4e829e6ae1d0d0be6f2f5cf92b2e5bed03009c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_clay_three_quarter.png",
+      "bytes": 571855,
+      "sha256": "ee58cf8e2e3f119e6c7a96b6b1dfd0b095ddc2e08eea54436dd59d482f39b68c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_textured_front.png",
+      "bytes": 584199,
+      "sha256": "53f22e9709f1090011bbcefa814d7b287e810ce9a447a5c554e3a7ca00ca7f2f"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_textured_profile.png",
+      "bytes": 564991,
+      "sha256": "67f65b0c9fdb9577ddde9b5430e91c1f07b3def45dd653007ed553ea28dedda9"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_textured_rear.png",
+      "bytes": 561362,
+      "sha256": "1226d66225deaacce16a4cfd0fed830f2860142d40b5d4fd188e4f64f8d4a649"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_060_textured_three_quarter.png",
+      "bytes": 580042,
+      "sha256": "54e2d0aa18e9b986a076be9427b60aaa361ba83fce351c70ca53201dbe1189be"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_clay_front.png",
+      "bytes": 567958,
+      "sha256": "2ca5ca1f1e3dc46b178bf4b73521bbfdf5d29f437c0c408c54571565f5ca2bde"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_clay_profile.png",
+      "bytes": 560678,
+      "sha256": "21e6be4d44cf2bf2cc496a0f96d64139906a7268ff214f7e156d26077f77ce1c"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_clay_rear.png",
+      "bytes": 553946,
+      "sha256": "bc3b8a87568e4565a416cf2b8ea25b36651e965f1be197587b69c01b52837eaa"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_clay_three_quarter.png",
+      "bytes": 580892,
+      "sha256": "ce679e44d11cd92c5a32bc5c5b5645e507ea4e1b28a22158b576122493e840f8"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_textured_front.png",
+      "bytes": 598805,
+      "sha256": "8e80c2527c2288338ebb04e43a5c3684e92707c60406fbecd42d1ad16d7863ce"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_textured_profile.png",
+      "bytes": 564213,
+      "sha256": "58f558a814239b4973ea1e645c34e0273841bb363cf3beecd1af87b7830df65e"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_textured_rear.png",
+      "bytes": 579092,
+      "sha256": "d4444d932b5efd50f216db597f9dfdfcf7f450c166a481879c7a21b9e3443859"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Solid_120_textured_three_quarter.png",
+      "bytes": 594261,
+      "sha256": "be77bfa9b40d059de8589fa215bc20e32d673e1724a68f9eed34eb3e3afd0a84"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_clay_front.png",
+      "bytes": 569760,
+      "sha256": "ddf4d3dda12085b66f201af843d04c011af1814b641f45dc82db5efe71f69f07"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_clay_profile.png",
+      "bytes": 561074,
+      "sha256": "0425bcd6c27d6b528bb5ade97345aa576354da9a3a2fceddcf0bdb40e9b8d286"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_clay_rear.png",
+      "bytes": 549956,
+      "sha256": "3eeef33ece554125fc42ee9b74ed86de37485c8b30369e2c04e68462852af1a2"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_clay_three_quarter.png",
+      "bytes": 575629,
+      "sha256": "a2a4613b97e299a279e933921be59017dfd21fd2b6369f00ec906c068ae8ba9e"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_textured_front.png",
+      "bytes": 598399,
+      "sha256": "512c5579e86cad51162431833c7466ca885be6d1552030d460aff5a1077729ff"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_textured_profile.png",
+      "bytes": 567256,
+      "sha256": "c0c8391eb5031b87cc64db5836d97f79ea45243973e4f4ffa5dacf229b9e5ced"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_textured_rear.png",
+      "bytes": 570307,
+      "sha256": "6393584d127b0aa2af92f32384e79a46ebb565cc8be765a5e46f9c18cdf8e3d4"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_060_textured_three_quarter.png",
+      "bytes": 597008,
+      "sha256": "0ad4f9c097ee59d1d0d7d01cf75cd0f51ab732e2b605f9107a7b62c2336fb4dc"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_clay_front.png",
+      "bytes": 569358,
+      "sha256": "402534285a1e3c4e05e22cc343e98f8faa03d86f37fa86224a33ebb34bce8e64"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_clay_profile.png",
+      "bytes": 559683,
+      "sha256": "5d9498f56f521975dbd115d81aae9608ef98b2109846702c6cfa03b8dea0772e"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_clay_rear.png",
+      "bytes": 554760,
+      "sha256": "b6c4c3a750fcd52cd1979f57cf00c339f98985b9e413299f9ac43ca92d6c8a0e"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_clay_three_quarter.png",
+      "bytes": 582289,
+      "sha256": "8dd5f0411b38a7aa608c7726fd90e15e1639d445fa204b5c009aa451b6ce87de"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_textured_front.png",
+      "bytes": 611456,
+      "sha256": "da5335e076989f621cf390c8f8c5f5171bc7792426b9144379850ec07a9dddb7"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_textured_profile.png",
+      "bytes": 568242,
+      "sha256": "21794581bbd0ce39ae0f640195e8aa9fdc7a905ccb608b1580e888b6f0507430"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_textured_rear.png",
+      "bytes": 577570,
+      "sha256": "b68bddd7c01b83e544a96130e16935aecd8e1d8f1e1133e408f67ce0519ce985"
+    },
+    {
+      "path": "renders/modules/X14_PART_Panel_Wood_090_textured_three_quarter.png",
+      "bytes": 609545,
+      "sha256": "697fd14217d4fc204536e02a0f7fd8ebfeff7fc5189c8555d7a01ad68576d78d"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_clay_front.png",
+      "bytes": 562123,
+      "sha256": "0e8f2b036fb83430519e9382c4d6ebd357afb69700a275b748e832ed685f3391"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_clay_profile.png",
+      "bytes": 562596,
+      "sha256": "8cb477cf1e09e120320a633561688b8ccd1035b4c2e3040cd4dff98cc7ecfcfe"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_clay_rear.png",
+      "bytes": 538175,
+      "sha256": "cf718fbab9f6e8f3614fbd02663fffcc851b72c19acf0a0a72e250afc6be0837"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_clay_three_quarter.png",
+      "bytes": 561308,
+      "sha256": "91c23825a114bed111f3481c6661f2ccef4a18f8370363d5940b79daf871a9f5"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_textured_front.png",
+      "bytes": 562360,
+      "sha256": "319d79d2eb643991eca66b43ab0bf1f673b4e3fad98e08a791c020a730774a3f"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_textured_profile.png",
+      "bytes": 565138,
+      "sha256": "cd0f88663ba13db404dcb694ecd1367444cc22b63de35da8d7a4409a9642acaa"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_textured_rear.png",
+      "bytes": 539717,
+      "sha256": "1924e6ee712b97f001533d21ca9b911b626d649bad91795c2986d45aa30203d9"
+    },
+    {
+      "path": "renders/modules/X14_PART_Post_textured_three_quarter.png",
+      "bytes": 563273,
+      "sha256": "eabf71582608648876212b49c83746c5c6b5cbed1ccfa3ccdeff320c1d341e93"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_clay_front.png",
+      "bytes": 555588,
+      "sha256": "97ecf7994aebb1489d4d6b7a9b4a6a55d71b11c7a2249cab963a25097cf57a48"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_clay_profile.png",
+      "bytes": 565851,
+      "sha256": "1d4439c74ffc6ad3348d28290456da9bce63dafe2d1f156c410fe1e204877aa6"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_clay_rear.png",
+      "bytes": 564954,
+      "sha256": "c563323a145dcac98d35e512cfec81bf79529edcd8fac1ebbdc6e9cb753918de"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_clay_three_quarter.png",
+      "bytes": 583690,
+      "sha256": "5a617af49c7cf080f7a8268e55a6b1c418f889c9113bcf1f39c4e646a37364c3"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_textured_front.png",
+      "bytes": 569059,
+      "sha256": "37e574827df8cac4e14418b337bea710dae013839253d51e99f420c40a1cde47"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_textured_profile.png",
+      "bytes": 563725,
+      "sha256": "312e5c20635770bd3e16936443bbb4c064c5369c307eaffad963d49a190a7f18"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_textured_rear.png",
+      "bytes": 589008,
+      "sha256": "8167e93e9287896b961d17cdb02cf0e9addb4ed9584b2a2ee9f999a0d3506545"
+    },
+    {
+      "path": "renders/modules/X14_PART_Sign_Door_textured_three_quarter.png",
+      "bytes": 591270,
+      "sha256": "1a8a13625c486c84128168482b770e77960d15c8a03e951c8e79c574580855ff"
+    },
+    {
+      "path": "source/DC-X14_kit.blend",
+      "bytes": 6329281,
+      "sha256": "b0a91e5c8b9ad4e7e131cafc922f01225725a90a60ac5fbe99f4733b1b961958"
+    },
+    {
+      "path": "source/build.py",
+      "bytes": 114863,
+      "sha256": "1f5a16ba27d7b2e2bc35467843c8af0fba7c8ecf3f6af9c74279bbda4e415b7b"
+    },
+    {
+      "path": "source/dress_pcg.py",
+      "bytes": 14107,
+      "sha256": "7cb08b3e2e01d77f75285b4da4b187ec34dc25030befc03b86e1f578aca03b4f"
+    },
+    {
+      "path": "source/preview_dressing.py",
+      "bytes": 16630,
+      "sha256": "056f3c6ced4f28e7f2ec35b07cc0d76672415d9d707c25182f677eac58616107"
+    },
+    {
+      "path": "source/render_interior.py",
+      "bytes": 5994,
+      "sha256": "10d68d1a171a8e03ebf78a74db04edd9a2b663120c7b183f3285b8a9e9e5f657"
+    },
+    {
+      "path": "textures/T_X14_AcousticTile_BC.png",
+      "bytes": 92886,
+      "sha256": "b4ae5d846d1bfb82d0e1fa1dc3ff16eb4076755ed81868562867eb4a3e477fc3"
+    },
+    {
+      "path": "textures/T_X14_AcousticTile_N.png",
+      "bytes": 250267,
+      "sha256": "c0e5a70fb4721113790eae3374a51d3ef1b2cab2afed11082016a3df389fc8e5"
+    },
+    {
+      "path": "textures/T_X14_AcousticTile_R.png",
+      "bytes": 3158,
+      "sha256": "a028c29011423da94589d1f67bf7ad5ce9d9723c065d4ffe2a3ac3afd2b25f21"
+    },
+    {
+      "path": "textures/T_X14_Calendar_1963-11_BC.png",
+      "bytes": 74566,
+      "sha256": "d806c9ca2244749f21d10f664afb49c23d2f6ca882ee9133635d53bbe58b84dd"
+    },
+    {
+      "path": "textures/T_X14_Cork_BC.png",
+      "bytes": 230107,
+      "sha256": "73440be50a53a38aafb1cad97084d2970b60754ea57dfa3d2acf34aea2f6fe8e"
+    },
+    {
+      "path": "textures/T_X14_Flag_US_50Star_BC.png",
+      "bytes": 16436,
+      "sha256": "7abdaec5dbf8601ff30b58e2b5643d25d47b16ff7c21be7bf0cec1bc78535187"
+    },
+    {
+      "path": "textures/T_X14_Linoleum_BC.png",
+      "bytes": 734278,
+      "sha256": "b1f060bbc5543da86f245456b7d07504b153f0e12c69c13f65e556fe21e42199"
+    },
+    {
+      "path": "textures/T_X14_Linoleum_R.png",
+      "bytes": 394907,
+      "sha256": "de108161fb4b733a592feba48ef0870829b87b97e36c0c2e6e763589e1fe8cf2"
+    },
+    {
+      "path": "textures/T_X14_Marble_BC.png",
+      "bytes": 470212,
+      "sha256": "a466008c647d4ffc8d5702be66d5960e2d6e63982d6b139b0c3a0ab120a1ab50"
+    },
+    {
+      "path": "textures/T_X14_Marble_R.png",
+      "bytes": 3158,
+      "sha256": "00f27481a29daca0f0087fc5387d80b278579fd288a2f59b151465d948f53cd0"
+    },
+    {
+      "path": "textures/T_X14_Memo_BC.png",
+      "bytes": 2833,
+      "sha256": "d2856b97c69cbd8f5e44f7d59d68491a44bea197aa477faa4d4f3e8b5add80a8"
+    },
+    {
+      "path": "textures/T_X14_MetalPaint_BC.png",
+      "bytes": 329023,
+      "sha256": "c34be1666e98d2ad5a7c83ff697bc1c24fdcd47b639f365be5cb3839a3eb00bb"
+    },
+    {
+      "path": "textures/T_X14_MetalPaint_R.png",
+      "bytes": 220096,
+      "sha256": "41dde61f26f70a6b9359419871d36659af4c25595c5b6f39aa0bda3630ffd935"
+    },
+    {
+      "path": "textures/T_X14_OakDark_BC.png",
+      "bytes": 131387,
+      "sha256": "6fa11988d22f45a7d44ead5ccbc5e0a69d144b3e3dfea6eaf59ad6102bf05ce5"
+    },
+    {
+      "path": "textures/T_X14_OakDoor_BC.png",
+      "bytes": 151698,
+      "sha256": "f481dde2ef2fb79924a6e05ed8e4db3b4459b2e0c17d74c9e39799046f6df385"
+    },
+    {
+      "path": "textures/T_X14_OakFloor_BC.png",
+      "bytes": 147945,
+      "sha256": "b499b0b8a444931ada212f4c37568800a6c1f0ec3f1ea4ef30bed778e8b0aad7"
+    },
+    {
+      "path": "textures/T_X14_OakFloor_N.png",
+      "bytes": 99667,
+      "sha256": "c045f1f12cf3d23db827f04dceb475d1045b5ebdf0d5bb81d171b9e752eddc54"
+    },
+    {
+      "path": "textures/T_X14_OakFloor_R.png",
+      "bytes": 55682,
+      "sha256": "1665d43fad7f2c582c16c0121a30139373ce8946b58708de332dcc1f6a57f291"
+    },
+    {
+      "path": "textures/T_X14_Oak_BC.png",
+      "bytes": 181021,
+      "sha256": "d50f6e892956a5b9259420c3d031a186541be581d651881dd08999c4e04cfef6"
+    },
+    {
+      "path": "textures/T_X14_Oak_N.png",
+      "bytes": 155633,
+      "sha256": "bb6a057f1017f6d1969e40a357a891b0cb7c1668b36f5c18311efbe72f15a691"
+    },
+    {
+      "path": "textures/T_X14_Oak_R.png",
+      "bytes": 68777,
+      "sha256": "7817cb011870b452ec5b0fac0ea5215fde6c7c2f3fdc39f6d0a1ed8dd2ca0777"
+    },
+    {
+      "path": "textures/T_X14_PartitionGray_BC.png",
+      "bytes": 404285,
+      "sha256": "75f6c1e7ae79e61807d55dbc8514f0d21f89d8c4eaa7344e5871b1c7d6a257f9"
+    },
+    {
+      "path": "textures/T_X14_PartitionMahogany_BC.png",
+      "bytes": 380383,
+      "sha256": "74de1be9321c8dc0b556b6e7d41949bb119dee2a030f1d766b22aacb9d69bdd6"
+    },
+    {
+      "path": "textures/T_X14_Partition_R.png",
+      "bytes": 235535,
+      "sha256": "b5cd74d4728535b5fcd00eb4fa867a865ad43a2a0d0150fc7ce6d2261a089bf7"
+    },
+    {
+      "path": "textures/T_X14_PlasterCeiling_BC.png",
+      "bytes": 553764,
+      "sha256": "03f8e5cee26c3d808ec5b0168653a694ecf92aea95f8f2daee741306bf7a2c58"
+    },
+    {
+      "path": "textures/T_X14_Plaster_BC.png",
+      "bytes": 617477,
+      "sha256": "66cfa24a858f77b7f815df0c15f191865677ba77bc4b3d857aa5b5f8752538fd"
+    },
+    {
+      "path": "textures/T_X14_Plaster_N.png",
+      "bytes": 994701,
+      "sha256": "090c7eec2c50f02d5f6b6510e7cf133161d239efd2c03d422716330ed9e0b4d6"
+    },
+    {
+      "path": "textures/T_X14_Plaster_R.png",
+      "bytes": 381837,
+      "sha256": "a5c5e415ab4ac645c629559b50f37438cc473a35fb93a902dedf2983f135f8b7"
+    },
+    {
+      "path": "textures/T_X14_Print_Engraving_BC.png",
+      "bytes": 27715,
+      "sha256": "aa07d14bd592f4611531461b1745bae3494227397fffd0adf8e97b4f63addac0"
+    },
+    {
+      "path": "textures/T_X14_Print_Photo_BC.png",
+      "bytes": 912613,
+      "sha256": "cfef66756dbdacbb2378412bc3948d943d019e811441f60637515267d6e653af"
+    }
+  ]
+}

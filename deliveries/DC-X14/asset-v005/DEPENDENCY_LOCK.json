@@ -1,0 +1,49 @@
+{
+  "job_id": "DC-X14",
+  "locked_utc": "2026-10-02T10:30:00Z",
+  "dependencies": [
+    {
+      "id": "DC-I09",
+      "name": "Office furniture set (cross-city)",
+      "relation": "consumed via sockets only (SOCKET_I09_*); no I09 geometry is included in this delivery",
+      "register_status_at_lock": "DELIVERED / delivery_integrity VERIFIED / asset_user_approval PENDING",
+      "locked_version": "asset-v005",
+      "drive_folder": {
+        "title": "DC-I09 — asset — v005",
+        "id": "1MUveU1GrHxPHtkQB6FiVWbJmhCVJTQG3"
+      },
+      "payload": {
+        "title": "DC-I09_asset_v005.zip",
+        "id": "1ajFUC-Ivz_gn2ZFsKyK1X3WM9w9NQTfX",
+        "bytes": 6707841,
+        "sha256": "NOT_COMPUTED — ZIP not downloadable through the connector in the sandbox"
+      },
+      "fit_qualification": "By socket semantics only (desk footprint assumed ≤ 1.6 × 0.8 m, file cabinet ≤ 0.5 × 0.7 m, desk-top items at z = 0.75 m). Must be re-qualified against the real I09 meshes locally before placement.",
+      "note": "I09 request doc 1rQWN5TArJL45pI7VjJ-aU-rc7tzSx_XgVrDzrDVBBDQ lists desk, filing cabinet, rotary telephone, typewriter, desk lamp, wall clock — one socket of each type per cubicle is provided.",
+      "v003_note": "Real I09 meshes still not available in the sandbox. v003 renders named *_dressed_* use PREVIEW-ONLY stand-ins from jobs/DC-X14/preview_dressing.py at the I09 sockets; no I09 geometry is exported. Stand-in sizes: desk 1.52 × 0.76 × 0.76 m, file 0.38 × 0.71 × 1.32 m, chair seat 0.47 m.",
+      "v004_fit_test": {
+        "tested_version": "asset-v004 (Drive DC-I09_asset_v004.zip 1sdLl-qPS2zpmIghdlomcvkz7wjUEysCI, 2,203,362 bytes, decoded intact)",
+        "why_not_v005": "the v005 ZIP (6,707,841 bytes) exceeds the Drive connector's transfer size; v004 is the newest set that could be brought into the sandbox. Re-check v005 locally.",
+        "result": "desk, filing cabinet, typewriter, rotary phone, desk lamp and wall clock placed at the X14 sockets in both demo rooms with no collisions after aligning the sockets to the I09 contract (renders *_i09_*).",
+        "i09_findings_for_owner": [
+          "Axis: I09 GLBs (trimesh exporter) store height on glTF +Z with an unrotated root, but glTF is +Y up by spec, so Blender and UE import every piece lying on its back. Previews correct it with a -90° X rotation; the I09 files were not modified.",
+          "Desk LOD0 lowest point is z 0.02 m: the desk floats 2 cm above its pivot unless glides are added or the pivot moves."
+        ]
+      }
+    },
+    {
+      "id": "DC-X15",
+      "name": "Gala night state and day/night integration",
+      "relation": "downstream consumer; a labelled SOCKET_X15_StaffAccess_Door is provided; no gala dressing in this kit (Road Plan 04 addendum)",
+      "locked_version": null
+    }
+  ],
+  "tooling": {
+    "bpy": "4.5.14 LTS (python 3.11.15)",
+    "generator": "jobs/DC-X14/build.py (seed 1963)",
+    "qa": "tools/qa_check.py",
+    "renders": "tools/render_views.py (modules), jobs/DC-X14/render_interior.py (demo rooms; --dress adds preview stand-ins)"
+  },
+  "dallas_assets_touched": "none",
+  "v005_note": "Set-dressing layer added (10 X14_DRESS_* modules). No new external dependency: the furniture fit test still uses DC-I09 v004 (preview only). No DALLAS assets touched."
+}

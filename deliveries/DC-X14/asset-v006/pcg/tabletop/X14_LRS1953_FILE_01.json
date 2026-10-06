@@ -1,0 +1,181 @@
+{
+ "generator_revision": "WASHINGTON-TABLETOP-PCG-v004-pass6f",
+ "status": "WORKING_NOT_APPROVED_NOT_DELIVERED",
+ "surface": {
+  "surface_id": "X14_LRS1953_FILE_01",
+  "width_m": 0.47,
+  "depth_m": 0.71,
+  "edge_margin_m": 0.022,
+  "blocked_regions": null
+ },
+ "master_seed": 140401875,
+ "seeds": {
+  "layout": 319697979,
+  "population": 105343677,
+  "state": 1479916897,
+  "appearance": 780818098,
+  "weathering": 1125793357
+ },
+ "archetype": "organized_filing",
+ "controls": {
+  "organization": 0.96,
+  "paper_density": 0.72,
+  "surface_coverage": 0.58,
+  "activity": 0.26,
+  "stack_bias": 0.96,
+  "smoking_intensity": 0.0,
+  "cluster_bias": 0.9
+ },
+ "constraints": {
+  "scale_policy": "LOCKED_1_0",
+  "historical_identity": "APPROXIMATE period-generic unless separately evidenced",
+  "graphics": "DC optional graphics remain FICTIONALISED; SHARED construction is city-neutral"
+ },
+ "counts": {
+  "document_folder": 3,
+  "document_stack": 7
+ },
+ "placement_count": 10,
+ "occupied_area_m2": 0.09905,
+ "target_area_m2": 0.15763,
+ "overflow_towers": [],
+ "max_overflow_height_m": 0.0,
+ "resolved_placements": [
+  {
+   "asset": "document_folder",
+   "variant": 3,
+   "variant_label": "center_tab_protruding_inserts",
+   "x_m": -0.009745203348450915,
+   "y_m": 0.00047520593439587255,
+   "z_m": 0.0,
+   "yaw_deg": 0,
+   "orientation": "flat",
+   "relation": "surface",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_folder",
+   "variant": 1,
+   "variant_label": "center_tab_sparse",
+   "x_m": -0.009745203348450915,
+   "y_m": 0.00047520593439587255,
+   "z_m": 0.00228,
+   "yaw_deg": 0,
+   "orientation": "flat",
+   "relation": "stacked_folder_pile",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_folder",
+   "variant": 0,
+   "variant_label": "right_tab_medium_fill",
+   "x_m": -0.009745203348450915,
+   "y_m": 0.00047520593439587255,
+   "z_m": 0.0039664,
+   "yaw_deg": 0,
+   "orientation": "flat",
+   "relation": "stacked_folder_pile",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.009907981607869713,
+   "y_m": 0.0007289932861679511,
+   "z_m": 0.0062464,
+   "yaw_deg": -0.22851110455780746,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 1,
+   "variant_label": "medium_stack",
+   "x_m": -0.009907981607869713,
+   "y_m": 0.0007289932861679511,
+   "z_m": 0.0099898,
+   "yaw_deg": -0.22851110455780746,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.009907981607869713,
+   "y_m": 0.0007289932861679511,
+   "z_m": 0.0145198,
+   "yaw_deg": -0.22851110455780746,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.008774011718381186,
+   "y_m": 0.0013281843948617844,
+   "z_m": 0.0182631,
+   "yaw_deg": -0.37600248724178154,
+   "orientation": "flat",
+   "relation": "stacked_on_folder",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 3,
+   "variant_label": "messy_spread_stack",
+   "x_m": -0.009907981607869713,
+   "y_m": 0.0007289932861679511,
+   "z_m": 0.0220065,
+   "yaw_deg": -0.22851110455780746,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 4,
+   "variant_label": "organized_clipped_stack",
+   "x_m": -0.009907981607869713,
+   "y_m": 0.0007289932861679511,
+   "z_m": 0.0265365,
+   "yaw_deg": -0.22851110455780746,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  },
+  {
+   "asset": "document_stack",
+   "variant": 2,
+   "variant_label": "thick_stack",
+   "x_m": -0.009907981607869713,
+   "y_m": 0.0007289932861679511,
+   "z_m": 0.0302799,
+   "yaw_deg": -0.22851110455780746,
+   "orientation": "flat",
+   "relation": "stacked_on_paper_tower",
+   "scale": 1.0,
+   "support_resolved": true
+  }
+ ],
+ "support_qa": {
+  "unintended_3d_overlap_count": 0,
+  "issues": []
+ },
+ "x14_surface_node": "SURFACE_X14_Tabletop_File_01",
+ "x14_room": "LRS1953"
+}

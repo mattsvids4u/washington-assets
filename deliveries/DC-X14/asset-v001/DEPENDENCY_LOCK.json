@@ -1,0 +1,30 @@
+{
+  "job_id": "DC-X14",
+  "locked_utc": "2026-10-02T10:30:00Z",
+  "dependencies": [
+    {
+      "id": "DC-I09",
+      "name": "Office furniture set (cross-city)",
+      "relation": "consumed via sockets only (SOCKET_I09_*); no I09 geometry is included in this delivery",
+      "register_status_at_lock": "DELIVERED / delivery_integrity VERIFIED / asset_user_approval PENDING",
+      "locked_version": "asset-v005",
+      "drive_folder": {"title": "DC-I09 — asset — v005", "id": "1MUveU1GrHxPHtkQB6FiVWbJmhCVJTQG3"},
+      "payload": {"title": "DC-I09_asset_v005.zip", "id": "1ajFUC-Ivz_gn2ZFsKyK1X3WM9w9NQTfX", "bytes": 6707841, "sha256": "NOT_COMPUTED — ZIP not downloadable through the connector in the sandbox"},
+      "fit_qualification": "By socket semantics only (desk footprint assumed ≤ 1.6 × 0.8 m, file cabinet ≤ 0.5 × 0.7 m, desk-top items at z = 0.75 m). Must be re-qualified against the real I09 meshes locally before placement.",
+      "note": "I09 request doc 1rQWN5TArJL45pI7VjJ-aU-rc7tzSx_XgVrDzrDVBBDQ lists desk, filing cabinet, rotary telephone, typewriter, desk lamp, wall clock — one socket of each type per cubicle is provided."
+    },
+    {
+      "id": "DC-X15",
+      "name": "Gala night state and day/night integration",
+      "relation": "downstream consumer; a labelled SOCKET_X15_StaffAccess_Door is provided; no gala dressing in this kit (Road Plan 04 addendum)",
+      "locked_version": null
+    }
+  ],
+  "tooling": {
+    "bpy": "4.5.14 LTS (python 3.11.15)",
+    "generator": "jobs/DC-X14/build.py (seed 1963)",
+    "qa": "tools/qa_check.py",
+    "renders": "tools/render_views.py (modules), jobs/DC-X14/render_interior.py (demo room)"
+  },
+  "dallas_assets_touched": "none"
+}
