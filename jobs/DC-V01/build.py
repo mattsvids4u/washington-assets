@@ -1671,13 +1671,30 @@ def decal_plane(name, x0, y0, x1, y1, z, mat, target, direction=(0, 0, -1), subd
     return obj
 
 
-def side_decal(name, y0, z0, y1, z1, side, mat, target, subdiv=20, offset=0.004):
+def side_decal(name, y0, z0, y1, z1, side, mat, target, subdiv=20, offset=0.004, disc=False):
     bm = bmesh.new()
     x = side * 110
-    grid = [[bm.verts.new(V(x, y0 + (y1 - y0) * i / subdiv, z0 + (z1 - z0) * j / subdiv)) for j in range(subdiv + 1)] for i in range(subdiv + 1)]
-    for i in range(subdiv):
-        for j in range(subdiv):
-            bm.faces.new([grid[i][j], grid[i + 1][j], grid[i + 1][j + 1], grid[i][j + 1]])
+    if disc:
+        # round sheet just outside the seal's outer ring (ring edge at 0.477 of the sheet), so no
+        # square sheet edge can show on the door; polar grid keeps the shrinkwrap smooth
+        yc, zc = (y0 + y1) / 2, (z0 + z1) / 2
+        r = 0.49 * min(y1 - y0, z1 - z0)
+        rings, segs = 10, 48
+        centre = bm.verts.new(V(x, yc, zc))
+        ring = [[bm.verts.new(V(x, yc + r * k / rings * math.cos(2 * math.pi * s / segs),
+                                zc + r * k / rings * math.sin(2 * math.pi * s / segs))) for s in range(segs)]
+                for k in range(1, rings + 1)]
+        for s in range(segs):
+            bm.faces.new([centre, ring[0][s], ring[0][(s + 1) % segs]])
+        for k in range(rings - 1):
+            for s in range(segs):
+                t = (s + 1) % segs
+                bm.faces.new([ring[k][s], ring[k + 1][s], ring[k + 1][t], ring[k][t]])
+    else:
+        grid = [[bm.verts.new(V(x, y0 + (y1 - y0) * i / subdiv, z0 + (z1 - z0) * j / subdiv)) for j in range(subdiv + 1)] for i in range(subdiv + 1)]
+        for i in range(subdiv):
+            for j in range(subdiv):
+                bm.faces.new([grid[i][j], grid[i + 1][j], grid[i + 1][j + 1], grid[i][j + 1]])
     uv = bm.loops.layers.uv.new("UVMap")
     for f in bm.faces:
         for l in f.loops:
@@ -1718,7 +1735,8 @@ def police_layer(body, panels):
     objs.append(decal_plane("POLICE_DECAL_TRUNK", -46, 246, 46, 268, 110, M["MI_V01_Decal_Trunk"], panels["TRUNK"]))
     # door seals (front doors, both sides)
     for side, tag in ((1, "L"), (-1, "R")):
-        objs.append(side_decal(f"POLICE_DECAL_SEAL_F{tag}", -18, 46, 22, 86, side, M["MI_V01_Decal_DoorSeal"], panels[f"DOOR_F{tag}"]))
+        objs.append(side_decal(f"POLICE_DECAL_SEAL_F{tag}", -18, 46, 22, 86, side, M["MI_V01_Decal_DoorSeal"], panels[f"DOOR_F{tag}"],
+                                    offset=0.0015, disc=True))
     # beacon: chrome base + red dome (Beacon Ray 17 class, APPROXIMATE), on the roof centreline
     by = 14.0                       # E1: between M and P, forward of the roof centre
     bz = interp(K["zc"], by)

@@ -140,3 +140,12 @@ through the glass, MP/DC roof letters, single red beacon, POLICE trunk marking, 
 - Next pass (after Matt's review): identity correction if the 1963 make is established; side
   character line / spear if Matt wants Galaxie-500 trim rather than fleet trim; siren (socket only);
   DPD livery layer for V07; lit beacon state as a material switch in UE.
+- 2026-10-11 (scheduled run, WIP on branch asset/DC-V01-v005, NOT delivered): still no Matt
+  review of v003/v004, so no new delivery. Fixed the one known v004 defect: the clay profile showed
+  an L-shaped line on each front door, which was the edge of the square 40 × 40 cm door-seal sheet.
+  `side_decal(..., disc=True)` now builds a round polar-grid sheet (r = 0.49 of the sheet, just
+  outside the seal's outer ring at 0.477), and the shrinkwrap offset is 1.5 mm instead of 4 mm.
+  Clay profile: the L line is gone; a faint arc remains where the textured seal ring sits.
+  `detail_door_belt`: ring intact, no z-fighting. QA 675/675 + 595/595; clean rebuild
+  byte-identical (2 GLBs). Textures unchanged. This rides into the next delivery after Matt's review;
+  it is not a version on its own.
